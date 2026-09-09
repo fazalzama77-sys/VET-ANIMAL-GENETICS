@@ -216,6 +216,7 @@ var app = (function () {
 
     stopSpeech();              // never let a lesson keep reading after you leave it
     teardownHighlightPopup();  // remove floating selection toolbar if active
+    closeWhyModal();
 
     var map = {
       home: "home", theory: "theory", practical: "practical",
@@ -2336,6 +2337,123 @@ var app = (function () {
   /* ============================================================
      WHY
      ============================================================ */
+  function ensureWhyModal() {
+    var modal = document.getElementById("whyModalOverlay");
+    if (!modal) {
+      var modalHtml =
+        '<div id="whyModalOverlay" class="why-modal-overlay" role="dialog" aria-modal="true" style="display:none;">' +
+          '<div class="why-modal-dialog" id="whyModalDialog">' +
+            '<div class="why-modal-head">' +
+              '<button class="why-modal-close" id="whyModalClose" title="Close Analysis" aria-label="Close Analysis">&times;</button>' +
+              '<div class="row row--wrap mb-2">' +
+                '<span class="card-category" id="whyModalCat"></span>' +
+                '<span class="chip chip--muted" id="whyModalUnit"></span>' +
+              '</div>' +
+              '<h2 class="whycard-title" style="font-size: 1.35rem; margin-bottom: 8px;" id="whyModalTitle"></h2>' +
+              '<div class="whycard-comparison" id="whyModalComparison"></div>' +
+            '</div>' +
+            '<div class="why-modal-body">' +
+              '<div class="why-modal-prose" id="whyModalWhy"></div>' +
+              '<div class="why-chain-box" id="whyModalChainBox" style="display: none;">' +
+                '<h4>' + icon("pulse") + ' Step-by-Step Biological Mechanism</h4>' +
+                '<ol class="why-chain-list" id="whyModalChainList"></ol>' +
+              '</div>' +
+              '<div class="why-modal-clinical" id="whyModalClinicalBox" style="display: none;">' +
+                '<strong>' + icon("shield") + ' At the Clinic / In the Field:</strong> ' +
+                '<span id="whyModalClinical"></span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="why-modal-foot">' +
+              '<button class="btn btn--sm btn--primary" id="whyModalCloseBtn">Done Reading</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      document.body.insertAdjacentHTML("beforeend", modalHtml);
+    }
+    var closeX = document.getElementById("whyModalClose");
+    if (closeX && !closeX.dataset.bound) {
+      closeX.dataset.bound = "1";
+      closeX.onclick = closeWhyModal;
+    }
+    var closeBtn = document.getElementById("whyModalCloseBtn");
+    if (closeBtn && !closeBtn.dataset.bound) {
+      closeBtn.dataset.bound = "1";
+      closeBtn.onclick = closeWhyModal;
+    }
+    var overlay = document.getElementById("whyModalOverlay");
+    if (overlay && !overlay.dataset.bound) {
+      overlay.dataset.bound = "1";
+      overlay.onclick = function (e) {
+        if (e.target === overlay) closeWhyModal();
+      };
+    }
+  }
+
+  function openWhyModal(item) {
+    if (!item) return;
+    ensureWhyModal();
+
+    var catEl = document.getElementById("whyModalCat");
+    var unitEl = document.getElementById("whyModalUnit");
+    var titleEl = document.getElementById("whyModalTitle");
+    var compEl = document.getElementById("whyModalComparison");
+    var whyEl = document.getElementById("whyModalWhy");
+    var chainBox = document.getElementById("whyModalChainBox");
+    var chainList = document.getElementById("whyModalChainList");
+    var clinicalBox = document.getElementById("whyModalClinicalBox");
+    var clinicalText = document.getElementById("whyModalClinical");
+
+    if (catEl) catEl.textContent = (item.category || "mechanism").toUpperCase();
+    if (unitEl) unitEl.textContent = (item.unit || "unit-2").toUpperCase().replace("-", " ");
+    if (titleEl) titleEl.textContent = item.title;
+    if (compEl) compEl.innerHTML = '<span class="comp-icon">' + icon("scale") + '</span> Comparison: ' + esc(item.comparison || "");
+    if (whyEl) whyEl.innerHTML = item.why || "";
+
+    if (item.mechanism && item.mechanism.length) {
+      if (chainList) {
+        chainList.innerHTML = item.mechanism.map(function (step, i) {
+          return '<li class="why-chain-item"><span class="why-chain-num">' + (i + 1) + '</span>' + esc(step) + '</li>';
+        }).join("");
+      }
+      if (chainBox) chainBox.style.display = "block";
+    } else {
+      if (chainBox) chainBox.style.display = "none";
+    }
+
+    if (item.clinical) {
+      if (clinicalText) clinicalText.innerHTML = item.clinical;
+      if (clinicalBox) clinicalBox.style.display = "block";
+    } else {
+      if (clinicalBox) clinicalBox.style.display = "none";
+    }
+
+    var modal = document.getElementById("whyModalOverlay");
+    if (modal) {
+      modal.style.display = "flex";
+      void modal.offsetWidth; // Force layout reflow
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeWhyModal() {
+    var modal = document.getElementById("whyModalOverlay");
+    if (modal) {
+      modal.classList.remove("open");
+      setTimeout(function () {
+        if (!modal.classList.contains("open")) {
+          modal.style.display = "none";
+        }
+      }, 220);
+    }
+    document.body.style.overflow = "";
+  }
+
+  // Global escape key handler for WHY modal
+  window.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeWhyModal();
+  });
+
   function renderWhy() {
     var rawData = (window.whyData || []).filter(function (w) { return w.title; });
 
@@ -2384,36 +2502,10 @@ var app = (function () {
         '</button>' +
       '</div>';
 
-    var modalHtml =
-      '<div id="whyModalOverlay" class="why-modal-overlay" role="dialog" aria-modal="true">' +
-        '<div class="why-modal-dialog" id="whyModalDialog">' +
-          '<div class="why-modal-head">' +
-            '<button class="why-modal-close" id="whyModalClose" title="Close Analysis">&times;</button>' +
-            '<div class="row row--wrap mb-2">' +
-              '<span class="card-category" id="whyModalCat"></span>' +
-              '<span class="chip chip--muted" id="whyModalUnit"></span>' +
-            '</div>' +
-            '<h2 class="whycard-title" style="font-size: 1.35rem; margin-bottom: 8px;" id="whyModalTitle"></h2>' +
-            '<div class="whycard-comparison" id="whyModalComparison"></div>' +
-          '</div>' +
-          '<div class="why-modal-body">' +
-            '<div class="why-modal-prose" id="whyModalWhy"></div>' +
-            '<div class="why-chain-box" id="whyModalChainBox" style="display: none;">' +
-              '<h4>' + icon("pulse") + ' Step-by-Step Biological Mechanism</h4>' +
-              '<ol class="why-chain-list" id="whyModalChainList"></ol>' +
-            '</div>' +
-            '<div class="why-modal-clinical" id="whyModalClinicalBox" style="display: none;">' +
-              '<strong>' + icon("shield") + ' At the Clinic / In the Field:</strong> ' +
-              '<span id="whyModalClinical"></span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="why-modal-foot">' +
-            '<button class="btn btn--sm btn--primary" id="whyModalCloseBtn">Done Reading</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
+    // Injected into view: only header, toolbar, and cards grid (Modal is under document.body!)
+    view.innerHTML = head + toolbarHtml + '<div id="whygrid" class="why-grid-compact"></div>';
 
-    view.innerHTML = head + toolbarHtml + '<div id="whygrid" class="why-grid-compact"></div>' + modalHtml;
+    ensureWhyModal();
 
     var currentFilter = "all";
     var currentSearch = "";
@@ -2425,55 +2517,6 @@ var app = (function () {
       var text = (tmp.textContent || tmp.innerText || "").trim();
       return text.length > 175 ? text.slice(0, 175) + "…" : text;
     }
-
-    function openModal(item) {
-      if (!item) return;
-      el("#whyModalCat").textContent = (item.category || "mechanism").toUpperCase();
-      el("#whyModalUnit").textContent = (item.unit || "unit-2").toUpperCase().replace("-", " ");
-      el("#whyModalTitle").textContent = item.title;
-      el("#whyModalComparison").innerHTML = '<span class="comp-icon">' + icon("scale") + '</span> Comparison: ' + esc(item.comparison || "");
-      el("#whyModalWhy").innerHTML = item.why || "";
-
-      var chainBox = el("#whyModalChainBox");
-      var chainList = el("#whyModalChainList");
-      if (item.mechanism && item.mechanism.length) {
-        chainList.innerHTML = item.mechanism.map(function (step, i) {
-          return '<li class="why-chain-item"><span class="why-chain-num">' + (i + 1) + '</span>' + esc(step) + '</li>';
-        }).join("");
-        chainBox.style.display = "block";
-      } else {
-        chainBox.style.display = "none";
-      }
-
-      var clinicalBox = el("#whyModalClinicalBox");
-      var clinicalText = el("#whyModalClinical");
-      if (item.clinical) {
-        clinicalText.innerHTML = item.clinical;
-        clinicalBox.style.display = "block";
-      } else {
-        clinicalBox.style.display = "none";
-      }
-
-      var modal = el("#whyModalOverlay");
-      modal.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-      var modal = el("#whyModalOverlay");
-      if (modal) modal.classList.remove("open");
-      document.body.style.overflow = "";
-    }
-
-    el("#whyModalClose").addEventListener("click", closeModal);
-    el("#whyModalCloseBtn").addEventListener("click", closeModal);
-    el("#whyModalOverlay").addEventListener("click", function (e) {
-      if (e.target === el("#whyModalOverlay")) closeModal();
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeModal();
-    });
 
     function getFilteredData() {
       return rawData.filter(function (item) {
@@ -2516,19 +2559,23 @@ var app = (function () {
             '<p class="whycard-preview">' + esc(cleanSnippet(w.why)) + '</p>' +
           '</div>' +
           '<div class="whycard-footer">' +
-            '<button class="why-analyze-btn" data-analyze="' + w.id + '">' +
+            '<button class="why-analyze-btn" type="button" data-analyze="' + w.id + '">' +
               'Analyze ' + icon("microscope") +
             '</button>' +
           '</div>' +
         '</article>';
       }).join("");
+    }
 
-      els(".whycard-compact").forEach(function (card) {
-        card.addEventListener("click", function (e) {
-          var id = parseInt(card.getAttribute("data-why-id"), 10);
-          var item = rawData.find(function (w) { return w.id === id; });
-          if (item) openModal(item);
-        });
+    // Grid Event Delegation for robust clicking on both card and "Analyze" button
+    var gridEl = el("#whygrid");
+    if (gridEl) {
+      gridEl.addEventListener("click", function (e) {
+        var card = e.target.closest(".whycard-compact");
+        if (!card) return;
+        var id = parseInt(card.getAttribute("data-why-id"), 10);
+        var item = rawData.find(function (w) { return w.id === id; });
+        if (item) openWhyModal(item);
       });
     }
 
@@ -2551,14 +2598,14 @@ var app = (function () {
       });
     }
 
-    // Challenge Me Button: Spotlight a random card in the Analyze scanner
+    // Challenge Me Button: Spotlight a random card in the Analyze modal
     var challengeBtn = el("#whyChallengeBtn");
     if (challengeBtn) {
       challengeBtn.addEventListener("click", function () {
         var list = getFilteredData();
         if (!list.length) list = rawData;
         var randomIndex = Math.floor(Math.random() * list.length);
-        openModal(list[randomIndex]);
+        openWhyModal(list[randomIndex]);
       });
     }
 
@@ -2570,7 +2617,7 @@ var app = (function () {
       var targetItem = rawData.find(function (w) { return w.id === targetId; });
       if (targetItem) {
         setTimeout(function () {
-          openModal(targetItem);
+          openWhyModal(targetItem);
         }, 120);
       }
     }
@@ -4180,7 +4227,9 @@ var app = (function () {
     setSrsNotificationTime: setSrsNotificationTime,
     toggleSpotterDetails: toggleSpotterDetails,
     shuffleWhyMechanism: shuffleWhyMechanism,
-    shuffleGlossaryTerm: shuffleGlossaryTerm
+    shuffleGlossaryTerm: shuffleGlossaryTerm,
+    openWhy: openWhyModal,
+    closeWhy: closeWhyModal
   };
 })();
 

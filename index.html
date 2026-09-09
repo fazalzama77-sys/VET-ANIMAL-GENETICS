@@ -253,6 +253,35 @@
   </div>
 </div>
 
+<!-- ==================== WHY ANALYZE MODAL ==================== -->
+<div id="whyModalOverlay" class="why-modal-overlay" role="dialog" aria-modal="true" style="display:none;">
+  <div class="why-modal-dialog" id="whyModalDialog">
+    <div class="why-modal-head">
+      <button class="why-modal-close" id="whyModalClose" title="Close Analysis" aria-label="Close Analysis">&times;</button>
+      <div class="row row--wrap mb-2">
+        <span class="card-category" id="whyModalCat"></span>
+        <span class="chip chip--muted" id="whyModalUnit"></span>
+      </div>
+      <h2 class="whycard-title" style="font-size: 1.35rem; margin-bottom: 8px;" id="whyModalTitle"></h2>
+      <div class="whycard-comparison" id="whyModalComparison"></div>
+    </div>
+    <div class="why-modal-body">
+      <div class="why-modal-prose" id="whyModalWhy"></div>
+      <div class="why-chain-box" id="whyModalChainBox" style="display: none;">
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Step-by-Step Biological Mechanism</h4>
+        <ol class="why-chain-list" id="whyModalChainList"></ol>
+      </div>
+      <div class="why-modal-clinical" id="whyModalClinicalBox" style="display: none;">
+        <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> At the Clinic / In the Field:</strong>
+        <span id="whyModalClinical"></span>
+      </div>
+    </div>
+    <div class="why-modal-foot">
+      <button class="btn btn--sm btn--primary" id="whyModalCloseBtn">Done Reading</button>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== INSTALL BANNER ==================== -->
 <div class="install-banner" id="install-banner" role="region" aria-label="Install app">
   <div class="install-icon">

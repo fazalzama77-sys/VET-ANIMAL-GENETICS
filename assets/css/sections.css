@@ -724,8 +724,8 @@
 .why-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
-  background: rgba(15, 23, 42, 0.72);
+  z-index: 100000;
+  background: rgba(15, 23, 42, 0.76);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -734,24 +734,31 @@
   padding: 16px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  pointer-events: none;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
 }
 
 .why-modal-overlay.open {
-  opacity: 1;
-  visibility: visible;
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .why-modal-dialog {
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-xl);
+  background: var(--surface, #ffffff);
+  color: var(--text, #0f172a);
+  border: 1px solid var(--border-strong, #cbd5e1);
+  border-radius: var(--r-xl, 16px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 1px rgba(0, 0, 0, 0.2);
   width: min(780px, calc(100vw - 32px));
   max-height: 88vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  z-index: 100001;
+  margin: auto;
   transform: scale(0.95) translateY(12px);
   transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -765,23 +772,25 @@
   border-bottom: 1px solid var(--border);
   background: var(--surface-2);
   position: relative;
+  flex-shrink: 0;
 }
 
 .why-modal-close {
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text-muted);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   display: grid;
   place-items: center;
   cursor: pointer;
   transition: all 0.15s ease;
+  line-height: 1;
 }
 
 .why-modal-close:hover {
@@ -794,24 +803,31 @@
   padding: 24px;
   overflow-y: auto;
   line-height: var(--lh-body);
+  flex: 1 1 auto;
 }
 
 .why-modal-prose {
-  font-size: 0.98rem;
+  font-size: 1rem;
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+.why-modal-prose b,
+.why-modal-prose strong {
+  color: var(--text);
+  font-weight: 700;
 }
 
 .why-chain-box {
-  margin-top: 20px;
+  margin-top: 22px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  padding: 16px 20px;
+  padding: 18px 20px;
 }
 
 .why-chain-box h4 {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -835,7 +851,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   line-height: 1.5;
   color: var(--text);
 }
@@ -858,17 +874,17 @@
 .why-modal-clinical {
   margin-top: 20px;
   padding: 16px 20px;
-  background: var(--ok-soft);
-  border: 1px dashed var(--ok);
-  border-left: 4px solid var(--ok);
+  background: var(--ok-soft, rgba(46, 125, 50, 0.09));
+  border: 1px dashed var(--ok, #2e7d32);
+  border-left: 4px solid var(--ok, #2e7d32);
   border-radius: var(--r-md);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   line-height: 1.6;
   color: var(--text);
 }
 
 .why-modal-clinical strong {
-  color: var(--ok);
+  color: var(--ok, #2e7d32);
 }
 
 .why-modal-foot {
@@ -877,6 +893,7 @@
   background: var(--surface-2);
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 

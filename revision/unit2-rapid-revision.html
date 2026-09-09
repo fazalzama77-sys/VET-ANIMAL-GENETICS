@@ -4,7 +4,259 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AGB Unit 2 — Rapid Revision</title>
-<link rel="stylesheet" href="_revision.css">
+<style>
+/* ============================================================
+   AGB RAPID REVISION SHEETS — print-first A4 stylesheet
+   Uses the shared IVRI Academic palette (values mirrored from
+   assets/css/tokens.css so the sheet prints standalone).
+   ============================================================ */
+
+:root{
+  --blue:#1565c0; --blue-dark:#0d47a1; --blue-light:#e8f1fb;
+  --teal:#00897b; --teal-dark:#00695c; --teal-light:#e0f2f1;
+  --purple:#6a48b5; --purple-light:#ede7f6;
+  --amber:#b25e00; --amber-light:#fff5e8;
+  --coral:#d84315; --coral-light:#fdece7;
+  --sage:#2e7d32; --sage-light:#e8f5e9;
+  --ink:#1b2733; --ink-2:#3d4d5c; --ink-3:#63737f;
+  --line:#c9d6e2; --line-soft:#e3ebf3;
+  --surface:#ffffff; --surface-2:#f7fafc; --bg:#eef3f8;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  font-size:8.75pt; line-height:1.28;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+b,strong{font-weight:700;color:var(--ink);}
+sub,sup{font-size:.68em;}
+.mono{font-family:"JetBrains Mono","Consolas",ui-monospace,monospace;}
+
+/* ---------- PAGE ---------- */
+.page{
+  width:210mm; min-height:296mm; height:296mm;
+  margin:0 auto 6mm; padding:8mm 9mm 7mm;
+  background:var(--surface);
+  box-shadow:0 2px 14px rgba(21,101,192,.13);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.page-no{
+  position:absolute; right:9mm; bottom:3.4mm;
+  font-size:7pt; color:var(--ink-3); letter-spacing:.06em;
+  font-family:"JetBrains Mono",monospace;
+}
+.page-foot{
+  position:absolute; left:9mm; bottom:3.4mm;
+  font-size:6.8pt; color:var(--ink-3); letter-spacing:.03em;
+}
+
+/* ---------- AUTO-FIT WRAPPER ----------
+   Each page carries an individually computed scale (--z) so that a full
+   page of content fits an A4 sheet exactly, at the largest type that
+   still fits. Width is divided by --z first so the block still fills the
+   page after zoom. Values are baked in by fit.js -> build.py. */
+.pg{
+  --z:1;
+  width:calc(100% / var(--z));
+  transform:scale(var(--z));
+  transform-origin:top left;
+  flex:0 0 auto;
+}
+
+/* ---------- MASTHEAD ---------- */
+.masthead{
+  display:flex; align-items:center; gap:8px;
+  border-bottom:2.4px solid var(--blue);
+  padding-bottom:4px; margin-bottom:6px;
+}
+.mark{
+  width:26px;height:26px;border-radius:6px;background:var(--blue);
+  color:#fff;font-weight:800;font-size:11pt;display:flex;
+  align-items:center;justify-content:center;letter-spacing:-.02em;flex:0 0 auto;
+}
+.mh-t{font-size:12.6pt;font-weight:800;letter-spacing:-.02em;color:var(--blue-dark);line-height:1.05;}
+.mh-s{font-size:7.4pt;color:var(--ink-3);letter-spacing:.05em;text-transform:uppercase;font-weight:600;}
+.mh-right{margin-left:auto;text-align:right;font-size:7.2pt;color:var(--ink-3);line-height:1.3;}
+.mh-right b{display:block;font-size:8.6pt;color:var(--coral);letter-spacing:.03em;}
+
+.runner{
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1.6px solid var(--line);padding-bottom:3px;margin-bottom:5px;
+}
+.runner .rn{font-size:10.6pt;font-weight:800;color:var(--blue-dark);letter-spacing:-.01em;}
+.runner .rs{font-size:7.2pt;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-left:auto;}
+
+/* ---------- GRID ---------- */
+.row{display:flex;gap:4mm;}
+.col{flex:1;min-width:0;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3.2mm;}
+.stack{display:flex;flex-direction:column;gap:3.4mm;}
+.grow{flex:1;}
+
+/* ---------- BLOCK ---------- */
+.blk{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface);}
+.blk > .bh{
+  font-size:8.1pt;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:2.6px 6px;color:#fff;background:var(--blue);display:flex;align-items:center;gap:5px;
+}
+.bh .n{
+  background:rgba(255,255,255,.26);border-radius:3px;padding:0 4px;font-size:7.4pt;
+  font-family:"JetBrains Mono",monospace;
+}
+.bb{padding:3.8px 5px;}
+.blk.teal > .bh{background:var(--teal);}
+.blk.purple > .bh{background:var(--purple);}
+.blk.amber > .bh{background:var(--amber);}
+.blk.coral > .bh{background:var(--coral);}
+.blk.sage > .bh{background:var(--sage);}
+.blk.teal{border-color:#9fd3cd;} .blk.purple{border-color:#c4b3e4;}
+.blk.amber{border-color:#e8c48f;} .blk.coral{border-color:#f0b39c;}
+.blk.sage{border-color:#a9d3ab;}
+
+/* ---------- LISTS ---------- */
+ul.t{margin:0;padding-left:12px;}
+ul.t li{margin:0 0 1.2px;}
+ul.t li::marker{color:var(--blue);}
+ol.t{margin:0;padding-left:14px;}
+ol.t li{margin:0 0 1.6px;}
+.dash{margin:0;padding:0;list-style:none;}
+.dash li{margin:0 0 1.3px;padding-left:9px;position:relative;}
+.dash li::before{content:"▸";position:absolute;left:0;top:-.5px;color:var(--blue);font-size:7.5pt;}
+.dash.tealx li::before{color:var(--teal);} .dash.purplex li::before{color:var(--purple);}
+.dash.amberx li::before{color:var(--amber);} .dash.coralx li::before{color:var(--coral);}
+.dash.sagex li::before{color:var(--sage);}
+
+/* ---------- TABLE ---------- */
+table.t{width:100%;border-collapse:collapse;font-size:8.1pt;}
+table.t th{
+  background:var(--blue-light);color:var(--blue-dark);font-weight:700;
+  text-align:left;padding:2px 3.5px;border:1px solid var(--line);font-size:7.7pt;
+  letter-spacing:.02em;
+}
+table.t td{padding:1.8px 3.5px;border:1px solid var(--line-soft);vertical-align:top;}
+table.t tr:nth-child(even) td{background:var(--surface-2);}
+table.t.teal th{background:var(--teal-light);color:var(--teal-dark);}
+table.t.purple th{background:var(--purple-light);color:var(--purple);}
+table.t.amber th{background:var(--amber-light);color:var(--amber);}
+table.t.sage th{background:var(--sage-light);color:var(--sage);}
+table.t.coral th{background:var(--coral-light);color:var(--coral);}
+table.t.tight td,table.t.tight th{padding:1.6px 3px;font-size:7.7pt;}
+
+/* ---------- FORMULA ---------- */
+.fx{
+  font-family:"JetBrains Mono",monospace;font-size:8.2pt;
+  background:var(--blue-light);border-left:2.6px solid var(--blue);
+  padding:2px 5px;border-radius:0 3px 3px 0;margin:1.7px 0;display:block;
+  color:var(--blue-dark);font-weight:600;
+}
+.fx.teal{background:var(--teal-light);border-color:var(--teal);color:var(--teal-dark);}
+.fx.purple{background:var(--purple-light);border-color:var(--purple);color:var(--purple);}
+.fx.amber{background:var(--amber-light);border-color:var(--amber);color:var(--amber);}
+.fx.sage{background:var(--sage-light);border-color:var(--sage);color:var(--sage);}
+.fx .lbl{font-family:"Inter",sans-serif;font-weight:700;color:var(--ink-2);font-size:7.4pt;}
+
+/* ---------- CHIPS / TAGS ---------- */
+.chip{
+  display:inline-block;padding:.4px 4.5px;border-radius:9px;font-size:7pt;font-weight:700;
+  background:var(--blue-light);color:var(--blue-dark);letter-spacing:.02em;margin:0 2px 2px 0;
+}
+.chip.t{background:var(--teal-light);color:var(--teal-dark);}
+.chip.p{background:var(--purple-light);color:var(--purple);}
+.chip.a{background:var(--amber-light);color:var(--amber);}
+.chip.c{background:var(--coral-light);color:var(--coral);}
+.chip.s{background:var(--sage-light);color:var(--sage);}
+
+/* ---------- CALLOUTS ---------- */
+.call{border-radius:4px;padding:2.9px 5px;font-size:7.9pt;margin:2px 0;border:1px solid;}
+.call .ct{font-weight:800;font-size:7.4pt;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:1px;}
+.call.trap{background:var(--coral-light);border-color:#f0b39c;color:#7d2a10;}
+.call.trap .ct{color:var(--coral);}
+.call.mnem{background:var(--amber-light);border-color:#e8c48f;color:#6b3a00;}
+.call.mnem .ct{color:var(--amber);}
+.call.gold{background:var(--sage-light);border-color:#a9d3ab;color:#1d5220;}
+.call.gold .ct{color:var(--sage);}
+.call.why{background:var(--purple-light);border-color:#c4b3e4;color:#40296f;}
+.call.why .ct{color:var(--purple);}
+
+/* ---------- FLOW / DIAGRAM ---------- */
+.flow{display:flex;align-items:stretch;gap:0;font-size:7.6pt;}
+.node{
+  flex:1;border:1.2px solid var(--blue);border-radius:4px;padding:2.2px 4px;
+  background:var(--blue-light);text-align:center;line-height:1.2;
+}
+.node b{display:block;font-size:7.9pt;color:var(--blue-dark);}
+.node small{color:var(--ink-2);font-size:6.9pt;}
+.arw{flex:0 0 12px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-weight:800;font-size:9pt;}
+.node.t{border-color:var(--teal);background:var(--teal-light);} .node.t b{color:var(--teal-dark);}
+.node.p{border-color:var(--purple);background:var(--purple-light);} .node.p b{color:var(--purple);}
+.node.a{border-color:var(--amber);background:var(--amber-light);} .node.a b{color:var(--amber);}
+.node.s{border-color:var(--sage);background:var(--sage-light);} .node.s b{color:var(--sage);}
+.node.c{border-color:var(--coral);background:var(--coral-light);} .node.c b{color:var(--coral);}
+
+/* tree */
+.tree{font-size:7.7pt;line-height:1.3;}
+.tree .lvl{display:flex;gap:3px;margin-bottom:3px;}
+.tree .box{
+  flex:1;border:1px solid var(--line);border-radius:3.5px;padding:2px 4px;background:var(--surface-2);
+}
+.tree .box b{color:var(--blue-dark);}
+
+/* key-value strip */
+.kv{display:grid;grid-template-columns:auto 1fr;gap:1.5px 6px;font-size:8pt;}
+.kv dt{font-weight:700;color:var(--blue-dark);white-space:nowrap;}
+.kv dd{margin:0;color:var(--ink-2);}
+
+/* numbered map */
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:2.6px;font-size:7.4pt;}
+.map .m{
+  border:1px solid var(--line);border-radius:3.5px;padding:2.4px 4px;background:var(--surface-2);
+  line-height:1.22;
+}
+.map .m b{display:block;color:var(--blue-dark);font-size:7.7pt;}
+.map .m span{color:var(--ink-3);font-size:6.7pt;font-family:"JetBrains Mono",monospace;}
+
+/* rapid-fire two column list */
+.rf{column-count:2;column-gap:5mm;font-size:7.9pt;}
+.rf p{margin:0 0 1.4px;break-inside:avoid;}
+.rf b{color:var(--blue-dark);}
+.rf3{column-count:3;column-gap:4mm;font-size:7.7pt;}
+.rf3 p{margin:0 0 1.3px;break-inside:avoid;}
+
+/* answer skeleton */
+.skel{font-size:7.9pt;}
+.skel .s{display:flex;gap:5px;margin-bottom:1.6px;align-items:baseline;}
+.skel .s i{
+  flex:0 0 15px;font-style:normal;font-weight:800;color:#fff;background:var(--purple);
+  border-radius:3px;text-align:center;font-size:6.9pt;padding:.5px 0;
+}
+.hl{background:#fff3b0;padding:0 1px;border-radius:2px;font-weight:600;}
+.u{border-bottom:1.4px solid var(--amber);padding-bottom:.5px;font-weight:700;}
+
+/* ---------- PRINT ---------- */
+@page{size:A4 portrait;margin:0;}
+@media print{
+  body{background:#fff;}
+  .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;}
+  .page:last-child{page-break-after:auto;break-after:auto;}
+  .noprint{display:none !important;}
+}
+.toolbar{
+  max-width:210mm;margin:8px auto 0;display:flex;gap:8px;align-items:center;
+  font-size:8.5pt;color:var(--ink-2);
+}
+.toolbar button{
+  font:inherit;font-weight:700;background:var(--blue);color:#fff;border:0;
+  padding:6px 14px;border-radius:6px;cursor:pointer;
+}
+.toolbar a{color:var(--blue);font-weight:700;text-decoration:none;}
+
+</style>
 </head>
 <body>
 
@@ -16,6 +268,7 @@
 
 <!-- ==================== PAGE 1 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.885">
   <div class="masthead">
     <div class="mark">AG</div>
     <div>
@@ -163,12 +416,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 2</div>
   <div class="page-no">PAGE 1 / 6</div>
 </section>
 
 <!-- ==================== PAGE 2 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:1">
   <div class="runner"><span class="rn">Mendelian Principles · Modified Ratios · Gene Interaction · Multiple Alleles</span><span class="rs">Unit 2 · Transmission Genetics</span></div>
 
   <div class="g2">
@@ -258,12 +515,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 2</div>
   <div class="page-no">PAGE 2 / 6</div>
 </section>
 
 <!-- ==================== PAGE 3 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.889">
   <div class="runner"><span class="rn">Sex Determination · Dosage Compensation · Sex &amp; Genes · Linkage</span><span class="rs">Unit 2 · Sex and Linkage</span></div>
 
   <div class="g2">
@@ -310,7 +571,7 @@
       </table>
       <div class="row" style="margin-top:2px;gap:4mm;">
         <div class="col">
-          <div class="call gold"><span class="ct">Applied gold — auto-sexing of chicks</span>In poultry the male is <b>ZZ</b>. Cross a <b>silver (S) male? No —</b> cross a <b>gold (s) male × silver (S<sup>-</sup>) female</b>: all <b>daughters are gold</b> (they get their single Z from the father) and all <b>sons are silver</b>. This <b>criss-cross</b> pattern lets day-old chicks be <b>sexed by down colour</b>, saving hatchery labour. The same logic uses the <b>barring (B)</b> gene and slow/fast feathering.</div>
+          <div class="call gold"><span class="ct">Applied gold — auto-sexing of chicks</span>In poultry the male is <b>ZZ</b> and the female <b>ZW</b>, and <b>silver (S) is dominant to gold (s)</b>, both Z-linked. Mate a <b>gold male (Z<sup>s</sup>Z<sup>s</sup>) × silver female (Z<sup>S</sup>W)</b>: every <b>daughter is GOLD</b> (her single Z comes from the father) and every <b>son is SILVER</b> (Z<sup>S</sup>Z<sup>s</sup>). This <b>criss-cross</b> pattern lets day-old chicks be <b>sexed by down colour</b>, saving hatchery labour. The same logic is used with the <b>barring (B)</b> gene and with slow/fast feathering.</div>
         </div>
         <div class="col">
           <div class="call trap"><span class="ct">Trap</span>Milk yield is <b>sex-limited, NOT sex-linked</b> — the genes are autosomal and the bull carries them fully, which is exactly <b>why a bull is evaluated on his daughters' records (progeny testing)</b>. Horns in sheep are <b>sex-influenced, NOT sex-limited</b> — both sexes can be horned, only the dominance flips.</div>
@@ -331,8 +592,8 @@
           <tr><td><b>Complete linkage</b></td><td>No crossing over; only parental types (♂ <i>Drosophila</i>, ♀ silkworm)</td></tr>
           <tr><td><b>Incomplete linkage</b></td><td>Parental types in excess + a few recombinants — the usual situation</td></tr>
         </table>
-        <p style="margin:2px 0 2px;font-size:7.85pt;"><b>Crossing over</b> = the reciprocal exchange of segments between <b>non-sister chromatids of homologous chromosomes</b>, occurring at <b>PACHYTENE of prophase I</b>; the visible point of exchange is the <b>CHIASMA</b> (seen at diplotene). Types: <b>single, double, multiple</b>; also <b>somatic (mitotic)</b> crossing over. Requires: homologous pairing, tetrad stage, enzyme <b>recombinase/endonuclease + ligase</b>. Factors affecting: <b>distance between genes (↑ distance ↑ CO), sex, age, temperature, nutrition, X-rays and chemicals, proximity to centromere (reduced)</b>.</p>
-        <div class="call why"><span class="ct">Significance</span>Crossing over is the <b>chief source of genetic recombination</b> — it produces new gene combinations, allows <b>linkage mapping</b>, breaks unfavourable linkages in a breeding programme, and underlies the <b>marker-assisted selection</b> of Unit 3.</div>
+        <p style="margin:2px 0 2px;font-size:7.85pt;"><b>Crossing over</b> = reciprocal exchange of segments between <b>non-sister chromatids of homologous chromosomes</b> at <b>PACHYTENE of prophase I</b>; the visible point of exchange is the <b>CHIASMA</b> (seen at diplotene). Types: single, double, multiple. Factors affecting it: <b>distance between genes (↑ distance ↑ CO), sex, age, temperature, X-rays and chemicals, proximity to the centromere (reduced)</b>.</p>
+        <div class="call why"><span class="ct">Significance</span>Crossing over is the <b>chief source of genetic recombination</b> — it creates new gene combinations, allows <b>linkage mapping</b>, breaks unfavourable linkages, and underlies <b>marker-assisted selection</b>.</div>
       </div>
     </div>
 
@@ -354,12 +615,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 2</div>
   <div class="page-no">PAGE 3 / 6</div>
 </section>
 
 <!-- ==================== PAGE 4 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.99">
   <div class="runner"><span class="rn">Mutation · Chromosomal Aberrations · Cytogenetics · Cytoplasmic Inheritance</span><span class="rs">Unit 2 · Variation &amp; Cytogenetics</span></div>
 
   <div class="g2">
@@ -450,12 +715,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 2</div>
   <div class="page-no">PAGE 4 / 6</div>
 </section>
 
 <!-- ==================== PAGE 5 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.892">
   <div class="runner"><span class="rn">Molecular Genetics · Gene Frequency · Hardy–Weinberg · Forces</span><span class="rs">Unit 2 · Molecular &amp; Population Genetics</span></div>
 
   <div class="g2">
@@ -468,11 +737,9 @@
           <tr><td><b>Sugar</b></td><td>Deoxyribose</td><td>Ribose</td></tr>
           <tr><td><b>Bases</b></td><td>A T G C</td><td>A <b>U</b> G C</td></tr>
           <tr><td><b>Strands</b></td><td>Double</td><td>Usually single</td></tr>
-          <tr><td><b>Site</b></td><td>Nucleus (+ mitochondria)</td><td>Nucleus &amp; cytoplasm</td></tr>
-          <tr><td><b>Function</b></td><td><b>Stores</b> genetic information</td><td><b>Expresses</b> it (mRNA carries, tRNA transfers, rRNA builds)</td></tr>
-          <tr><td><b>Stability</b></td><td>Stable</td><td>Labile</td></tr>
+          <tr><td><b>Function</b></td><td><b>Stores</b> genetic information; stable</td><td><b>Expresses</b> it (mRNA carries, tRNA transfers, rRNA builds); labile</td></tr>
         </table>
-        <p style="margin:2px 0 2px;font-size:7.8pt;"><b>Gene concept:</b> the <b>unit of heredity</b> — a segment of DNA coding for one polypeptide (or a functional RNA). <b>Beadle &amp; Tatum: one gene–one enzyme → one gene–one polypeptide.</b> Benzer: <b>cistron</b> (function), <b>recon</b> (recombination), <b>muton</b> (mutation). Eukaryotic genes are <b>split genes</b> — coding <b>exons</b> interrupted by non-coding <b>introns</b> removed by <b>splicing</b>. Regulation: <b>lac operon</b> (Jacob &amp; Monod, 1961) — promoter, operator, structural genes, repressor.</p>
+        <p style="margin:2px 0 2px;font-size:7.8pt;"><b>Gene concept:</b> the <b>unit of heredity</b> — a DNA segment coding for one polypeptide or functional RNA. <b>Beadle &amp; Tatum: one gene–one enzyme → one gene–one polypeptide.</b> Benzer: <b>cistron</b> (function), <b>recon</b>, <b>muton</b>. Eukaryotic genes are <b>split</b> — <b>exons</b> interrupted by <b>introns</b> removed by <b>splicing</b>. Regulation: <b>lac operon</b> (Jacob &amp; Monod, 1961).</p>
         <p style="margin:0 0 2px;font-size:7.8pt;"><b>DNA REPLICATION — semiconservative</b> (proved by <b>Meselson &amp; Stahl, 1958</b>, <sup>15</sup>N density-gradient in <i>E. coli</i>): each daughter molecule has <b>one parental + one new</b> strand. It is <b>bidirectional</b>, starts at an <b>origin</b>, always proceeds <b>5′ → 3′</b>.</p>
         <div class="flow" style="font-size:7.1pt;">
           <div class="node"><b>Helicase</b><small>unwinds; SSB proteins hold; topoisomerase relieves supercoils</small></div><div class="arw">→</div>
@@ -480,7 +747,7 @@
           <div class="node"><b>DNA pol III</b><small>leading strand continuous; lagging strand in <b>Okazaki fragments</b></small></div><div class="arw">→</div>
           <div class="node"><b>DNA pol I + Ligase</b><small>removes primer, seals nicks</small></div>
         </div>
-        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Central dogma:</b> DNA —(<b>transcription</b>, RNA polymerase)→ mRNA —(<b>translation</b>, ribosome + tRNA)→ Protein. <b>Genetic code:</b> triplet, <b>64 codons</b>, <b>degenerate</b> (more than one codon per amino acid), non-overlapping, comma-less, <b>universal</b>; <b>start = AUG (methionine)</b>, <b>stop = UAA, UAG, UGA</b>. Reverse transcription (RNA → DNA) in retroviruses.</p>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Central dogma:</b> DNA —(<b>transcription</b>)→ mRNA —(<b>translation</b>)→ protein. <b>Genetic code:</b> triplet, <b>64 codons</b>, <b>degenerate</b>, non-overlapping, comma-less, <b>universal</b>; <b>start AUG</b>, <b>stop UAA, UAG, UGA</b>. Reverse transcription in retroviruses.</p>
       </div>
     </div>
 
@@ -537,8 +804,8 @@
         <div class="col" style="flex:1.28;">
           <table class="t coral tight">
             <tr><th style="width:14%;">Force</th><th style="width:26%;">Formula</th><th>Nature &amp; breeding relevance</th></tr>
-            <tr><td><b>MUTATION</b></td><td class="mono">Δq = up − vq<br>at equilibrium <b>q = u/(u+v)</b></td><td><b>Systematic</b>; direction &amp; amount predictable. Extremely slow (10⁻⁵–10⁻⁶), so <b>negligible over a breeder's lifetime</b>, but it is the <b>only original source of new alleles</b>. u = forward, v = reverse rate.</td></tr>
-            <tr><td><b>MIGRATION</b><br>(gene flow)</td><td class="mono">q₁ = m(q<sub>m</sub> − q₀) + q₀<br><b>Δq = m(q<sub>m</sub> − q₀)</b></td><td><b>Systematic</b>. m = proportion of immigrants. This is exactly what <b>GRADING UP and crossbreeding with exotic semen</b> do — a rapid, controllable way to change gene frequency. Also causes loss of indigenous genes if unregulated.</td></tr>
+            <tr><td><b>MUTATION</b></td><td class="mono">Δq = up − vq<br>at equilibrium <b>q = u/(u+v)</b></td><td><b>Systematic</b>; direction &amp; amount predictable. Very slow (10⁻⁵–10⁻⁶), so <b>negligible in a breeder's lifetime</b>, but the <b>only original source of new alleles</b>.</td></tr>
+            <tr><td><b>MIGRATION</b><br>(gene flow)</td><td class="mono">q₁ = m(q<sub>m</sub> − q₀) + q₀<br><b>Δq = m(q<sub>m</sub> − q₀)</b></td><td><b>Systematic</b>. m = proportion of immigrants. Exactly what <b>GRADING UP and exotic semen</b> do — a rapid, controllable way to change gene frequency; erodes indigenous genes if unregulated.</td></tr>
             <tr><td><b>SELECTION</b></td><td class="mono">Δq = −spq² / (1 − sq²)<br>fitness w = 1 − s</td><td><b>Systematic and the breeder's main tool.</b> s = selection coefficient (0 = no selection, 1 = lethal). Natural vs <b>artificial</b> selection. Against a <b>recessive</b>, progress is <b>fast at high q but extremely slow at low q</b> (alleles hide in heterozygotes). Selection against a <b>dominant</b> can eliminate it in one generation.</td></tr>
             <tr><td><b>GENETIC DRIFT</b><br>(Sewall Wright effect)</td><td class="mono">σ²<sub>q</sub> = pq / 2N</td><td><b>DISPERSIVE</b> — <b>magnitude predictable but direction random</b>. Random change in gene frequency due to <b>sampling of gametes in a SMALL population</b>. Leads to <b>random fixation (q=1) or loss (q=0)</b>, ↑ homozygosity, ↓ variability, differentiation between herds. Includes the <b>FOUNDER EFFECT</b> (new herd started from few animals) and <b>BOTTLENECK</b> (population crash). <b>Critical for small closed herds, zoos and endangered breeds.</b></td></tr>
           </table>
@@ -551,12 +818,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 2</div>
   <div class="page-no">PAGE 5 / 6</div>
 </section>
 
 <!-- ==================== PAGE 6 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.851">
   <div class="runner"><span class="rn">Quantitative Genetics · Breeding Value · Variance · h² · Repeatability · Correlations</span><span class="rs">Unit 2 · Final Sweep</span></div>
 
   <div class="g2">
@@ -570,11 +841,9 @@
           <tr><td><b>Measured by</b></td><td>Counting / classifying (kind)</td><td><b>Measuring</b> (degree) — kg, litres, cm, number</td></tr>
           <tr><td><b>Environment</b></td><td>Little or no effect</td><td><b>Strongly affected</b></td></tr>
           <tr><td><b>Distribution</b></td><td>Ratios (3:1, 9:3:3:1)</td><td><b>Normal curve</b></td></tr>
-          <tr><td><b>Studied by</b></td><td>Mendelian ratios, χ²</td><td><b>Mean, variance, h², r, correlation</b></td></tr>
           <tr><td><b>Examples</b></td><td>Coat colour, horn/polled, blood groups, genetic defects</td><td><b>Milk yield, fat %, growth rate, body weight, egg number, litter size, wool yield</b></td></tr>
         </table>
-        <div class="call trap"><span class="ct">Trap</span><b>Almost every trait of economic importance is QUANTITATIVE</b> — which is exactly why animal breeding needs statistics (Unit 1) rather than Punnett squares. <b>Threshold traits</b> (twinning, dystocia, disease resistance) look qualitative but have an <b>underlying continuous liability</b>.</p>
-        </div>
+        <div class="call trap"><span class="ct">Trap</span><b>Almost every trait of economic importance is QUANTITATIVE</b> — which is exactly why animal breeding needs statistics (Unit 1) rather than Punnett squares. <b>Threshold traits</b> (twinning, dystocia, disease resistance) look qualitative but have an <b>underlying continuous liability</b>.</div>
         <p style="margin:2px 0 2px;font-size:7.85pt;"><b>Genotypic values (Falconer):</b> midpoint <b>m</b> between the two homozygotes; <b>AA = +a, aa = −a, Aa = d</b>. d = 0 no dominance · d = a complete dominance · d &gt; a overdominance.</p>
         <span class="fx"><span class="lbl">Population mean</span> M = a(p − q) + 2pqd</span>
         <span class="fx"><span class="lbl">Average effect of gene substitution</span> α = a + d(q − p)</span>
@@ -627,15 +896,14 @@
           <tr><td><b>Paternal HALF-SIB correlation</b> (best — free of maternal &amp; dominance effects)</td><td><b>h² = 4t</b> (t = intraclass correlation)</td></tr>
           <tr><td><b>FULL-SIB correlation</b> (over-estimates: contains ¼V<sub>D</sub> + common environment)</td><td><b>h² = 2t</b></td></tr>
           <tr><td><b>Realised heritability</b> (from an actual selection experiment)</td><td><b>h² = R / S</b> (response ÷ selection differential)</td></tr>
-          <tr><td><b>Twin studies</b></td><td>MZ vs DZ comparison — rare in livestock</td></tr>
-        </table>
+          </table>
         <table class="t teal tight" style="margin-top:2px;">
           <tr><th style="width:24%;">h² class</th><th>Typical traits (memorise the pattern)</th><th style="width:22%;">Best selection method</th></tr>
           <tr><td><b>LOW (&lt; 0.20)</b></td><td><b>Reproductive &amp; fitness traits</b> — conception rate, services per conception, calving interval, litter size, viability, egg number (0.2)</td><td><b>Family / progeny testing</b>; improve by <b>crossbreeding &amp; management</b></td></tr>
           <tr><td><b>MEDIUM (0.20–0.40)</b></td><td><b>Milk yield (0.25–0.30)</b>, growth rate, weaning weight, wool yield</td><td>Combined selection / pedigree + individual</td></tr>
           <tr><td><b>HIGH (&gt; 0.40)</b></td><td><b>Fat % &amp; SNF % (0.5–0.6), egg weight (0.5), body/carcass measurements, mature body weight, fleece quality</b></td><td><b>Individual (mass) selection</b> — the animal's own record is reliable</td></tr>
         </table>
-        <div class="call gold"><span class="ct">Uses of h² — say all five</span>① Decides the <b>method of selection</b> ② <b>predicts genetic gain</b> ΔG = h²·S = i·h²·σ<sub>P</sub> ③ used in constructing the <b>selection index</b> and in <b>BLUP</b> ④ estimates <b>breeding value</b> (EBV = h² × deviation) ⑤ tells how much of the observed superiority will actually be <b>transmitted</b> to the next generation. <b>Factors affecting h²:</b> trait, breed, population variability, environment (uniform environment raises h²), method of estimation, sample size, degree of inbreeding.</div>
+        <div class="call gold"><span class="ct">Uses of h² — say all five</span>① Decides the <b>method of selection</b> ② <b>predicts genetic gain</b> ΔG = h²·S = i·h²·σ<sub>P</sub> ③ used in the <b>selection index</b> and in <b>BLUP</b> ④ estimates <b>breeding value</b> (EBV = h² × deviation) ⑤ tells how much superiority is actually <b>transmitted</b>. <b>Factors affecting h²:</b> trait, breed, variability, environment (a uniform environment raises h²), method of estimation, inbreeding.</div>
       </div>
     </div>
 
@@ -650,28 +918,29 @@
         <p style="margin:1px 0 2px;font-size:7.8pt;"><b>Uses of r<sub>A</sub>:</b> predicts the <b>correlated response</b> in a second trait · allows <b>indirect selection</b> when the target trait is hard/late/sex-limited to measure · essential for building a <b>selection index</b> · warns of <b>antagonistic pairs</b>. <b>Classic negative (antagonistic) r<sub>A</sub>: milk yield vs fat %, milk yield vs fertility, growth rate vs feed efficiency in poultry, egg number vs egg size.</b> Positive: body weight and growth rate; milk yield and SNF yield.</p>
         <div class="rf" style="font-size:7.5pt;border-top:1px dashed var(--line);padding-top:2px;margin-top:2px;">
           <p><b>Father of Genetics</b> — Mendel; <b>coined "genetics"</b> — Bateson; <b>coined "gene"</b> — Johannsen</p>
-          <p><b>Cattle 2n = 60</b> (all acrocentric); <b>buffalo 50</b>; <b>chicken 78</b>; <b>mule 63, sterile</b></p>
+          <p><b>Cattle 2n = 60</b>; <b>buffalo 50</b>; <b>chicken 78</b>; <b>mule 63, sterile</b></p>
           <p><b>Crossing over</b> — pachytene; <b>chiasma</b> — diplotene; <b>synapsis</b> — zygotene</p>
           <p><b>Barr bodies</b> = X − 1; tortoiseshell tom = <b>XXY</b></p>
           <p><b>SRY</b> on <b>Yp</b> = TDF; birds — <b>male ZZ, female ZW</b></p>
-          <p><b>Freemartin</b> = 92% of heifers twin-born with a bull; <b>XX/XY chimera</b></p>
+          <p><b>Freemartin</b> — 92% of heifers twin-born with a bull; <b>XX/XY chimera</b></p>
           <p><b>1/29 Robertsonian translocation</b> — cattle, ↓ fertility, screen AI bulls</p>
           <p><b>Max RF = 50%</b>; <b>1% RF = 1 cM</b>; linkage groups = <b>n</b></p>
-          <p><b>13 : 3</b> inhibitory · <b>15 : 1</b> duplicate dominant · <b>9 : 7</b> complementary · <b>12 : 3 : 1</b> dominant epistasis · <b>9 : 3 : 4</b> recessive epistasis · <b>2 : 1</b> lethal</p>
-          <p><b>Walnut : Rose : Pea : Single = 9 : 3 : 3 : 1</b></p>
+          <p><b>13:3</b> inhibitory · <b>15:1</b> duplicate dominant · <b>9:7</b> complementary · <b>12:3:1</b> dominant epistasis · <b>9:3:4</b> recessive epistasis · <b>2:1</b> lethal · <b>Walnut:Rose:Pea:Single = 9:3:3:1</b></p>
           <p><b>HWE</b> reached in <b>one</b> generation (autosomal); <b>2pq max = 0.5</b></p>
           <p><b>Systematic</b> — mutation, migration, selection; <b>dispersive</b> — drift</p>
           <p><b>Inbreeding</b> changes genotypic, <b>not</b> gene, frequency</p>
           <p><b>h² = 4t</b> (half-sib), <b>2t</b> (full-sib), <b>2b</b> (one parent), <b>R/S</b> (realised)</p>
           <p><b>r ≥ h²</b>; milk yield h² ≈ 0.25, fat % ≈ 0.5–0.6</p>
           <p><b>Only V<sub>A</sub></b> is fixable by selection; <b>V<sub>D</sub></b> is exploited by crossbreeding</p>
-          <p><b>PCR</b> — Mullis 1983; 94 → 55 → 72 °C; <b>Taq</b> polymerase</p>
-          <p><b>Southern</b> DNA · <b>Northern</b> RNA · <b>Western</b> protein</p>
+          <p><b>PCR</b> — Mullis 1983; 94 → 55 → 72 °C, <b>Taq</b>; <b>Southern</b> DNA · <b>Northern</b> RNA · <b>Western</b> protein</p>
         </div>
         <div class="call trap" style="margin-top:2px;"><span class="ct">Subjective attack plans</span><b>"Heritability — definition, methods of estimation and uses"</b> → definition (narrow &amp; broad) → V<sub>P</sub> tree → 5 methods with formulas → the 3-class value table → 5 uses → factors affecting it → conclusion linking to ΔG. <b>"Hardy–Weinberg law"</b> → statement → equation → 6 conditions → proof by random union of gametes (checkerboard) → attained in one generation → applications → χ² test → limitations. <b>"Components of variance"</b> → P = G + E → the full tree → define each term → which is fixable → link to h², heterosis and G×E.</div>
       </div>
     </div>
   </div>
+
+  </div>
+
 
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 2 · Fazal Zama</div>
   <div class="page-no">PAGE 6 / 6</div>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AGB Rapid Revision Sheets</title>
+<link rel="stylesheet" href="_revision.css">
+<style>
+  body{padding:0 14px 40px;}
+  .wrap{max-width:210mm;margin:0 auto;}
+  .hero{
+    background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;
+    border-radius:10px;padding:20px 22px;margin:18px 0 16px;
+  }
+  .hero h1{margin:0 0 4px;font-size:22pt;letter-spacing:-.02em;}
+  .hero p{margin:0;font-size:10pt;opacity:.9;line-height:1.45;}
+  .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:9px;
+    padding:14px;text-decoration:none;color:inherit;display:block;
+    transition:box-shadow .15s, transform .15s;
+  }
+  .card:hover{box-shadow:0 6px 20px rgba(21,101,192,.18);transform:translateY(-2px);}
+  .card .u{display:inline-block;font-size:7.5pt;font-weight:800;letter-spacing:.1em;
+    color:#fff;background:var(--blue);border-radius:4px;padding:2px 7px;border:0;margin-bottom:8px;}
+  .card.t2 .u{background:var(--teal);} .card.t3 .u{background:var(--purple);}
+  .card h2{margin:0 0 6px;font-size:12.5pt;line-height:1.2;letter-spacing:-.01em;}
+  .card p{margin:0 0 8px;font-size:8.6pt;color:var(--ink-2);line-height:1.42;}
+  .meta{font-size:7.6pt;color:var(--ink-3);font-family:"JetBrains Mono",monospace;}
+  .how{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:14px 16px;margin-top:16px;}
+  .how h3{margin:0 0 8px;font-size:11pt;color:var(--blue-dark);}
+  .how ol{margin:0;padding-left:18px;font-size:9pt;line-height:1.55;}
+  .how li{margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Rapid Revision Sheets</h1>
+    <p>Animal Genetics &amp; Breeding · VCI MSVE 2016 · one whole theory unit compressed onto six A4 pages.
+    Built to be swept in <b>30 minutes</b> and to cover the objective paper and the long-answer paper from the same sheet.</p>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="unit1-rapid-revision.html">
+      <span class="u">UNIT 1 · PAPER I</span>
+      <h2>Biostatistics &amp; Computer Application</h2>
+      <p>Formula vaults for central tendency, dispersion and the three distributions; the test-selection decision tree; χ², CRD/RBD and the ANOVA skeleton; DBMS, Excel and networks.</p>
+      <div class="meta">6 pages · 22 syllabus heads</div>
+    </a>
+    <a class="card t2" href="unit2-rapid-revision.html">
+      <span class="u">UNIT 2 · PAPER I</span>
+      <h2>Animal &amp; Population Genetics</h2>
+      <p>Mitosis vs meiosis, all modified Mendelian ratios, linkage maps, aberrations and cytogenetics, molecular tools, Hardy–Weinberg, the variance tree, h² and repeatability.</p>
+      <div class="meta">6 pages · 29 syllabus heads</div>
+    </a>
+    <a class="card t3" href="unit3-rapid-revision.html">
+      <span class="u">UNIT 3 · PAPER II</span>
+      <h2>Principles of Animal Breeding</h2>
+      <p>ΔG and the factors affecting it, bases and methods of selection, inbreeding and heterosis, species-wise strategies, sire evaluation and BLUP, ONBS, AnGR conservation, pets and wildlife.</p>
+      <div class="meta">6 pages · 28 syllabus heads</div>
+    </a>
+  </div>
+
+  <div class="how">
+    <h3>How to use these sheets</h3>
+    <ol>
+      <li><b>Print them.</b> Open a sheet, press <b>Print</b>, set <b>Margins → None</b> and tick <b>Background graphics</b>, then Save as PDF or print on A4. Each sheet comes out at exactly 6 pages.</li>
+      <li><b>Sweep in order.</b> Page 1 always carries the unit map and the ★ highest-yield list — read that first and you already know where the marks are.</li>
+      <li><b>Colour is information.</b> Red boxes are examiner's traps, amber are mnemonics, green are gold-standard lines to quote verbatim, purple explain the <i>why</i>.</li>
+      <li><b>The last page of every sheet</b> is a two- or three-column objective ammunition dump plus subjective attack plans — the skeleton of each likely long question. Read that page alone the night before.</li>
+      <li><b>Formula strips</b> (the monospaced blue bars) are the ones worth writing out from memory once each — everything numerical in the paper comes from them.</li>
+    </ol>
+  </div>
+
+</div>
+</body>
+</html>

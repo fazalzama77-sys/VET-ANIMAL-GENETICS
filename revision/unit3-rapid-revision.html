@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AGB Unit 3 — Rapid Revision</title>
+<style>
+/* ============================================================
+   AGB RAPID REVISION SHEETS — print-first A4 stylesheet
+   Uses the shared IVRI Academic palette (values mirrored from
+   assets/css/tokens.css so the sheet prints standalone).
+   ============================================================ */
+
+:root{
+  --blue:#1565c0; --blue-dark:#0d47a1; --blue-light:#e8f1fb;
+  --teal:#00897b; --teal-dark:#00695c; --teal-light:#e0f2f1;
+  --purple:#6a48b5; --purple-light:#ede7f6;
+  --amber:#b25e00; --amber-light:#fff5e8;
+  --coral:#d84315; --coral-light:#fdece7;
+  --sage:#2e7d32; --sage-light:#e8f5e9;
+  --ink:#1b2733; --ink-2:#3d4d5c; --ink-3:#63737f;
+  --line:#c9d6e2; --line-soft:#e3ebf3;
+  --surface:#ffffff; --surface-2:#f7fafc; --bg:#eef3f8;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  font-size:8.75pt; line-height:1.28;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+b,strong{font-weight:700;color:var(--ink);}
+sub,sup{font-size:.68em;}
+.mono{font-family:"JetBrains Mono","Consolas",ui-monospace,monospace;}
+
+/* ---------- PAGE ---------- */
+.page{
+  width:210mm; min-height:296mm; height:296mm;
+  margin:0 auto 6mm; padding:8mm 9mm 7mm;
+  background:var(--surface);
+  box-shadow:0 2px 14px rgba(21,101,192,.13);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.page-no{
+  position:absolute; right:9mm; bottom:3.4mm;
+  font-size:7pt; color:var(--ink-3); letter-spacing:.06em;
+  font-family:"JetBrains Mono",monospace;
+}
+.page-foot{
+  position:absolute; left:9mm; bottom:3.4mm;
+  font-size:6.8pt; color:var(--ink-3); letter-spacing:.03em;
+}
+
+/* ---------- AUTO-FIT WRAPPER ----------
+   Each page carries an individually computed scale (--z) so that a full
+   page of content fits an A4 sheet exactly, at the largest type that
+   still fits. Width is divided by --z first so the block still fills the
+   page after zoom. Values are baked in by fit.js -> build.py. */
+.pg{
+  --z:1;
+  width:calc(100% / var(--z));
+  transform:scale(var(--z));
+  transform-origin:top left;
+  flex:0 0 auto;
+}
+
+/* ---------- MASTHEAD ---------- */
+.masthead{
+  display:flex; align-items:center; gap:8px;
+  border-bottom:2.4px solid var(--blue);
+  padding-bottom:4px; margin-bottom:6px;
+}
+.mark{
+  width:26px;height:26px;border-radius:6px;background:var(--blue);
+  color:#fff;font-weight:800;font-size:11pt;display:flex;
+  align-items:center;justify-content:center;letter-spacing:-.02em;flex:0 0 auto;
+}
+.mh-t{font-size:12.6pt;font-weight:800;letter-spacing:-.02em;color:var(--blue-dark);line-height:1.05;}
+.mh-s{font-size:7.4pt;color:var(--ink-3);letter-spacing:.05em;text-transform:uppercase;font-weight:600;}
+.mh-right{margin-left:auto;text-align:right;font-size:7.2pt;color:var(--ink-3);line-height:1.3;}
+.mh-right b{display:block;font-size:8.6pt;color:var(--coral);letter-spacing:.03em;}
+
+.runner{
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1.6px solid var(--line);padding-bottom:3px;margin-bottom:5px;
+}
+.runner .rn{font-size:10.6pt;font-weight:800;color:var(--blue-dark);letter-spacing:-.01em;}
+.runner .rs{font-size:7.2pt;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-left:auto;}
+
+/* ---------- GRID ---------- */
+.row{display:flex;gap:4mm;}
+.col{flex:1;min-width:0;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3.2mm;}
+.stack{display:flex;flex-direction:column;gap:3.4mm;}
+.grow{flex:1;}
+
+/* ---------- BLOCK ---------- */
+.blk{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface);}
+.blk > .bh{
+  font-size:8.1pt;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:2.6px 6px;color:#fff;background:var(--blue);display:flex;align-items:center;gap:5px;
+}
+.bh .n{
+  background:rgba(255,255,255,.26);border-radius:3px;padding:0 4px;font-size:7.4pt;
+  font-family:"JetBrains Mono",monospace;
+}
+.bb{padding:3.8px 5px;}
+.blk.teal > .bh{background:var(--teal);}
+.blk.purple > .bh{background:var(--purple);}
+.blk.amber > .bh{background:var(--amber);}
+.blk.coral > .bh{background:var(--coral);}
+.blk.sage > .bh{background:var(--sage);}
+.blk.teal{border-color:#9fd3cd;} .blk.purple{border-color:#c4b3e4;}
+.blk.amber{border-color:#e8c48f;} .blk.coral{border-color:#f0b39c;}
+.blk.sage{border-color:#a9d3ab;}
+
+/* ---------- LISTS ---------- */
+ul.t{margin:0;padding-left:12px;}
+ul.t li{margin:0 0 1.2px;}
+ul.t li::marker{color:var(--blue);}
+ol.t{margin:0;padding-left:14px;}
+ol.t li{margin:0 0 1.6px;}
+.dash{margin:0;padding:0;list-style:none;}
+.dash li{margin:0 0 1.3px;padding-left:9px;position:relative;}
+.dash li::before{content:"▸";position:absolute;left:0;top:-.5px;color:var(--blue);font-size:7.5pt;}
+.dash.tealx li::before{color:var(--teal);} .dash.purplex li::before{color:var(--purple);}
+.dash.amberx li::before{color:var(--amber);} .dash.coralx li::before{color:var(--coral);}
+.dash.sagex li::before{color:var(--sage);}
+
+/* ---------- TABLE ---------- */
+table.t{width:100%;border-collapse:collapse;font-size:8.1pt;}
+table.t th{
+  background:var(--blue-light);color:var(--blue-dark);font-weight:700;
+  text-align:left;padding:2px 3.5px;border:1px solid var(--line);font-size:7.7pt;
+  letter-spacing:.02em;
+}
+table.t td{padding:1.8px 3.5px;border:1px solid var(--line-soft);vertical-align:top;}
+table.t tr:nth-child(even) td{background:var(--surface-2);}
+table.t.teal th{background:var(--teal-light);color:var(--teal-dark);}
+table.t.purple th{background:var(--purple-light);color:var(--purple);}
+table.t.amber th{background:var(--amber-light);color:var(--amber);}
+table.t.sage th{background:var(--sage-light);color:var(--sage);}
+table.t.coral th{background:var(--coral-light);color:var(--coral);}
+table.t.tight td,table.t.tight th{padding:1.6px 3px;font-size:7.7pt;}
+
+/* ---------- FORMULA ---------- */
+.fx{
+  font-family:"JetBrains Mono",monospace;font-size:8.2pt;
+  background:var(--blue-light);border-left:2.6px solid var(--blue);
+  padding:2px 5px;border-radius:0 3px 3px 0;margin:1.7px 0;display:block;
+  color:var(--blue-dark);font-weight:600;
+}
+.fx.teal{background:var(--teal-light);border-color:var(--teal);color:var(--teal-dark);}
+.fx.purple{background:var(--purple-light);border-color:var(--purple);color:var(--purple);}
+.fx.amber{background:var(--amber-light);border-color:var(--amber);color:var(--amber);}
+.fx.sage{background:var(--sage-light);border-color:var(--sage);color:var(--sage);}
+.fx .lbl{font-family:"Inter",sans-serif;font-weight:700;color:var(--ink-2);font-size:7.4pt;}
+
+/* ---------- CHIPS / TAGS ---------- */
+.chip{
+  display:inline-block;padding:.4px 4.5px;border-radius:9px;font-size:7pt;font-weight:700;
+  background:var(--blue-light);color:var(--blue-dark);letter-spacing:.02em;margin:0 2px 2px 0;
+}
+.chip.t{background:var(--teal-light);color:var(--teal-dark);}
+.chip.p{background:var(--purple-light);color:var(--purple);}
+.chip.a{background:var(--amber-light);color:var(--amber);}
+.chip.c{background:var(--coral-light);color:var(--coral);}
+.chip.s{background:var(--sage-light);color:var(--sage);}
+
+/* ---------- CALLOUTS ---------- */
+.call{border-radius:4px;padding:2.9px 5px;font-size:7.9pt;margin:2px 0;border:1px solid;}
+.call .ct{font-weight:800;font-size:7.4pt;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:1px;}
+.call.trap{background:var(--coral-light);border-color:#f0b39c;color:#7d2a10;}
+.call.trap .ct{color:var(--coral);}
+.call.mnem{background:var(--amber-light);border-color:#e8c48f;color:#6b3a00;}
+.call.mnem .ct{color:var(--amber);}
+.call.gold{background:var(--sage-light);border-color:#a9d3ab;color:#1d5220;}
+.call.gold .ct{color:var(--sage);}
+.call.why{background:var(--purple-light);border-color:#c4b3e4;color:#40296f;}
+.call.why .ct{color:var(--purple);}
+
+/* ---------- FLOW / DIAGRAM ---------- */
+.flow{display:flex;align-items:stretch;gap:0;font-size:7.6pt;}
+.node{
+  flex:1;border:1.2px solid var(--blue);border-radius:4px;padding:2.2px 4px;
+  background:var(--blue-light);text-align:center;line-height:1.2;
+}
+.node b{display:block;font-size:7.9pt;color:var(--blue-dark);}
+.node small{color:var(--ink-2);font-size:6.9pt;}
+.arw{flex:0 0 12px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-weight:800;font-size:9pt;}
+.node.t{border-color:var(--teal);background:var(--teal-light);} .node.t b{color:var(--teal-dark);}
+.node.p{border-color:var(--purple);background:var(--purple-light);} .node.p b{color:var(--purple);}
+.node.a{border-color:var(--amber);background:var(--amber-light);} .node.a b{color:var(--amber);}
+.node.s{border-color:var(--sage);background:var(--sage-light);} .node.s b{color:var(--sage);}
+.node.c{border-color:var(--coral);background:var(--coral-light);} .node.c b{color:var(--coral);}
+
+/* tree */
+.tree{font-size:7.7pt;line-height:1.3;}
+.tree .lvl{display:flex;gap:3px;margin-bottom:3px;}
+.tree .box{
+  flex:1;border:1px solid var(--line);border-radius:3.5px;padding:2px 4px;background:var(--surface-2);
+}
+.tree .box b{color:var(--blue-dark);}
+
+/* key-value strip */
+.kv{display:grid;grid-template-columns:auto 1fr;gap:1.5px 6px;font-size:8pt;}
+.kv dt{font-weight:700;color:var(--blue-dark);white-space:nowrap;}
+.kv dd{margin:0;color:var(--ink-2);}
+
+/* numbered map */
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:2.6px;font-size:7.4pt;}
+.map .m{
+  border:1px solid var(--line);border-radius:3.5px;padding:2.4px 4px;background:var(--surface-2);
+  line-height:1.22;
+}
+.map .m b{display:block;color:var(--blue-dark);font-size:7.7pt;}
+.map .m span{color:var(--ink-3);font-size:6.7pt;font-family:"JetBrains Mono",monospace;}
+
+/* rapid-fire two column list */
+.rf{column-count:2;column-gap:5mm;font-size:7.9pt;}
+.rf p{margin:0 0 1.4px;break-inside:avoid;}
+.rf b{color:var(--blue-dark);}
+.rf3{column-count:3;column-gap:4mm;font-size:7.7pt;}
+.rf3 p{margin:0 0 1.3px;break-inside:avoid;}
+
+/* answer skeleton */
+.skel{font-size:7.9pt;}
+.skel .s{display:flex;gap:5px;margin-bottom:1.6px;align-items:baseline;}
+.skel .s i{
+  flex:0 0 15px;font-style:normal;font-weight:800;color:#fff;background:var(--purple);
+  border-radius:3px;text-align:center;font-size:6.9pt;padding:.5px 0;
+}
+.hl{background:#fff3b0;padding:0 1px;border-radius:2px;font-weight:600;}
+.u{border-bottom:1.4px solid var(--amber);padding-bottom:.5px;font-weight:700;}
+
+/* ---------- PRINT ---------- */
+@page{size:A4 portrait;margin:0;}
+@media print{
+  body{background:#fff;}
+  .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;}
+  .page:last-child{page-break-after:auto;break-after:auto;}
+  .noprint{display:none !important;}
+}
+.toolbar{
+  max-width:210mm;margin:8px auto 0;display:flex;gap:8px;align-items:center;
+  font-size:8.5pt;color:var(--ink-2);
+}
+.toolbar button{
+  font:inherit;font-weight:700;background:var(--blue);color:#fff;border:0;
+  padding:6px 14px;border-radius:6px;cursor:pointer;
+}
+.toolbar a{color:var(--blue);font-weight:700;text-decoration:none;}
+
+</style>
+</head>
+<body>
+
+<div class="toolbar noprint">
+  <button onclick="window.print()">🖨 Print / Save as PDF</button>
+  <span>A4 · 6 pages · set margins to <b>None</b> and enable <b>Background graphics</b></span>
+  <a href="index.html">← All units</a>
+</div>
+
+<!-- ==================== PAGE 1 ==================== -->
+<section class="page">
+  <div class="pg" style="--z:0.832">
+  <div class="masthead">
+    <div class="mark">AG</div>
+    <div>
+      <div class="mh-t">UNIT 3 · PRINCIPLES OF ANIMAL BREEDING</div>
+      <div class="mh-s">Animal Genetics &amp; Breeding · VCI MSVE 2016 · Rapid Revision Sheet</div>
+    </div>
+    <div class="mh-right"><b>PAPER II</b>Theory 100 + Pract 60<br>Target: 30-min full sweep</div>
+  </div>
+
+  <div class="row" style="gap:4mm;">
+    <div class="col" style="flex:1.42;">
+      <div class="blk">
+        <div class="bh"><span class="n">MAP</span> THE WHOLE UNIT ON ONE SCREEN — 28 SYLLABUS HEADS, 5 BLOCKS</div>
+        <div class="bb">
+          <div class="map">
+            <div class="m"><b>History</b><span>A·01</span> Bakewell → Lush → BLUP → genomics</div>
+            <div class="m"><b>Breeds</b><span>A·02</span> Classification + Indian breed lists</div>
+            <div class="m"><b>Economic traits</b><span>A·03</span> Dairy, meat, wool, egg</div>
+            <div class="m"><b>Selection</b><span>B·04</span> Types &amp; principles</div>
+            <div class="m"><b>Response</b><span>B·05</span> ΔG = i·h²·σ<sub>P</sub>/L, factors</div>
+            <div class="m"><b>Bases</b><span>B·06</span> Individual, pedigree, family, sib</div>
+            <div class="m"><b>Progeny test</b><span>B·07</span> Combined &amp; indirect selection</div>
+            <div class="m"><b>Methods</b><span>B·08</span> Tandem · ICL · Selection index</div>
+            <div class="m"><b>Mating systems</b><span>C·09</span> Full classification chart</div>
+            <div class="m"><b>Inbreeding F</b><span>C·10</span> Wright's formula, relationship R</div>
+            <div class="m"><b>Consequences</b><span>C·11</span> Depression &amp; applications</div>
+            <div class="m"><b>Outbreeding</b><span>C·12</span> Outcross, crossbreed, grading up</div>
+            <div class="m"><b>Heterosis</b><span>C·13</span> Theories &amp; % formula</div>
+            <div class="m"><b>Utilising it</b><span>C·14</span> Rotational, terminal, synthetic</div>
+            <div class="m"><b>Combining ability</b><span>C·15</span> GCA/SCA · RS &amp; RRS</div>
+            <div class="m"><b>Dairy strategy</b><span>D·16</span> Cattle &amp; buffalo</div>
+            <div class="m"><b>Small stock</b><span>D·17</span> Sheep, goat, swine</div>
+            <div class="m"><b>Poultry</b><span>D·18</span> Egg &amp; broiler lines</div>
+            <div class="m"><b>Sire evaluation</b><span>D·19</span> CC → BLUP</div>
+            <div class="m"><b>ONBS</b><span>D·20</span> Nucleus–multiplier–base</div>
+            <div class="m"><b>New breeds</b><span>D·21</span> Synthetics &amp; strains</div>
+            <div class="m"><b>Policies</b><span>E·22</span> NPCBB, Rashtriya Gokul Mission</div>
+            <div class="m"><b>Conservation</b><span>E·23</span> In-situ / ex-situ, AnGR</div>
+            <div class="m"><b>Biotech tools</b><span>E·24</span> AI, MOET, MAS, genomic selection</div>
+            <div class="m"><b>Disease resistance</b><span>E·25</span> Major genes, MAS</div>
+            <div class="m"><b>Pets</b><span>F·26</span> Dog &amp; cat breeds, pedigree sheet</div>
+            <div class="m"><b>Pet management</b><span>F·27</span> Dogs, cats, pet birds</div>
+            <div class="m"><b>Wildlife</b><span>F·28</span> N<sub>e</sub>, planned &amp; controlled breeding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="blk coral">
+        <div class="bh"><span class="n">★</span> HIGHEST-YIELD IN THIS UNIT</div>
+        <div class="bb">
+          <ul class="dash coralx" style="font-size:7.85pt;">
+            <li><b>Response to selection</b> — ΔG formula + all factors affecting it.</li>
+            <li><b>Bases of selection</b> — the 7-row comparison.</li>
+            <li><b>Tandem vs ICL vs Selection index</b> — sure differentiate.</li>
+            <li><b>Inbreeding</b> — F, consequences, depression, applications.</li>
+            <li><b>Heterosis</b> — definition, formula, theories, systems.</li>
+            <li><b>Sire evaluation</b> — contemporary comparison &amp; BLUP.</li>
+            <li><b>ONBS</b> — diagram + advantages.</li>
+            <li><b>Crossbreeding strategy for Indian dairy cattle.</b></li>
+            <li><b>Conservation of AnGR</b> — in-situ vs ex-situ.</li>
+            <li><b>Effective population size N<sub>e</sub></b> — formula + 50/500 rule.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk purple">
+      <div class="bh"><span class="n">1</span> HISTORY OF ANIMAL BREEDING — THE NAMES THEY ASK</div>
+      <div class="bb">
+        <div class="rf" style="font-size:7.8pt;">
+          <p><b>Robert Bakewell (1725–95)</b> — pioneer of breeding <b>practice</b>; Leicester sheep, Shire horse. Introduced <b>inbreeding + progeny testing + "breed the best to the best"</b>.</p>
+          <p><b>Colling brothers &amp; Bates</b> — Shorthorn; line breeding.</p>
+          <p><b>Sewall Wright (1921–22)</b> — <b>inbreeding coefficient F</b>, path coefficients.</p>
+          <p><b>Fisher, Wright &amp; Haldane</b> — founders of <b>population &amp; quantitative genetics</b>.</p>
+          <p><b>Jay L. LUSH (1937, "Animal Breeding Plans")</b> — <b>FATHER OF MODERN ANIMAL BREEDING</b>.</p>
+          <p><b>Hazel &amp; Lush (1943)</b> — <b>SELECTION INDEX</b>.</p>
+          <p><b>Comstock, Hess &amp; Bell (1949)</b> — <b>RRS</b>.</p>
+          <p><b>Robertson &amp; Rendel (1954)</b> — <b>Contemporary Comparison</b>.</p>
+          <p><b>C.R. Henderson (1949, 1975)</b> — <b>BLUP</b> / animal model.</p>
+          <p><b>Meuwissen <i>et al.</i> (2001)</b> — <b>GENOMIC SELECTION</b>.</p>
+          <p><b>India:</b> KVS <b>1952</b> · ICDP <b>1964</b> · <b>Operation Flood 1970</b> (NDDB, Kurien) · NPCBB <b>2000</b> · <b>Rashtriya Gokul Mission 2014</b>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">2</span> CLASSIFICATION OF BREEDS + INDIAN BREED LISTS ★ EASY MARKS</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>BREED</b> = a group of animals of common origin with <b>distinguishable characteristics</b> (colour, horn, size, performance) that are <b>transmitted to the offspring</b>. <b>Strain</b> = sub-group developed by one breeder; <b>Variety</b> = differs in one visible character; <b>Type</b> = based on function, cuts across breeds.</p>
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>Bases of classification:</b> ① <b>Utility</b> (milch, draught, dual; mutton/wool; egg/broiler) ② <b>Origin</b> (indigenous · exotic · crossbred) ③ <b>Taxonomy</b> (<i>Bos indicus</i> — humped, heat &amp; tick tolerant; <i>Bos taurus</i> — humpless, high yield; <i>Bubalus bubalis</i>) ④ <b>Size</b> ⑤ <b>Horn / coat pattern</b>.</p>
+        <table class="t teal tight">
+          <tr><th style="width:15%;">Species</th><th>Key Indian breeds (write 4–5 each)</th></tr>
+          <tr><td><b>Cattle — Milch</b></td><td><b>Sahiwal, Red Sindhi, Gir, Tharparkar</b> (Tharparkar also dual)</td></tr>
+          <tr><td><b>Cattle — Draught</b></td><td><b>Amritmahal, Hallikar, Khillari, Kangayam, Nagori, Malvi, Bachaur, Kherigarh</b></td></tr>
+          <tr><td><b>Cattle — Dual</b></td><td><b>Haryana, Ongole, Kankrej, Deoni, Rathi, Mewati, Dangi, Gaolao, Krishna Valley</b></td></tr>
+          <tr><td><b>Buffalo</b></td><td><b>Murrah</b> (best milch, "black gold"), <b>Nili-Ravi, Jaffarabadi</b> (heaviest), <b>Surti, Mehsana, Bhadawari</b> (highest fat ~13%), Nagpuri, Pandharpuri, Toda, Banni</td></tr>
+          <tr><td><b>Sheep</b></td><td>Carpet wool — <b>Chokla</b> (best Indian wool), <b>Nali, Magra, Marwari</b>; Mutton — <b>Nellore, Mandya, Deccani</b>; Apparel wool — <b>Gaddi, Bhakarwal, Rampur Bushair</b></td></tr>
+          <tr><td><b>Goat</b></td><td><b>Jamunapari</b> (largest, "Pari"), <b>Beetal, Barbari, Sirohi, Marwari, Osmanabadi, Black Bengal</b> (best skin, prolific), <b>Changthangi</b> (pashmina), Malabari, Surti</td></tr>
+          <tr><td><b>Pig</b></td><td>Indigenous — <b>Ghungroo, Ankamali, Niang Megha, Agonda Goan, Doom</b>; Exotic — <b>Large White Yorkshire</b> (most used), Landrace, Hampshire, Duroc</td></tr>
+          <tr><td><b>Poultry</b></td><td>Native — <b>Aseel</b> (game), <b>Kadaknath</b> (black meat), <b>Chittagong, Busra, Ghagus, Nicobari</b>; Improved — <b>Vanaraja, Gramapriya, Krishibro, Giriraja</b>; Exotic — <b>White Leghorn</b> (egg), <b>Cornish &amp; Plymouth Rock</b> (broiler), RIR</td></tr>
+        </table>
+        <div class="call trap"><span class="ct">Trap</span><b>NBAGR, Karnal</b> is the national authority that <b>registers</b> Indian breeds. India has <b>~50+ cattle and ~20 buffalo</b> registered breeds. <b>Zebu (<i>Bos indicus</i>) traits</b> — hump, dewlap, heat &amp; tick tolerance, disease resistance, low yield, late maturity; <b>taurine</b> — no hump, high yield, early maturity, heat-sensitive.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk sage" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">3</span> ECONOMIC TRAITS OF LIVESTOCK &amp; POULTRY AND THEIR IMPORTANCE</div>
+    <div class="bb">
+      <table class="t sage tight">
+        <tr><th style="width:12%;">Enterprise</th><th>Economic traits (the selection objectives)</th><th style="width:24%;">Typical h² &amp; note</th></tr>
+        <tr><td><b>Dairy</b></td><td><b>Total/305-day milk yield, fat % &amp; SNF %, lactation length (305 d), peak yield &amp; persistency, age at first calving (AFC), calving interval (12–13 mo), dry period (60 d), service period, milking speed, udder &amp; teat conformation, longevity/herd life, feed efficiency, mastitis &amp; SCC, temperament</b></td><td>Milk yield <b>0.25–0.30</b>; fat % <b>0.5–0.6</b>; AFC &amp; calving interval <b>&lt; 0.10</b> (manage, don't select)</td></tr>
+        <tr><td><b>Meat / growth</b></td><td><b>Birth weight, weaning weight, average daily gain (ADG), feed conversion ratio (FCR), dressing %, carcass length, backfat thickness, eye-muscle area, marbling, meat : bone ratio</b></td><td>Growth &amp; carcass traits <b>0.30–0.60</b> → respond well to <b>individual selection</b></td></tr>
+        <tr><td><b>Sheep — wool</b></td><td><b>Greasy &amp; clean fleece yield, staple length, fibre diameter (micron), medullation %, crimp, lustre, yield %, lambing % &amp; twinning</b></td><td>Fleece weight <b>0.3–0.4</b>; fibre diameter <b>0.4–0.5</b>; lambing % <b>&lt; 0.10</b></td></tr>
+        <tr><td><b>Swine</b></td><td><b>Litter size at birth &amp; at weaning, birth &amp; weaning weight, number of functional teats, ADG, FCR, backfat, dressing %, age at 90 kg</b></td><td>Litter size <b>0.10–0.15</b> (low, use crossbreeding); backfat <b>0.4–0.5</b></td></tr>
+        <tr><td><b>Poultry — egg</b></td><td><b>Age at sexual maturity (ASM), egg number to 40/72 weeks, egg weight, shell thickness, Haugh unit, fertility, hatchability, FCR, livability</b> (broodiness is <b>undesirable</b>)</td><td>Egg number <b>0.2–0.3</b>; <b>egg weight 0.5–0.6</b>; fertility &amp; hatchability <b>&lt; 0.15</b></td></tr>
+        <tr><td><b>Poultry — broiler</b></td><td><b>6-week body weight, FCR, breast yield, livability, feathering rate, leg soundness</b></td><td>6-wk body weight <b>0.35–0.45</b></td></tr>
+      </table>
+      <div class="call gold"><span class="ct">Why "economic" traits — the answer they want</span>A trait is economic when a unit change in it changes <b>net profit</b>; the objective therefore combines traits by their <b>relative economic weights</b> (the basis of the <b>selection index</b>). Universal pattern: <b>production &amp; carcass traits have HIGH h² (select on the individual); reproduction, fertility and viability traits have LOW h² (improve by crossbreeding and management).</b></div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 3</div>
+  <div class="page-no">PAGE 1 / 6</div>
+</section>
+
+<!-- ==================== PAGE 2 ==================== -->
+<section class="page">
+  <div class="pg" style="--z:0.868">
+  <div class="runner"><span class="rn">Selection · Response · Bases of Selection · Methods of Selection</span><span class="rs">Unit 3 · Selection Theory</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">4</span> SELECTION — TYPES &amp; RESPONSE ★★</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>SELECTION</b> = allowing certain animals to be the <b>parents of the next generation</b> more often than others — i.e. <b>differential reproduction</b>. It <b>does not create new genes</b>; it only <b>changes gene frequencies</b> by increasing the frequency of favourable alleles. <b>Selection + culling are two sides of the same act.</b></p>
+        <table class="t tight">
+          <tr><th style="width:24%;">Type</th><th>Effect on the population</th></tr>
+          <tr><td><b>Natural</b> vs <b>Artificial</b></td><td>Nature favours <b>fitness</b>; man favours <b>economic merit</b> — the two often <b>oppose</b> each other.</td></tr>
+          <tr><td><b>Directional</b></td><td>Favours one extreme → the <b>mean shifts</b>. The normal breeding situation (higher milk, faster growth).</td></tr>
+          <tr><td><b>Stabilising (normalising)</b></td><td>Favours the <b>intermediate</b>, culls both extremes → <b>variance falls</b>, mean unchanged. Ex: egg weight, birth weight (dystocia at both ends).</td></tr>
+          <tr><td><b>Disruptive (diversifying)</b></td><td>Favours <b>both extremes</b> → population splits into two groups; used to create divergent lines.</td></tr>
+        </table>
+        <span class="fx"><span class="lbl">Selection differential</span> S = (mean of selected parents) − (mean of the population)</span>
+        <span class="fx"><span class="lbl">Intensity of selection</span> i = S / σ<sub>P</sub> &nbsp;(a standardised, unit-free S)</span>
+        <span class="fx"><span class="lbl">RESPONSE per generation</span> R = ΔG = h² × S = i · h² · σ<sub>P</sub> = i · r<sub>IA</sub> · σ<sub>A</sub></span>
+        <span class="fx"><span class="lbl">RESPONSE per YEAR</span> ΔG/yr = (i · h² · σ<sub>P</sub>) / L &nbsp;&nbsp;(L = generation interval)</span>
+        <span class="fx"><span class="lbl">Realised heritability</span> h² = R / S</span>
+        <p style="margin:1px 0 0;font-size:7.8pt;"><b>Generation interval L</b> = average age of the parents when their replacement offspring are born. <b>Cattle 4.5–6 yr · Buffalo 6–8 · Sheep &amp; goat 3–4 · Pig 2 · Poultry 1–1.5 yr.</b> This is why <b>poultry improve fastest and buffalo slowest</b>.</p>
+      </div>
+    </div>
+
+    <div class="blk coral">
+      <div class="bh"><span class="n">5</span> FACTORS AFFECTING RESPONSE TO SELECTION ★ WRITE ALL EIGHT</div>
+      <div class="bb">
+        <ol class="t" style="font-size:7.85pt;">
+          <li><b>Heritability of the trait</b> — the higher h², the more of the observed superiority is transmitted. Low-h² traits respond poorly to individual selection.</li>
+          <li><b>Selection differential / intensity (i)</b> — set by the <b>proportion selected</b>, hence by the species' <b>reproductive rate</b> and <b>culling rate</b>. Poultry and pigs allow high intensity; cattle very little on the female side.</li>
+          <li><b>Phenotypic variability (σ<sub>P</sub>)</b> — no variation, no selection. A uniform herd offers little scope.</li>
+          <li><b>Generation interval (L)</b> — yearly response is <b>inversely</b> proportional to L; shortening L (young sires, MOET, genomic selection) is often the fastest route to gain.</li>
+          <li><b>Accuracy (r<sub>IA</sub>)</b> — how well the estimated breeding value reflects the true one; raised by <b>more records, more progeny, BLUP and genomic data</b>.</li>
+          <li><b>Number of traits selected for</b> — gain per trait falls roughly as <b>1/√n</b>. Selecting for 4 traits halves the progress in each.</li>
+          <li><b>Genetic correlations</b> — a favourable r<sub>A</sub> gives free correlated gain; an <b>antagonistic</b> one (milk yield vs fertility, growth vs feed efficiency) slows or reverses progress.</li>
+          <li><b>Inbreeding, G × E and environment</b> — inbreeding depresses performance; a poor environment masks genetic differences and lowers h²; a <b>selection plateau</b> is reached when additive variance is exhausted.</li>
+        </ol>
+        <div class="call trap"><span class="ct">Exam trap</span><b>Response is per generation; gain is quoted per YEAR</b> — always divide by L. The <b>four "levers"</b> in ΔG/yr = i·r·σ<sub>A</sub>/L are the only ways a plan can work: raise <b>i</b>, raise <b>accuracy r</b>, exploit <b>σ<sub>A</sub></b>, or cut <b>L</b>. Genomic selection wins by <b>cutting L and raising r in young animals</b>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk teal" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">6</span> BASES OF SELECTION — WHICH INFORMATION DO WE USE? ★★ CERTAIN QUESTION</div>
+    <div class="bb">
+      <table class="t teal tight">
+        <tr><th style="width:14%;">Basis</th><th style="width:26%;">Information used</th><th>Best used when</th><th style="width:24%;">Limitation</th></tr>
+        <tr><td><b>INDIVIDUAL / MASS / phenotypic</b></td><td>The animal's <b>own performance record</b></td><td><b>h² HIGH (&gt;0.4)</b>; trait expressed <b>early</b> and in <b>both sexes</b>; cheap &amp; simple. Ex: body weight, growth rate, fleece weight, egg weight</td><td>Useless for <b>sex-limited</b> traits, carcass traits, and low-h² traits</td></tr>
+        <tr><td><b>PEDIGREE</b></td><td>Records of <b>ancestors</b> (sire, dam, grandparents)</td><td>Animal is <b>too young</b> to have a record; trait is <b>sex-limited</b> or measurable only after slaughter; <b>low h²</b>; choosing a bull calf</td><td>Contribution halves each generation (½, ¼, ⅛) — <b>remote ancestors are almost worthless</b>; ancestors reared in a different era/environment</td></tr>
+        <tr><td><b>FAMILY</b> (between-family)</td><td><b>Mean of the whole family</b>; family accepted or rejected as a unit</td><td><b>LOW h²</b> and <b>LARGE families</b> (poultry, pigs); family mean averages out environment</td><td>Fails if members share a strong <b>common environment</b>; ↑ inbreeding</td></tr>
+        <tr><td><b>WITHIN-FAMILY</b></td><td>Best individuals <b>inside each</b> family</td><td>Common environmental effect is <b>large</b> (litter/maternal effects)</td><td>Loses between-family genetic differences</td></tr>
+        <tr><td><b>SIB</b> (full-sib / half-sib)</td><td>Records of <b>brothers &amp; sisters</b></td><td><b>Sex-limited</b> traits and <b>destructive</b> measurements (carcass, meat quality); a young cockerel judged on his sisters' egg records</td><td>Full-sib data inflated by common environment &amp; dominance</td></tr>
+        <tr><td><b>PROGENY TESTING</b></td><td>Performance of the animal's <b>OFFSPRING</b></td><td><b>The most accurate method for SIRES</b>; essential for <b>sex-limited</b> traits (milk, eggs) and for <b>low-h²</b> traits; the basis of bull selection in AI</td><td><b>Long generation interval, costly, few sires can be tested</b>, needs large progeny groups &amp; good recording</td></tr>
+        <tr><td><b>COMBINED</b></td><td>Own + pedigree + sib + progeny, each <b>weighted</b> by its accuracy</td><td><b>The most efficient of all</b> — this is exactly what <b>BLUP / animal model</b> does</td><td>Needs complete pedigree &amp; computing power</td></tr>
+        <tr><td><b>INDIRECT</b></td><td>Selection on a <b>correlated</b> trait</td><td>Target trait is hard, late, expensive or sex-limited; ex: <b>SCC for mastitis resistance</b>, backfat by ultrasound for carcass fat</td><td>Only pays when <b>r<sub>A</sub>·h<sub>secondary</sub> &gt; h<sub>primary</sub></b></td></tr>
+      </table>
+      <div class="row" style="margin-top:2px;gap:4mm;">
+        <div class="col"><span class="fx teal"><span class="lbl">Accuracy of progeny test</span> r = √[ n / (n + k) ] , k = (4 − h²)/h²</span></div>
+        <div class="col"><div class="call gold" style="margin:0;"><span class="ct">One-line rule to quote</span><b>High h² → individual selection. Low h² → family, sib or progeny testing. Sex-limited → progeny testing (sires) or sib/pedigree. Destructive traits → sib selection. Everything at once → BLUP (combined).</b></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk amber" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">7</span> METHODS OF SELECTION FOR SEVERAL TRAITS — SINGLE vs MULTI-TRAIT ★ SURE DIFFERENTIATE</div>
+    <div class="bb">
+      <div class="row" style="gap:4mm;">
+        <div class="col" style="flex:1.4;">
+          <table class="t amber tight">
+            <tr><th style="width:16%;">Method</th><th>How it works</th><th>Merit</th><th>Demerit</th></tr>
+            <tr><td><b>TANDEM</b></td><td>Select for <b>ONE trait at a time</b> until it reaches the desired level, then move to the next</td><td>Simple; full intensity on one trait; fastest gain <b>in that one trait</b></td><td><b>SLOWEST overall</b>; earlier trait <b>slips back</b>; ignores genetic correlations; wastes generations</td></tr>
+            <tr><td><b>INDEPENDENT CULLING LEVEL (ICL)</b></td><td>A <b>minimum standard is fixed for EVERY trait</b>; an animal failing <b>any one</b> is culled, however good elsewhere</td><td>Selects for all traits simultaneously; can cull early at different ages (cheap, practical on farm)</td><td><b>Discards an outstanding animal for one small fault</b>; does not allow merit in one trait to compensate a deficiency in another</td></tr>
+            <tr><td><b>SELECTION INDEX</b><br>(Hazel &amp; Lush, 1943)</td><td>All traits combined into a <b>SINGLE SCORE</b> weighted by their <b>heritabilities, genetic &amp; phenotypic correlations and relative economic values</b>; animals ranked on the index</td><td><b>THEORETICALLY THE MOST EFFICIENT</b> — allows compensation between traits, uses all information, maximises total economic gain</td><td>Needs reliable estimates of h², r<sub>A</sub>, r<sub>P</sub> and economic weights; all traits must be recorded on every animal before culling; computationally heavy</td></tr>
+          </table>
+          <span class="fx amber"><span class="lbl">Index</span> I = b₁P₁ + b₂P₂ + b₃P₃ + … + b<sub>n</sub>P<sub>n</sub></span>
+          <p style="margin:1px 0 0;font-size:7.8pt;">P = phenotypic record of each trait; <b>b = partial regression weight</b> derived from <b>Pb = Gv</b>, where v = relative economic values. <b>Aggregate genotype H = a₁A₁ + a₂A₂ + …</b>; the index is built to maximise the correlation r<sub>IH</sub> between I and H.</p>
+        </div>
+        <div class="col" style="flex:1;">
+          <div class="call mnem"><span class="ct">Efficiency order — one line for the exam</span><b>SELECTION INDEX &gt; INDEPENDENT CULLING LEVEL &gt; TANDEM.</b> In practice a <b>combination</b> is used: cull grossly on ICL for cheap early traits (survival, conformation, gross defects), then rank the survivors on a <b>selection index</b>.</div>
+          <div class="call why"><span class="ct">Indian dairy example</span>A bull-mother index for Sahiwal might weight <b>first-lactation 305-day yield, fat %, age at first calving and calving interval</b>. The <b>National Dairy Plan progeny-testing projects</b> now rank bulls by <b>BLUP-based total merit indices</b> — selection indices computed with an animal model.</div>
+          <div class="call trap"><span class="ct">Trap</span>The <b>selection index and BLUP EBV are not opposites</b> — BLUP <i>produces</i> the breeding values that a modern index combines. Also remember <b>ΔG per trait falls as 1/√n</b>, so an index with <b>too many traits</b> improves none of them appreciably: keep the objective to a <b>few economically important traits</b>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 3</div>
+  <div class="page-no">PAGE 2 / 6</div>
+</section>
+
+<!-- ==================== PAGE 3 ==================== -->
+<section class="page">
+  <div class="pg" style="--z:0.848">
+  <div class="runner"><span class="rn">Mating Systems · Inbreeding · Outbreeding · Heterosis · Combining Ability</span><span class="rs">Unit 3 · Mating Systems</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">8</span> CLASSIFICATION OF MATING SYSTEMS — DRAW THIS CHART</div>
+      <div class="bb">
+        <div class="tree">
+          <div class="lvl"><div class="box" style="background:var(--blue-light);"><b>MATING SYSTEMS</b> — how selected animals are paired</div></div>
+          <div class="lvl">
+            <div class="box"><b>A. On GENETIC RELATIONSHIP</b></div>
+            <div class="box"><b>B. On PHENOTYPIC RESEMBLANCE</b></div>
+          </div>
+          <div class="lvl">
+            <div class="box"><b>INBREEDING</b> — related animals<br>• <b>Close breeding</b> (full-sib, parent–offspring)<br>• <b>Line breeding</b> (keeps kinship to <b>one outstanding ancestor</b> high, total F low)</div>
+            <div class="box"><b>ASSORTATIVE (like × like)</b><br>Positive — best × best; ↑ uniformity, ↑ variance between groups</div>
+          </div>
+          <div class="lvl">
+            <div class="box"><b>OUTBREEDING</b> — unrelated animals<br>• <b>Outcrossing</b> (unrelated, <b>same breed</b>)<br>• <b>Crossbreeding</b> (<b>different breeds</b>, same species)<br>• <b>Species / genus hybridisation</b> (mule, dzo)<br>• <b>Grading up</b> (repeated purebred sires on native stock)</div>
+            <div class="box"><b>DISASSORTATIVE (unlike × unlike)</b><br>Also called <b>corrective mating</b> — a fault in one parent is compensated by the other; ↑ heterozygosity</div>
+          </div>
+          <div class="lvl"><div class="box" style="background:var(--surface-2);"><b>C. RANDOM MATING (panmixis)</b> — every male has an equal chance of mating any female; the reference point of the Hardy–Weinberg law</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk purple">
+      <div class="bh"><span class="n">9</span> INBREEDING — COEFFICIENT F &amp; RELATIONSHIP R ★★</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Inbreeding</b> = mating of individuals <b>more closely related to each other than the average of the population</b> from which they come.</p>
+        <span class="fx purple"><span class="lbl">Wright's F</span> F<sub>X</sub> = Σ (½)<sup>(n₁ + n₂ + 1)</sup> (1 + F<sub>A</sub>)</span>
+        <p style="margin:1px 0 2px;font-size:7.8pt;">n₁, n₂ = number of generations from sire and from dam back to the <b>common ancestor A</b>; F<sub>A</sub> = inbreeding of that ancestor; Σ = sum over <b>every path</b> through <b>every</b> common ancestor.<br><b>Definition of F:</b> the <b>probability that the two alleles at a locus in an individual are IDENTICAL BY DESCENT</b> (i.e. replicas of one allele in a common ancestor). Range <b>0 → 1</b>.</p>
+        <span class="fx purple"><span class="lbl">Coefficient of relationship</span> R<sub>XY</sub> = 2F<sub>XY</sub> / √[(1+F<sub>X</sub>)(1+F<sub>Y</sub>)]</span>
+        <table class="t purple tight">
+          <tr><th style="width:44%;">Mating / relationship</th><th>F of progeny</th><th>R between the pair</th></tr>
+          <tr><td><b>Full sibs</b> (brother × sister)</td><td><b>0.25</b></td><td><b>0.50</b></td></tr>
+          <tr><td><b>Parent × offspring</b></td><td><b>0.25</b></td><td><b>0.50</b></td></tr>
+          <tr><td><b>Half sibs</b></td><td><b>0.125</b></td><td><b>0.25</b></td></tr>
+          <tr><td><b>Grandparent × grandoffspring</b></td><td>0.125</td><td>0.25</td></tr>
+          <tr><td><b>First cousins</b></td><td><b>0.0625</b></td><td>0.125</td></tr>
+          <tr><td>Uncle/aunt × niece/nephew</td><td>0.125</td><td>0.25</td></tr>
+        </table>
+        <span class="fx purple"><span class="lbl">Rate of inbreeding</span> ΔF = 1/(8N<sub>m</sub>) + 1/(8N<sub>f</sub>) = 1/(2N<sub>e</sub>)</span>
+        <p style="margin:1px 0 0;font-size:7.8pt;"><b>Practical rule: keep ΔF below 1% per generation (≤0.5% is safer).</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk coral">
+      <div class="bh"><span class="n">10</span> CONSEQUENCES OF INBREEDING &amp; ITS APPLICATIONS</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>GENETIC CONSEQUENCES:</b></p>
+        <ul class="dash coralx" style="font-size:7.85pt;">
+          <li><b>↑ HOMOZYGOSITY and ↓ heterozygosity</b> — heterozygotes fall by the factor (1 − F): <b>AA = p² + pqF · Aa = 2pq(1 − F) · aa = q² + pqF</b>.</li>
+          <li><b>Gene frequency is NOT changed</b> — only the genotypic frequencies are redistributed.</li>
+          <li><b>Exposes deleterious recessives</b> in the homozygous state → hidden genetic defects appear.</li>
+          <li>Splits the population into <b>inbred lines</b>: variance <b>WITHIN</b> lines falls, <b>BETWEEN</b> lines rises.</li>
+          <li>Increases <b>uniformity and PREPOTENCY</b> (a sire's ability to stamp his characters on his progeny).</li>
+        </ul>
+        <p style="margin:2px 0 2px;font-size:7.85pt;"><b>PHENOTYPIC CONSEQUENCE — INBREEDING DEPRESSION:</b> the decline in mean performance for traits associated with <b>fitness</b>. It is <b>roughly LINEAR with F</b> and is greatest in traits with <b>low h² and high dominance variance</b>: <b>fertility, conception rate, litter size, viability &amp; survivability, growth rate, milk yield</b>. Traits with mainly additive variance (fat %, skeletal measurements, fibre diameter) are hardly affected. <b>Cause:</b> expression of homozygous deleterious recessives (<b>dominance theory</b>) and loss of heterozygote advantage (<b>overdominance</b>) — it is simply the <b>reverse of heterosis</b>.</p>
+        <p style="margin:0 0 0;font-size:7.85pt;"><b>APPLICATIONS:</b> ① develop <b>INBRED LINES</b> for later crossing to exploit heterosis (poultry, swine, lab animals) ② <b>fix and make uniform</b> a desirable type — how <b>every breed was originally formed</b> ③ <b>detect carriers</b> of undesirable recessives ④ raise <b>prepotency</b> of elite sires ⑤ produce <b>isogenic lab strains</b> ⑥ line breeding to conserve an outstanding ancestor's genes.</p>
+        <div class="call trap"><span class="ct">Trap</span><b>Line breeding is a MILD form of inbreeding</b>, not a separate system. <b>Inbreeding itself never improves a herd</b> — it only exposes what is already there, and is safe only with <b>rigorous simultaneous selection and culling</b>.</div>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">11</span> OUTBREEDING · ITS FORMS &amp; CONSEQUENCES</div>
+      <div class="bb">
+        <table class="t teal tight">
+          <tr><th style="width:22%;">Form</th><th>Definition &amp; use</th></tr>
+          <tr><td><b>Outcrossing</b></td><td>Mating of <b>unrelated animals WITHIN the same breed</b> (no common ancestor for 4–6 generations). Restores vigour in an inbred purebred herd without losing breed identity.</td></tr>
+          <tr><td><b>Crossbreeding</b></td><td>Mating animals of <b>two different breeds</b> of the same species. Produces <b>heterosis</b> and combines complementary breed strengths — the mainstay of Indian dairy, pig and poultry production.</td></tr>
+          <tr><td><b>Species / genus hybridisation</b></td><td>Crossing <b>different species</b>: horse ♀ × ass ♂ = <b>MULE</b> (2n = 63, sterile, great draught vigour); ass ♀ × horse ♂ = <b>hinny</b>; yak × cattle = <b>dzo</b>. Hybrids are usually <b>sterile</b> — chromosome numbers differ.</td></tr>
+          <tr><td><b>GRADING UP</b></td><td><b>Repeated use of purebred sires of one breed on a nondescript/native female population</b>, generation after generation. Exotic inheritance: F₁ <b>50% → 75% → 87.5% → 93.75% → 96.87%</b>. In <b>4–6 generations</b> the graded animals are practically purebred. <b>Cheapest and quickest way to upgrade a large nondescript population</b> (e.g. grading up nondescript buffaloes with <b>Murrah</b> bulls).</td></tr>
+        </table>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>CONSEQUENCES:</b> <b>↑ heterozygosity</b> and <b>↓ homozygosity</b> · <b>masks deleterious recessives</b> · <b>improves fertility, viability and vigour (heterosis)</b> · combines the merits of two breeds (<b>complementarity</b>) · <b>gene frequency unchanged in the population as a whole</b>. <b>Drawbacks:</b> loss of uniformity and of breed purity; <b>heterosis is NOT fixable — it halves in F₂ (recombination loss)</b>; crossbreds may be poorly adapted; needs continuous supply of purebred parent stock; indiscriminate crossbreeding <b>erodes indigenous germplasm</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk sage">
+      <div class="bh"><span class="n">12</span> HETEROSIS (HYBRID VIGOUR) — Shull, 1914 ★★</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Definition:</b> the <b>superiority of the crossbred offspring over the AVERAGE of its two parental breeds</b> (mid-parent value) for a given trait. Its opposite is inbreeding depression.</p>
+        <span class="fx sage"><span class="lbl">Heterosis %</span> H% = [ (F₁ mean − Mid-parent mean) / Mid-parent mean ] × 100</span>
+        <span class="fx sage"><span class="lbl">Genetic basis</span> H ∝ Σ d y² &nbsp; (d = dominance deviation, y = difference in gene frequency between the breeds)</span>
+        <ul class="dash sagex" style="font-size:7.85pt;">
+          <li><b>THEORIES: ① Dominance</b> — each parent's dominant favourable alleles <b>mask the other's deleterious recessives</b> (most accepted). <b>② Overdominance</b> — the <b>heterozygote Aa is itself superior</b>. <b>③ Epistasis</b> — favourable between-locus interactions.</li>
+          <li><b>Two requirements:</b> the trait must show <b>DOMINANCE (d ≠ 0)</b> and the two breeds must <b>DIFFER IN GENE FREQUENCY (y ≠ 0)</b>. Hence heterosis is <b>largest between genetically distant breeds</b>.</li>
+          <li><b>Greatest in LOW-h² fitness traits</b> — fertility, litter size, viability, longevity (10–30%); <b>small in high-h² traits</b> — fat %, fibre diameter, body measurements.</li>
+          <li><b>Types:</b> <b>individual</b> (in the crossbred itself), <b>maternal</b> (from a crossbred dam — mothering ability, milk), <b>paternal</b> (from a crossbred sire — libido, semen).</li>
+          <li><b>NOT FIXABLE:</b> in F₂ heterosis <b>halves</b> with heterozygosity (recombination loss) — crossbreds must be <b>regenerated each generation</b> or stabilised into a synthetic.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blk amber">
+      <div class="bh"><span class="n">13</span> SYSTEMS OF UTILISING HETEROSIS + COMBINING ABILITY (RS &amp; RRS)</div>
+      <div class="bb">
+        <table class="t amber tight">
+          <tr><th style="width:26%;">System</th><th>How it works / where used</th></tr>
+          <tr><td><b>Two-breed (simple) cross</b></td><td>A × B → F₁ all marketed. Maximum individual heterosis, <b>no maternal heterosis</b>.</td></tr>
+          <tr><td><b>Three-breed cross</b></td><td>(A × B) ♀ × C ♂ — gains <b>individual + maternal</b> heterosis. Common in <b>pigs</b>.</td></tr>
+          <tr><td><b>Criss-cross / rotational (2-breed)</b></td><td>Crossbred females bred alternately to A and B sires; retains ≈ <b>67%</b> heterosis, replacements bred on the farm.</td></tr>
+          <tr><td><b>Rotational 3-breed</b></td><td>Sires of A, B, C used in rotation; retains ≈ <b>86%</b> heterosis.</td></tr>
+          <tr><td><b>Terminal (static terminal) crossing</b></td><td>All crossbred progeny <b>go for slaughter</b>; females bought in. Maximum heterosis + complementarity; <b>no replacements produced</b>.</td></tr>
+          <tr><td><b>Roto-terminal</b></td><td>Rotation to breed replacements + a terminal sire on the older females. Best of both.</td></tr>
+          <tr><td><b>SYNTHETIC / COMPOSITE breed</b></td><td>Crossbreds <b>inter-se mated</b> and stabilised into a new breed — retains part of the heterosis <b>permanently</b>. <b>Karan Swiss, Karan Fries, Frieswal, Sunandini, Vrindavani, Taylor, Jersind; Avikalin, Bharat Merino, Hissardale; Vanaraja, Gramapriya.</b></td></tr>
+          <tr><td><b>Topcross · Incross · Incrossbred</b></td><td>Inbred sire × non-inbred dams; crosses of inbred lines of the same or different breeds — <b>poultry</b>.</td></tr>
+        </table>
+        <p style="margin:2px 0 1px;font-size:7.8pt;"><b>COMBINING ABILITY:</b> <b>GCA</b> = the <b>average performance of a line in all its crosses</b> → due to <b>ADDITIVE</b> gene action. <b>SCA</b> = the <b>deviation of one particular cross</b> from what its parents' GCA predicted → due to <b>DOMINANCE &amp; EPISTASIS</b>.</p>
+        <p style="margin:0;font-size:7.8pt;"><b>RS (Recurrent Selection)</b> — one line is selected on its cross performance with a <b>constant inbred tester</b>; improves <b>GCA</b> of that line only. <b>RRS (Reciprocal Recurrent Selection — Comstock, Hess &amp; Bell, 1949)</b> — <b>two lines are each used as the tester for the other</b>, and both are selected and improved simultaneously; improves <b>BOTH GCA and SCA</b>. RRS is the standard method in <b>commercial poultry (and pig) line development</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 3</div>
+  <div class="page-no">PAGE 3 / 6</div>
+</section>
+
+<!-- ==================== PAGE 4 ==================== -->
+<section class="page">
+  <div class="pg" style="--z:0.962">
+  <div class="runner"><span class="rn">Breeding Strategies · Sire Evaluation · ONBS · New Breeds</span><span class="rs">Unit 3 · Applied Breeding Plans</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">14</span> BREEDING STRATEGY — DAIRY CATTLE &amp; BUFFALO ★★</div>
+      <div class="bb">
+        <div class="flow" style="margin-bottom:3px;font-size:7.1pt;">
+          <div class="node"><b>Elite indigenous milch breeds</b><small>Sahiwal, Gir, Red Sindhi, Tharparkar</small></div><div class="arw">→</div>
+          <div class="node s"><b>SELECTIVE / PURE BREEDING</b><small>progeny testing, ONBS, no exotic blood</small></div>
+        </div>
+        <div class="flow" style="margin-bottom:3px;font-size:7.1pt;">
+          <div class="node c"><b>Nondescript / low producers</b><small>~⅔ of the national herd</small></div><div class="arw">→</div>
+          <div class="node a"><b>CROSSBREEDING</b><small>HF / Jersey / Brown Swiss</small></div><div class="arw">→</div>
+          <div class="node a"><b>Stabilise at 50–62.5% exotic</b><small>inter-se mating</small></div><div class="arw">→</div>
+          <div class="node s"><b>New synthetic breed</b><small>Frieswal, Vrindavani, Sunandini</small></div>
+        </div>
+        <ul class="dash" style="font-size:7.85pt;">
+          <li><b>Cattle — the accepted national policy:</b> ① <b>Selection &amp; pure breeding</b> in the recognised indigenous <b>milch</b> breeds in their <b>breeding tracts</b> ② <b>Selection for draught</b> + conservation in draught breeds ③ <b>Crossbreeding</b> of <b>nondescript</b> cows with exotic dairy breeds, holding <b>exotic inheritance at 50% (up to 62.5%)</b>, then <b>inter-se mating</b> of the crossbreds ④ <b>Grading up</b> of nondescript stock with the best-adapted indigenous breed ⑤ Country-wide <b>AI with progeny-tested frozen semen</b>, pedigree &amp; milk recording.</li>
+          <li><b>Choice of exotic breed:</b> <b>Jersey</b> for hot, humid, low-input areas (small, early maturing, high fat, easy calving); <b>Holstein-Friesian</b> for cooler, well-managed, high-input areas (highest yield, low fat); <b>Brown Swiss</b> intermediate and hardy.</li>
+          <li><b>BUFFALO — NO CROSSBREEDING with exotic.</b> There is no superior exotic buffalo, so the strategy is: <b>selection and pure breeding within Murrah, Nili-Ravi, Jaffarabadi, Surti, Mehsana</b> etc., <b>progeny testing</b> of Murrah bulls (CIRB Hisar, NDRI, Network Project on Buffalo Improvement), and <b>GRADING UP of nondescript buffaloes with Murrah</b> — the single most successful Indian breeding programme. Constraints: <b>late maturity, long calving interval, seasonality, low reproductive rate, poor heat detection (silent heat)</b>.</li>
+          <li><b>Selection criteria for bull mothers:</b> high first-lactation 305-day yield, fat %, early AFC, short calving interval, sound udder, freedom from genetic defects, good pedigree.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">15</span> SHEEP · GOAT · SWINE · POULTRY STRATEGIES</div>
+      <div class="bb">
+        <table class="t teal tight">
+          <tr><th style="width:14%;">Species</th><th>Strategy &amp; breeds used</th></tr>
+          <tr><td><b>SHEEP — wool</b></td><td><b>Crossbreeding</b> of native ewes with <b>Rambouillet, Merino, Corriedale, Russian Merino</b> to improve fineness &amp; fleece weight, then inter-se mating → <b>Hissardale (first Indian crossbred sheep), Avikalin, Avivastra, Bharat Merino, Nilgiri Synthetic</b>. Select for <b>greasy fleece weight, staple length, fibre diameter, low medullation</b>.</td></tr>
+          <tr><td><b>SHEEP — mutton</b></td><td><b>Selection within</b> Nellore, Mandya, Deccani, Marwari; crossing with <b>Dorset, Suffolk</b> for growth. Select for <b>6-month body weight, ADG, lambing % &amp; twinning</b>.</td></tr>
+          <tr><td><b>GOAT</b></td><td><b>Selection within</b> Jamunapari, Beetal, Barbari, Sirohi (milk &amp; meat) and <b>Black Bengal</b> (meat &amp; superior skin, prolific). Crossing with <b>Alpine / Saanen</b> for milk, <b>Boer</b> for meat; <b>Changthangi</b> for pashmina. Traits: litter size, kidding interval, 6-month weight, milk yield.</td></tr>
+          <tr><td><b>SWINE</b></td><td><b>Crossbreeding</b> of indigenous sows with <b>Large White Yorkshire</b> (most widely used), Landrace, Hampshire, Duroc — usually a <b>three-breed or terminal cross</b> to capture individual + maternal heterosis. Select for <b>litter size at birth &amp; weaning, ADG, FCR, backfat thickness, number of functional teats</b>. Very high reproductive rate → very <b>high selection intensity and short L (2 yr)</b>.</td></tr>
+          <tr><td><b>POULTRY</b></td><td>Highly industrialised, <b>separate egg-type and broiler lines</b>. <b>Egg:</b> White Leghorn-based; select for <b>ASM, egg number to 72 wk, egg weight, FCR, livability</b>. <b>Broiler:</b> <b>Cornish sire line × Plymouth Rock dam line</b>; select for <b>6-week body weight, FCR, breast yield</b>. Methods: development of <b>inbred and pure lines → strain crossing → RRS → 3- and 4-way commercial hybrids</b>, with <b>random-bred controls</b> to measure genetic trend. <b>Rural/backyard:</b> dual-purpose coloured birds — <b>Vanaraja, Gramapriya, Krishibro, Giriraja, CARI-Nirbheek</b>.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk coral">
+      <div class="bh"><span class="n">16</span> SIRE EVALUATION ★★ — WHY, AND THE METHODS</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Why evaluate sires?</b> A bull produces <b>no milk himself</b> (milk is a <b>sex-limited</b> trait), yet through AI one bull can sire <b>thousands</b> of daughters. <b>Over 75–90% of the genetic improvement in a dairy population comes through the sire path.</b> He must therefore be evaluated on his <b>daughters</b>.</p>
+        <table class="t coral tight">
+          <tr><th style="width:28%;">Method</th><th>Basis &amp; limitation</th></tr>
+          <tr><td><b>Dam–daughter comparison</b></td><td>Daughters' average vs their dams' average. Simple but <b>ignores environmental &amp; year differences</b> and regression to the mean.</td></tr>
+          <tr><td><b>Simple daughter average</b></td><td>Only the daughters' mean — badly biased by herd and management.</td></tr>
+          <tr><td><b>Equal-parent index</b></td><td><b>SI = 2D̄ − Dam average</b> (assumes both parents contribute equally).</td></tr>
+          <tr><td><b>CONTEMPORARY COMPARISON</b><br>(Robertson &amp; Rendel, 1954)</td><td>Each daughter is compared with the <b>contemporaries</b> — unrelated herdmates of the <b>same herd, year and season</b> calving at the same time. <b>Removes herd-year-season environmental effects</b>; the standard field method. Weighted by number of daughters.</td></tr>
+          <tr><td><b>Herdmate comparison (USDA)</b></td><td>A refinement of CC using a wider herdmate base.</td></tr>
+          <tr><td><b>Least-squares (Harvey)</b></td><td>Handles <b>unequal and disproportionate subclass numbers</b>; fits fixed effects simultaneously.</td></tr>
+          <tr><td><b>★ BLUP</b><br>(Henderson, 1949/1975)</td><td><b>Best Linear Unbiased Prediction.</b> A mixed-model method that <b>simultaneously estimates the fixed environmental effects and predicts the breeding values</b>. It <b>accounts for all genetic relationships</b> among animals, unequal numbers, non-random mating, culling and <b>genetic trend</b>. <b>Best = minimum error variance · Linear · Unbiased · Prediction</b> of random effects. The <b>ANIMAL MODEL</b> form ranks every animal — cows and bulls — on one scale. Now universally used; combined with SNP data as <b>genomic BLUP / ssGBLUP</b>.</td></tr>
+        </table>
+        <span class="fx"><span class="lbl">Accuracy</span> r = √[ n / (n + k) ] , k = (4 − h²)/h² &nbsp;→ more daughters, more accuracy</span>
+        <p style="margin:1px 0 0;font-size:7.8pt;"><b>Requirements for a valid progeny test:</b> random allotment of semen across herds, <b>at least 30–50 daughters in 10+ herds</b>, accurate pedigree &amp; milk recording, contemporaries available, and correction for <b>age, season, lactation number and lactation length (305-day, 2× milking, mature-equivalent)</b>.</p>
+      </div>
+    </div>
+
+    <div class="blk sage">
+      <div class="bh"><span class="n">17</span> OPEN NUCLEUS BREEDING SYSTEM (ONBS) + NEW BREED DEVELOPMENT</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>ONBS</b> = a breeding structure in which the <b>genetically best animals of the whole population are gathered into a small NUCLEUS herd/flock</b> where intensive recording and selection are done; superior genes then flow down to the base. The nucleus is <b>OPEN</b> because <b>superior females (and males) from the base population are continuously allowed to migrate INTO the nucleus</b> (typically about <b>half</b> of nucleus replacements).</p>
+        <div class="flow" style="margin-bottom:3px;font-size:7.1pt;">
+          <div class="node s"><b>NUCLEUS</b><small>elite, fully recorded, intensive selection</small></div><div class="arw">↕</div>
+          <div class="node"><b>MULTIPLIER</b><small>multiplies nucleus genes</small></div><div class="arw">↓</div>
+          <div class="node a"><b>BASE / COMMERCIAL</b><small>farmers' herds — best females move UP</small></div>
+        </div>
+        <ul class="dash sagex" style="font-size:7.85pt;">
+          <li><b>Advantages:</b> much <b>higher selection intensity</b> (choose from the whole population, not one herd) · <b>shorter generation interval</b> · <b>greater accuracy</b> (recording is feasible in a small nucleus) · <b>faster genetic gain</b>, especially where field recording is poor — ideal for <b>Indian village conditions</b> · <b>less inbreeding than a CLOSED nucleus</b> because of continuous inflow · rapid dissemination through <b>AI and MOET</b>.</li>
+          <li><b>Closed nucleus</b> = no inflow → higher intensity but rising inbreeding and loss of variability. <b>MOET-ONBS</b> multiplies the female contribution and is used in Indian <b>buffalo, sheep and goat</b> improvement.</li>
+        </ul>
+        <p style="margin:2px 0 2px;font-size:7.85pt;"><b>DEVELOPMENT OF NEW BREEDS / STRAINS — steps:</b> ① fix the <b>breeding objective</b> and the target environment ② choose <b>foundation breeds</b> that complement each other ③ <b>crossbreed</b> to the desired level of inheritance ④ <b>INTER-SE MATING</b> of the crossbreds ⑤ <b>rigorous selection</b> and culling for the objective over several generations ⑥ <b>close the flock/herd</b> and stabilise type ⑦ evaluate, expand, <b>register (NBAGR)</b> and disseminate.</p>
+        <div class="call gold"><span class="ct">Indian synthetics — quote these</span><b>Cattle:</b> <b>Karan Swiss</b> (Brown Swiss × Sahiwal/Red Sindhi), <b>Karan Fries</b> (HF × Tharparkar), <b>Frieswal</b> (HF × Sahiwal, 62.5% HF — ICAR/Army), <b>Sunandini</b> (Kerala), <b>Vrindavani</b> (IVRI — HF/BS/Jersey × Hariana), <b>Phule Triveni, Taylor, Jersind</b>. <b>Sheep:</b> Hissardale, Avikalin, Avivastra, Bharat Merino, Nilgiri Synthetic. <b>Poultry:</b> Vanaraja, Gramapriya, Krishibro, Giriraja, CARI strains.</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 3</div>
+  <div class="page-no">PAGE 4 / 6</div>
+</section>
+
+<!-- ==================== PAGE 5 ==================== -->
+<section class="page">
+  <div class="pg" style="--z:0.928">
+  <div class="runner"><span class="rn">Breeding Policies · Conservation of AnGR · Biotechnological Tools · Disease Resistance</span><span class="rs">Unit 3 · National Programmes &amp; Technology</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">18</span> CURRENT BREEDING POLICIES &amp; PROGRAMMES — STATE AND COUNTRY</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;">A <b>breeding policy</b> is a written government decision stating, <b>for each region and species: which breed is to be used, on which female population, by what method (selection / grading up / crossbreeding) and up to what level of exotic inheritance.</b> It is framed by the State Animal Husbandry Department within the national framework, because the breeding tract, agro-climate and farmer resources differ from state to state.</p>
+        <table class="t tight">
+          <tr><th style="width:32%;">Programme</th><th>Year &amp; purpose</th></tr>
+          <tr><td><b>Key Village Scheme (KVS)</b></td><td><b>1952</b> — first organised cattle-improvement scheme; village-level breeding units with selected bulls.</td></tr>
+          <tr><td><b>Intensive Cattle Development Project (ICDP)</b></td><td><b>1964</b> — package approach: breeding + feeding + health + marketing around milk-shed areas.</td></tr>
+          <tr><td><b>OPERATION FLOOD</b></td><td><b>1970</b>, NDDB, <b>Dr V. Kurien</b> — the White Revolution; Anand-pattern dairy co-operatives; made India the <b>world's largest milk producer</b>.</td></tr>
+          <tr><td><b>NPCBB</b></td><td><b>2000</b> — National Project for Cattle &amp; Buffalo Breeding: AI delivery at the farmer's door, quality frozen semen, breed conservation.</td></tr>
+          <tr><td><b>National Dairy Plan-I</b></td><td><b>2012</b> — scientific <b>progeny testing &amp; pedigree selection</b>, ration balancing, village-based milk procurement.</td></tr>
+          <tr><td><b>RASHTRIYA GOKUL MISSION</b></td><td><b>2014</b> ★ — development &amp; conservation of <b>INDIGENOUS breeds</b>; <b>Gokul Grams</b>, <b>National Kamdhenu Breeding Centres</b>, Gopal Ratna &amp; Kamdhenu awards, <b>e-Pashuhaat</b> portal, Pashu Sanjivani &amp; animal UID (INAPH).</td></tr>
+          <tr><td><b>Nationwide AI Programme (NAIP)</b> · NPBBDD · NLM</td><td>Free AI coverage in low-performing districts; National Livestock Mission for small ruminants, pigs and poultry.</td></tr>
+        </table>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Institutions to name:</b> <b>NBAGR Karnal</b> (registration &amp; characterisation of breeds) · <b>NDDB Anand</b> · <b>NDRI Karnal</b> · <b>CIRB Hisar</b> (buffalo) · <b>CSWRI Avikanagar</b> (sheep) · <b>CIRG Makhdoom</b> (goat) · <b>CARI &amp; IVRI Izatnagar</b> · <b>CPDOs</b> · Central Frozen Semen Production &amp; Training Institute (Hessarghatta) · State Livestock Development Boards · Central Herd Registration Scheme.</p>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">19</span> CONSERVATION OF ANIMAL GENETIC RESOURCES (AnGR) ★★</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Conservation</b> = all human activities, including strategies and plans, that ensure the <b>continued existence, use and availability</b> of animal genetic resources. <b>Preservation</b> is the narrower act of <b>holding the material unchanged</b> (usually frozen).</p>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>WHY conserve?</b> <b>insurance against unknown future needs</b> (climate, disease, market) · unique <b>adaptation, heat &amp; tick tolerance, disease resistance and draught ability</b> of indigenous breeds · they are the raw material for <b>future selection and crossbreeding</b> · <b>scientific, cultural and socio-economic</b> value to rural livelihoods · <b>ethical duty</b>; a breed lost is lost forever.</p>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>CAUSES of genetic erosion:</b> <b>indiscriminate crossbreeding</b> and unregulated grading up · concentration on <b>a few high-yielding exotic breeds</b> · <b>mechanisation</b> replacing draught cattle · loss of <b>common grazing land</b> and changed farming systems · small population size → <b>drift and inbreeding</b> · disease outbreaks, drought and disasters · lack of economic incentive to the keeper.</p>
+        <table class="t teal tight">
+          <tr><th style="width:24%;">Method</th><th>What it means</th></tr>
+          <tr><td><b>IN-SITU</b><br>(in the native habitat)</td><td>Maintaining <b>live populations in their own breeding tract</b> under the farmer's management: <b>breed societies &amp; breeders' associations, herd/flock registration, subsidy and incentive schemes, elite bull production, gaushalas, Gokul Grams, protected breeding tracts, herd books, community/village-level conservation, providing an economic market for the breed's product.</b> <b>Advantage:</b> the breed keeps <b>evolving with its environment</b> and stays useful.</td></tr>
+          <tr><td><b>EX-SITU IN-VIVO</b></td><td>Live animals maintained <b>outside the breeding tract</b> — government farms, ICAR institute herds, university farms, <b>zoos and rescue centres</b>.</td></tr>
+          <tr><td><b>EX-SITU IN-VITRO</b><br>(cryoconservation)</td><td><b>Cryopreservation in liquid nitrogen (−196 °C)</b> of <b>semen, embryos, oocytes, somatic cells and DNA</b> in a <b>gene/germplasm bank</b>. Cheap, safe, indefinite; <b>but the breed stops evolving</b> and cannot be used <i>in situ</i>.</td></tr>
+        </table>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Supporting tools:</b> <b>characterisation and registration by NBAGR</b>; <b>FAO DAD-IS</b> global database; breed risk-status classes (<b>extinct, critical, endangered, vulnerable, at risk, not at risk</b>) judged on <b>number of breeding females, N<sub>e</sub> and population trend</b>; molecular <b>microsatellite/SNP</b> characterisation to prioritise genetically distinct breeds; <b>Minimum Viable Population</b> and <b>N<sub>e</sub> ≥ 50</b> targets.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk purple">
+      <div class="bh"><span class="n">20</span> REPRODUCTIVE &amp; BIOTECHNOLOGICAL TOOLS FOR GENETIC IMPROVEMENT</div>
+      <div class="bb">
+        <table class="t purple tight">
+          <tr><th style="width:24%;">Tool</th><th>Genetic contribution — which term of ΔG = i·r·σ<sub>A</sub>/L it improves</th></tr>
+          <tr><td><b>ARTIFICIAL INSEMINATION (AI)</b> + frozen semen</td><td>Hugely raises <b>selection intensity on the sire path</b> (one bull → thousands of daughters), permits <b>progeny testing</b>, breaks the size barrier, controls venereal disease, economical. <b>Limits:</b> needs trained inseminators &amp; heat detection; can <b>spread a genetic defect rapidly</b> and raise population inbreeding.</td></tr>
+          <tr><td><b>Sexed semen</b> (flow cytometry, ~90%)</td><td>More heifer calves from the best cows → raises <b>female selection intensity</b>; fewer unwanted male calves.</td></tr>
+          <tr><td><b>Oestrus synchronisation</b></td><td>Fixed-time AI, better records, group management.</td></tr>
+          <tr><td><b>MOET</b> (Multiple Ovulation &amp; Embryo Transfer)</td><td><b>Multiplies the DAM's contribution</b> (an elite cow can give many calves a year) and <b>shortens the generation interval</b> — the basis of <b>MOET nucleus schemes</b>.</td></tr>
+          <tr><td><b>IVF / IVEP · OPU</b></td><td>Embryos from slaughterhouse or live-donor oocytes; large numbers, cheaper than MOET.</td></tr>
+          <tr><td><b>Cloning (SCNT)</b></td><td>Exact genetic copies of elite animals — NDRI buffalo clones <b>Garima, Samrupa</b>. Costly, low efficiency.</td></tr>
+          <tr><td><b>Transgenesis &amp; gene editing (CRISPR-Cas9)</b></td><td>Introducing/editing specific genes — polledness, disease resistance, milk composition.</td></tr>
+          <tr><td><b>MAS &amp; QTL mapping</b></td><td>Selection on <b>DNA markers linked to a QTL</b> — useful for <b>low-h², sex-limited, late-expressed or carcass</b> traits and for <b>carrier detection</b> (BLAD, CVM, DUMPS).</td></tr>
+          <tr><td><b>★ GENOMIC SELECTION</b><br>(Meuwissen <i>et al.</i>, 2001)</td><td>Thousands of <b>SNPs across the whole genome</b> are used to compute a <b>GEBV</b> in a reference population. <b>Doubles the rate of genetic gain</b> mainly by giving <b>useful accuracy in very young animals</b>, so bulls can be used at 1–2 years instead of 6 — it <b>halves the generation interval</b> and can largely replace conventional progeny testing.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk amber">
+      <div class="bh"><span class="n">21</span> BREEDING FOR DISEASE RESISTANCE</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Resistance</b> = ability of the animal to <b>limit establishment/multiplication of the pathogen</b>. <b>Tolerance</b> = ability to remain productive <b>despite</b> infection. <b>Resilience</b> = ability to recover after challenge.</p>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>APPROACHES:</b> ① <b>Direct selection</b> on the disease trait (incidence, clinical score) ② <b>Indirect selection</b> on a correlated indicator — e.g. <b>somatic cell count (SCC) for mastitis</b> (h² 0.10–0.15 vs mastitis incidence 0.02–0.05), <b>FAMACHA/FEC</b> for worm resistance ③ <b>Major genes and MAS</b> ④ <b>crossbreeding</b> to introduce a resistant breed's genes ⑤ transgenesis / gene editing.</p>
+        <table class="t amber tight">
+          <tr><th style="width:32%;">Gene / breed</th><th>Resistance</th></tr>
+          <tr><td><b>BoLA (MHC) haplotypes</b></td><td>Mastitis, general immune responsiveness in cattle</td></tr>
+          <tr><td><b>NRAMP1 (SLC11A1)</b></td><td><b>Brucellosis &amp; tuberculosis</b> resistance in cattle</td></tr>
+          <tr><td><b>PRNP genotype — the ARR allele</b></td><td><b>Scrapie</b> resistance in sheep (basis of national ram-genotyping schemes)</td></tr>
+          <tr><td><b>Mx gene</b></td><td>Influenza / viral resistance in poultry</td></tr>
+          <tr><td><b>F18 / K88 (F4) receptor</b></td><td><b><i>E. coli</i> diarrhoea &amp; oedema disease</b> resistance in pigs</td></tr>
+          <tr><td><b>N'Dama cattle</b></td><td><b>Trypanotolerance</b></td></tr>
+          <tr><td><b><i>Bos indicus</i> (zebu)</b></td><td><b>Tick and tick-borne disease resistance</b>, heat tolerance</td></tr>
+          <tr><td><b>Naked-neck &amp; frizzle genes</b></td><td>Heat tolerance in tropical poultry</td></tr>
+        </table>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Advantages:</b> the improvement is <b>permanent, cumulative and inherited</b>; <b>no drug residues or resistance</b>; cheaper than lifelong treatment; helps where vaccines are unavailable. <b>Limitations:</b> <b>very low h²</b> for most diseases; <b>needs exposure/challenge</b> to record the trait; <b>often antagonistic to production</b> traits; pathogens <b>evolve</b>; resistance to one disease may not extend to others; long time and large recorded populations required.</p>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 3</div>
+  <div class="page-no">PAGE 5 / 6</div>
+</section>
+
+<!-- ==================== PAGE 6 ==================== -->
+<section class="page">
+  <div class="pg" style="--z:0.878">
+  <div class="runner"><span class="rn">Pet · Zoo &amp; Wild Animal Breeding · Final Sweep</span><span class="rs">Unit 3 · Companion &amp; Wildlife</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">22</span> DOG &amp; CAT BREEDS · PEDIGREE SHEET · BREED TRAITS</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>DOG — Kennel-Club groups (7):</b> <b>① Sporting/Gun</b> (Labrador, Golden Retriever, Pointer, Cocker Spaniel) <b>② Hounds</b> — sight hounds hunt by sight, scent hounds by smell (Greyhound, Beagle, Dachshund, <b>Rampur &amp; Mudhol Hound</b>) <b>③ Working</b> (Boxer, Rottweiler, Doberman, Great Dane, Mastiff) <b>④ Terriers</b> (Bull &amp; Fox Terrier) <b>⑤ Toy</b> (Pug, Spitz, Chihuahua) <b>⑥ Non-sporting/Utility</b> (Dalmatian, Bulldog, Poodle) <b>⑦ Herding</b> (German Shepherd, Collie, <b>Gaddi &amp; Bakharwal</b>).</p>
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>Indian dog breeds:</b> <b>Rajapalayam</b> (white, Tamil Nadu), <b>Chippiparai, Kanni, Kombai, Pandikona, Mudhol/Caravan Hound, Rampur Hound, Gaddi, Bakharwal, Himalayan Sheepdog, Indian Pariah, Jonangi</b>.</p>
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>CAT breeds — ① Long-haired:</b> <b>Persian</b> (brachycephalic; screen for <b>PKD</b>), Himalayan, Maine Coon (screen for <b>HCM</b>), Turkish Angora, Ragdoll. <b>② Short-haired:</b> <b>Siamese</b> (points are temperature-sensitive albinism), Burmese, Abyssinian, British/American Shorthair, Russian Blue, Bombay. <b>③ Hairless:</b> Sphynx. <b>Indian:</b> Indian desi/Billi. <b>Note:</b> tortoiseshell/calico = X-linked mosaicism → almost always female.</p>
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>PEDIGREE SHEET</b> = an official record showing an animal's <b>ancestry (usually 3–5 generations)</b> with registration numbers, dates of birth, colour, and the show/working/performance records of the ancestors. Forms: <b>tabular (bracket), arrow, and circular</b>. <b>Uses:</b> <b>pedigree selection</b>; <b>computing F and R</b> before a mating; <b>avoiding inbreeding</b>; breed registration with the <b>Kennel Club of India (KCI)</b>; establishing <b>identity, ownership and sale value</b>; tracing the origin of a <b>hereditary defect</b>. <b>Selection of a breed</b> for a client: purpose (guard/companion/working), space &amp; climate, temperament, exercise &amp; grooming need, cost, and the <b>breed-specific hereditary disorders</b>.</p>
+        <div class="call trap"><span class="ct">Breed-linked hereditary defects to screen</span><b>Hip &amp; elbow dysplasia</b> (German Shepherd, Labrador — OFA/PennHIP scoring) · <b>progressive retinal atrophy</b> · <b>von Willebrand's disease</b> (Doberman) · <b>congenital deafness</b> (Dalmatian, white coat) · <b>brachycephalic airway syndrome</b> (Pug, Bulldog, Persian) · <b>PKD</b> (Persian) · <b>HCM</b> (Maine Coon, Ragdoll). Carriers must be identified and <b>excluded from breeding</b>.</div>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">23</span> BREEDING MANAGEMENT — DOGS · CATS · PET BIRDS</div>
+      <div class="bb">
+        <table class="t teal tight">
+          <tr><th style="width:20%;">Point</th><th>DOG (bitch)</th><th>CAT (queen)</th></tr>
+          <tr><td><b>Puberty</b></td><td>6–12 months</td><td>5–9 months</td></tr>
+          <tr><td><b>First breeding</b></td><td><b>2nd–3rd oestrus, ~18–24 months</b></td><td>~10–12 months</td></tr>
+          <tr><td><b>Cycle type</b></td><td><b>MONOESTROUS</b> — ~2 cycles/year, ~6-month interval; <b>spontaneous ovulator</b></td><td><b>Seasonally polyoestrous</b>, long-day breeder; <b>INDUCED OVULATOR</b> (mating triggers the LH surge)</td></tr>
+          <tr><td><b>Oestrus</b></td><td>Proestrus ~9 d (bloody discharge, refuses male) → oestrus ~9 d (accepts male, straw-coloured discharge, flagging)</td><td>Oestrus 4–10 d, repeating every 14–21 d in season; calling, lordosis, treading</td></tr>
+          <tr><td><b>Best time to mate</b></td><td><b>Day 10–14 from onset of proestrus</b>; confirm by <b>vaginal cytology (&gt;80–90% cornified cells)</b> and <b>serum progesterone (~5 ng/mL at the LH surge)</b>; mate on alternate days</td><td>Days 2–4 of oestrus; 2–3 matings to ensure ovulation</td></tr>
+          <tr><td><b>Gestation</b></td><td><b>63 ± 3 days</b></td><td><b>63–65 days</b></td></tr>
+          <tr><td><b>Litter</b></td><td>1–12 (breed-dependent)</td><td>4–6</td></tr>
+        </table>
+        <p style="margin:2px 0 2px;font-size:7.8pt;"><b>Management common to both:</b> select on <b>breed standard conformation, temperament, health screening and pedigree</b>; <b>avoid close inbreeding</b>; deworm and vaccinate before mating; balanced diet with adequate protein, calcium &amp; energy; provide a quiet <b>whelping/queening box</b>; monitor parturition (dystocia is common in <b>brachycephalic</b> breeds → planned caesarean); record matings, whelping dates and litter details; register the litter.</p>
+        <p style="margin:0 0 0;font-size:7.8pt;"><b>PET BIRDS COMMON IN INDIA &amp; THEIR BREEDING:</b> <b>Budgerigar</b> (clutch 4–6, incubation <b>18 d</b>), <b>Cockatiel</b> (18–21 d), <b>Lovebirds</b> (23 d), <b>Zebra &amp; Bengalese finch</b>, <b>Java sparrow</b>, <b>Canary</b>, <b>fancy pigeons</b>. Breeding needs: <b>true pairs</b> (many species are <b>monomorphic</b> → <b>DNA/endoscopic sexing</b>), a <b>nest box</b> of the right size, 12–14 h light, breeding-season conditioning, <b>calcium (cuttlefish bone/mineral grit)</b>, soft/egg food, quiet surroundings; <b>colony</b> breeding for finches vs <b>cage/pair</b> breeding for budgerigars; avoid inbreeding and colour-mutation matings that carry lethal or semi-lethal genes; foster/hand rearing when needed. <b>Legal note: Indian native birds (rose-ringed parakeet, munias, mynah, peafowl) are protected under the Wildlife (Protection) Act, 1972 and CANNOT be kept, bred or traded</b> — only exotic species may be kept.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk sage">
+      <div class="bh"><span class="n">24</span> WILD ANIMALS — POPULATION DYNAMICS, N<sub>e</sub>, PLANNED &amp; CONTROLLED BREEDING ★</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>POPULATION DYNAMICS</b> = study of how a population's size and structure change with time under <b>natality, mortality, immigration and emigration</b> (N<sub>t+1</sub> = N<sub>t</sub> + B − D + I − E). Growth is <b>exponential (J-shaped)</b> when resources are unlimited and <b>logistic (S-shaped)</b> when limited by the <b>carrying capacity K</b>. Also studied: age structure &amp; life tables, sex ratio, density-dependent (competition, disease) vs density-independent (drought, fire) factors, <b>Minimum Viable Population</b> and <b>Population Viability Analysis (PVA)</b>.</p>
+        <span class="fx sage"><span class="lbl">EFFECTIVE POPULATION SIZE</span> N<sub>e</sub> = 4 N<sub>m</sub> N<sub>f</sub> / (N<sub>m</sub> + N<sub>f</sub>) &nbsp;;&nbsp; ΔF = 1 / (2N<sub>e</sub>)</span>
+        <p style="margin:1px 0 2px;font-size:7.8pt;"><b>N<sub>e</sub></b> = the size of an <b>idealised population</b> that would show the <b>same rate of inbreeding / loss of genetic variation</b> as the actual population. <b>N<sub>e</sub> is almost always much SMALLER than the census number N</b>, and is reduced by: <b>unequal sex ratio</b> (a few breeding males), <b>variance in family size</b>, <b>fluctuating population size</b> (use the <b>harmonic mean</b> — a single bottleneck dominates), overlapping generations and non-random mating. <b>50/500 rule: N<sub>e</sub> ≥ 50 to avoid immediate inbreeding depression (ΔF ≤ 1%/generation) and N<sub>e</sub> ≥ 500 to retain long-term evolutionary potential.</b></p>
+        <p style="margin:0 0 2px;font-size:7.8pt;"><b>PLANNED BREEDING IN CAPTIVITY:</b> maintained through <b>STUDBOOKS</b> (international/national, kept by a studbook keeper) and pedigree analysis. Objectives: <b>retain ~90% of the founders' gene diversity for 100 years</b>, <b>minimise inbreeding</b>, <b>equalise founder representation</b>, avoid <b>adaptation to captivity</b>. Pairings are chosen by <b>MEAN KINSHIP (mate the lowest-MK animals; avoid pairs with high kinship)</b>, supported by <b>genome resource banks</b> and cooperative programmes (<b>SSP</b> in the USA, <b>EEP</b> in Europe; in India the <b>Central Zoo Authority conservation-breeding programmes</b> for the <b>Red Panda, Snow Leopard, Sangai (brow-antlered deer), Pygmy Hog, Great Indian Bustard, Gharial and vultures (Jatayu centres)</b>). Longer generation intervals are <b>deliberately encouraged</b> in captive programmes to slow genetic drift — the opposite of livestock practice.</p>
+        <p style="margin:0 0 0;font-size:7.8pt;"><b>CONTROLLED BREEDING &amp; ASSISTED REPRODUCTION:</b> <b>oestrus detection by non-invasive faecal/urinary steroid monitoring</b> and ultrasonography; <b>oestrus synchronisation and GnRH/hormonal induction</b>; <b>semen collection by electroejaculation</b>, evaluation and <b>cryopreservation in genome resource banks</b>; <b>AI (successful in elephant, rhino, giant panda, big cats)</b>, <b>embryo transfer and IVF</b>, interspecies surrogacy, and <b>cloning</b> for critically endangered species; <b>contraception (GnRH vaccines, implants)</b> to prevent surplus animals in over-represented species. <b>Breeding for conservation</b> also requires avoiding <b>hybridisation with related species</b> and <b>outbreeding depression</b>, and planning eventual <b>reintroduction/rewilding</b> with disease screening and behavioural preparation.</p>
+      </div>
+    </div>
+
+    <div class="blk coral">
+      <div class="bh"><span class="n">★</span> LAST-10-MINUTES: OBJECTIVE AMMUNITION + SUBJECTIVE ATTACK PLANS</div>
+      <div class="bb">
+        <div class="rf" style="font-size:7.5pt;">
+          <p><b>Father of Animal Breeding</b> — <b>Jay L. Lush</b>; practice — <b>Robert Bakewell</b></p>
+          <p><b>F</b> — Sewall Wright; <b>Selection index</b> — Hazel &amp; Lush; <b>BLUP</b> — Henderson; <b>RRS</b> — Comstock, Hess &amp; Bell; <b>Contemporary comparison</b> — Robertson &amp; Rendel; <b>Heterosis</b> — Shull</p>
+          <p><b>ΔG/yr = i · h² · σ<sub>P</sub> / L</b>; <b>R = h²S</b>; <b>i = S/σ<sub>P</sub></b></p>
+          <p><b>L:</b> poultry 1–1.5 · pig 2 · sheep/goat 3–4 · cattle 4.5–6 · <b>buffalo 6–8 yr</b></p>
+          <p><b>F full-sib = parent-offspring = 0.25</b>; half-sib 0.125; first cousins 0.0625</p>
+          <p><b>R full-sib = parent-offspring = 0.50</b>; half-sib 0.25</p>
+          <p><b>Heterozygotes fall by (1 − F)</b>; inbreeding changes <b>genotypic</b> not gene frequency</p>
+          <p><b>Grading up:</b> 50 → 75 → 87.5 → <b>93.75</b> → 96.87%; purebred in <b>4–6 generations</b></p>
+          <p><b>Heterosis halves in F₂</b>; greatest in <b>low-h² fitness traits</b></p>
+          <p><b>Criss-cross retains ~67%</b>, 3-breed rotation <b>~86%</b> heterosis</p>
+          <p><b>Efficiency: Index &gt; ICL &gt; Tandem</b></p>
+          <p><b>GCA = additive; SCA = dominance/epistasis</b></p>
+          <p><b>Exotic inheritance held at 50% (up to 62.5%)</b> in Indian dairy crossbreeding</p>
+          <p><b>Buffalo — NO exotic crossbreeding</b>; grade up with <b>Murrah</b></p>
+          <p><b>Frieswal</b> = HF × Sahiwal (62.5%); <b>Karan Fries</b> = HF × Tharparkar; <b>Karan Swiss</b> = Brown Swiss × Sahiwal; <b>Vrindavani</b> = IVRI</p>
+          <p><b>Mule 2n = 63, sterile</b>; horse ♀ × ass ♂</p>
+          <p><b>Progeny test needs ≥ 30–50 daughters in 10+ herds</b></p>
+          <p><b>BLUP</b> = Best Linear Unbiased Prediction (animal model)</p>
+          <p><b>ONBS</b> — open = superior females migrate INTO the nucleus</p>
+          <p><b>N<sub>e</sub> = 4N<sub>m</sub>N<sub>f</sub>/(N<sub>m</sub>+N<sub>f</sub>)</b>; <b>ΔF = 1/2N<sub>e</sub></b>; <b>50/500 rule</b></p>
+          <p><b>NBAGR Karnal</b> registers breeds; <b>DAD-IS</b> = FAO database</p>
+          <p><b>Rashtriya Gokul Mission 2014</b> — indigenous breeds, Gokul Grams</p>
+          <p><b>Operation Flood 1970</b> — NDDB, Dr V. Kurien</p>
+          <p><b>Cryopreservation at −196 °C</b> (liquid nitrogen) = ex-situ in-vitro</p>
+          <p><b>Genomic selection</b> doubles gain by <b>halving L</b> (Meuwissen 2001)</p>
+          <p><b>Bitch:</b> monoestrous, 63 d gestation, mate day 10–14; <b>Queen:</b> induced ovulator, 63–65 d</p>
+          <p><b>Budgerigar incubation 18 days</b>; Indian native birds protected — <b>WPA 1972</b></p>
+        </div>
+        <div class="call trap" style="margin-top:2px;"><span class="ct">Subjective attack plans</span><b>"Response to selection and factors affecting it"</b> → define selection &amp; S, i → ΔG = i·h²·σ<sub>P</sub>/L → derive per year → the <b>8 factors</b> → species comparison of L → conclusion on the four levers. <b>"Inbreeding — coefficient, consequences, applications"</b> → definition &amp; types → Wright's formula with a worked path → F table → genetic consequences (homozygosity, no change in gene frequency) → inbreeding depression → 6 applications → ΔF ≤ 1% rule. <b>"Heterosis"</b> → definition → formula → 3 theories → H ∝ Σdy² → which traits → types → not fixable → all systems of utilisation → Indian examples. <b>"Sire evaluation"</b> → why (sex-limited, AI, 75–90% of gain) → all 7 methods in order → CC in detail → BLUP in detail → accuracy formula → requirements. <b>"Conservation of AnGR"</b> → definitions → why → causes of erosion → in-situ vs ex-situ table → NBAGR/DAD-IS/risk status → N<sub>e</sub> and the 50/500 rule → Indian programmes.</div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 3 · Fazal Zama</div>
+  <div class="page-no">PAGE 6 / 6</div>
+</section>
+
+</body>
+</html>

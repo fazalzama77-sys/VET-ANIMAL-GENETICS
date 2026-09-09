@@ -4,7 +4,259 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AGB Unit 1 — Rapid Revision</title>
-<link rel="stylesheet" href="_revision.css">
+<style>
+/* ============================================================
+   AGB RAPID REVISION SHEETS — print-first A4 stylesheet
+   Uses the shared IVRI Academic palette (values mirrored from
+   assets/css/tokens.css so the sheet prints standalone).
+   ============================================================ */
+
+:root{
+  --blue:#1565c0; --blue-dark:#0d47a1; --blue-light:#e8f1fb;
+  --teal:#00897b; --teal-dark:#00695c; --teal-light:#e0f2f1;
+  --purple:#6a48b5; --purple-light:#ede7f6;
+  --amber:#b25e00; --amber-light:#fff5e8;
+  --coral:#d84315; --coral-light:#fdece7;
+  --sage:#2e7d32; --sage-light:#e8f5e9;
+  --ink:#1b2733; --ink-2:#3d4d5c; --ink-3:#63737f;
+  --line:#c9d6e2; --line-soft:#e3ebf3;
+  --surface:#ffffff; --surface-2:#f7fafc; --bg:#eef3f8;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  font-size:8.75pt; line-height:1.28;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+b,strong{font-weight:700;color:var(--ink);}
+sub,sup{font-size:.68em;}
+.mono{font-family:"JetBrains Mono","Consolas",ui-monospace,monospace;}
+
+/* ---------- PAGE ---------- */
+.page{
+  width:210mm; min-height:296mm; height:296mm;
+  margin:0 auto 6mm; padding:8mm 9mm 7mm;
+  background:var(--surface);
+  box-shadow:0 2px 14px rgba(21,101,192,.13);
+  position:relative; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.page-no{
+  position:absolute; right:9mm; bottom:3.4mm;
+  font-size:7pt; color:var(--ink-3); letter-spacing:.06em;
+  font-family:"JetBrains Mono",monospace;
+}
+.page-foot{
+  position:absolute; left:9mm; bottom:3.4mm;
+  font-size:6.8pt; color:var(--ink-3); letter-spacing:.03em;
+}
+
+/* ---------- AUTO-FIT WRAPPER ----------
+   Each page carries an individually computed scale (--z) so that a full
+   page of content fits an A4 sheet exactly, at the largest type that
+   still fits. Width is divided by --z first so the block still fills the
+   page after zoom. Values are baked in by fit.js -> build.py. */
+.pg{
+  --z:1;
+  width:calc(100% / var(--z));
+  transform:scale(var(--z));
+  transform-origin:top left;
+  flex:0 0 auto;
+}
+
+/* ---------- MASTHEAD ---------- */
+.masthead{
+  display:flex; align-items:center; gap:8px;
+  border-bottom:2.4px solid var(--blue);
+  padding-bottom:4px; margin-bottom:6px;
+}
+.mark{
+  width:26px;height:26px;border-radius:6px;background:var(--blue);
+  color:#fff;font-weight:800;font-size:11pt;display:flex;
+  align-items:center;justify-content:center;letter-spacing:-.02em;flex:0 0 auto;
+}
+.mh-t{font-size:12.6pt;font-weight:800;letter-spacing:-.02em;color:var(--blue-dark);line-height:1.05;}
+.mh-s{font-size:7.4pt;color:var(--ink-3);letter-spacing:.05em;text-transform:uppercase;font-weight:600;}
+.mh-right{margin-left:auto;text-align:right;font-size:7.2pt;color:var(--ink-3);line-height:1.3;}
+.mh-right b{display:block;font-size:8.6pt;color:var(--coral);letter-spacing:.03em;}
+
+.runner{
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1.6px solid var(--line);padding-bottom:3px;margin-bottom:5px;
+}
+.runner .rn{font-size:10.6pt;font-weight:800;color:var(--blue-dark);letter-spacing:-.01em;}
+.runner .rs{font-size:7.2pt;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-left:auto;}
+
+/* ---------- GRID ---------- */
+.row{display:flex;gap:4mm;}
+.col{flex:1;min-width:0;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:4mm;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3.2mm;}
+.stack{display:flex;flex-direction:column;gap:3.4mm;}
+.grow{flex:1;}
+
+/* ---------- BLOCK ---------- */
+.blk{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface);}
+.blk > .bh{
+  font-size:8.1pt;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:2.6px 6px;color:#fff;background:var(--blue);display:flex;align-items:center;gap:5px;
+}
+.bh .n{
+  background:rgba(255,255,255,.26);border-radius:3px;padding:0 4px;font-size:7.4pt;
+  font-family:"JetBrains Mono",monospace;
+}
+.bb{padding:3.8px 5px;}
+.blk.teal > .bh{background:var(--teal);}
+.blk.purple > .bh{background:var(--purple);}
+.blk.amber > .bh{background:var(--amber);}
+.blk.coral > .bh{background:var(--coral);}
+.blk.sage > .bh{background:var(--sage);}
+.blk.teal{border-color:#9fd3cd;} .blk.purple{border-color:#c4b3e4;}
+.blk.amber{border-color:#e8c48f;} .blk.coral{border-color:#f0b39c;}
+.blk.sage{border-color:#a9d3ab;}
+
+/* ---------- LISTS ---------- */
+ul.t{margin:0;padding-left:12px;}
+ul.t li{margin:0 0 1.2px;}
+ul.t li::marker{color:var(--blue);}
+ol.t{margin:0;padding-left:14px;}
+ol.t li{margin:0 0 1.6px;}
+.dash{margin:0;padding:0;list-style:none;}
+.dash li{margin:0 0 1.3px;padding-left:9px;position:relative;}
+.dash li::before{content:"▸";position:absolute;left:0;top:-.5px;color:var(--blue);font-size:7.5pt;}
+.dash.tealx li::before{color:var(--teal);} .dash.purplex li::before{color:var(--purple);}
+.dash.amberx li::before{color:var(--amber);} .dash.coralx li::before{color:var(--coral);}
+.dash.sagex li::before{color:var(--sage);}
+
+/* ---------- TABLE ---------- */
+table.t{width:100%;border-collapse:collapse;font-size:8.1pt;}
+table.t th{
+  background:var(--blue-light);color:var(--blue-dark);font-weight:700;
+  text-align:left;padding:2px 3.5px;border:1px solid var(--line);font-size:7.7pt;
+  letter-spacing:.02em;
+}
+table.t td{padding:1.8px 3.5px;border:1px solid var(--line-soft);vertical-align:top;}
+table.t tr:nth-child(even) td{background:var(--surface-2);}
+table.t.teal th{background:var(--teal-light);color:var(--teal-dark);}
+table.t.purple th{background:var(--purple-light);color:var(--purple);}
+table.t.amber th{background:var(--amber-light);color:var(--amber);}
+table.t.sage th{background:var(--sage-light);color:var(--sage);}
+table.t.coral th{background:var(--coral-light);color:var(--coral);}
+table.t.tight td,table.t.tight th{padding:1.6px 3px;font-size:7.7pt;}
+
+/* ---------- FORMULA ---------- */
+.fx{
+  font-family:"JetBrains Mono",monospace;font-size:8.2pt;
+  background:var(--blue-light);border-left:2.6px solid var(--blue);
+  padding:2px 5px;border-radius:0 3px 3px 0;margin:1.7px 0;display:block;
+  color:var(--blue-dark);font-weight:600;
+}
+.fx.teal{background:var(--teal-light);border-color:var(--teal);color:var(--teal-dark);}
+.fx.purple{background:var(--purple-light);border-color:var(--purple);color:var(--purple);}
+.fx.amber{background:var(--amber-light);border-color:var(--amber);color:var(--amber);}
+.fx.sage{background:var(--sage-light);border-color:var(--sage);color:var(--sage);}
+.fx .lbl{font-family:"Inter",sans-serif;font-weight:700;color:var(--ink-2);font-size:7.4pt;}
+
+/* ---------- CHIPS / TAGS ---------- */
+.chip{
+  display:inline-block;padding:.4px 4.5px;border-radius:9px;font-size:7pt;font-weight:700;
+  background:var(--blue-light);color:var(--blue-dark);letter-spacing:.02em;margin:0 2px 2px 0;
+}
+.chip.t{background:var(--teal-light);color:var(--teal-dark);}
+.chip.p{background:var(--purple-light);color:var(--purple);}
+.chip.a{background:var(--amber-light);color:var(--amber);}
+.chip.c{background:var(--coral-light);color:var(--coral);}
+.chip.s{background:var(--sage-light);color:var(--sage);}
+
+/* ---------- CALLOUTS ---------- */
+.call{border-radius:4px;padding:2.9px 5px;font-size:7.9pt;margin:2px 0;border:1px solid;}
+.call .ct{font-weight:800;font-size:7.4pt;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:1px;}
+.call.trap{background:var(--coral-light);border-color:#f0b39c;color:#7d2a10;}
+.call.trap .ct{color:var(--coral);}
+.call.mnem{background:var(--amber-light);border-color:#e8c48f;color:#6b3a00;}
+.call.mnem .ct{color:var(--amber);}
+.call.gold{background:var(--sage-light);border-color:#a9d3ab;color:#1d5220;}
+.call.gold .ct{color:var(--sage);}
+.call.why{background:var(--purple-light);border-color:#c4b3e4;color:#40296f;}
+.call.why .ct{color:var(--purple);}
+
+/* ---------- FLOW / DIAGRAM ---------- */
+.flow{display:flex;align-items:stretch;gap:0;font-size:7.6pt;}
+.node{
+  flex:1;border:1.2px solid var(--blue);border-radius:4px;padding:2.2px 4px;
+  background:var(--blue-light);text-align:center;line-height:1.2;
+}
+.node b{display:block;font-size:7.9pt;color:var(--blue-dark);}
+.node small{color:var(--ink-2);font-size:6.9pt;}
+.arw{flex:0 0 12px;display:flex;align-items:center;justify-content:center;color:var(--blue);font-weight:800;font-size:9pt;}
+.node.t{border-color:var(--teal);background:var(--teal-light);} .node.t b{color:var(--teal-dark);}
+.node.p{border-color:var(--purple);background:var(--purple-light);} .node.p b{color:var(--purple);}
+.node.a{border-color:var(--amber);background:var(--amber-light);} .node.a b{color:var(--amber);}
+.node.s{border-color:var(--sage);background:var(--sage-light);} .node.s b{color:var(--sage);}
+.node.c{border-color:var(--coral);background:var(--coral-light);} .node.c b{color:var(--coral);}
+
+/* tree */
+.tree{font-size:7.7pt;line-height:1.3;}
+.tree .lvl{display:flex;gap:3px;margin-bottom:3px;}
+.tree .box{
+  flex:1;border:1px solid var(--line);border-radius:3.5px;padding:2px 4px;background:var(--surface-2);
+}
+.tree .box b{color:var(--blue-dark);}
+
+/* key-value strip */
+.kv{display:grid;grid-template-columns:auto 1fr;gap:1.5px 6px;font-size:8pt;}
+.kv dt{font-weight:700;color:var(--blue-dark);white-space:nowrap;}
+.kv dd{margin:0;color:var(--ink-2);}
+
+/* numbered map */
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:2.6px;font-size:7.4pt;}
+.map .m{
+  border:1px solid var(--line);border-radius:3.5px;padding:2.4px 4px;background:var(--surface-2);
+  line-height:1.22;
+}
+.map .m b{display:block;color:var(--blue-dark);font-size:7.7pt;}
+.map .m span{color:var(--ink-3);font-size:6.7pt;font-family:"JetBrains Mono",monospace;}
+
+/* rapid-fire two column list */
+.rf{column-count:2;column-gap:5mm;font-size:7.9pt;}
+.rf p{margin:0 0 1.4px;break-inside:avoid;}
+.rf b{color:var(--blue-dark);}
+.rf3{column-count:3;column-gap:4mm;font-size:7.7pt;}
+.rf3 p{margin:0 0 1.3px;break-inside:avoid;}
+
+/* answer skeleton */
+.skel{font-size:7.9pt;}
+.skel .s{display:flex;gap:5px;margin-bottom:1.6px;align-items:baseline;}
+.skel .s i{
+  flex:0 0 15px;font-style:normal;font-weight:800;color:#fff;background:var(--purple);
+  border-radius:3px;text-align:center;font-size:6.9pt;padding:.5px 0;
+}
+.hl{background:#fff3b0;padding:0 1px;border-radius:2px;font-weight:600;}
+.u{border-bottom:1.4px solid var(--amber);padding-bottom:.5px;font-weight:700;}
+
+/* ---------- PRINT ---------- */
+@page{size:A4 portrait;margin:0;}
+@media print{
+  body{background:#fff;}
+  .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;}
+  .page:last-child{page-break-after:auto;break-after:auto;}
+  .noprint{display:none !important;}
+}
+.toolbar{
+  max-width:210mm;margin:8px auto 0;display:flex;gap:8px;align-items:center;
+  font-size:8.5pt;color:var(--ink-2);
+}
+.toolbar button{
+  font:inherit;font-weight:700;background:var(--blue);color:#fff;border:0;
+  padding:6px 14px;border-radius:6px;cursor:pointer;
+}
+.toolbar a{color:var(--blue);font-weight:700;text-decoration:none;}
+
+</style>
 </head>
 <body>
 
@@ -16,6 +268,7 @@
 
 <!-- ==================== PAGE 1 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:1">
   <div class="masthead">
     <div class="mark">AG</div>
     <div>
@@ -141,12 +394,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
   <div class="page-no">PAGE 1 / 6</div>
 </section>
 
 <!-- ==================== PAGE 2 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.994">
   <div class="runner"><span class="rn">Central Tendency · Dispersion · Shape of Distribution</span><span class="rs">Unit 1 · Descriptive Statistics</span></div>
 
   <div class="g2">
@@ -258,12 +515,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
   <div class="page-no">PAGE 2 / 6</div>
 </section>
 
 <!-- ==================== PAGE 3 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:1">
   <div class="runner"><span class="rn">Probability · Binomial · Poisson · Normal Distribution</span><span class="rs">Unit 1 · Probability Theory</span></div>
 
   <div class="g2">
@@ -369,12 +630,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
   <div class="page-no">PAGE 3 / 6</div>
 </section>
 
 <!-- ==================== PAGE 4 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.933">
   <div class="runner"><span class="rn">Correlation · Regression · Sampling Methods</span><span class="rs">Unit 1 · Relationship &amp; Sampling</span></div>
 
   <div class="g2">
@@ -481,12 +746,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
   <div class="page-no">PAGE 4 / 6</div>
 </section>
 
 <!-- ==================== PAGE 5 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:1">
   <div class="runner"><span class="rn">Z-test · t-test · Chi-square · Non-parametric Tests</span><span class="rs">Unit 1 · Tests of Significance</span></div>
 
   <div class="blk sage">
@@ -589,12 +858,16 @@
     </div>
   </div>
 
+  </div>
+
+
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
   <div class="page-no">PAGE 5 / 6</div>
 </section>
 
 <!-- ==================== PAGE 6 ==================== -->
 <section class="page">
+  <div class="pg" style="--z:0.84">
   <div class="runner"><span class="rn">Design of Experiments · ANOVA · Computer Application</span><span class="rs">Unit 1 · Final Sweep</span></div>
 
   <div class="g2">
@@ -606,7 +879,7 @@
           <div class="node a"><b>REPLICATION</b><small>gives an estimate of error · ↑ precision</small></div><div class="arw">+</div>
           <div class="node a"><b>LOCAL CONTROL</b><small>blocking · reduces experimental error</small></div>
         </div>
-        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Other terms:</b> treatment · experimental unit (plot/animal) · <b>experimental error</b> (unexplained variation between units treated alike) · <b>precision ∝ 1/SE</b> · <b>efficiency</b> of one design relative to another.<br><b>CRD uses only randomisation + replication; RBD adds local control.</b></p>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Other terms:</b> treatment · experimental unit · <b>experimental error</b> (variation between units treated alike) · <b>precision ∝ 1/SE</b>. <b>CRD uses randomisation + replication only; RBD adds local control.</b></p>
         <table class="t amber tight">
           <tr><th style="width:20%;"></th><th>CRD</th><th>RBD</th></tr>
           <tr><td><b>Principles</b></td><td>Randomisation + Replication</td><td>All <b>three</b> (+ Local control)</td></tr>
@@ -615,7 +888,7 @@
           <tr><td><b>Replication</b></td><td><b>May be unequal</b> — most flexible</td><td>Must be <b>equal</b> (= no. of blocks)</td></tr>
           <tr><td><b>Error df</b></td><td><b>Maximum</b> (best for very small experiments)</td><td>Less — some df go to blocks</td></tr>
           <tr><td><b>Precision</b></td><td>Lower</td><td><b>Higher</b> (block variation removed from error)</td></tr>
-          <tr><td><b>Missing plot</b></td><td>No problem — just analyse unequal n</td><td>Needs a <b>missing-plot formula</b></td></tr>
+          <tr><td><b>Missing plot</b></td><td>No problem — analyse unequal n</td><td>Needs a <b>missing-plot formula</b></td></tr>
           <tr><td><b>Analysis</b></td><td>One-way ANOVA</td><td>Two-way ANOVA</td></tr>
         </table>
         <div class="call mnem"><span class="ct">Mnemonic</span><b>"R-R-L"</b> — <b>R</b>andomisation, <b>R</b>eplication, <b>L</b>ocal control. CRD = <b>R-R</b> only; RBD = <b>R-R-L</b>. (Latin Square adds local control in <b>two</b> directions, rows &amp; columns, and needs t = r = c.)</div>
@@ -647,15 +920,9 @@
     <div class="blk">
       <div class="bh"><span class="n">27</span> COMPUTER APPLICATION — ONE-PASS SWEEP</div>
       <div class="bb">
-        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Computer languages:</b> <b>Low level</b> — <b>Machine language</b> (binary 0/1, only language the CPU understands, machine-dependent) and <b>Assembly language</b> (mnemonics; needs an <b>ASSEMBLER</b>). <b>High level</b> — English-like, machine-independent: FORTRAN, COBOL, BASIC, C, C++, Java, Python, R; need a <b>COMPILER</b> (translates the whole program at once, faster) or an <b>INTERPRETER</b> (line by line, easier to debug). <b>4GL</b> — SQL. Source code → translator → object code.</p>
-        <p style="margin:0 0 2px;font-size:7.85pt;"><b>DBMS:</b> software to <b>create, store, retrieve, update and manage</b> data in a database. Hierarchy: <b>bit → byte → field → record → file → database</b>. <b>Advantages:</b> controls <b>data redundancy</b>, ensures <b>consistency, integrity, security, sharing</b>, enforces standards, backup &amp; recovery. <b>Models:</b> hierarchical (tree), network, <b>relational (RDBMS — data in tables of rows &amp; columns; primary key, foreign key; query language SQL)</b>, object-oriented. <b>Examples:</b> MS-Access, Oracle, MySQL, SQL Server. Vet use: herd registers, breeding &amp; health records, AI records, disease surveillance databases.</p>
-        <table class="t tight">
-          <tr><th style="width:24%;">MS-Office component</th><th>Function &amp; file extension</th></tr>
-          <tr><td><b>MS-Word</b></td><td>Word processing — thesis, reports · <b>.docx</b></td></tr>
-          <tr><td><b>MS-Excel</b></td><td><b>Spreadsheet</b> — data entry, calculation, charts, statistical analysis · <b>.xlsx</b></td></tr>
-          <tr><td><b>MS-PowerPoint</b></td><td>Presentation slides · <b>.pptx</b></td></tr>
-          <tr><td><b>MS-Access</b></td><td><b>Database</b> management (RDBMS) · <b>.accdb</b></td></tr>
-        </table>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Computer languages: Low level</b> — <b>machine language</b> (binary, the only language the CPU understands) and <b>assembly</b> (mnemonics; needs an <b>ASSEMBLER</b>). <b>High level</b> — English-like, machine-independent: FORTRAN, COBOL, C, C++, Java, Python, R; need a <b>COMPILER</b> (whole program at once, faster) or an <b>INTERPRETER</b> (line by line, easier to debug). <b>4GL</b> — SQL.</p>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>DBMS:</b> software to <b>create, store, retrieve, update and manage</b> data. Hierarchy: <b>bit → byte → field → record → file → database</b>. <b>Advantages:</b> controls <b>data redundancy</b>; ensures <b>consistency, integrity, security, sharing</b>; backup &amp; recovery. <b>Models:</b> hierarchical, network, <b>relational (RDBMS — tables of rows &amp; columns; primary &amp; foreign key; SQL)</b>, object-oriented. <b>Examples:</b> MS-Access, Oracle, MySQL. Vet use: herd, breeding, AI and disease-surveillance records.</p>
+        <p style="margin:0;font-size:7.85pt;"><b>MS-OFFICE:</b> <b>MS-Word</b> — word processing, <b>.docx</b> · <b>MS-Excel</b> — <b>spreadsheet</b>: data entry, calculation, charts, statistics, <b>.xlsx</b> · <b>MS-PowerPoint</b> — presentation slides, <b>.pptx</b> · <b>MS-Access</b> — <b>database</b> (RDBMS), <b>.accdb</b>.</p>
       </div>
     </div>
 
@@ -683,15 +950,14 @@
       <div class="row" style="gap:4mm;">
         <div class="col" style="flex:1.5;">
           <div class="rf3">
-            <p><b>Father of statistics</b> — Sir R.A. Fisher (also of ANOVA &amp; experimental design)</p>
-            <p><b>Father of biostatistics</b> — Karl Pearson (also χ², r, skewness)</p>
+            <p><b>Father of statistics</b> — R.A. Fisher (ANOVA, design)</p>
+            <p><b>Father of biostatistics</b> — Karl Pearson (χ², r)</p>
             <p><b>t-test</b> — W.S. Gosset ("Student")</p>
             <p><b>Regression</b> — Sir Francis Galton</p>
-            <p><b>Σ(x − x̄)</b> = 0; <b>Σ(x − x̄)²</b> = minimum</p>
-            <p><b>Best measure of dispersion</b> — SD</p>
-            <p><b>Most unstable</b> — Range</p>
+            <p><b>Σ(x − x̄)</b> = 0; <b>Σ(x − x̄)²</b> = min</p>
+            <p><b>Best dispersion measure</b> — SD; <b>most unstable</b> — Range</p>
             <p><b>Unit-free measures</b> — r, CV, Z, β₁, β₂</p>
-            <p><b>Median from</b> ogive; <b>Mode from</b> histogram</p>
+            <p><b>Median</b> from ogive; <b>Mode</b> from histogram</p>
             <p><b>Mode = 3 Median − 2 Mean</b></p>
             <p><b>AM ≥ GM ≥ HM</b></p>
             <p><b>QD : MD : SD = 10 : 12 : 15</b></p>
@@ -714,9 +980,7 @@
             <p><b>SE = s/√n</b> — falls as n rises</p>
             <p><b>Non-parametric for ANOVA</b> — Kruskal–Wallis</p>
             <p><b>Compiler</b> — whole program; <b>Interpreter</b> — line by line</p>
-            <p><b>Machine language</b> — binary, only one CPU understands</p>
-            <p><b>SMTP</b> send, <b>POP3/IMAP</b> receive mail</p>
-            <p><b>Bcc</b> — recipients hidden from each other</p>
+            <p><b>SMTP</b> send, <b>POP3/IMAP</b> receive mail; <b>Bcc</b> hidden</p>
           </div>
         </div>
         <div class="col" style="flex:1;">
@@ -725,13 +989,16 @@
             <div class="s"><i>Q2</i><span><b>"Differentiate CRD and RBD. Give ANOVA table of RBD."</b> → definition of each → layout diagram → the 8-row comparison table on this page → full RBD ANOVA skeleton with df column → CD formula → conclusion on when to prefer each.</span></div>
             <div class="s"><i>Q3</i><span><b>"Normal distribution and its importance."</b> → pdf → all 7 properties → the area rule → SNV Z = (x−μ)/σ → importance (basis of all parametric tests, CLT, selection intensity, quality control).</span></div>
             <div class="s"><i>Q4</i><span><b>"Correlation vs regression."</b> → definitions → both formulas → comparison table → r = ±√(b<sub>yx</sub>b<sub>xy</sub>) → application in genetics (genetic &amp; phenotypic correlation, regression of offspring on parent = heritability, Unit 2).</span></div>
-            <div class="s"><i>Q5</i><span><b>"Measures of dispersion / CV."</b> → why dispersion needed → 4 absolute + 4 relative measures with formulas → CV as the only comparator across units → herd-uniformity example → SD vs SE table.</span></div>
+            <div class="s"><i>Q5</i><span><b>"Measures of dispersion / CV."</b> → why needed → 4 absolute + 4 relative measures with formulas → CV as the only cross-unit comparator → herd-uniformity example → SD vs SE table.</span></div>
           </div>
-          <div class="call gold" style="margin-top:2px;"><span class="ct">Carry into Unit 2 &amp; 3</span>Variance → <b>components of phenotypic variance</b>; regression of offspring on parent → <b>heritability</b>; correlation → <b>genetic &amp; phenotypic correlation</b>; normal curve → <b>selection intensity</b>; χ² → <b>Hardy–Weinberg testing</b>. Unit 1 is the toolbox; Units 2–3 are the workshop.</div>
+          <div class="call gold" style="margin-top:2px;"><span class="ct">Carry into Unit 2 &amp; 3</span>Variance → <b>components of phenotypic variance</b>; offspring-on-parent regression → <b>heritability</b>; correlation → <b>genetic &amp; phenotypic correlation</b>; normal curve → <b>selection intensity</b>; χ² → <b>Hardy–Weinberg testing</b>.</div>
         </div>
       </div>
     </div>
   </div>
+
+  </div>
+
 
   <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1 · Fazal Zama</div>
   <div class="page-no">PAGE 6 / 6</div>
