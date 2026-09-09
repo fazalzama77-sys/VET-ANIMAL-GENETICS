@@ -73,6 +73,7 @@ var app = (function () {
     eyeOff:    '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>',
     repeat:    '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
     help:      '<circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+    phone:     '<rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
     filter:    '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
     checkCircle:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
     crossCircle:'<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/>',
@@ -2077,41 +2078,62 @@ var app = (function () {
   }
 
   /* ============================================================
-     PWA INSTALL BANNER
+     PWA INSTALL PROMPT & OFFLINE ENGINE
      ============================================================ */
   var INSTALL_DISMISS_KEY = "vgen-install-dismissed";
   var deferredInstallPrompt = null;
+
+  function isAppInstalled() {
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+           (window.navigator && window.navigator.standalone === true);
+  }
+
+  function isIOSDevice() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }
 
   function setupInstallPrompt() {
     window.addEventListener("beforeinstallprompt", function (e) {
       e.preventDefault();
       deferredInstallPrompt = e;
+      updateInstallUI();
       if (localStorage.getItem(INSTALL_DISMISS_KEY) === "1") return;
-      if (store.getVisits() < 2) return;
-      setTimeout(showInstallBanner, 1500);
+      setTimeout(showInstallBanner, 2000);
     });
 
     window.addEventListener("appinstalled", function () {
       hideInstallBanner();
-      toast("Animal Genetics Studio installed!");
+      updateInstallUI();
+      toast("Animal Genetics Studio installed! Available offline on your home screen.");
     });
 
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    var isStandalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || (window.navigator && window.navigator.standalone === true);
-    if (isIOS && !isStandalone && localStorage.getItem(INSTALL_DISMISS_KEY) !== "1" && store.getVisits() >= 2) {
-      setTimeout(showInstallBanner, 2000);
+    updateInstallUI();
+
+    if (isIOSDevice() && !isAppInstalled() && localStorage.getItem(INSTALL_DISMISS_KEY) !== "1") {
+      setTimeout(showInstallBanner, 2500);
+    }
+  }
+
+  function updateInstallUI() {
+    var installed = isAppInstalled();
+    var sidebarBtn = el("#sidebar-install-btn");
+    if (sidebarBtn) {
+      sidebarBtn.style.display = installed ? "none" : "flex";
     }
   }
 
   function showInstallBanner() {
+    if (isAppInstalled()) return;
     var b = el("#install-banner");
     if (!b) return;
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (isIOS) {
+    if (isIOSDevice()) {
       var msg = b.querySelector(".install-msg");
-      if (msg) msg.innerHTML = "Install Animal Genetics Studio: tap <b>Share</b>, then <b>Add to Home Screen</b>.";
+      if (msg) msg.innerHTML = "Install Animal Genetics Studio on iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>.";
       var btn = b.querySelector(".install-btn");
-      if (btn) btn.style.display = "none";
+      if (btn) {
+        btn.textContent = "How to Install";
+        btn.onclick = function () { showIOSInstallHelp(); };
+      }
     }
     b.style.display = "flex";
     requestAnimationFrame(function () { b.classList.add("install-shown"); });
@@ -2125,25 +2147,44 @@ var app = (function () {
   }
 
   function triggerInstall() {
-    if (!deferredInstallPrompt) {
-      toast("Tap browser menu (\u22EE or share) \u2192 'Install app' or 'Add to Home Screen'");
+    if (isAppInstalled()) {
+      toast("App is already installed and running!");
       return;
     }
-    try {
-      deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then(function (choice) {
-        if (choice && choice.outcome === "accepted") {
-          toast("Installing app…");
-        }
-      });
-    } catch (e) { console.warn(e); }
-    deferredInstallPrompt = null;
-    hideInstallBanner();
+    if (deferredInstallPrompt) {
+      try {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(function (choice) {
+          if (choice && choice.outcome === "accepted") {
+            toast("Installing Animal Genetics Studio…");
+          }
+        });
+      } catch (e) { console.warn(e); }
+      deferredInstallPrompt = null;
+      hideInstallBanner();
+      return;
+    }
+    if (isIOSDevice()) {
+      showIOSInstallHelp();
+      return;
+    }
+    toast("To install: tap browser menu (\u22EE) \u2192 'Install app' or 'Add to Home Screen'");
   }
 
   function dismissInstall() {
     localStorage.setItem(INSTALL_DISMISS_KEY, "1");
     hideInstallBanner();
+  }
+
+  function showIOSInstallHelp() {
+    var m = el("#ios-install-modal");
+    if (m) m.style.display = "flex";
+    hideInstallBanner();
+  }
+
+  function closeIOSInstallHelp() {
+    var m = el("#ios-install-modal");
+    if (m) m.style.display = "none";
   }
 
   function wireTopicActions(t) {
@@ -3509,6 +3550,15 @@ var app = (function () {
             '<input id="me-reminder-time-input" class="me-reminder-time" type="time" value="' + esc(srsTime) + '">' +
           '</div>' +
         '</div>' +
+      '<div class="card mb-4">' +
+        '<h3>' + icon("phone") + ' App Installation & Offline Status</h3>' +
+        '<p class="muted mt-2">Animal Genetics Studio runs as an offline-first Progressive Web App. All 104 syllabus topics, laboratory practicals, biostatistics numericals, question banks and quizzes live directly on your phone.</p>' +
+        '<div class="mt-4 row row--wrap" style="align-items:center; gap:10px;">' +
+          (isAppInstalled()
+            ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; font-weight:700; padding:8px 14px; border-radius:8px; display:inline-flex; align-items:center; gap:6px;">' + icon("check") + ' App Installed & Running Standalone</span>'
+            : '<button class="btn btn--primary" onclick="app.triggerInstall()">' + icon("download") + ' Install App on this Device</button>') +
+          '<button class="btn" onclick="app.resetCache()">' + icon("repeat") + ' Refresh Offline Cache</button>' +
+        '</div>' +
       '</div>' +
 
       '<div class="card mb-4">' +
@@ -3956,6 +4006,8 @@ var app = (function () {
     startOnboarding: startOnboarding, closeOnboarding: closeOnboarding, replayOnboarding: replayOnboarding,
     _onboardNext: _onboardNext, _onboardPrev: _onboardPrev,
     triggerInstall: triggerInstall, dismissInstall: dismissInstall,
+    showIOSInstallHelp: showIOSInstallHelp, closeIOSInstallHelp: closeIOSInstallHelp,
+    isAppInstalled: isAppInstalled,
     exportHighlights: exportHighlights, exportNotes: exportNotes,
     copyTextToClipboard: copyTextToClipboard,
     teardownHighlightPopup: teardownHighlightPopup,

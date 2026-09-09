@@ -1,11 +1,17 @@
 {
+  "id": "./",
   "name": "Animal Genetics and Breeding Studio",
   "short_name": "Animal Genetics",
-  "description": "B.V.Sc second-year Animal Genetics and Breeding — biostatistics, population genetics, animal breeding, question bank, quizzes and progress dashboard. Works offline.",
-  "start_url": "./index.html#/",
+  "description": "B.V.Sc second-year Animal Genetics and Breeding \u2014 biostatistics, population genetics, animal breeding, question bank, quizzes and progress dashboard. Works 100% offline.",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
   "background_color": "#f0f4f8",
   "theme_color": "#1565c0",
   "categories": [
@@ -13,6 +19,8 @@
     "medical"
   ],
   "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "images/icon-192.png",
@@ -31,6 +39,68 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Theory Units",
+      "short_name": "Theory",
+      "description": "Read official VCI theory units",
+      "url": "./index.html#/theory",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Practicals",
+      "short_name": "Practical",
+      "description": "Laboratory practicals & numericals",
+      "url": "./index.html#/practical",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Practice Quiz",
+      "short_name": "Quiz",
+      "description": "MCQs, Paper I & II Mock Tests",
+      "url": "./index.html#/quiz",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Question Bank",
+      "short_name": "Q&A",
+      "description": "Written exam questions & answers",
+      "url": "./index.html#/qa",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Mastery Dashboard",
+      "short_name": "Progress",
+      "description": "Dual exam readiness & Leitner pipeline",
+      "url": "./index.html#/dashboard",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

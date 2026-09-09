@@ -12,7 +12,7 @@
    PRECACHE, otherwise students keep seeing the old version.
    ============================================================ */
 
-var CACHE_VERSION = "vgen-v1";
+var CACHE_VERSION = "vgen-v2";
 var SHELL_CACHE = CACHE_VERSION + "-shell";
 var IMG_CACHE = CACHE_VERSION + "-img";
 
@@ -45,7 +45,11 @@ var PRECACHE = [
   "js/search.js",
   "js/deep-guide.js",
   "js/events.js",
-  "js/app.js"
+  "js/app.js",
+
+  "images/icon-192.png",
+  "images/icon-512.png",
+  "images/icon-maskable-512.png"
 ];
 
 self.addEventListener("install", function (e) {
@@ -71,12 +75,36 @@ self.addEventListener("activate", function (e) {
   );
 });
 
+self.addEventListener("message", function (e) {
+  if (e.data && e.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
 
   var url = new URL(req.url);
   if (url.origin !== location.origin) return;   // never touch third-party requests
+
+  // ---- HTML Navigation Requests (Opening app / refreshing while offline) ----
+  if (req.mode === "navigate" || (req.headers.get("accept") && req.headers.get("accept").indexOf("text/html") !== -1)) {
+    e.respondWith(
+      fetch(req).then(function (res) {
+        if (res && res.status === 200) {
+          var copy = res.clone();
+          caches.open(SHELL_CACHE).then(function (c) { c.put(req, copy); });
+        }
+        return res;
+      }).catch(function () {
+        return caches.match("index.html").then(function (hit) {
+          return hit || caches.match("./");
+        });
+      })
+    );
+    return;
+  }
 
   // ---- Images: cache on first use ----
   if (/\.(png|jpg|jpeg|webp|gif|svg)$/i.test(url.pathname)) {
@@ -106,7 +134,7 @@ self.addEventListener("fetch", function (e) {
       }).catch(function () {
         // Offline and not cached: fall back to the app shell so
         // hash routes still resolve.
-        return hit || caches.match("index.html");
+        return hit || caches.match("index.html") || caches.match("./");
       });
       return hit || network;
     })
