@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AGB Unit 1 — Rapid Revision</title>
+<link rel="stylesheet" href="_revision.css">
+</head>
+<body>
+
+<div class="toolbar noprint">
+  <button onclick="window.print()">🖨 Print / Save as PDF</button>
+  <span>A4 · 6 pages · set margins to <b>None</b> and enable <b>Background graphics</b></span>
+  <a href="index.html">← All units</a>
+</div>
+
+<!-- ==================== PAGE 1 ==================== -->
+<section class="page">
+  <div class="masthead">
+    <div class="mark">AG</div>
+    <div>
+      <div class="mh-t">UNIT 1 · BIOSTATISTICS &amp; COMPUTER APPLICATION</div>
+      <div class="mh-s">Animal Genetics &amp; Breeding · VCI MSVE 2016 · Rapid Revision Sheet</div>
+    </div>
+    <div class="mh-right"><b>PAPER I</b>Theory 100 + Pract 60<br>Target: 30-min full sweep</div>
+  </div>
+
+  <div class="row" style="gap:4mm;">
+    <div class="col" style="flex:1.45;">
+      <div class="blk">
+        <div class="bh"><span class="n">MAP</span> THE WHOLE UNIT ON ONE SCREEN — 22 SYLLABUS HEADS</div>
+        <div class="bb">
+          <div class="map">
+            <div class="m"><b>Foundations</b><span>01–04</span> Importance · classification · tabulation · parameter/statistic</div>
+            <div class="m"><b>Presentation</b><span>05</span> Diagrams &amp; graphs; histogram, ogive, pie</div>
+            <div class="m"><b>Central tendency</b><span>06–07</span> Mean, median, mode (simple + grouped)</div>
+            <div class="m"><b>Dispersion</b><span>08–09</span> Range, QD, MD, variance, SD, CV, SE</div>
+            <div class="m"><b>Shape</b><span>10</span> Moments, skewness, kurtosis</div>
+            <div class="m"><b>Probability</b><span>11</span> Theorems, addition, multiplication</div>
+            <div class="m"><b>Distributions</b><span>12–13</span> Binomial, Poisson, Normal, SNV</div>
+            <div class="m"><b>Relationship</b><span>14–15</span> Correlation (r, r<sub>s</sub>), regression lines</div>
+            <div class="m"><b>Sampling</b><span>16</span> SRS, stratified, systematic, cluster</div>
+            <div class="m"><b>Large sample</b><span>17</span> Z-test (mean, 2 means, proportion)</div>
+            <div class="m"><b>Small sample</b><span>18</span> t-test: one, two, paired</div>
+            <div class="m"><b>Attributes</b><span>19</span> χ² goodness of fit &amp; independence</div>
+            <div class="m"><b>Designs</b><span>20</span> 3 principles · CRD · RBD</div>
+            <div class="m"><b>ANOVA</b><span>21</span> Partition of SS · F-test · CD</div>
+            <div class="m"><b>Non-parametric</b><span>22</span> Sign, Mann-Whitney, Kruskal-Wallis</div>
+            <div class="m"><b>Computer</b><span>23–25</span> Languages · DBMS · MS-Office · Excel · net</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="blk coral">
+        <div class="bh"><span class="n">★</span> HIGHEST-YIELD IN THIS UNIT</div>
+        <div class="bb">
+          <ul class="dash coralx" style="font-size:7.9pt;">
+            <li><b>χ² test</b> — asked every year (genetics ratios). Formula + df + Yates.</li>
+            <li><b>CRD vs RBD</b> — the standard 10-mark differentiate.</li>
+            <li><b>ANOVA table</b> — write the skeleton with df column correctly.</li>
+            <li><b>Normal distribution</b> — properties list + area rule.</li>
+            <li><b>Correlation vs Regression</b> — table + r = √(b<sub>yx</sub>·b<sub>xy</sub>).</li>
+            <li><b>CV</b> — why unit-free; used to compare two herds.</li>
+            <li><b>SD vs SE</b> — the single most confused pair.</li>
+            <li><b>Binomial vs Poisson vs Normal</b> — mean/variance relations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk">
+      <div class="bh"><span class="n">1</span> WHY BIOSTATISTICS · SCOPE &amp; LIMITATIONS</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;"><b>Statistics</b> = science of collection, organisation, presentation, analysis and interpretation of numerical data. <b>Biostatistics</b> = statistics applied to biological, medical and veterinary data (Bio + Statistics; coined from the variability of living material).</p>
+        <ul class="dash" style="font-size:7.9pt;">
+          <li><b>Why needed:</b> biological data are inherently <b>variable</b> — no two animals give identical yield; conclusions must be drawn from samples, not whole populations.</li>
+          <li><b>Uses in vet science:</b> comparing rations/treatments · estimating heritability &amp; breeding values · designing field trials · disease prevalence &amp; morbidity–mortality rates · standardising lactation yield · drug efficacy trials · sire evaluation.</li>
+          <li><b>Limitations:</b> deals with <b>aggregates, not individuals</b>; only quantitative facts; results are true only <b>on average</b>; can be misused; requires expert handling.</li>
+        </ul>
+        <div class="call gold"><span class="ct">Definition to quote</span>Croxton &amp; Cowden: "Statistics is the science of collection, presentation, analysis and interpretation of numerical data."</div>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">2</span> POPULATION vs SAMPLE — THE 3 WORDS THEY ASK</div>
+      <div class="bb">
+        <table class="t teal tight">
+          <tr><th style="width:22%;">Term</th><th>Meaning</th><th style="width:24%;">Symbol</th></tr>
+          <tr><td><b>Observation</b></td><td>A single recorded value / measurement on one unit (one cow's milk yield)</td><td class="mono">x<sub>i</sub></td></tr>
+          <tr><td><b>Parameter</b></td><td>A constant describing the <b>whole population</b>; usually unknown, fixed</td><td class="mono">μ, σ, σ², P, ρ</td></tr>
+          <tr><td><b>Statistic</b></td><td>A value computed from the <b>sample</b>; varies sample to sample; estimates the parameter</td><td class="mono">x̄, s, s², p, r</td></tr>
+        </table>
+        <div class="call trap"><span class="ct">Trap</span><b>Greek = population, Roman = sample.</b> A statistic is a <b>variable</b> (it changes with the sample); a parameter is a <b>constant</b>. Sampling distribution of a statistic → gives the <b>standard error</b>.</div>
+        <p style="margin:2px 0 0;"><b>Variable types:</b> <span class="chip">Qualitative / attribute</span> breed, sex, coat colour &nbsp; <span class="chip t">Quantitative</span> → <b>Discrete</b> (litter size, counts) &amp; <b>Continuous</b> (milk yield, body weight).<br><b>Scales:</b> Nominal → Ordinal → Interval → Ratio.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk purple">
+      <div class="bh"><span class="n">3</span> CLASSIFICATION &amp; TABULATION OF DATA</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;"><b>Classification</b> = arranging raw data into homogeneous groups. <b>Tabulation</b> = systematic presentation of classified data in rows and columns.</p>
+        <div class="flow" style="margin:3px 0;">
+          <div class="node p"><b>Raw data</b><small>unorganised</small></div><div class="arw">→</div>
+          <div class="node p"><b>Array</b><small>ascending order</small></div><div class="arw">→</div>
+          <div class="node p"><b>Classify</b><small>into classes</small></div><div class="arw">→</div>
+          <div class="node p"><b>Tabulate</b><small>freq. table</small></div><div class="arw">→</div>
+          <div class="node p"><b>Present</b><small>graph</small></div>
+        </div>
+        <table class="t purple tight">
+          <tr><th>Basis of classification</th><th>Example</th></tr>
+          <tr><td><b>Geographical</b> (spatial)</td><td>Milk production state-wise</td></tr>
+          <tr><td><b>Chronological</b> (temporal)</td><td>Yearly egg production</td></tr>
+          <tr><td><b>Qualitative</b> (attribute)</td><td>Breed, sex, coat colour</td></tr>
+          <tr><td><b>Quantitative</b> (variable)</td><td>Body weight classes</td></tr>
+        </table>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Frequency-table terms:</b> class limits (lower/upper) · class boundaries (true limits, ±0.5 in exclusive→inclusive conversion) · <b>class interval i = (L−S)/no. of classes</b> · mid-point/class mark = (LL+UL)/2 · <b>Sturges' rule k = 1 + 3.322 log₁₀N</b> · cumulative frequency (less-than / more-than) · relative frequency.<br><b>Parts of a table:</b> table number, title, head-note, stub (rows), caption (columns), body, footnote, source note.</p>
+      </div>
+    </div>
+
+    <div class="blk amber">
+      <div class="bh"><span class="n">4</span> DIAGRAMMATIC &amp; GRAPHICAL REPRESENTATION</div>
+      <div class="bb">
+        <table class="t amber tight">
+          <tr><th style="width:34%;">Device</th><th>Used for / key point</th></tr>
+          <tr><td><b>Bar diagram</b> (simple, multiple, sub-divided/component, percentage)</td><td><b>Discrete / qualitative</b> data. Bars are <b>separated</b>, width uniform, only length matters.</td></tr>
+          <tr><td><b>Pie / circle diagram</b></td><td>Component parts of a whole. <b>Angle = (component/total) × 360°</b>.</td></tr>
+          <tr><td><b>Pictogram · Cartogram</b></td><td>Popular presentation; map-based (cartogram).</td></tr>
+          <tr><td><b>Histogram</b></td><td><b>Continuous</b> grouped data. Bars <b>adjacent</b> (no gap); <b>area ∝ frequency</b>. Mode located graphically from it.</td></tr>
+          <tr><td><b>Frequency polygon</b></td><td>Mid-points joined by straight lines; area = histogram area.</td></tr>
+          <tr><td><b>Frequency curve</b></td><td>Smoothed polygon; large N.</td></tr>
+          <tr><td><b>Ogive (cumulative freq. curve)</b></td><td>Less-than &amp; more-than ogives; their <b>intersection = MEDIAN</b>. Also gives quartiles &amp; percentiles.</td></tr>
+          <tr><td><b>Scatter diagram</b></td><td>First step in correlation; shows direction &amp; linearity.</td></tr>
+        </table>
+        <div class="call trap"><span class="ct">One-mark trap</span>Histogram = <b>continuous, no gaps, area ∝ f</b>. Bar diagram = <b>discrete, gaps present, length ∝ f</b>. Median from <b>ogive</b>; Mode from <b>histogram</b>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
+  <div class="page-no">PAGE 1 / 6</div>
+</section>
+
+<!-- ==================== PAGE 2 ==================== -->
+<section class="page">
+  <div class="runner"><span class="rn">Central Tendency · Dispersion · Shape of Distribution</span><span class="rs">Unit 1 · Descriptive Statistics</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">5</span> MEASURES OF CENTRAL TENDENCY — FORMULA VAULT</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.9pt;">A single value around which the data cluster. <b>Requisites of an ideal average (Yule):</b> rigidly defined · based on all observations · easy to understand &amp; compute · suitable for further algebraic treatment · least affected by sampling fluctuation · not unduly affected by extremes.</p>
+        <span class="fx"><span class="lbl">MEAN simple</span> x̄ = Σx / n</span>
+        <span class="fx"><span class="lbl">MEAN grouped</span> x̄ = Σfx / Σf  &nbsp;(x = class mid-point)</span>
+        <span class="fx"><span class="lbl">Step-deviation</span> x̄ = A + (Σfd / Σf) × c ,  d = (x − A)/c</span>
+        <span class="fx"><span class="lbl">MEDIAN simple</span> odd: [(n+1)/2]ᵗʰ item · even: mean of (n/2) &amp; (n/2 + 1)ᵗʰ</span>
+        <span class="fx"><span class="lbl">MEDIAN grouped</span> M = L + [ (N/2 − cf) / f ] × h</span>
+        <span class="fx"><span class="lbl">MODE grouped</span> Z = L + [ (f₁ − f₀) / (2f₁ − f₀ − f₂) ] × h</span>
+        <span class="fx"><span class="lbl">Empirical relation</span> Mode = 3 Median − 2 Mean</span>
+        <span class="fx"><span class="lbl">Quartiles</span> Q₁ = L + [(N/4 − cf)/f]h ; Q₃ uses 3N/4</span>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Other averages:</b> <b>GM</b> = ⁿ√(x₁x₂…xₙ) = antilog(Σlog x / n) — used for <b>rates of growth, ratios</b>. <b>HM</b> = n / Σ(1/x) — used for <b>average speed / rates per unit</b>. Relation: <b>AM ≥ GM ≥ HM</b>; for two values GM² = AM × HM.</p>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">6</span> WHICH AVERAGE? — DECISION TABLE</div>
+      <div class="bb">
+        <table class="t teal tight">
+          <tr><th style="width:16%;"></th><th>Mean</th><th>Median</th><th>Mode</th></tr>
+          <tr><td><b>Based on all obs.</b></td><td>Yes</td><td>No (positional)</td><td>No (positional)</td></tr>
+          <tr><td><b>Affected by extremes</b></td><td><b>Yes, badly</b></td><td>No</td><td>No</td></tr>
+          <tr><td><b>Algebraic treatment</b></td><td>Yes</td><td>No</td><td>No</td></tr>
+          <tr><td><b>Open-end classes</b></td><td>Cannot compute</td><td><b>Can</b></td><td><b>Can</b></td></tr>
+          <tr><td><b>Qualitative data</b></td><td>No</td><td>Ordinal only</td><td><b>Yes</b></td></tr>
+          <tr><td><b>Graphic location</b></td><td>—</td><td>Ogive</td><td>Histogram</td></tr>
+          <tr><td><b>Value may not exist</b></td><td>Yes (2.4 calves)</td><td>Actual value</td><td>Actual value</td></tr>
+          <tr><td><b>Uniqueness</b></td><td>Unique</td><td>Unique</td><td>May be bi/multi-modal or absent</td></tr>
+        </table>
+        <div class="call gold"><span class="ct">Properties of the mean — direct 2-mark</span>1. Σ(x − x̄) = 0 (algebraic sum of deviations from mean is zero). 2. Σ(x − x̄)² is <b>minimum</b> (least-squares property). 3. Combined mean x̄₁₂ = (n₁x̄₁ + n₂x̄₂)/(n₁ + n₂). 4. Affected by change of both origin and scale.</div>
+        <div class="call trap"><span class="ct">Trap</span>In a <b>positively skewed</b> curve: <b>Mode &lt; Median &lt; Mean</b>. Negatively skewed: <b>Mean &lt; Median &lt; Mode</b>. Symmetrical: all three coincide.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk purple">
+      <div class="bh"><span class="n">7</span> MEASURES OF DISPERSION — FORMULA VAULT</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.9pt;"><b>Dispersion / variation</b> = extent to which observations scatter about the average. Two herds may have the same mean but very different uniformity — dispersion measures that.</p>
+        <table class="t purple tight">
+          <tr><th style="width:29%;">Measure</th><th>Absolute</th><th style="width:31%;">Relative (coefficient)</th></tr>
+          <tr><td><b>Range</b></td><td class="mono">R = L − S</td><td class="mono">(L − S)/(L + S)</td></tr>
+          <tr><td><b>Quartile deviation</b> (semi-interquartile)</td><td class="mono">QD = (Q₃ − Q₁)/2</td><td class="mono">(Q₃ − Q₁)/(Q₃ + Q₁)</td></tr>
+          <tr><td><b>Mean deviation</b></td><td class="mono">MD = Σ|x − A|/n</td><td class="mono">MD / A</td></tr>
+          <tr><td><b>Standard deviation</b></td><td class="mono">s = √[Σ(x − x̄)²/(n−1)]</td><td class="mono">CV = (s/x̄) × 100</td></tr>
+        </table>
+        <span class="fx purple"><span class="lbl">Variance (short-cut)</span> s² = [ Σx² − (Σx)²/n ] / (n − 1)</span>
+        <span class="fx purple"><span class="lbl">Grouped variance</span> s² = [ Σfx² − (Σfx)²/Σf ] / (Σf − 1)</span>
+        <span class="fx purple"><span class="lbl">Standard error of mean</span> SE(x̄) = s / √n</span>
+        <span class="fx purple"><span class="lbl">Normal-curve relation</span> QD : MD : SD = 0.6745 : 0.7979 : 1 ≈ 10 : 12 : 15</span>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Why (n − 1)?</b> Divisor <b>n − 1 = degrees of freedom</b>; it makes s² an <b>unbiased estimator</b> of σ². Population variance uses N.<br><b>SD properties:</b> independent of <b>change of origin</b> but <b>not of scale</b>; minimum when deviations taken from mean; SD of combined series can be pooled.</p>
+      </div>
+    </div>
+
+    <div class="blk coral">
+      <div class="bh"><span class="n">8</span> CV · SD vs SE — THE EXAMINER'S FAVOURITE PAIR</div>
+      <div class="bb">
+        <table class="t coral tight">
+          <tr><th style="width:20%;"></th><th>Standard Deviation (SD)</th><th>Standard Error (SE)</th></tr>
+          <tr><td><b>Measures</b></td><td>Variability of <b>individual observations</b> about the sample mean</td><td>Variability of the <b>sample mean</b> about the population mean</td></tr>
+          <tr><td><b>Formula</b></td><td class="mono">√[Σ(x−x̄)²/(n−1)]</td><td class="mono">s/√n</td></tr>
+          <tr><td><b>Effect of ↑ n</b></td><td>Stays ~constant</td><td><b>Decreases</b> (∝ 1/√n)</td></tr>
+          <tr><td><b>Used for</b></td><td>Describing spread of data</td><td>Confidence limits &amp; tests of significance</td></tr>
+        </table>
+        <div class="call gold"><span class="ct">Coefficient of Variation — full answer</span><b>CV = (SD/Mean) × 100.</b> It is a <b>relative, unit-free (percentage)</b> measure, so it is the <b>only valid way to compare variability of two series with different units or widely different means</b> (e.g. milk yield in kg vs fat % ; Sahiwal vs HF herd). <b>Lower CV = more consistent / uniform / stable</b>. Used in animal breeding to judge uniformity of a herd, repeatability of a lab technique, and in field trials CV of the experiment indicates <b>experimental precision</b> (a low CV in ANOVA = well-conducted trial).</div>
+        <div class="call trap"><span class="ct">Trap</span>CV is meaningless if the mean is near zero or negative. Range is the <b>simplest</b> but <b>most unstable</b> (uses only 2 values). SD is the <b>best and most widely used</b> measure of dispersion.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk amber" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">9</span> MOMENTS · SKEWNESS · KURTOSIS — SHAPE OF THE DISTRIBUTION</div>
+    <div class="bb">
+      <div class="row">
+        <div class="col" style="flex:1.05;">
+          <p style="margin:0 0 2px;font-size:7.9pt;"><b>Moments</b> describe the shape of a frequency distribution — arithmetic means of powers of deviations.</p>
+          <span class="fx amber"><span class="lbl">Central moments</span> μ<sub>r</sub> = Σf(x − x̄)<sup>r</sup> / N</span>
+          <p style="margin:1px 0 2px;font-size:7.8pt;"><b>μ₁ = 0</b> always · <b>μ₂ = variance (σ²)</b> · <b>μ₃ → skewness</b> · <b>μ₄ → kurtosis</b>. Raw moments μ′<sub>r</sub> are taken about an arbitrary point A; convert with μ₂ = μ′₂ − μ′₁², μ₃ = μ′₃ − 3μ′₂μ′₁ + 2μ′₁³.</p>
+          <span class="fx amber"><span class="lbl">β₁ (skewness)</span> β₁ = μ₃² / μ₂³ ;  γ₁ = √β₁ = μ₃/σ³</span>
+          <span class="fx amber"><span class="lbl">β₂ (kurtosis)</span> β₂ = μ₄ / μ₂² ;  γ₂ = β₂ − 3</span>
+        </div>
+        <div class="col" style="flex:1.15;">
+          <p style="margin:0 0 2px;font-size:7.9pt;"><b>SKEWNESS = lack of symmetry</b> (which tail is longer).</p>
+          <span class="fx amber"><span class="lbl">Karl Pearson</span> S<sub>k</sub> = (Mean − Mode)/SD = 3(Mean − Median)/SD</span>
+          <span class="fx amber"><span class="lbl">Bowley (quartile)</span> S<sub>k</sub> = (Q₃ + Q₁ − 2M)/(Q₃ − Q₁)</span>
+          <table class="t amber tight" style="margin-top:2px;">
+            <tr><th>Type</th><th>Order</th><th>Tail</th><th>S<sub>k</sub></th></tr>
+            <tr><td><b>Symmetrical</b></td><td>Mean = Median = Mode</td><td>Both equal</td><td>0</td></tr>
+            <tr><td><b>Positive skew</b></td><td>Mode &lt; Median &lt; Mean</td><td>Longer to <b>right</b></td><td>+ve</td></tr>
+            <tr><td><b>Negative skew</b></td><td>Mean &lt; Median &lt; Mode</td><td>Longer to <b>left</b></td><td>−ve</td></tr>
+          </table>
+        </div>
+        <div class="col" style="flex:1;">
+          <p style="margin:0 0 2px;font-size:7.9pt;"><b>KURTOSIS = peakedness / flatness</b> of the curve relative to the normal curve.</p>
+          <table class="t amber tight">
+            <tr><th>Curve</th><th>β₂</th><th>γ₂</th><th>Look</th></tr>
+            <tr><td><b>Meso</b>kurtic</td><td>= 3</td><td>0</td><td>Normal</td></tr>
+            <tr><td><b>Lepto</b>kurtic</td><td>&gt; 3</td><td>+ve</td><td>More peaked, thin tails</td></tr>
+            <tr><td><b>Platy</b>kurtic</td><td>&lt; 3</td><td>−ve</td><td>Flat-topped, broad</td></tr>
+          </table>
+          <div class="call mnem"><span class="ct">Mnemonic</span><b>"LEAP high, PLATE flat."</b> <b>Lep</b>tokurtic = <b>leap</b>s up (peaked). <b>Platy</b>kurtic = flat like a <b>plate</b>. Normal curve: <b>β₁ = 0 and β₂ = 3</b>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
+  <div class="page-no">PAGE 2 / 6</div>
+</section>
+
+<!-- ==================== PAGE 3 ==================== -->
+<section class="page">
+  <div class="runner"><span class="rn">Probability · Binomial · Poisson · Normal Distribution</span><span class="rs">Unit 1 · Probability Theory</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">10</span> PROBABILITY — DEFINITIONS &amp; THEOREMS</div>
+      <div class="bb">
+        <span class="fx"><span class="lbl">Classical</span> P(A) = favourable outcomes / total equally-likely outcomes = m/n</span>
+        <p style="margin:1px 0 2px;font-size:7.9pt;"><b>0 ≤ P(A) ≤ 1</b> · P(certain) = 1 · P(impossible) = 0 · P(A) + P(Ā) = 1 (complement).<br><b>Empirical / relative-frequency definition:</b> P = lim (m/n) as n → ∞ (von Mises).<br><b>Terms:</b> random experiment · trial · sample space (S) · event · <b>mutually exclusive</b> (cannot occur together, A∩B = φ) · <b>exhaustive</b> (cover S) · <b>equally likely</b> · <b>independent</b> (one does not affect the other).</p>
+        <span class="fx"><span class="lbl">ADDITION (OR)</span> P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</span>
+        <span class="fx"><span class="lbl">— mutually exclusive</span> P(A ∪ B) = P(A) + P(B)</span>
+        <span class="fx"><span class="lbl">MULTIPLICATION (AND)</span> P(A ∩ B) = P(A) · P(B|A)</span>
+        <span class="fx"><span class="lbl">— independent</span> P(A ∩ B) = P(A) · P(B)</span>
+        <span class="fx"><span class="lbl">Conditional</span> P(B|A) = P(A ∩ B)/P(A)</span>
+        <span class="fx"><span class="lbl">Bayes' theorem</span> P(A<sub>i</sub>|B) = P(A<sub>i</sub>)P(B|A<sub>i</sub>) / Σ P(A<sub>j</sub>)P(B|A<sub>j</sub>)</span>
+        <div class="call gold"><span class="ct">Genetics application (write this)</span>Monohybrid Aa × Aa → P(aa) = ¼ (classical). Both parents' gametes are independent → multiplication rule. Probability that a calf is <b>either</b> red <b>or</b> polled → addition rule. Mendel's laws are essentially statements of <b>independent probability</b>, which is why probability underpins all of animal genetics.</div>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">11</span> BINOMIAL DISTRIBUTION (Bernoulli, 1713)</div>
+      <div class="bb">
+        <span class="fx teal"><span class="lbl">pmf</span> P(x) = <sup>n</sup>C<sub>x</sub> p<sup>x</sup> q<sup>n−x</sup> ,  x = 0,1,2,…,n ;  q = 1 − p</span>
+        <span class="fx teal"><span class="lbl">Mean</span> μ = np &nbsp;&nbsp; <span class="lbl">Variance</span> σ² = npq &nbsp;&nbsp; <span class="lbl">SD</span> = √npq</span>
+        <ul class="dash tealx" style="font-size:7.9pt;">
+          <li><b>Conditions:</b> fixed number of trials <b>n</b> · each trial has only <b>two mutually exclusive outcomes</b> (success/failure) · <b>p constant</b> for every trial · trials are <b>independent</b>.</li>
+          <li><b>Discrete</b> distribution; parameters <b>n and p</b>.</li>
+          <li><b>Mean &gt; Variance</b> always (because q &lt; 1). <b>This is the identifying line.</b></li>
+          <li>Symmetrical when p = q = 0.5; positively skewed when p &lt; 0.5.</li>
+          <li>Skewness γ₁ = (q − p)/√npq; Kurtosis β₂ = 3 + (1 − 6pq)/npq.</li>
+          <li><b>Vet examples:</b> sex ratio of calves born · number of animals responding to a vaccine out of n · Mendelian segregation ratios · number of carriers in a litter.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk purple">
+      <div class="bh"><span class="n">12</span> POISSON DISTRIBUTION (1837) — LAW OF RARE EVENTS</div>
+      <div class="bb">
+        <span class="fx purple"><span class="lbl">pmf</span> P(x) = e<sup>−λ</sup> λ<sup>x</sup> / x! ,  x = 0,1,2,… ∞</span>
+        <span class="fx purple"><span class="lbl">Key identity</span> Mean = Variance = λ = np &nbsp;(SD = √λ)</span>
+        <ul class="dash purplex" style="font-size:7.9pt;">
+          <li><b>Limiting case of binomial</b> when <b>n → very large, p → very small</b>, np = λ finite.</li>
+          <li>Single parameter <b>λ</b>; discrete; range 0 → ∞ (no upper limit, unlike binomial).</li>
+          <li>Always <b>positively skewed</b>; becomes symmetrical as λ increases; γ₁ = 1/√λ, β₂ = 3 + 1/λ.</li>
+          <li>Sum of independent Poisson variates is Poisson (additive property).</li>
+          <li><b>Vet examples:</b> number of <b>rare congenital defects</b> per 1000 births · deaths from a rare disease · bacterial colonies per plate · somatic cell counts · number of ticks per animal · accidents in a farm per month.</li>
+        </ul>
+        <div class="call trap"><span class="ct">One-mark discriminator</span>Binomial: <b>mean &gt; variance</b>, finite range 0–n, two parameters. Poisson: <b>mean = variance</b>, infinite range, one parameter. If a question says "rare event / very large n / small p" → <b>Poisson</b>.</div>
+      </div>
+    </div>
+
+    <div class="blk coral">
+      <div class="bh"><span class="n">13</span> NORMAL DISTRIBUTION (De Moivre · Laplace · Gauss)</div>
+      <div class="bb">
+        <span class="fx"><span class="lbl">pdf</span> f(x) = 1/(σ√2π) · e<sup>−(x−μ)²/2σ²</sup> ,  −∞ &lt; x &lt; ∞</span>
+        <p style="margin:1px 0 2px;font-size:7.9pt;"><b>PROPERTIES — write all of these for full marks:</b></p>
+        <ul class="dash coralx" style="font-size:7.85pt;">
+          <li><b>Continuous</b>; parameters <b>μ (location)</b> and <b>σ (scale)</b>; written X ~ N(μ, σ²).</li>
+          <li><b>Bell-shaped, perfectly symmetrical</b> about x = μ; <b>unimodal</b>.</li>
+          <li><b>Mean = Median = Mode = μ</b>; skewness β₁ = 0, kurtosis <b>β₂ = 3 (mesokurtic)</b>.</li>
+          <li><b>Total area under the curve = 1</b> (or 100%); curve never touches the X-axis — <b>asymptotic</b> to it.</li>
+          <li>Quartiles equidistant: Q₃ − M = M − Q₁; <b>QD = 0.6745σ, MD = 0.7979σ</b>.</li>
+          <li>Points of <b>inflexion at μ ± σ</b>. Odd central moments = 0; μ₄ = 3σ⁴.</li>
+          <li>Linear combination of normal variates is normal. <b>Central Limit Theorem:</b> means of samples from ANY population tend to normal as n increases.</li>
+        </ul>
+        <div class="call gold"><span class="ct">AREA RULE — memorise exactly</span><b>μ ± 1σ = 68.27%</b> · <b>μ ± 2σ = 95.45%</b> · <b>μ ± 3σ = 99.73%</b><br>Reverse (used in testing): <b>μ ± 1.96σ = 95%</b> · <b>μ ± 2.58σ = 99%</b> · μ ± 1.645σ = 90%.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk sage">
+      <div class="bh"><span class="n">14</span> STANDARD NORMAL VARIATE &amp; CURVE</div>
+      <div class="bb">
+        <span class="fx sage"><span class="lbl">SNV</span> Z = (x − μ) / σ  →  Z ~ N(0, 1)</span>
+        <ul class="dash sagex" style="font-size:7.9pt;">
+          <li>Standardisation converts <b>any</b> normal curve to <b>one</b> standard curve with <b>mean 0 and SD 1</b>, so a single table serves all problems.</li>
+          <li>Z is a <b>pure number</b> (unit-free) — it tells how many SDs an observation lies from the mean.</li>
+          <li>Area is symmetrical: P(Z &gt; 1.96) = 0.025; P(−1.96 &lt; Z &lt; 1.96) = 0.95.</li>
+          <li><b>Uses:</b> converting raw scores · finding % of animals above/below a cut-off (basis of <b>selection intensity</b> in breeding!) · normal approximation to binomial (when np &gt; 5 and nq &gt; 5) and to Poisson (λ &gt; 10) · basis of all large-sample tests.</li>
+        </ul>
+        <div class="call why"><span class="ct">Link to Unit 3</span>The <b>selection differential</b> and <b>intensity of selection (i)</b> come straight from the normal curve: if the top p% are selected, <b>i = z/p</b>, where z is the height of the ordinate at the truncation point. So Unit 1's normal curve <b>is</b> Unit 3's selection theory.</div>
+      </div>
+    </div>
+
+    <div class="blk amber">
+      <div class="bh"><span class="n">15</span> THE THREE DISTRIBUTIONS — SIDE BY SIDE</div>
+      <div class="bb">
+        <table class="t amber tight">
+          <tr><th style="width:20%;"></th><th>Binomial</th><th>Poisson</th><th>Normal</th></tr>
+          <tr><td><b>Nature</b></td><td>Discrete</td><td>Discrete</td><td><b>Continuous</b></td></tr>
+          <tr><td><b>Parameters</b></td><td>n, p</td><td>λ</td><td>μ, σ</td></tr>
+          <tr><td><b>Range</b></td><td>0 to n</td><td>0 to ∞</td><td>−∞ to +∞</td></tr>
+          <tr><td><b>Mean</b></td><td>np</td><td>λ</td><td>μ</td></tr>
+          <tr><td><b>Variance</b></td><td>npq</td><td>λ</td><td>σ²</td></tr>
+          <tr><td><b>Mean vs Var</b></td><td><b>Mean &gt; Var</b></td><td><b>Mean = Var</b></td><td>Independent</td></tr>
+          <tr><td><b>Skewness</b></td><td>(q−p)/√npq</td><td>1/√λ (always +ve)</td><td><b>0</b></td></tr>
+          <tr><td><b>Typical use</b></td><td>Sex ratio, Mendelian ratio</td><td>Rare defects, colony counts</td><td>Body wt, milk yield, all metric traits</td></tr>
+        </table>
+        <div class="call mnem"><span class="ct">Chain of reasoning</span><b>Binomial —(n large, p small)→ Poisson</b> and <b>Binomial —(n large, p ≈ 0.5)→ Normal</b>; <b>Poisson —(λ large)→ Normal</b>. Normal is the limiting form of both.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
+  <div class="page-no">PAGE 3 / 6</div>
+</section>
+
+<!-- ==================== PAGE 4 ==================== -->
+<section class="page">
+  <div class="runner"><span class="rn">Correlation · Regression · Sampling Methods</span><span class="rs">Unit 1 · Relationship &amp; Sampling</span></div>
+
+  <div class="g2">
+    <div class="blk">
+      <div class="bh"><span class="n">16</span> CORRELATION</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.9pt;"><b>Correlation</b> = degree and direction of <b>linear association</b> between two variables. Studied by scatter diagram (visual), Karl Pearson's r (quantitative), and Spearman's rank r<sub>s</sub>.</p>
+        <span class="fx"><span class="lbl">Karl Pearson</span> r = Σ(x−x̄)(y−ȳ) / √[ Σ(x−x̄)² · Σ(y−ȳ)² ]</span>
+        <span class="fx"><span class="lbl">Working form</span> r = Cov(x,y)/(σ<sub>x</sub>·σ<sub>y</sub>) = [nΣxy − ΣxΣy] / √{[nΣx²−(Σx)²][nΣy²−(Σy)²]}</span>
+        <span class="fx"><span class="lbl">Spearman rank</span> r<sub>s</sub> = 1 − 6Σd² / n(n² − 1) ,  d = difference of ranks</span>
+        <span class="fx"><span class="lbl">SE / test</span> t = r√(n−2) / √(1−r²) , df = n − 2</span>
+        <ul class="dash" style="font-size:7.85pt;">
+          <li><b>Limits: −1 ≤ r ≤ +1.</b> +1 = perfect positive, −1 = perfect negative, 0 = no <i>linear</i> relation.</li>
+          <li>r is a <b>pure number</b>, independent of <b>units</b> and of <b>change of origin and scale</b>.</li>
+          <li><b>r² = coefficient of determination</b> = proportion of variation in Y explained by X (r = 0.8 → 64% explained).</li>
+          <li><b>Types:</b> positive/negative · linear/non-linear · simple, partial, multiple.</li>
+          <li><b>Spearman</b> is used for <b>ranked/ordinal or non-normal</b> data (e.g. judging scores of animals in a show) — it is the <b>non-parametric</b> counterpart.</li>
+        </ul>
+        <div class="call trap"><span class="ct">Trap</span><b>Correlation ≠ causation.</b> A high r may be due to a <b>spurious/nonsense correlation</b> or a common third cause. Also r = 0 only rules out a <b>linear</b> relation, not a curvilinear one.</div>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">17</span> REGRESSION</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.9pt;"><b>Regression</b> (Sir Francis Galton) = the average functional relationship used to <b>predict</b> the dependent variable from the independent one. Lines are fitted by the <b>method of least squares</b> (minimising Σ of squared deviations).</p>
+        <span class="fx teal"><span class="lbl">Y on X</span> (Y − Ȳ) = b<sub>yx</sub>(X − X̄) ;  b<sub>yx</sub> = Σxy/Σx² = r·(σ<sub>y</sub>/σ<sub>x</sub>)</span>
+        <span class="fx teal"><span class="lbl">X on Y</span> (X − X̄) = b<sub>xy</sub>(Y − Ȳ) ;  b<sub>xy</sub> = Σxy/Σy² = r·(σ<sub>x</sub>/σ<sub>y</sub>)</span>
+        <span class="fx teal"><span class="lbl">Bridge to r</span> r = ± √(b<sub>yx</sub> · b<sub>xy</sub>)  → r is the <b>GM of the two b's</b></span>
+        <ul class="dash tealx" style="font-size:7.85pt;">
+          <li>Both regression coefficients carry the <b>same sign as r</b>; both cannot exceed 1 numerically at the same time; their product ≤ 1.</li>
+          <li>The two lines <b>always intersect at (X̄, Ȳ)</b>.</li>
+          <li><b>r = ±1</b> → the two lines <b>coincide</b>; <b>r = 0</b> → they are <b>perpendicular</b> (parallel to the axes).</li>
+          <li>b is <b>independent of change of origin but NOT of scale</b> (opposite of r, which is independent of both).</li>
+          <li>b has <b>units</b> (kg per day, etc.); r is unit-free.</li>
+        </ul>
+        <table class="t teal tight" style="margin-top:2px;">
+          <tr><th style="width:16%;"></th><th>Correlation</th><th>Regression</th></tr>
+          <tr><td><b>Purpose</b></td><td>Measures <b>degree</b> of relation</td><td>Establishes <b>nature</b> &amp; <b>predicts</b></td></tr>
+          <tr><td><b>Symmetry</b></td><td>r<sub>xy</sub> = r<sub>yx</sub> — one value</td><td>b<sub>yx</sub> ≠ b<sub>xy</sub> — two lines</td></tr>
+          <tr><td><b>Units</b></td><td>None (pure number)</td><td>Has units</td></tr>
+          <tr><td><b>Cause–effect</b></td><td>Does not imply</td><td>Implies dependent/independent</td></tr>
+          <tr><td><b>Origin &amp; scale</b></td><td>Independent of both</td><td>Independent of origin only</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk purple" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">18</span> SAMPLING METHODS — INTRODUCTION</div>
+    <div class="bb">
+      <div class="row">
+        <div class="col" style="flex:1.1;">
+          <p style="margin:0 0 2px;font-size:7.9pt;"><b>Population (universe)</b> = entire group of interest; <b>sample</b> = representative subset; <b>sampling frame</b> = complete list of units; <b>sampling unit</b>; <b>sampling fraction = n/N</b>.</p>
+          <p style="margin:0 0 2px;font-size:7.9pt;"><b>Why sample?</b> saves <b>time, cost, labour</b> · the only option when the test is <b>destructive</b> (slaughter, necropsy) or the population is infinite · allows greater <b>depth and accuracy</b> per unit · gives an estimate of <b>sampling error</b>.</p>
+          <p style="margin:0 0 2px;font-size:7.9pt;"><b>Sampling error</b> = difference between sample estimate and population value; <b>decreases as n increases</b> and is measurable. <b>Non-sampling error</b> = faulty frame, measurement, recording, non-response; <b>increases with n</b> and is NOT measurable. <b>Essentials of good sampling: representativeness, adequacy, independence, homogeneity.</b></p>
+          <div class="call trap"><span class="ct">Trap</span>Complete enumeration = <b>census</b> (no sampling error, but costly). Only <b>probability (random) sampling</b> permits valid statistical inference and computation of standard error.</div>
+        </div>
+        <div class="col" style="flex:1.35;">
+          <table class="t purple tight">
+            <tr><th style="width:22%;">Method</th><th>How it works</th><th style="width:29%;">When used / note</th></tr>
+            <tr><td><b>Simple random (SRS)</b></td><td>Every unit has an <b>equal and independent</b> chance; lottery method or random-number tables; with or without replacement</td><td>Population <b>homogeneous</b>; needs a complete frame</td></tr>
+            <tr><td><b>Stratified random</b></td><td>Population divided into <b>homogeneous strata</b> (breed, age, sex), then SRS <b>within each</b> stratum; proportional or optimum allocation</td><td>Population <b>heterogeneous</b>; gives <b>highest precision</b>; guarantees representation of every subgroup</td></tr>
+            <tr><td><b>Systematic</b></td><td>Choose a random start, then take every <b>k</b>th unit, <b>k = N/n</b></td><td>Simple, quick, spread evenly; <b>biased if a periodic/cyclic trend</b> exists in the list</td></tr>
+            <tr><td><b>Cluster</b></td><td>Population divided into <b>clusters (villages, herds)</b>; a few <b>whole clusters</b> selected at random</td><td>No frame of individuals available; cheapest for field surveys; <b>lower precision</b></td></tr>
+            <tr><td><b>Multistage</b></td><td>Sampling in successive stages: district → village → household → animal</td><td>Large-scale livestock censuses / national surveys</td></tr>
+            <tr><td><b>Non-probability</b></td><td>Purposive (judgement), quota, convenience, snowball</td><td>Quick, but <b>no valid inference</b>; sampling error cannot be estimated</td></tr>
+          </table>
+          <div class="call mnem"><span class="ct">Remember the difference</span><b>Stratified:</b> strata are <b>internally homogeneous</b>, sampling is done <b>within every</b> stratum. <b>Cluster:</b> clusters are <b>internally heterogeneous</b> (mini-populations), and only <b>some</b> clusters are taken — <b>completely</b>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk coral" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">19</span> TESTS OF HYPOTHESIS — THE UNIVERSAL FRAMEWORK (learn once, use for Z, t, χ², F)</div>
+    <div class="bb">
+      <div class="flow" style="margin-bottom:3px;">
+        <div class="node"><b>1. State H₀ &amp; H₁</b><small>null = "no difference"</small></div><div class="arw">→</div>
+        <div class="node"><b>2. Fix α</b><small>5% or 1%; 1- or 2-tailed</small></div><div class="arw">→</div>
+        <div class="node"><b>3. Choose test</b><small>by data &amp; n</small></div><div class="arw">→</div>
+        <div class="node"><b>4. Compute statistic</b><small>&amp; degrees of freedom</small></div><div class="arw">→</div>
+        <div class="node"><b>5. Compare with table</b><small>at α &amp; df</small></div><div class="arw">→</div>
+        <div class="node c"><b>6. Decide</b><small>reject / fail to reject H₀</small></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <ul class="dash coralx" style="font-size:7.85pt;">
+            <li><b>H₀ (null):</b> assumption of <b>no difference / no association</b>; the hypothesis actually tested. <b>H₁ (alternative):</b> what we accept if H₀ is rejected.</li>
+            <li><b>Level of significance (α):</b> probability of rejecting a true H₀; conventionally <b>5% (P &lt; 0.05)</b> or <b>1%</b>. <b>Confidence level = 1 − α.</b></li>
+            <li><b>Degrees of freedom</b> = number of values free to vary = n − (number of constraints).</li>
+            <li><b>Critical values (2-tailed, normal):</b> <b>1.96 at 5%</b>, <b>2.58 at 1%</b>; one-tailed 1.645 at 5%.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <table class="t coral tight">
+            <tr><th style="width:26%;">Decision</th><th>H₀ is TRUE</th><th>H₀ is FALSE</th></tr>
+            <tr><td><b>Reject H₀</b></td><td><b>TYPE I ERROR (α)</b><br>producer's risk; "false positive"</td><td>Correct decision<br><b>Power = 1 − β</b></td></tr>
+            <tr><td><b>Fail to reject H₀</b></td><td>Correct decision (1 − α)</td><td><b>TYPE II ERROR (β)</b><br>consumer's risk; "false negative"</td></tr>
+          </table>
+          <div class="call trap"><span class="ct">Trap</span>Reducing α <b>increases</b> β. The only way to reduce both is to <b>increase sample size</b>. If calculated value <b>&gt;</b> table value → <b>significant, reject H₀</b>. "Significant" means <b>unlikely to be due to chance</b>, not "important".</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
+  <div class="page-no">PAGE 4 / 6</div>
+</section>
+
+<!-- ==================== PAGE 5 ==================== -->
+<section class="page">
+  <div class="runner"><span class="rn">Z-test · t-test · Chi-square · Non-parametric Tests</span><span class="rs">Unit 1 · Tests of Significance</span></div>
+
+  <div class="blk sage">
+    <div class="bh"><span class="n">20</span> WHICH TEST DO I APPLY? — MASTER DECISION FLOW</div>
+    <div class="bb">
+      <div class="tree">
+        <div class="lvl">
+          <div class="box" style="flex:0 0 30%;"><b>Is the data QUANTITATIVE (measurements)?</b></div>
+          <div class="box"><b>YES →</b> parametric route (assumes normality)</div>
+          <div class="box"><b>NO — counts / frequencies / attributes →</b> <span class="chip c">χ² TEST</span></div>
+        </div>
+        <div class="lvl">
+          <div class="box" style="flex:0 0 30%;">Sample size?</div>
+          <div class="box"><b>n &gt; 30 &amp; σ known →</b> <span class="chip">Z-TEST</span></div>
+          <div class="box"><b>n &lt; 30 &amp; σ unknown →</b> <span class="chip t">t-TEST</span></div>
+        </div>
+        <div class="lvl">
+          <div class="box" style="flex:0 0 30%;">How many groups?</div>
+          <div class="box"><b>Two groups →</b> Z or t test</div>
+          <div class="box"><b>Three or more →</b> <span class="chip a">ANOVA / F-TEST</span></div>
+        </div>
+        <div class="lvl">
+          <div class="box" style="flex:0 0 30%;">Assumptions violated / ranks only?</div>
+          <div class="box"><b>→</b> <span class="chip p">NON-PARAMETRIC</span> (Mann-Whitney, Kruskal-Wallis…)</div>
+          <div class="box">Comparing <b>two variances →</b> <span class="chip a">F-TEST</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk">
+      <div class="bh"><span class="n">21</span> LARGE SAMPLE — Z TEST (n &gt; 30)</div>
+      <div class="bb">
+        <span class="fx"><span class="lbl">Single mean</span> Z = (x̄ − μ) / (σ/√n)</span>
+        <span class="fx"><span class="lbl">Two means</span> Z = (x̄₁ − x̄₂) / √(σ₁²/n₁ + σ₂²/n₂)</span>
+        <span class="fx"><span class="lbl">Single proportion</span> Z = (p − P) / √(PQ/n)</span>
+        <span class="fx"><span class="lbl">Two proportions</span> Z = (p₁ − p₂) / √[ p̂q̂(1/n₁ + 1/n₂) ]</span>
+        <p style="margin:2px 0 0;font-size:7.85pt;"><b>Assumptions:</b> large sample, population normal (or CLT applies), σ known, random independent sampling.<br><b>Decision:</b> |Z| &gt; <b>1.96</b> → significant at 5%; |Z| &gt; <b>2.58</b> → significant at 1%. <b>95% confidence limits: x̄ ± 1.96 SE.</b></p>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">22</span> SMALL SAMPLE — STUDENT'S t TEST (W.S. Gosset, 1908)</div>
+      <div class="bb">
+        <span class="fx teal"><span class="lbl">① One-sample</span> t = (x̄ − μ)/(s/√n) ,  <b>df = n − 1</b></span>
+        <span class="fx teal"><span class="lbl">② Two independent</span> t = (x̄₁ − x̄₂)/[S<sub>p</sub>√(1/n₁ + 1/n₂)] , <b>df = n₁+n₂−2</b></span>
+        <span class="fx teal"><span class="lbl">— pooled variance</span> S<sub>p</sub>² = [Σ(x₁−x̄₁)² + Σ(x₂−x̄₂)²] / (n₁ + n₂ − 2)</span>
+        <span class="fx teal"><span class="lbl">③ Paired t</span> t = d̄ / (s<sub>d</sub>/√n) ,  <b>df = n − 1</b> (n = pairs)</span>
+        <ul class="dash tealx" style="font-size:7.85pt;">
+          <li><b>Assumptions:</b> ① sample drawn from a <b>normal</b> population ② observations <b>independent &amp; random</b> ③ σ <b>unknown</b>, estimated by s ④ for two-sample: <b>homogeneity of variances</b> (test first with F-test).</li>
+          <li><b>t-curve:</b> symmetrical, bell-shaped but <b>flatter with thicker tails</b> than normal; <b>depends only on df</b>; as <b>df → ∞, t → Z (normal)</b>.</li>
+          <li><b>Paired t</b> is used when the <b>same animal is measured twice</b> (before/after treatment) or animals are matched in pairs — it removes between-animal variation and is therefore <b>more powerful</b>.</li>
+          <li><b>Vet uses:</b> comparing two rations, two drugs, pre- vs post-treatment PCV, comparing a herd mean with a breed standard.</li>
+        </ul>
+        <div class="call trap"><span class="ct">Trap</span>Unpaired data with n₁ ≠ n₂ → <b>two-sample t</b>. Same animals before/after → <b>paired t</b>. Using unpaired t on paired data wastes information and loses precision.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk coral">
+      <div class="bh"><span class="n">23</span> CHI-SQUARE (χ²) TEST — Karl Pearson, 1900 ★ EVERY YEAR</div>
+      <div class="bb">
+        <span class="fx"><span class="lbl">Statistic</span> χ² = Σ (O − E)² / E</span>
+        <span class="fx"><span class="lbl">Expected freq. (contingency)</span> E = (Row total × Column total) / Grand total</span>
+        <span class="fx"><span class="lbl">Yates' correction (2×2, df = 1)</span> χ² = Σ (|O − E| − 0.5)² / E</span>
+        <table class="t coral tight" style="margin-top:2px;">
+          <tr><th style="width:34%;">Application</th><th>Degrees of freedom</th></tr>
+          <tr><td><b>Goodness of fit</b> (does observed fit an expected ratio?)</td><td><b>df = n − 1</b> (n = classes)</td></tr>
+          <tr><td><b>Test of independence / association</b> (r × c table)</td><td><b>df = (r − 1)(c − 1)</b></td></tr>
+          <tr><td><b>Homogeneity</b> of several populations</td><td>(r − 1)(c − 1)</td></tr>
+        </table>
+        <p style="margin:2px 0 1px;font-size:7.85pt;"><b>Conditions for validity:</b> observations must be <b>independent and random</b> · data must be <b>actual frequencies, not percentages or ratios</b> · <b>total N &gt; 50</b> · <b>every expected frequency ≥ 5</b> (if not, <b>pool</b> adjacent classes) · Σ O = Σ E.</p>
+        <p style="margin:0 0 1px;font-size:7.85pt;"><b>Nature of curve:</b> continuous, <b>positively skewed</b>, ranges 0 to ∞, never negative; shape depends only on df; becomes symmetrical as df increases.</p>
+        <div class="call gold"><span class="ct">Table values to memorise (5%)</span>df 1 = <b>3.84</b> · df 2 = <b>5.99</b> · df 3 = <b>7.81</b> · df 4 = <b>9.49</b> · df 5 = 11.07 &nbsp;|&nbsp; At 1%: df 1 = 6.63, df 2 = 9.21, df 3 = 11.34.</div>
+        <div class="call why"><span class="ct">The genetics use — say this in the answer</span>χ² is the standard test for <b>Mendelian segregation ratios</b>: a monohybrid F₂ 3 : 1 (df = 1), a dihybrid F₂ 9 : 3 : 3 : 1 (df = 3), a test-cross 1 : 1. It is also used to test a population for <b>Hardy–Weinberg equilibrium</b> (Unit 2) — there <b>df = number of genotypes − number of alleles</b> (for 2 alleles, df = 3 − 2 = 1), because gene frequency is estimated from the data itself.</div>
+      </div>
+    </div>
+
+    <div class="blk purple">
+      <div class="bh"><span class="n">24</span> NON-PARAMETRIC (DISTRIBUTION-FREE) TESTS</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.9pt;">Tests that make <b>no assumption about the form (distribution) of the population</b> and do not test population parameters. Used for <b>nominal/ordinal data, small samples, skewed data, or when normality/homogeneity fails</b>.</p>
+        <table class="t purple tight">
+          <tr><th style="width:38%;">Non-parametric test</th><th>Parametric equivalent</th></tr>
+          <tr><td><b>Sign test</b> · <b>Wilcoxon signed-rank</b></td><td>Paired t-test</td></tr>
+          <tr><td><b>Mann–Whitney U</b> (Wilcoxon rank-sum)</td><td>Two-sample (unpaired) t-test</td></tr>
+          <tr><td><b>Kruskal–Wallis H</b></td><td>One-way ANOVA (CRD)</td></tr>
+          <tr><td><b>Friedman test</b></td><td>Two-way ANOVA (RBD)</td></tr>
+          <tr><td><b>Spearman's rank correlation</b></td><td>Pearson's correlation</td></tr>
+          <tr><td><b>Run test</b></td><td>Test of randomness</td></tr>
+          <tr><td><b>Chi-square</b>, Median test, Kolmogorov–Smirnov</td><td>—</td></tr>
+        </table>
+        <div class="row" style="margin-top:2px;gap:3mm;">
+          <div class="col"><p style="margin:0;font-size:7.8pt;"><b>Advantages:</b> no distributional assumption · usable with <b>ranks, scores, attributes</b> · valid for very <b>small n</b> · simple, quick, less affected by outliers.</p></div>
+          <div class="col"><p style="margin:0;font-size:7.8pt;"><b>Disadvantages:</b> <b>less powerful / efficient</b> when parametric assumptions do hold · <b>wastes information</b> (uses ranks not magnitudes) · fewer tests available for complex designs.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1</div>
+  <div class="page-no">PAGE 5 / 6</div>
+</section>
+
+<!-- ==================== PAGE 6 ==================== -->
+<section class="page">
+  <div class="runner"><span class="rn">Design of Experiments · ANOVA · Computer Application</span><span class="rs">Unit 1 · Final Sweep</span></div>
+
+  <div class="g2">
+    <div class="blk amber">
+      <div class="bh"><span class="n">25</span> DESIGN OF EXPERIMENTS — FISHER'S 3 PRINCIPLES</div>
+      <div class="bb">
+        <div class="flow" style="margin-bottom:3px;">
+          <div class="node a"><b>RANDOMISATION</b><small>removes bias · validates the error term</small></div><div class="arw">+</div>
+          <div class="node a"><b>REPLICATION</b><small>gives an estimate of error · ↑ precision</small></div><div class="arw">+</div>
+          <div class="node a"><b>LOCAL CONTROL</b><small>blocking · reduces experimental error</small></div>
+        </div>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Other terms:</b> treatment · experimental unit (plot/animal) · <b>experimental error</b> (unexplained variation between units treated alike) · <b>precision ∝ 1/SE</b> · <b>efficiency</b> of one design relative to another.<br><b>CRD uses only randomisation + replication; RBD adds local control.</b></p>
+        <table class="t amber tight">
+          <tr><th style="width:20%;"></th><th>CRD</th><th>RBD</th></tr>
+          <tr><td><b>Principles</b></td><td>Randomisation + Replication</td><td>All <b>three</b> (+ Local control)</td></tr>
+          <tr><td><b>Grouping</b></td><td>None — treatments allotted wholly at random</td><td>Units grouped into <b>homogeneous blocks</b>; each block gets <b>every treatment once</b></td></tr>
+          <tr><td><b>Material</b></td><td>Requires <b>homogeneous</b> material (lab / poultry cages)</td><td>Suits <b>heterogeneous</b> material with a known gradient</td></tr>
+          <tr><td><b>Replication</b></td><td><b>May be unequal</b> — most flexible</td><td>Must be <b>equal</b> (= no. of blocks)</td></tr>
+          <tr><td><b>Error df</b></td><td><b>Maximum</b> (best for very small experiments)</td><td>Less — some df go to blocks</td></tr>
+          <tr><td><b>Precision</b></td><td>Lower</td><td><b>Higher</b> (block variation removed from error)</td></tr>
+          <tr><td><b>Missing plot</b></td><td>No problem — just analyse unequal n</td><td>Needs a <b>missing-plot formula</b></td></tr>
+          <tr><td><b>Analysis</b></td><td>One-way ANOVA</td><td>Two-way ANOVA</td></tr>
+        </table>
+        <div class="call mnem"><span class="ct">Mnemonic</span><b>"R-R-L"</b> — <b>R</b>andomisation, <b>R</b>eplication, <b>L</b>ocal control. CRD = <b>R-R</b> only; RBD = <b>R-R-L</b>. (Latin Square adds local control in <b>two</b> directions, rows &amp; columns, and needs t = r = c.)</div>
+      </div>
+    </div>
+
+    <div class="blk sage">
+      <div class="bh"><span class="n">26</span> ANOVA &amp; F-TEST — WRITE THE TABLE FROM MEMORY</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>ANOVA (R.A. Fisher)</b> = technique of <b>splitting the total variation</b> of a data set into components attributable to <b>assignable causes (treatments, blocks)</b> and to <b>chance (error)</b>, and testing them by the <b>variance-ratio (F) test</b>. Used when <b>3 or more means</b> are compared — a t-test on every pair would inflate the Type I error.</p>
+        <span class="fx sage"><span class="lbl">CF</span> Correction Factor = (Grand Total)² / N</span>
+        <span class="fx sage"><span class="lbl">TSS</span> Σx² − CF &nbsp;&nbsp; <span class="lbl">SST</span> Σ(T<sub>i</sub>²/r) − CF &nbsp;&nbsp; <span class="lbl">SSB</span> Σ(B<sub>j</sub>²/t) − CF</span>
+        <span class="fx sage"><span class="lbl">SSE</span> TSS − SST (− SSB in RBD) &nbsp;&nbsp; <span class="lbl">MS</span> = SS/df &nbsp;&nbsp; <span class="lbl">F</span> = MST / MSE</span>
+        <table class="t sage tight" style="margin-top:2px;">
+          <tr><th>Source</th><th>df — CRD</th><th>df — RBD</th><th>SS</th><th>MS</th><th>F</th></tr>
+          <tr><td><b>Blocks</b></td><td>—</td><td><b>r − 1</b></td><td>SSB</td><td>MSB</td><td>MSB/MSE</td></tr>
+          <tr><td><b>Treatments</b></td><td><b>t − 1</b></td><td><b>t − 1</b></td><td>SST</td><td>MST</td><td><b>MST/MSE</b></td></tr>
+          <tr><td><b>Error</b></td><td><b>n − t</b></td><td><b>(r−1)(t−1)</b></td><td>SSE</td><td>MSE</td><td>—</td></tr>
+          <tr><td><b>Total</b></td><td><b>n − 1</b></td><td><b>rt − 1</b></td><td>TSS</td><td>—</td><td>—</td></tr>
+        </table>
+        <span class="fx sage"><span class="lbl">CD / LSD</span> CD = t<sub>(α, error df)</sub> × √(2 × MSE / r)</span>
+        <span class="fx sage"><span class="lbl">CV of experiment</span> CV% = (√MSE / Grand mean) × 100</span>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Assumptions of ANOVA:</b> ① effects are <b>additive</b> ② errors are <b>independent</b> ③ errors are <b>normally distributed</b> with mean 0 ④ <b>homogeneity of variances</b> (homoscedasticity).<br><b>F-test:</b> F = larger variance / smaller variance (S₁²/S₂²), <b>always right-tailed</b>, df = (n₁−1, n₂−1); F ≥ 1; also used to test <b>equality of two population variances</b> before a two-sample t-test. <b>F = t² when df₁ = 1.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-top:3.4mm;">
+    <div class="blk">
+      <div class="bh"><span class="n">27</span> COMPUTER APPLICATION — ONE-PASS SWEEP</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Computer languages:</b> <b>Low level</b> — <b>Machine language</b> (binary 0/1, only language the CPU understands, machine-dependent) and <b>Assembly language</b> (mnemonics; needs an <b>ASSEMBLER</b>). <b>High level</b> — English-like, machine-independent: FORTRAN, COBOL, BASIC, C, C++, Java, Python, R; need a <b>COMPILER</b> (translates the whole program at once, faster) or an <b>INTERPRETER</b> (line by line, easier to debug). <b>4GL</b> — SQL. Source code → translator → object code.</p>
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>DBMS:</b> software to <b>create, store, retrieve, update and manage</b> data in a database. Hierarchy: <b>bit → byte → field → record → file → database</b>. <b>Advantages:</b> controls <b>data redundancy</b>, ensures <b>consistency, integrity, security, sharing</b>, enforces standards, backup &amp; recovery. <b>Models:</b> hierarchical (tree), network, <b>relational (RDBMS — data in tables of rows &amp; columns; primary key, foreign key; query language SQL)</b>, object-oriented. <b>Examples:</b> MS-Access, Oracle, MySQL, SQL Server. Vet use: herd registers, breeding &amp; health records, AI records, disease surveillance databases.</p>
+        <table class="t tight">
+          <tr><th style="width:24%;">MS-Office component</th><th>Function &amp; file extension</th></tr>
+          <tr><td><b>MS-Word</b></td><td>Word processing — thesis, reports · <b>.docx</b></td></tr>
+          <tr><td><b>MS-Excel</b></td><td><b>Spreadsheet</b> — data entry, calculation, charts, statistical analysis · <b>.xlsx</b></td></tr>
+          <tr><td><b>MS-PowerPoint</b></td><td>Presentation slides · <b>.pptx</b></td></tr>
+          <tr><td><b>MS-Access</b></td><td><b>Database</b> management (RDBMS) · <b>.accdb</b></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk teal">
+      <div class="bh"><span class="n">28</span> MS-EXCEL FOR BIOLOGICAL DATA · NETWORKS &amp; E-MAIL</div>
+      <div class="bb">
+        <p style="margin:0 0 2px;font-size:7.85pt;"><b>Excel structure:</b> workbook → worksheets → <b>cell</b> (intersection of a lettered <b>column</b> and numbered <b>row</b>, e.g. B7); cell reference may be <b>relative (B7), absolute ($B$7) or mixed</b>; formulas begin with <b>=</b>. Rows 1,048,576 × columns 16,384 (A → XFD).</p>
+        <table class="t teal tight">
+          <tr><th style="width:40%;">Excel function / tool</th><th>Gives</th></tr>
+          <tr><td class="mono">=AVERAGE() =MEDIAN() =MODE()</td><td>Central tendency</td></tr>
+          <tr><td class="mono">=STDEV.S() =VAR.S() =COUNT() =SUM()</td><td>Dispersion &amp; totals</td></tr>
+          <tr><td class="mono">=CORREL() =SLOPE() =INTERCEPT()</td><td>Correlation &amp; regression</td></tr>
+          <tr><td class="mono">=T.TEST() =Z.TEST() =CHISQ.TEST() =F.TEST()</td><td>Tests of significance</td></tr>
+          <tr><td><b>Data → Data Analysis (ToolPak)</b></td><td><b>Descriptive Statistics, ANOVA single factor (CRD), two-factor (RBD), Regression, t-Test, F-Test</b></td></tr>
+          <tr><td><b>Charts · Pivot Table · Sort · Filter</b></td><td>Graphs, summarisation, data handling</td></tr>
+        </table>
+        <p style="margin:2px 0 0;font-size:7.8pt;"><b>Networks:</b> <b>LAN</b> (single building) → <b>MAN</b> (city) → <b>WAN</b> (country/global; the Internet is the largest WAN). <b>Topologies:</b> bus, star, ring, mesh, tree. Devices: hub, switch, router, modem, NIC.<br><b>Internet:</b> global network of networks; protocol suite <b>TCP/IP</b>; <b>WWW</b> = the information service on it; <b>HTTP</b> (web pages), <b>FTP</b> (file transfer), <b>SMTP</b> (sending mail), <b>POP3 / IMAP</b> (receiving mail). <b>URL</b>, IP address, domain name, ISP, browser, search engine.<br><b>E-mail:</b> username@domain; fields — <b>To, Cc (carbon copy — visible), Bcc (blind — hidden), Subject, Body, Attachment</b>. Advantages: fast, cheap, records kept, attachments, global.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk coral" style="margin-top:3.4mm;">
+    <div class="bh"><span class="n">★</span> LAST-10-MINUTES: OBJECTIVE AMMUNITION + SUBJECTIVE ATTACK PLANS</div>
+    <div class="bb">
+      <div class="row" style="gap:4mm;">
+        <div class="col" style="flex:1.5;">
+          <div class="rf3">
+            <p><b>Father of statistics</b> — Sir R.A. Fisher (also of ANOVA &amp; experimental design)</p>
+            <p><b>Father of biostatistics</b> — Karl Pearson (also χ², r, skewness)</p>
+            <p><b>t-test</b> — W.S. Gosset ("Student")</p>
+            <p><b>Regression</b> — Sir Francis Galton</p>
+            <p><b>Σ(x − x̄)</b> = 0; <b>Σ(x − x̄)²</b> = minimum</p>
+            <p><b>Best measure of dispersion</b> — SD</p>
+            <p><b>Most unstable</b> — Range</p>
+            <p><b>Unit-free measures</b> — r, CV, Z, β₁, β₂</p>
+            <p><b>Median from</b> ogive; <b>Mode from</b> histogram</p>
+            <p><b>Mode = 3 Median − 2 Mean</b></p>
+            <p><b>AM ≥ GM ≥ HM</b></p>
+            <p><b>QD : MD : SD = 10 : 12 : 15</b></p>
+            <p><b>Normal:</b> β₁ = 0, β₂ = 3</p>
+            <p><b>μ ± 1.96σ = 95%</b>, μ ± 2.58σ = 99%</p>
+            <p><b>Binomial:</b> mean &gt; variance</p>
+            <p><b>Poisson:</b> mean = variance = λ</p>
+            <p><b>SNV:</b> mean 0, SD 1</p>
+            <p><b>r = ±√(b<sub>yx</sub>·b<sub>xy</sub>)</b></p>
+            <p><b>Lines meet at</b> (x̄, ȳ)</p>
+            <p><b>r = 0</b> → lines perpendicular</p>
+            <p><b>χ² df</b> = (r−1)(c−1)</p>
+            <p><b>χ² 5%, df 1</b> = 3.84</p>
+            <p><b>Yates' correction</b> — 2×2 table</p>
+            <p><b>Paired t df</b> = n − 1</p>
+            <p><b>Two-sample t df</b> = n₁+n₂−2</p>
+            <p><b>RBD error df</b> = (r−1)(t−1)</p>
+            <p><b>F</b> is always right-tailed; F = t² (df₁=1)</p>
+            <p><b>Type I = α</b>; <b>Type II = β</b>; <b>Power = 1−β</b></p>
+            <p><b>SE = s/√n</b> — falls as n rises</p>
+            <p><b>Non-parametric for ANOVA</b> — Kruskal–Wallis</p>
+            <p><b>Compiler</b> — whole program; <b>Interpreter</b> — line by line</p>
+            <p><b>Machine language</b> — binary, only one CPU understands</p>
+            <p><b>SMTP</b> send, <b>POP3/IMAP</b> receive mail</p>
+            <p><b>Bcc</b> — recipients hidden from each other</p>
+          </div>
+        </div>
+        <div class="col" style="flex:1;">
+          <div class="skel">
+            <div class="s"><i>Q1</i><span><b>"Define χ² test. Describe its applications and limitations."</b> → Definition &amp; formula → conditions for validity → goodness of fit (df = n−1) with a <b>3:1 Mendelian worked example</b> → test of independence (df = (r−1)(c−1)) → Yates' correction → table value 3.84 → limitations (needs E ≥ 5, actual frequencies, N &gt; 50, only tests association not its strength).</span></div>
+            <div class="s"><i>Q2</i><span><b>"Differentiate CRD and RBD. Give ANOVA table of RBD."</b> → definition of each → layout diagram → the 8-row comparison table on this page → full RBD ANOVA skeleton with df column → CD formula → conclusion on when to prefer each.</span></div>
+            <div class="s"><i>Q3</i><span><b>"Normal distribution and its importance."</b> → pdf → all 7 properties → the area rule → SNV Z = (x−μ)/σ → importance (basis of all parametric tests, CLT, selection intensity, quality control).</span></div>
+            <div class="s"><i>Q4</i><span><b>"Correlation vs regression."</b> → definitions → both formulas → comparison table → r = ±√(b<sub>yx</sub>b<sub>xy</sub>) → application in genetics (genetic &amp; phenotypic correlation, regression of offspring on parent = heritability, Unit 2).</span></div>
+            <div class="s"><i>Q5</i><span><b>"Measures of dispersion / CV."</b> → why dispersion needed → 4 absolute + 4 relative measures with formulas → CV as the only comparator across units → herd-uniformity example → SD vs SE table.</span></div>
+          </div>
+          <div class="call gold" style="margin-top:2px;"><span class="ct">Carry into Unit 2 &amp; 3</span>Variance → <b>components of phenotypic variance</b>; regression of offspring on parent → <b>heritability</b>; correlation → <b>genetic &amp; phenotypic correlation</b>; normal curve → <b>selection intensity</b>; χ² → <b>Hardy–Weinberg testing</b>. Unit 1 is the toolbox; Units 2–3 are the workshop.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">Animal Genetics &amp; Breeding Studio · Rapid Revision · Unit 1 · Fazal Zama</div>
+  <div class="page-no">PAGE 6 / 6</div>
+</section>
+
+</body>
+</html>

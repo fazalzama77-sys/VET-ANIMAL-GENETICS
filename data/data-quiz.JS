@@ -1,22 +1,6497 @@
 /* ============================================================
-   data-quiz.JS  —  Quiz Question Bank
+   data-quiz.JS  —  The Animal Genetics & Breeding Question Bank
+   Strictly aligned with VCI MSVE 2016 Second Year Curriculum
+   Total Questions: 540 (180 per unit | 90 MCQ : 45 TF : 45 FIB)
    ============================================================ */
 
 var quizBank = {
   "unit-1": {
-    mcq: [
+    "mcq": [
       {
-        q: "",
-        o: ["", "", "", ""],
-        a: 0,
-        e: "",
-        topicId: "",
-        diff: "easy"
+        "q": "Who is recognized as the pioneer of correlation and regression analysis and coined the term 'Biometry'?",
+        "o": [
+          "Sir Francis Galton",
+          "Karl Pearson",
+          "Sir Ronald A. Fisher",
+          "Gregor Mendel"
+        ],
+        "a": 0,
+        "e": "Sir Francis Galton coined the term 'Biometry' and pioneered the mathematical concepts of correlation and regression.",
+        "topicId": "u1-t01",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "Which of the following characteristics is an inherent feature of biological data compared to physical data?",
+        "o": [
+          "Deterministic replication",
+          "Absence of variation",
+          "Inherent biological variation",
+          "Zero sampling error"
+        ],
+        "a": 2,
+        "e": "Living organisms possess inherent biological variation due to genetic diversity and micro-environmental influences.",
+        "topicId": "u1-t01",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "Classification of biological data according to geographical location or region is known as:",
+        "o": [
+          "Chronological classification",
+          "Spatial / Geographical classification",
+          "Qualitative classification",
+          "Quantitative classification"
+        ],
+        "a": 1,
+        "e": "Spatial or geographical classification arranges biological data according to geographical areas, zones, or administrative regions.",
+        "topicId": "u1-t02",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "In a statistical frequency distribution table, the upper boundary of each class is excluded from that class in:",
+        "o": [
+          "Exclusive series",
+          "Inclusive series",
+          "Cumulative series",
+          "Discrete series"
+        ],
+        "a": 0,
+        "e": "In an exclusive class interval (e.g., 10-20, 20-30), the upper limit is excluded and counted in the next succeeding class.",
+        "topicId": "u1-t02",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "A numerical descriptive measure computed from an entire biological population is termed a:",
+        "o": [
+          "Statistic",
+          "Parameter",
+          "Variable",
+          "Estimate"
+        ],
+        "a": 1,
+        "e": "A parameter is a fixed numerical characteristic of a population (e.g., population mean μ), whereas a statistic is calculated from a sample.",
+        "topicId": "u1-t03",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "Which graphic representation is specifically used to locate the median of a continuous frequency distribution?",
+        "o": [
+          "Histogram",
+          "Frequency polygon",
+          "Ogive curve (cumulative frequency curve)",
+          "Pie diagram"
+        ],
+        "a": 2,
+        "e": "The median can be determined graphically from the intersection point of the 'less than' and 'more than' ogives (or at N/2 on cumulative frequency axis).",
+        "topicId": "u1-t04",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "A bar chart where adjacent vertical rectangles touch each other with area proportional to frequency is called a:",
+        "o": [
+          "Histogram",
+          "Bar diagram",
+          "Line graph",
+          "Cartogram"
+        ],
+        "a": 0,
+        "e": "A histogram consists of contiguous rectangles where the area of each bar is directly proportional to the frequency of that class.",
+        "topicId": "u1-t04",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "What is the algebraic sum of deviations of a set of observations from their arithmetic mean?",
+        "o": [
+          "Always 1",
+          "Always 0",
+          "Equal to standard deviation",
+          "Equal to variance"
+        ],
+        "a": 1,
+        "e": "By mathematical definition, Σ(X - X_bar) = 0. The sum of deviations of values from their arithmetic mean is always zero.",
+        "topicId": "u1-t05",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "Which measure of central tendency is the most suitable average for qualitative data or categorical breed preferences?",
+        "o": [
+          "Arithmetic mean",
+          "Geometric mean",
+          "Mode",
+          "Harmonic mean"
+        ],
+        "a": 2,
+        "e": "The mode represents the most frequently occurring observation and is the only measure of central tendency applicable to nominal/categorical data.",
+        "topicId": "u1-t05",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "In a moderately asymmetrical distribution, the empirical relationship between mean, median, and mode is:",
+        "o": [
+          "Mode = 3 Median - 2 Mean",
+          "Mean = 3 Median - 2 Mode",
+          "Median = 3 Mode - 2 Mean",
+          "Mode = 2 Median - 3 Mean"
+        ],
+        "a": 0,
+        "e": "Karl Pearson's empirical formula states: Mode = 3 Median - 2 Mean (or Mean - Mode = 3(Mean - Median)).",
+        "topicId": "u1-t05",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "The measure of dispersion that is defined as half the difference between the third and first quartiles is:",
+        "o": [
+          "Mean deviation",
+          "Quartile deviation (Semi-interquartile range)",
+          "Standard deviation",
+          "Variance"
+        ],
+        "a": 1,
+        "e": "Quartile Deviation (QD) = (Q3 - Q1) / 2. It is also known as the semi-interquartile range.",
+        "topicId": "u1-t06",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The positive square root of the arithmetic mean of the squared deviations from the mean is called:",
+        "o": [
+          "Standard deviation",
+          "Variance",
+          "Mean deviation",
+          "Range"
+        ],
+        "a": 0,
+        "e": "Standard deviation (SD or σ) is defined as the positive square root of variance: σ = sqrt(Σ(X - μ)² / N).",
+        "topicId": "u1-t06",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "If every observation in a lactation dataset is multiplied by a constant factor of 3, the standard deviation will:",
+        "o": [
+          "Remain unchanged",
+          "Increase by 3",
+          "Become 3 times the original SD",
+          "Become 9 times the original SD"
+        ],
+        "a": 2,
+        "e": "Standard deviation is affected by change of scale. Multiplying every observation by constant c multiplies the SD by |c| (so 3 * SD). Variance increases 9-fold.",
+        "topicId": "u1-t06",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "Which relative measure of dispersion is used to compare variability between two biological groups with different units or means?",
+        "o": [
+          "Variance",
+          "Standard error",
+          "Coefficient of Variation (CV)",
+          "Mean deviation"
+        ],
+        "a": 2,
+        "e": "Coefficient of Variation (CV = (SD / Mean) * 100) is a unitless percentage used to compare dispersion across different traits or populations.",
+        "topicId": "u1-t07",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "What is the formula for the Standard Error of the sample mean (SE_mean)?",
+        "o": [
+          "σ / sqrt(n)",
+          "σ / n",
+          "σ² / n",
+          "n / sqrt(σ)"
+        ],
+        "a": 0,
+        "e": "The standard error of the mean evaluates the precision of a sample mean and is calculated as SE = s / sqrt(n).",
+        "topicId": "u1-t07",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "For any frequency distribution, the first central moment (μ₁) is always equal to:",
+        "o": [
+          "1",
+          "0",
+          "Mean",
+          "Variance"
+        ],
+        "a": 1,
+        "e": "The first moment about the mean μ₁ = Σ(X - X_bar) / N = 0, because the sum of deviations from the mean is always zero.",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "In a positively skewed biological distribution, the relationship among the three averages is:",
+        "o": [
+          "Mean > Median > Mode",
+          "Mode > Median > Mean",
+          "Mean = Median = Mode",
+          "Median > Mean > Mode"
+        ],
+        "a": 0,
+        "e": "In a right-skewed (positively skewed) curve, the long tail extends to the right, pulling Mean > Median > Mode.",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "For a standard normal distribution, the value of kurtosis coefficient β₂ is equal to:",
+        "o": [
+          "0",
+          "1",
+          "3",
+          "-3"
+        ],
+        "a": 2,
+        "e": "A normal mesokurtic distribution has β₂ = 3 (and excess kurtosis γ₂ = β₂ - 3 = 0). Leptokurtic curves have β₂ > 3, platykurtic β₂ < 3.",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "If two events A and B are mutually exclusive, the probability of both occurring together P(A ∩ B) is:",
+        "o": [
+          "1",
+          "0",
+          "P(A) * P(B)",
+          "P(A) + P(B)"
+        ],
+        "a": 1,
+        "e": "Mutually exclusive events cannot occur simultaneously, hence their joint probability P(A ∩ B) = 0.",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The probability of drawing a black cow from a herd where 40% are black and 60% are red is:",
+        "o": [
+          "0.60",
+          "0.40",
+          "0.24",
+          "1.00"
+        ],
+        "a": 1,
+        "e": "Probability P = favorable cases / total cases = 40 / 100 = 0.40.",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "According to the addition theorem of probability, for any two non-mutually exclusive events A and B:",
+        "o": [
+          "P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
+          "P(A ∪ B) = P(A) * P(B)",
+          "P(A ∪ B) = P(A) + P(B)",
+          "P(A ∪ B) = P(A) / P(B)"
+        ],
+        "a": 0,
+        "e": "For general events, P(A or B) = P(A) + P(B) - P(A and B) to avoid double counting the intersection.",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "What are the two parameters that define a Binomial distribution?",
+        "o": [
+          "μ and σ",
+          "n and p",
+          "λ and e",
+          "n and λ"
+        ],
+        "a": 1,
+        "e": "A Binomial distribution B(n, p) is completely characterized by two parameters: n (number of independent trials) and p (probability of success in each trial).",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "In a Binomial distribution, the mean and variance are given respectively by:",
+        "o": [
+          "np and npq",
+          "np and sqrt(npq)",
+          "nq and np",
+          "λ and λ"
+        ],
+        "a": 0,
+        "e": "For a binomial distribution, Mean = np, and Variance = npq (where q = 1 - p). Notice variance < mean.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "Which discrete probability distribution is known as the 'law of rare events'?",
+        "o": [
+          "Binomial distribution",
+          "Poisson distribution",
+          "Normal distribution",
+          "Uniform distribution"
+        ],
+        "a": 1,
+        "e": "The Poisson distribution models rare biological events (e.g., rare genetic mutations, hemophilia cases) where n is very large and p is extremely small.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "In a Poisson distribution with parameter λ, which property is uniquely true?",
+        "o": [
+          "Mean > Variance",
+          "Mean < Variance",
+          "Mean = Variance = λ",
+          "Mean = λ²"
+        ],
+        "a": 2,
+        "e": "A hallmark of the Poisson distribution is that its mean and variance are identical and equal to the parameter λ.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "The total area under the standard normal distribution curve is equal to:",
+        "o": [
+          "0.5",
+          "1.0",
+          "3.0",
+          "100"
+        ],
+        "a": 1,
+        "e": "The total area under any valid probability density function, including the normal curve, is exactly 1.0 (or 100%).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The normal distribution curve is symmetrical about which central value?",
+        "o": [
+          "Mean only",
+          "Median only",
+          "Mode only",
+          "Mean = Median = Mode"
+        ],
+        "a": 3,
+        "e": "In a perfectly symmetrical bell-shaped normal curve, the Mean, Median, and Mode coincide at the center (X = μ).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "What percentage of observations lie within μ ± 1σ in a normal distribution?",
+        "o": [
+          "50.00%",
+          "68.27%",
+          "95.45%",
+          "99.73%"
+        ],
+        "a": 1,
+        "e": "Under the empirical rule of the normal curve: μ ± 1σ covers 68.27%, μ ± 2σ covers 95.45%, and μ ± 3σ covers 99.73% of all values.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "In a normal distribution, what percentage of observations fall within the range μ ± 1.96σ?",
+        "o": [
+          "90%",
+          "95%",
+          "99%",
+          "99.73%"
+        ],
+        "a": 1,
+        "e": "Exactly 95% of the total area under a normal curve lies between Z = -1.96 and Z = +1.96 (leaving 2.5% in each tail).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "The points of inflection of the standard normal distribution curve occur at:",
+        "o": [
+          "X = μ ± σ",
+          "X = μ ± 2σ",
+          "X = μ ± 3σ",
+          "X = μ only"
+        ],
+        "a": 0,
+        "e": "The normal curve changes its curvature from concave downward to convex downward at distance of one standard deviation on either side of the mean (μ ± σ).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 3
+      },
+      {
+        "q": "The transformation Z = (X - μ) / σ converts any normal variate X into a standard normal variate Z with:",
+        "o": [
+          "Mean = 1, Variance = 0",
+          "Mean = 0, Variance = 1",
+          "Mean = 0, Variance = 0",
+          "Mean = 1, Variance = 1"
+        ],
+        "a": 1,
+        "e": "The standard normal distribution Z ~ N(0, 1) has mean zero (μ = 0) and standard deviation/variance equal to one (σ = 1).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "If a dairy cow has a 305-day milk yield with Z-score = +2.0 in a herd with mean 3000 kg and SD 250 kg, her actual yield is:",
+        "o": [
+          "3250 kg",
+          "3500 kg",
+          "2500 kg",
+          "3750 kg"
+        ],
+        "a": 1,
+        "e": "X = μ + Z*σ = 3000 + (2.0 * 250) = 3000 + 500 = 3500 kg.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "Which theorem states that the distribution of sample means approaches normality as sample size increases, regardless of population shape?",
+        "o": [
+          "Bayes' theorem",
+          "Central Limit Theorem",
+          "Chebyshev's theorem",
+          "Hardy-Weinberg theorem"
+        ],
+        "a": 1,
+        "e": "The Central Limit Theorem (CLT) proves that for large n (n ≥ 30), the sampling distribution of sample means is approximately normal.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "In a binomial distribution with n = 100 and p = 0.2, what is the standard deviation?",
+        "o": [
+          "20",
+          "16",
+          "4",
+          "2"
+        ],
+        "a": 2,
+        "e": "Variance = npq = 100 * 0.2 * 0.8 = 16. Standard deviation = sqrt(16) = 4.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "If the probability of a calf being female is 0.5, what is the probability that all 3 calves born are female?",
+        "o": [
+          "0.5",
+          "0.25",
+          "0.125",
+          "0.0625"
+        ],
+        "a": 2,
+        "e": "Since calf sex events are independent: P(3 females) = (0.5)³ = 0.125 (or 1/8).",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "The skewness of a normal distribution (γ₁) is:",
+        "o": [
+          "0",
+          "1",
+          "3",
+          "Undefined"
+        ],
+        "a": 0,
+        "e": "Because the normal distribution is perfectly symmetric around its mean, its skewness γ₁ = 0.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The numerical value of Karl Pearson's correlation coefficient (r) always lies in the range:",
+        "o": [
+          "0 to +1",
+          "-1 to +1",
+          "-∞ to +∞",
+          "0 to 100"
+        ],
+        "a": 1,
+        "e": "Pearson's correlation coefficient r is bounded strictly between -1.0 and +1.0 (-1 ≤ r ≤ +1).",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "If two biological traits have a correlation coefficient of r = 0, this indicates:",
+        "o": [
+          "Perfect linear relationship",
+          "Zero linear relationship",
+          "Inverse relationship",
+          "Direct relationship"
+        ],
+        "a": 1,
+        "e": "An r = 0 indicates the complete absence of any linear association between the two continuous variables.",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Karl Pearson's coefficient of correlation is independent of:",
+        "o": [
+          "Change of origin only",
+          "Change of scale only",
+          "Both change of origin and change of scale",
+          "Neither origin nor scale"
+        ],
+        "a": 2,
+        "e": "Correlation coefficient r is a pure dimensionless number, invariant to both shift of origin (adding/subtracting) and change of scale (multiplying/dividing).",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "Spearman's rank correlation coefficient (ρ) formula is given by:",
+        "o": [
+          "1 - [6 Σ d² / (n(n² - 1))]",
+          "1 - [Σ d² / n]",
+          "6 Σ d² / (n² - 1)",
+          "[6 Σ d² / n(n - 1)] - 1"
+        ],
+        "a": 0,
+        "e": "Spearman's rank correlation formula is ρ = 1 - [6 Σ d² / (n(n² - 1))], where d is difference in ranks.",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "The geometric mean of the two regression coefficients b_yx and b_xy is equal to:",
+        "o": [
+          "Variance",
+          "Correlation coefficient (r)",
+          "Covariance",
+          "Standard error"
+        ],
+        "a": 1,
+        "e": "By mathematical rule: r = ± sqrt(b_yx * b_xy). The geometric mean of the regression coefficients equals correlation coefficient r.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "If regression coefficient b_yx = 0.8 and b_xy = 0.45, what is the correlation coefficient r?",
+        "o": [
+          "0.36",
+          "0.60",
+          "0.80",
+          "0.18"
+        ],
+        "a": 1,
+        "e": "r = sqrt(b_yx * b_xy) = sqrt(0.8 * 0.45) = sqrt(0.36) = 0.60.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "If one regression coefficient is greater than 1, the other regression coefficient must be:",
+        "o": [
+          "Greater than 1",
+          "Equal to 1",
+          "Less than 1",
+          "Negative"
+        ],
+        "a": 2,
+        "e": "Since r² = b_yx * b_xy ≤ 1, if one regression coefficient exceeds 1, the other must be less than 1.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 3
+      },
+      {
+        "q": "The two regression lines of Y on X and X on Y intersect each other at the point:",
+        "o": [
+          "(0, 0)",
+          "(X_bar, Y_bar)",
+          "(1, 1)",
+          "(σx, σy)"
+        ],
+        "a": 1,
+        "e": "Both regression lines always pass through the mean values of the two variables, intersecting at (X_bar, Y_bar).",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "If the two regression lines are perpendicular to each other, the correlation coefficient r between them is:",
+        "o": [
+          "+1",
+          "-1",
+          "0",
+          "0.5"
+        ],
+        "a": 2,
+        "e": "When r = 0, the two regression lines are mutually perpendicular (at 90°). When r = ±1, the two regression lines coincide.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "The proportion of total variation in Y explained by variation in X is measured by the:",
+        "o": [
+          "Correlation coefficient (r)",
+          "Coefficient of determination (r²)",
+          "Regression slope (b)",
+          "Covariance"
+        ],
+        "a": 1,
+        "e": "The coefficient of determination (r²) measures the percentage of total variance in the dependent variable explained by the independent variable.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "Sampling in which each individual in the population has a known and equal chance of being selected is:",
+        "o": [
+          "Simple random sampling",
+          "Purposive sampling",
+          "Quota sampling",
+          "Judgment sampling"
+        ],
+        "a": 0,
+        "e": "In Simple Random Sampling (SRS), every sampling unit has an equal and independent probability of inclusion.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which sampling technique divides a heterogeneous livestock population into homogeneous sub-groups before sampling?",
+        "o": [
+          "Cluster sampling",
+          "Stratified random sampling",
+          "Systematic sampling",
+          "Convenience sampling"
+        ],
+        "a": 1,
+        "e": "Stratified random sampling divides a heterogeneous population into internally homogeneous groups (strata, e.g. age or breed) and samples from each.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Selecting every k-th animal from a numbered herd register after a random start is known as:",
+        "o": [
+          "Cluster sampling",
+          "Stratified sampling",
+          "Systematic sampling",
+          "Multistage sampling"
+        ],
+        "a": 2,
+        "e": "Systematic sampling selects units at fixed intervals k = N/n after picking the first unit at random.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "In cluster sampling, the sampling units inside each selected cluster should ideally be:",
+        "o": [
+          "Homogeneous within, heterogeneous between",
+          "Heterogeneous within, homogeneous between",
+          "Identical in phenotype",
+          "From a single family"
+        ],
+        "a": 1,
+        "e": "Ideally, clusters should be internally heterogeneous (mini-populations) while being homogeneous among different clusters.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "Sampling errors can be minimized by:",
+        "o": [
+          "Decreasing sample size",
+          "Increasing sample size",
+          "Biased selection",
+          "Omitting non-respondents"
+        ],
+        "a": 1,
+        "e": "Sampling error is inversely proportional to the square root of sample size (SE = s / sqrt(n)), hence increasing n reduces sampling error.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Non-sampling errors can occur in:",
+        "o": [
+          "Sample surveys only",
+          "Complete census only",
+          "Both sample surveys and complete census",
+          "Neither surveys nor census"
+        ],
+        "a": 2,
+        "e": "Non-sampling errors (data entry errors, faulty instruments, non-response) arise in both sample surveys and complete population enumerations.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "The regression coefficient of Y on X (b_yx) represents the:",
+        "o": [
+          "Value of Y when X is zero",
+          "Average change in Y per unit change in X",
+          "Ratio of means",
+          "Total variation"
+        ],
+        "a": 1,
+        "e": "b_yx is the slope of the regression line, indicating the expected change in dependent variable Y for every one unit increase in independent variable X.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "If r = -0.90 between parasite egg count and daily body weight gain in lambs, the association is:",
+        "o": [
+          "Weak positive",
+          "Strong positive",
+          "Strong negative (inverse)",
+          "No association"
+        ],
+        "a": 2,
+        "e": "An r = -0.90 demonstrates a very strong negative linear relationship: higher parasite burden corresponds to significantly lower weight gain.",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "A hypothesis that asserts there is no significant difference between treatments or groups is called the:",
+        "o": [
+          "Alternative hypothesis (H₁)",
+          "Null hypothesis (H₀)",
+          "Composite hypothesis",
+          "Simple hypothesis"
+        ],
+        "a": 1,
+        "e": "The Null Hypothesis (H₀) is the hypothesis of no difference or no treatment effect, tested for possible rejection.",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Rejecting a true null hypothesis (H₀) constitutes which type of statistical error?",
+        "o": [
+          "Type I error (α)",
+          "Type II error (β)",
+          "Sampling error",
+          "Standard error"
+        ],
+        "a": 0,
+        "e": "Type I error (probability α) occurs when the researcher rejects H₀ when it is actually true (false positive).",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "The power of a statistical test is defined mathematically as:",
+        "o": [
+          "1 - α",
+          "1 - β",
+          "α + β",
+          "β / α"
+        ],
+        "a": 1,
+        "e": "Power of a test = 1 - β (where β is the probability of committing a Type II error, i.e., failing to reject a false null hypothesis).",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "For a two-tailed Z-test at the 5% level of significance, the critical value is:",
+        "o": [
+          "1.645",
+          "1.96",
+          "2.58",
+          "3.00"
+        ],
+        "a": 1,
+        "e": "For a standard normal Z-test, the critical value for a two-tailed test at 5% (α = 0.05) is ±1.96; at 1% it is ±2.58.",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Student's t-test was developed in 1908 by which scientist under the pseudonym 'Student'?",
+        "o": [
+          "Karl Pearson",
+          "Sir Ronald A. Fisher",
+          "William Sealy Gosset",
+          "P. C. Mahalanobis"
+        ],
+        "a": 2,
+        "e": "William Sealy Gosset, a chemist and statistician at Guinness Brewery in Dublin, published the t-test under the pen name 'Student'.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Student's t-test is generally applied when the population variance is unknown and sample size n is:",
+        "o": [
+          "Greater than 100",
+          "Equal to 50",
+          "Small (n < 30)",
+          "Infinite"
+        ],
+        "a": 2,
+        "e": "Student's t-test is specifically designed for small samples (n < 30) where the population standard deviation σ is unknown.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "What are the degrees of freedom for a two-sample independent Student's t-test with sample sizes n₁ and n₂?",
+        "o": [
+          "n₁ + n₂",
+          "n₁ + n₂ - 1",
+          "n₁ + n₂ - 2",
+          "(n₁ - 1)(n₂ - 1)"
+        ],
+        "a": 2,
+        "e": "For two independent samples, df = (n₁ - 1) + (n₂ - 1) = n₁ + n₂ - 2.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "To test the efficacy of an anthelmintic drug by comparing fecal egg counts in the same 12 sheep before and after treatment, which test is appropriate?",
+        "o": [
+          "Unpaired t-test",
+          "Paired t-test",
+          "Z-test for proportions",
+          "Chi-square test of homogeneity"
+        ],
+        "a": 1,
+        "e": "The paired t-test is used for dependent / repeated measurements on the same biological subjects (before vs after), with df = n - 1 = 11.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "Who developed the Chi-Square (χ²) test of goodness of fit in the year 1900?",
+        "o": [
+          "Sir Francis Galton",
+          "Karl Pearson",
+          "W. S. Gosset",
+          "Sewall Wright"
+        ],
+        "a": 1,
+        "e": "Karl Pearson developed the Chi-Square test in 1900 to test whether observed frequencies conform to theoretical expected frequencies.",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a 2 × 2 contingency table, the degrees of freedom for the Chi-Square test of independence is:",
+        "o": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "a": 0,
+        "e": "Degrees of freedom for an r × c contingency table = (r - 1)(c - 1). For a 2 × 2 table: (2 - 1)(2 - 1) = 1 * 1 = 1.",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Yates' continuity correction is applied to a 2 × 2 Chi-Square contingency table when:",
+        "o": [
+          "Degrees of freedom > 5",
+          "Any expected cell frequency is less than 5",
+          "Total sample size exceeds 500",
+          "All frequencies are equal"
+        ],
+        "a": 1,
+        "e": "Yates' correction for continuity is mandatory in a 2 × 2 table (df = 1) whenever an expected cell frequency is small (less than 5).",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "What are the three fundamental principles of experimental design formulated by Sir Ronald A. Fisher?",
+        "o": [
+          "Randomization, Replication, Local Control",
+          "Selection, Migration, Mutation",
+          "Mean, Variance, Covariance",
+          "Hypothesis, Experiment, Conclusion"
+        ],
+        "a": 0,
+        "e": "Fisher's three cardinal principles of experimental design are: Randomization (validity), Replication (precision/error estimation), and Local Control (error reduction).",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Which experimental design does NOT utilize the principle of Local Control?",
+        "o": [
+          "Randomized Block Design (RBD)",
+          "Completely Randomized Design (CRD)",
+          "Latin Square Design (LSD)",
+          "Split Plot Design"
+        ],
+        "a": 1,
+        "e": "In a Completely Randomized Design (CRD), experimental units are homogeneous (e.g. lab animals), so blocking (local control) is not applied.",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "In a Randomized Block Design (RBD) with 5 treatments and 4 replications (blocks), what is the error degrees of freedom?",
+        "o": [
+          "12",
+          "15",
+          "19",
+          "20"
+        ],
+        "a": 0,
+        "e": "For RBD: Treatment df = t - 1 = 4; Block df = b - 1 = 3; Error df = (t - 1)(b - 1) = 4 * 3 = 12.",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "In Analysis of Variance (ANOVA), the F-statistic is computed as the ratio of:",
+        "o": [
+          "Total Sum of Squares to Error Sum of Squares",
+          "Treatment Mean Square to Error Mean Square",
+          "Error Mean Square to Treatment Mean Square",
+          "Treatment Sum of Squares to Total df"
+        ],
+        "a": 1,
+        "e": "F = MS_treatment / MS_error. It tests whether variance between treatments is significantly greater than error variance within treatments.",
+        "topicId": "u1-t19",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Which non-parametric test is the distribution-free analogue of the two-sample independent Student's t-test?",
+        "o": [
+          "Wilcoxon signed-rank test",
+          "Mann-Whitney U test",
+          "Kruskal-Wallis H test",
+          "Chi-square test"
+        ],
+        "a": 1,
+        "e": "The Mann-Whitney U test (Wilcoxon rank-sum test) compares two independent groups without assuming normal distribution.",
+        "topicId": "u1-t20",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "Which non-parametric test is used as an alternative to one-way ANOVA for comparing three or more independent groups?",
+        "o": [
+          "Kruskal-Wallis H test",
+          "Mann-Whitney U test",
+          "Wilcoxon signed-rank test",
+          "Sign test"
+        ],
+        "a": 0,
+        "e": "The Kruskal-Wallis one-way analysis of variance by ranks is the non-parametric analogue to one-way ANOVA.",
+        "topicId": "u1-t20",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "In an experiment testing 4 diets across 20 broiler chicks in a CRD, the treatment degrees of freedom and error degrees of freedom are:",
+        "o": [
+          "3 and 16",
+          "4 and 20",
+          "3 and 19",
+          "4 and 16"
+        ],
+        "a": 0,
+        "e": "Total df = N - 1 = 19; Treatment df = t - 1 = 4 - 1 = 3; Error df = N - t = 20 - 4 = 16.",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "Which component of the Central Processing Unit (CPU) performs arithmetic and logical calculations?",
+        "o": [
+          "Control Unit (CU)",
+          "Arithmetic and Logic Unit (ALU)",
+          "Cache Memory",
+          "Hard Disk Drive"
+        ],
+        "a": 1,
+        "e": "The Arithmetic and Logic Unit (ALU) is responsible for executing all mathematical additions, subtractions, and logical comparison operations.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which type of computer memory is volatile and loses its stored contents when power is turned off?",
+        "o": [
+          "ROM (Read Only Memory)",
+          "RAM (Random Access Memory)",
+          "Hard Disk",
+          "Flash Drive"
+        ],
+        "a": 1,
+        "e": "RAM is primary volatile memory; all data held in RAM is lost as soon as the system power supply is interrupted.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "A program that translates an entire high-level source code program into machine language object code in one single pass is called a:",
+        "o": [
+          "Interpreter",
+          "Compiler",
+          "Assembler",
+          "Operating system"
+        ],
+        "a": 1,
+        "e": "A compiler translates the complete source code into machine-readable object code at once, unlike an interpreter which translates line by line.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In a Relational Database Management System (RDBMS), a table row is formally termed a:",
+        "o": [
+          "Attribute",
+          "Tuple (or Record)",
+          "Domain",
+          "Relation"
+        ],
+        "a": 1,
+        "e": "In relational database theory, a row in a table is called a Tuple or Record, while a column is called an Attribute.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "An attribute or set of attributes that uniquely identifies every record in a veterinary database table is the:",
+        "o": [
+          "Foreign Key",
+          "Primary Key",
+          "Candidate Key",
+          "Secondary Key"
+        ],
+        "a": 1,
+        "e": "A Primary Key uniquely identifies each row (e.g. Unique Animal Ear Tag Number or Microchip ID) in an RDBMS table without nulls.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which SQL command is utilized to retrieve specific records from a livestock database table?",
+        "o": [
+          "UPDATE",
+          "INSERT",
+          "SELECT",
+          "DELETE"
+        ],
+        "a": 2,
+        "e": "The SELECT statement in SQL is used to query and retrieve data from one or more database tables.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, an absolute cell reference is designated by prefixing the column letter and row number with:",
+        "o": [
+          "#",
+          "$",
+          "%",
+          "@"
+        ],
+        "a": 1,
+        "e": "The dollar sign ($) creates an absolute reference (e.g., $A$1) that prevents the cell coordinates from changing when copied across rows or columns.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which MS-Excel function computes the sample standard deviation of a dataset of body weights?",
+        "o": [
+          "=STDEV.S()",
+          "=STDEV.P()",
+          "=VAR.S()",
+          "=DEV.SQ()"
+        ],
+        "a": 0,
+        "e": "=STDEV.S() computes sample standard deviation using (n - 1) in the denominator, whereas =STDEV.P() uses N for the entire population.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "Which MS-Excel function is used to calculate Pearson's correlation coefficient between weaning weight and yearling weight?",
+        "o": [
+          "=CORREL()",
+          "=COVAR()",
+          "=SLOPE()",
+          "=INTERCEPT()"
+        ],
+        "a": 0,
+        "e": "The =CORREL(array1, array2) or =PEARSON(array1, array2) function returns Pearson's correlation coefficient r.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "To perform a Student's t-test in MS-Excel comparing treatment vs control milk yields, which formula is entered?",
+        "o": [
+          "=T.TEST()",
+          "=F.TEST()",
+          "=Z.TEST()",
+          "=CHISQ.TEST()"
+        ],
+        "a": 0,
+        "e": "=T.TEST(array1, array2, tails, type) returns the probability associated with a Student's t-test.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "Which Excel chart type is the standard choice for displaying a scatter plot and fitting a linear regression trendline?",
+        "o": [
+          "Pie Chart",
+          "Line Chart",
+          "X Y (Scatter) Chart",
+          "Column Chart"
+        ],
+        "a": 2,
+        "e": "The X Y (Scatter) chart plots paired numerical coordinates and allows adding linear trendlines and showing R² equations.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "The MS-Excel add-in that provides advanced statistical tools including ANOVA, F-test, and regression analysis is:",
+        "o": [
+          "Solver Add-in",
+          "Data Analysis ToolPak",
+          "Power Pivot",
+          "VBA Macro"
+        ],
+        "a": 1,
+        "e": "The Data Analysis ToolPak provides ready-to-use statistical procedures including Descriptive Statistics, ANOVA, Regression, and t-tests.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "How many bytes make up one Kilobyte (KB) in binary computing?",
+        "o": [
+          "1000 bytes",
+          "1024 bytes",
+          "512 bytes",
+          "2048 bytes"
+        ],
+        "a": 1,
+        "e": "In binary computer storage, 1 Kilobyte (KB) = 2¹⁰ bytes = 1024 bytes.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which generation of computers introduced integrated circuits (ICs) and semiconductors?",
+        "o": [
+          "First generation",
+          "Second generation",
+          "Third generation",
+          "Fourth generation"
+        ],
+        "a": 2,
+        "e": "First generation used vacuum tubes, second used transistors, and third generation introduced Integrated Circuits (ICs).",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "The primary key of one table placed into another table to establish a relational link between them is called a:",
+        "o": [
+          "Foreign Key",
+          "Candidate Key",
+          "Composite Key",
+          "Alternate Key"
+        ],
+        "a": 0,
+        "e": "A Foreign Key is an attribute in a child table that matches the Primary Key of a parent table, establishing referential integrity.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "Which MS-Excel function calculates the median of lactation lengths stored in cells A1 through A50?",
+        "o": [
+          "=MEDIAN(A1:A50)",
+          "=AVERAGE(A1:A50)",
+          "=MODE(A1:A50)",
+          "=MID(A1:A50)"
+        ],
+        "a": 0,
+        "e": "=MEDIAN(A1:A50) calculates the 50th percentile (median) of the values in the specified cell range.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "What will the formula =AVERAGE(10, 20, 30) return in MS-Excel?",
+        "o": [
+          "60",
+          "20",
+          "30",
+          "15"
+        ],
+        "a": 1,
+        "e": "The arithmetic mean of 10, 20, and 30 is (10 + 20 + 30) / 3 = 60 / 3 = 20.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "An operating system (e.g. Windows, Linux) is an example of:",
+        "o": [
+          "Application software",
+          "System software",
+          "Database software",
+          "Hardware"
+        ],
+        "a": 1,
+        "e": "Operating systems are system software that manage hardware resources and provide common services for application programs.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
       }
     ],
-    tf: [],
-    fib: []
+    "tf": [
+      {
+        "q": "Sir Ronald A. Fisher is considered the father of modern statistics and invented Analysis of Variance (ANOVA).",
+        "a": true,
+        "e": "Sir R. A. Fisher invented ANOVA, the F-distribution, and formulated the fundamental principles of experimental design.",
+        "topicId": "u1-t01",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "Statistical laws are deterministic and hold true for isolated individual animals with mathematical certainty.",
+        "a": false,
+        "e": "Statistical laws are stochastic and probabilistic; they hold true on average and in the long run across aggregates of individuals.",
+        "topicId": "u1-t01",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "A statistic is a fixed numerical characteristic of an entire biological population.",
+        "a": false,
+        "e": "A parameter is a characteristic of a population; a statistic is calculated from sample data.",
+        "topicId": "u1-t03",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The median of a continuous frequency distribution can be determined graphically from Ogive curves.",
+        "a": true,
+        "e": "The intersection of less-than and more-than ogives directly gives the median on the horizontal axis.",
+        "topicId": "u1-t04",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The sum of the absolute deviations of observations is minimum when measured from their median.",
+        "a": true,
+        "e": "A mathematical property of the median is that Σ|X - Median| is smaller than deviations taken from any other value.",
+        "topicId": "u1-t05",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "The standard deviation is independent of change of scale.",
+        "a": false,
+        "e": "Standard deviation is independent of change of origin (addition/subtraction), but is directly affected by change of scale (multiplication/division).",
+        "topicId": "u1-t06",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "The coefficient of variation is a dimensionless relative measure of dispersion expressed as a percentage.",
+        "a": true,
+        "e": "CV = (Standard Deviation / Mean) * 100. It is a unitless percentage used to compare relative variability.",
+        "topicId": "u1-t07",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "For any symmetrical distribution, the third central moment (μ₃) is zero.",
+        "a": true,
+        "e": "Because positive and negative deviations from the mean cancel out in odd powers, all odd central moments (μ₁, μ₃, μ₅) equal zero in a symmetrical distribution.",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "A leptokurtic distribution curve is flatter-topped than a normal curve.",
+        "a": false,
+        "e": "A leptokurtic curve is more peaked with heavier tails (β₂ > 3). A platykurtic curve is flatter-topped (β₂ < 3).",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "The probability of an impossible event is zero, while the probability of a certain event is one.",
+        "a": true,
+        "e": "By Kolmogorov's probability axioms, 0 ≤ P(E) ≤ 1. P(Impossible) = 0 and P(Certain) = 1.",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "In a Binomial distribution, the variance is always greater than the mean.",
+        "a": false,
+        "e": "In a Binomial distribution, Mean = np and Variance = npq. Since q < 1, variance is always strictly LESS than the mean.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "In a Poisson distribution, the mean and the variance are equal.",
+        "a": true,
+        "e": "A distinctive mathematical property of the Poisson distribution is that Mean = Variance = λ.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The normal distribution curve is asymptotic to the horizontal X-axis on both sides.",
+        "a": true,
+        "e": "The tails of the normal curve extend indefinitely in both directions (-∞ to +∞), approaching but never actually touching the horizontal axis.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "Approximately 95.45% of the total observations in a normal distribution lie within μ ± 2σ.",
+        "a": true,
+        "e": "Under the normal curve: μ ± 1σ contains 68.27%, μ ± 2σ contains 95.45%, and μ ± 3σ contains 99.73% of values.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The standard normal distribution has a mean of 1 and a standard deviation of 0.",
+        "a": false,
+        "e": "The standard normal distribution has a mean of zero (μ = 0) and standard deviation of one (σ = 1).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The Poisson distribution can be derived as a limiting case of the Binomial distribution when n is very large and p is very small.",
+        "a": true,
+        "e": "As n → ∞ and p → 0 such that np = λ (a finite constant), the Binomial distribution tends to the Poisson distribution.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "The normal curve is bimodal, possessing two distinct peak values.",
+        "a": false,
+        "e": "The normal curve is strictly unimodal, possessing a single central peak where Mean = Median = Mode.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "If two events A and B are independent, P(A ∩ B) = P(A) * P(B).",
+        "a": true,
+        "e": "By the multiplication rule of probability, for independent events, the joint probability is the product of their individual probabilities.",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "Karl Pearson's correlation coefficient can take values greater than +1 for strong relationships.",
+        "a": false,
+        "e": "The correlation coefficient r is mathematically bounded between -1.0 and +1.0. It can never exceed +1 or fall below -1.",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Both regression coefficients b_yx and b_xy must always have the same algebraic sign.",
+        "a": true,
+        "e": "Since r = ± sqrt(b_yx * b_xy), both regression coefficients must share the same sign as the correlation coefficient r (both positive or both negative).",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "The coefficient of determination r² can take negative values when correlation is negative.",
+        "a": false,
+        "e": "Since r² is the square of r, it is always non-negative, ranging from 0 to 1 (0% to 100% explained variance).",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "Stratified random sampling provides more representative samples than simple random sampling when the population is heterogeneous.",
+        "a": true,
+        "e": "By dividing heterogeneous populations into homogeneous strata, stratified sampling reduces sampling variance and ensures all subgroups are represented.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "The two regression lines coincide into a single line when r = 0.",
+        "a": false,
+        "e": "When r = 0, the two regression lines are perpendicular to each other. They coincide into a single line when r = +1 or r = -1.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "Sampling error increases as sample size increases.",
+        "a": false,
+        "e": "Sampling error decreases as sample size increases, because SE = s / sqrt(n). Larger samples provide more precise population estimates.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Non-sampling errors can occur even in a complete population census.",
+        "a": true,
+        "e": "Non-sampling errors arise from measurement faults, non-response, and recording errors, which exist in both sample surveys and complete censuses.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Spearman's rank correlation is a non-parametric method suitable for ranked or qualitative ordinal data.",
+        "a": true,
+        "e": "Spearman's rank correlation does not assume a normal distribution and evaluates monotonic relationships between ranked variables.",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "The intersection point of the two regression lines gives the mean values (X_bar, Y_bar).",
+        "a": true,
+        "e": "Both regression lines of Y on X and X on Y pass through the point of means (X_bar, Y_bar).",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Type I error is the error committed by failing to reject a false null hypothesis.",
+        "a": false,
+        "e": "Type I error is rejecting a true null hypothesis (α). Failing to reject a false null hypothesis is Type II error (β).",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "A large sample Z-test is applicable when the sample size n is 30 or greater.",
+        "a": true,
+        "e": "By convention in biostatistics, sample sizes n ≥ 30 are considered large samples where the Z-test is valid under the Central Limit Theorem.",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a paired t-test with 10 pairs of observations, the degrees of freedom is 9.",
+        "a": true,
+        "e": "For a paired t-test on n differences, degrees of freedom df = n - 1 = 10 - 1 = 9.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "The Chi-Square test can be used to test the goodness of fit of Mendelian genetic ratios.",
+        "a": true,
+        "e": "Karl Pearson's Chi-Square test is standardly used to test whether observed phenotypic counts fit theoretical Mendelian expectations (e.g. 3:1 or 9:3:3:1).",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a Completely Randomized Design (CRD), local control is exercised by grouping units into homogeneous blocks.",
+        "a": false,
+        "e": "CRD does not use local control (blocking); treatments are allocated completely at random to all homogeneous experimental units.",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "The F-test in ANOVA is a two-tailed test in standard agricultural and veterinary trials.",
+        "a": false,
+        "e": "The F-test in ANOVA is an upper one-tailed (right-tailed) test because the null hypothesis is rejected only when MS_treatment is significantly greater than MS_error.",
+        "topicId": "u1-t19",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "The Mann-Whitney U test requires the assumption that the biological data are normally distributed.",
+        "a": false,
+        "e": "Mann-Whitney U is a non-parametric (distribution-free) test and does not assume a normal distribution.",
+        "topicId": "u1-t20",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Randomization eliminates subjective investigator bias in allocating treatments to experimental animals.",
+        "a": true,
+        "e": "Randomization ensures that every experimental unit has an equal chance of receiving any treatment, satisfying statistical independence.",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a 2 × 2 contingency table, the degrees of freedom for the Chi-Square test is 2.",
+        "a": false,
+        "e": "In a 2 × 2 contingency table, df = (2 - 1)(2 - 1) = 1 * 1 = 1.",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "ROM (Read Only Memory) is non-volatile memory that retains its data even after power is switched off.",
+        "a": true,
+        "e": "ROM permanently stores startup firmware (BIOS) and is non-volatile, retaining information without power.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "Machine language consists of binary 0s and 1s that can be directly executed by the computer processor without translation.",
+        "a": true,
+        "e": "Machine language is the fundamental native binary language (0s and 1s) directly understood and executed by the CPU.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "A Primary Key in an RDBMS table can contain duplicate values and null entries.",
+        "a": false,
+        "e": "A Primary Key must contain strictly unique, non-null values for every record to guarantee unique entity identification.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, the formula =AVERAGE(A1:A10) ignores text cells and empty cells in the specified range.",
+        "a": true,
+        "e": "=AVERAGE() automatically ignores blank cells and text strings, averaging only numerical values.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "An interpreter translates high-level programming code line-by-line during program execution.",
+        "a": true,
+        "e": "An interpreter executes instructions line by line, pausing whenever an error is encountered, unlike a compiler which translates the entire file.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, $B$4 represents a relative cell reference.",
+        "a": false,
+        "e": "$B$4 is an absolute cell reference. A relative cell reference has no dollar signs (e.g. B4).",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "SQL stands for Structured Query Language.",
+        "a": true,
+        "e": "SQL (Structured Query Language) is the standardized language for defining, querying, and updating relational database systems.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, =VAR.P() calculates the variance based on a sample rather than an entire population.",
+        "a": false,
+        "e": "=VAR.P() computes population variance using N. The function =VAR.S() calculates sample variance using (n - 1).",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 2
+      },
+      {
+        "q": "The Data Analysis ToolPak is a built-in add-in in MS-Excel that provides advanced statistical procedures like ANOVA and t-tests.",
+        "a": true,
+        "e": "The Analysis ToolPak is an Excel add-in providing statistical analysis tools including ANOVA, regression, correlation, and t-tests.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      }
+    ],
+    "fib": [
+      {
+        "q": "The term 'Biometry' was coined by Sir Francis ______.",
+        "a": [
+          "Galton",
+          "Francis Galton"
+        ],
+        "a_display": "Galton",
+        "e": "Sir Francis Galton coined the term 'Biometry' and established early biometric methods in heredity.",
+        "topicId": "u1-t01",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "A numerical characteristic computed from a sample to estimate a population value is called a ______.",
+        "a": [
+          "statistic"
+        ],
+        "a_display": "Statistic",
+        "e": "A statistic is a function of observable sample values (e.g., sample mean x̄), whereas a parameter belongs to the whole population.",
+        "topicId": "u1-t03",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The cumulative frequency curve used to locate the median graphically is known as an ______.",
+        "a": [
+          "ogive",
+          "ogive curve"
+        ],
+        "a_display": "Ogive",
+        "e": "An ogive (cumulative frequency polygon) is plotted to determine medians and quartiles graphically.",
+        "topicId": "u1-t04",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The algebraic sum of deviations of a set of observations from their arithmetic mean is always equal to ______.",
+        "a": [
+          "0",
+          "zero"
+        ],
+        "a_display": "0 (zero)",
+        "e": "Σ(X - X_bar) is mathematically always equal to zero.",
+        "topicId": "u1-t05",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "According to Karl Pearson's empirical formula, Mode = 3 Median - 2 ______.",
+        "a": [
+          "mean",
+          "arithmetic mean"
+        ],
+        "a_display": "Mean",
+        "e": "The empirical relationship for moderately skewed data is: Mode = 3 Median - 2 Mean.",
+        "topicId": "u1-t05",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "The positive square root of variance is called the ______ deviation.",
+        "a": [
+          "standard",
+          "standard deviation"
+        ],
+        "a_display": "Standard",
+        "e": "Standard deviation (SD or σ) is the positive square root of the variance.",
+        "topicId": "u1-t06",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The formula for Coefficient of Variation (CV) is (Standard Deviation / Mean) multiplied by ______.",
+        "a": [
+          "100"
+        ],
+        "a_display": "100",
+        "e": "CV = (SD / Mean) * 100, which expresses dispersion as a percentage of the mean.",
+        "topicId": "u1-t07",
+        "subSection": "u1-s1",
+        "diff": 1
+      },
+      {
+        "q": "The first central moment (μ₁) about the arithmetic mean is always equal to ______.",
+        "a": [
+          "0",
+          "zero"
+        ],
+        "a_display": "0 (zero)",
+        "e": "The first moment about the mean μ₁ is always equal to 0.",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "A frequency distribution curve that is more peaked than the normal curve is termed ______.",
+        "a": [
+          "leptokurtic"
+        ],
+        "a_display": "Leptokurtic",
+        "e": "A distribution with β₂ > 3 has a sharper peak and heavier tails, termed leptokurtic.",
+        "topicId": "u1-t08",
+        "subSection": "u1-s1",
+        "diff": 2
+      },
+      {
+        "q": "If two events cannot occur simultaneously in a single trial, they are called mutually ______ events.",
+        "a": [
+          "exclusive",
+          "mutually exclusive"
+        ],
+        "a_display": "Exclusive",
+        "e": "Mutually exclusive (disjoint) events cannot happen at the same time: P(A ∩ B) = 0.",
+        "topicId": "u1-t09",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "In a Binomial distribution B(n, p), the formula for the mean is ______.",
+        "a": [
+          "np",
+          "n*p"
+        ],
+        "a_display": "np",
+        "e": "The expected value (mean) of a binomial distribution is the product of n and p.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "In a Poisson distribution, the mean and the variance are both equal to the parameter ______.",
+        "a": [
+          "lambda",
+          "λ",
+          "m"
+        ],
+        "a_display": "λ (lambda)",
+        "e": "For a Poisson distribution, Mean = Variance = λ.",
+        "topicId": "u1-t10",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The total area under the standard normal probability curve is equal to ______.",
+        "a": [
+          "1",
+          "1.0",
+          "one"
+        ],
+        "a_display": "1.0",
+        "e": "The integral of the normal probability density function over all real numbers equals 1.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "In a normal distribution, approximately ______ percent of total observations lie within the interval μ ± 1σ.",
+        "a": [
+          "68.27",
+          "68.27%",
+          "68.3",
+          "68"
+        ],
+        "a_display": "68.27%",
+        "e": "The area under a normal curve between μ - σ and μ + σ is approximately 68.27%.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The standard normal variate has a mean of 0 and a standard deviation of ______.",
+        "a": [
+          "1",
+          "one"
+        ],
+        "a_display": "1",
+        "e": "Z = (X - μ) / σ follows N(0, 1) with mean 0 and variance/SD equal to 1.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The points of inflection of a normal distribution curve occur at X = μ ± ______.",
+        "a": [
+          "sigma",
+          "σ",
+          "1 sigma",
+          "1σ",
+          "s"
+        ],
+        "a_display": "σ (sigma)",
+        "e": "The inflection points of a normal curve occur at one standard deviation on either side of the mean (μ ± σ).",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "The theorem stating that sample means approach normality as sample size increases is the Central ______ Theorem.",
+        "a": [
+          "limit",
+          "central limit"
+        ],
+        "a_display": "Limit",
+        "e": "The Central Limit Theorem provides the foundation for using normal theory on large biological samples.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 2
+      },
+      {
+        "q": "The measure of skewness (γ₁) for a normal distribution curve is equal to ______.",
+        "a": [
+          "0",
+          "zero"
+        ],
+        "a_display": "0 (zero)",
+        "e": "Because the normal distribution is perfectly symmetrical, its skewness γ₁ = 0.",
+        "topicId": "u1-t11",
+        "subSection": "u1-s2",
+        "diff": 1
+      },
+      {
+        "q": "The value of Karl Pearson's correlation coefficient r ranges between -1 and ______.",
+        "a": [
+          "+1",
+          "1",
+          "+1.0",
+          "1.0"
+        ],
+        "a_display": "+1",
+        "e": "The correlation coefficient r is mathematically constrained between -1 and +1.",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "If two variables have a correlation coefficient of r = 0, there is zero ______ relationship between them.",
+        "a": [
+          "linear"
+        ],
+        "a_display": "Linear",
+        "e": "An r of 0 specifically implies the absence of any linear relationship (a non-linear relationship may still exist).",
+        "topicId": "u1-t12",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "The geometric mean of the two regression coefficients b_yx and b_xy is equal to the ______ coefficient.",
+        "a": [
+          "correlation",
+          "correlation coefficient",
+          "r"
+        ],
+        "a_display": "Correlation",
+        "e": "r = sqrt(b_yx * b_xy). The correlation coefficient is the geometric mean of the two regression coefficients.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "The two regression lines intersect at the point of their ______ (X_bar, Y_bar).",
+        "a": [
+          "means",
+          "mean values",
+          "mean"
+        ],
+        "a_display": "Means",
+        "e": "The coordinates of the intersection of both regression lines are the sample means (X_bar, Y_bar).",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "When the correlation coefficient r = 0, the two regression lines are ______ to each other.",
+        "a": [
+          "perpendicular",
+          "at right angles",
+          "at 90 degrees"
+        ],
+        "a_display": "Perpendicular",
+        "e": "When r = 0, the angle between the two regression lines is 90 degrees (perpendicular).",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 2
+      },
+      {
+        "q": "The square of the correlation coefficient (r²) is known as the coefficient of ______.",
+        "a": [
+          "determination"
+        ],
+        "a_display": "Determination",
+        "e": "r² is the Coefficient of Determination, representing the proportion of variance explained by the model.",
+        "topicId": "u1-t13",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Selecting every k-th element from an ordered sampling frame is called ______ sampling.",
+        "a": [
+          "systematic",
+          "systematic sampling"
+        ],
+        "a_display": "Systematic",
+        "e": "Systematic sampling selects units at regular intervals k = N/n after a random starting point.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Dividing a heterogeneous population into homogeneous sub-populations before sampling is called ______ random sampling.",
+        "a": [
+          "stratified",
+          "stratified random sampling"
+        ],
+        "a_display": "Stratified",
+        "e": "Stratified random sampling ensures that all distinct subgroups (strata) are proportionately represented.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "Sampling error can be reduced by ______ the sample size.",
+        "a": [
+          "increasing",
+          "raising",
+          "enlarging"
+        ],
+        "a_display": "Increasing",
+        "e": "Since standard error is inversely proportional to sqrt(n), increasing the sample size reduces sampling error.",
+        "topicId": "u1-t14",
+        "subSection": "u1-s3",
+        "diff": 1
+      },
+      {
+        "q": "The hypothesis of 'no difference' between treatment groups is called the ______ hypothesis.",
+        "a": [
+          "null",
+          "null hypothesis"
+        ],
+        "a_display": "Null",
+        "e": "The Null Hypothesis (H₀) posits that observed sample differences are purely due to chance.",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Rejecting a true null hypothesis constitutes a Type ______ error.",
+        "a": [
+          "I",
+          "1",
+          "one",
+          "type I"
+        ],
+        "a_display": "I",
+        "e": "Type I error (α) is rejecting H₀ when it is actually true (false positive).",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "For a two-tailed Z-test at the 5% significance level, the critical value is ± ______.",
+        "a": [
+          "1.96"
+        ],
+        "a_display": "1.96",
+        "e": "Z = ±1.96 cuts off 2.5% of the area in each tail (5% total).",
+        "topicId": "u1-t15",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "Student's t-test was developed by William Sealy ______ in 1908.",
+        "a": [
+          "Gosset",
+          "William Gosset",
+          "W. S. Gosset"
+        ],
+        "a_display": "Gosset",
+        "e": "William Sealy Gosset invented the t-distribution while working for Guinness Brewery, writing under the pen name 'Student'.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a paired t-test with n pairs of observations, the degrees of freedom is n - ______.",
+        "a": [
+          "1",
+          "one"
+        ],
+        "a_display": "1",
+        "e": "The paired t-test operates on n paired differences, yielding df = n - 1.",
+        "topicId": "u1-t16",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "The Chi-Square test was introduced in 1900 by Karl ______.",
+        "a": [
+          "Pearson",
+          "Karl Pearson"
+        ],
+        "a_display": "Pearson",
+        "e": "Karl Pearson developed the Chi-Square test of goodness of fit and independence of attributes.",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "The continuity correction applied to a 2 × 2 contingency table when cell frequencies are small is ______' correction.",
+        "a": [
+          "Yates'",
+          "Yates",
+          "Yates's"
+        ],
+        "a_display": "Yates'",
+        "e": "Frank Yates introduced Yates' correction for continuity to improve the Chi-Square approximation for 1 df with small expected numbers.",
+        "topicId": "u1-t17",
+        "subSection": "u1-s4",
+        "diff": 2
+      },
+      {
+        "q": "The three principles of experimental design are Randomization, Replication, and Local ______.",
+        "a": [
+          "control"
+        ],
+        "a_display": "Control",
+        "e": "Fisher's three principles are Randomization, Replication, and Local Control (blocking).",
+        "topicId": "u1-t18",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "In ANOVA, the variance ratio test statistic is denoted by the letter ______.",
+        "a": [
+          "F",
+          "f"
+        ],
+        "a_display": "F",
+        "e": "The F-statistic (named in honor of Sir Ronald A. Fisher) equals MS_treatment / MS_error.",
+        "topicId": "u1-t19",
+        "subSection": "u1-s4",
+        "diff": 1
+      },
+      {
+        "q": "The central hardware unit that performs arithmetic calculations and logical decisions in a computer is the ______.",
+        "a": [
+          "ALU",
+          "Arithmetic Logic Unit",
+          "Arithmetic and Logic Unit"
+        ],
+        "a_display": "ALU",
+        "e": "The ALU (Arithmetic and Logic Unit) executes math and boolean logic operations within the CPU.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "Computer memory that loses its content when electrical power is switched off is called ______ memory.",
+        "a": [
+          "volatile",
+          "RAM"
+        ],
+        "a_display": "Volatile",
+        "e": "RAM is volatile memory because its electrical states vanish when power is lost.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "A program that translates an entire high-level program into machine code all at once is called a ______.",
+        "a": [
+          "compiler"
+        ],
+        "a_display": "Compiler",
+        "e": "A compiler scans and translates the complete source code file into executable machine language.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In a relational database, a column representing a specific data property is called an ______.",
+        "a": [
+          "attribute",
+          "field"
+        ],
+        "a_display": "Attribute",
+        "e": "Columns are called attributes (or fields), while rows are called tuples (or records).",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "The unique field that prevents duplicate records in an RDBMS table is called the ______ Key.",
+        "a": [
+          "primary",
+          "primary key"
+        ],
+        "a_display": "Primary",
+        "e": "The Primary Key uniquely identifies each row in a relational database table.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, an absolute cell reference is indicated by placing the ______ symbol before column and row identifiers.",
+        "a": [
+          "$",
+          "dollar",
+          "dollar sign"
+        ],
+        "a_display": "$",
+        "e": "Placing a $ sign (e.g. $A$1) locks the cell reference during copy-paste operations.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, the function to calculate the sample standard deviation is =STDEV.______().",
+        "a": [
+          "S",
+          "s"
+        ],
+        "a_display": "S",
+        "e": "=STDEV.S() calculates sample standard deviation using n - 1 degrees of freedom.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In MS-Excel, the function used to compute Pearson's correlation coefficient is =______().",
+        "a": [
+          "CORREL",
+          "PEARSON",
+          "correl",
+          "pearson"
+        ],
+        "a_display": "CORREL",
+        "e": "The =CORREL() function returns the Pearson correlation coefficient between two cell arrays.",
+        "topicId": "u1-t22",
+        "subSection": "u1-s5",
+        "diff": 1
+      },
+      {
+        "q": "In binary computer storage, one Kilobyte (KB) is equal to ______ bytes.",
+        "a": [
+          "1024"
+        ],
+        "a_display": "1024",
+        "e": "In binary 2¹⁰ = 1024 bytes = 1 KB.",
+        "topicId": "u1-t21",
+        "subSection": "u1-s5",
+        "diff": 1
+      }
+    ]
   },
-  "unit-2": { mcq: [], tf: [], fib: [] },
-  "unit-3": { mcq: [], tf: [], fib: [] }
+  "unit-2": {
+    "mcq": [
+      {
+        "q": "Who is universally recognized as the 'Father of Genetics' for discovering the fundamental laws of inheritance in Pisum sativum?",
+        "o": [
+          "Gregor Johann Mendel",
+          "William Bateson",
+          "Thomas Hunt Morgan",
+          "Wilhelm Johannsen"
+        ],
+        "a": 0,
+        "e": "Gregor Johann Mendel conducted his famous hybridization experiments on the garden pea from 1856 to 1863, establishing particulate inheritance.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "The term 'Genetics' was coined in the year 1905 by which pioneer scientist?",
+        "o": [
+          "Gregor Mendel",
+          "William Bateson",
+          "Carl Correns",
+          "Hugo de Vries"
+        ],
+        "a": 1,
+        "e": "William Bateson coined the term 'Genetics' in 1905, along with terms like 'allele', 'homozygote', 'heterozygote', and 'F1 generation'.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Which scientist formulated the Germplasm Theory, disproving the inheritance of acquired characters by cutting mice tails for 22 generations?",
+        "o": [
+          "Jean-Baptiste Lamarck",
+          "Charles Darwin",
+          "August Weismann",
+          "Theodor Boveri"
+        ],
+        "a": 2,
+        "e": "August Weismann (1892) proposed the Germplasm Theory, showing a strict physical distinction between somatoplasm and immortal germplasm.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Mendel's First Law (Law of Segregation) is also known as the Law of:",
+        "o": [
+          "Independent Assortment",
+          "Purity of Gametes",
+          "Dominance",
+          "Linkage"
+        ],
+        "a": 1,
+        "e": "The Law of Segregation states that paired alleles separate cleanly during meiosis so that each gamete carries only one allele, hence 'Purity of Gametes'.",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "What is the expected phenotypic ratio in the F₂ generation of a typical Mendelian monohybrid cross with complete dominance?",
+        "o": [
+          "1:2:1",
+          "3:1",
+          "9:3:3:1",
+          "1:1"
+        ],
+        "a": 1,
+        "e": "A monohybrid cross (e.g. Tt x Tt) yields a 3:1 phenotypic ratio (3 dominant : 1 recessive) and a 1:2:1 genotypic ratio.",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "A genetic cross between an unknown dominant phenotype individual and a homozygous recessive individual is called a:",
+        "o": [
+          "Backcross",
+          "Testcross",
+          "Reciprocal cross",
+          "Dihybrid cross"
+        ],
+        "a": 1,
+        "e": "A testcross is specifically performed with a homozygous recessive tester to determine whether the dominant parent is homozygous or heterozygous.",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "What phenotypic ratio is obtained from a testcross of a heterozygous dihybrid individual (AaBb × aabb)?",
+        "o": [
+          "9:3:3:1",
+          "1:1:1:1",
+          "3:1",
+          "1:2:1"
+        ],
+        "a": 1,
+        "e": "A dihybrid testcross produces equal proportions of four recombinant and parental phenotypes in a 1:1:1:1 ratio.",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "In Andalusian fowl, crossing a true-breeding black fowl with a splashed white fowl produces 100% blue offspring. This is a classic example of:",
+        "o": [
+          "Complete dominance",
+          "Incomplete dominance",
+          "Codominance",
+          "Recessive epistasis"
+        ],
+        "a": 1,
+        "e": "Incomplete dominance results in an intermediate heterozygous phenotype (blue plumage in Andalusian fowl, pink in Mirabilis jalapa) with a 1:2:1 F2 ratio.",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "The roan coat color in Shorthorn cattle (intermingled red and white hairs) is an example of:",
+        "o": [
+          "Incomplete dominance",
+          "Codominance",
+          "Dominant epistasis",
+          "Overdominance"
+        ],
+        "a": 1,
+        "e": "Codominance occurs when both alleles (red hair and white hair) are fully and simultaneously expressed in the heterozygote without blending.",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "In yellow mice (Lucien Cuénot, 1905), crossing two yellow mice always produces yellow and agouti offspring in which modified ratio?",
+        "o": [
+          "3:1",
+          "2:1",
+          "1:2:1",
+          "9:3:4"
+        ],
+        "a": 1,
+        "e": "The yellow allele (A^Y) is a recessive lethal in homozygous state (A^Y A^Y dies in utero), producing a modified surviving ratio of 2 yellow : 1 agouti.",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "The lethal condition known as 'Bulldog Calf' (severe chondrodysplasia and abortion) in Dexter cattle is caused by:",
+        "o": [
+          "A homozygous recessive lethal gene",
+          "A homozygous dominant lethal gene",
+          "A sex-linked recessive gene",
+          "Mitochondrial mutation"
+        ],
+        "a": 0,
+        "e": "In Dexter cattle, heterozygous calves are short-legged (Dexter type), but homozygous lethal calves exhibit severe achondroplasia ('Bulldog calf') and are aborted.",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "What modified dihybrid F₂ phenotypic ratio represents Complementary Gene Action (e.g. Bateson and Punnett's sweet pea flower color)?",
+        "o": [
+          "9:7",
+          "12:3:1",
+          "9:3:4",
+          "15:1"
+        ],
+        "a": 0,
+        "e": "Complementary gene interaction requires the presence of at least one dominant allele at both loci (A-B-) to produce the trait, yielding a 9:7 ratio.",
+        "topicId": "u2-t06",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "A modified dihybrid F₂ phenotypic ratio of 12:3:1 is characteristic of:",
+        "o": [
+          "Dominant epistasis",
+          "Recessive epistasis",
+          "Duplicate dominant genes",
+          "Inhibitory gene interaction"
+        ],
+        "a": 0,
+        "e": "In dominant epistasis (e.g. fruit color in summer squash, feather color in Leghorn fowl), a single dominant allele at one locus masks both alleles at the other locus, yielding 12:3:1.",
+        "topicId": "u2-t06",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "Coat color inheritance in Labrador retrievers (black, brown/chocolate, and yellow) is governed by:",
+        "o": [
+          "Dominant epistasis (12:3:1)",
+          "Recessive epistasis (9:3:4)",
+          "Complementary genes (9:7)",
+          "Duplicate genes (15:1)"
+        ],
+        "a": 1,
+        "e": "Recessive epistasis (9:3:4) operates in Labrador coat color: homozygous recessive ee at the extension locus masks the black/brown B locus, resulting in yellow coat.",
+        "topicId": "u2-t06",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "The phenomenon where a single gene influences multiple distinct and apparently unrelated phenotypic traits is called:",
+        "o": [
+          "Polygeny",
+          "Pleiotropy",
+          "Epistasis",
+          "Penetrance"
+        ],
+        "a": 1,
+        "e": "Pleiotropy occurs when one gene affects multiple organ systems or traits (e.g. frizzle gene in chickens causing curled feathers, high metabolic rate, and enlarged heart).",
+        "topicId": "u2-t07",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "The percentage of individuals carrying a specific genotype who actually express the corresponding phenotype is termed:",
+        "o": [
+          "Expressivity",
+          "Penetrance",
+          "Heritability",
+          "Repeatability"
+        ],
+        "a": 1,
+        "e": "Penetrance is the statistical proportion of genotypes that express the expected phenotype. Expressivity refers to the degree or severity of expression.",
+        "topicId": "u2-t07",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "An environmentally induced non-hereditary phenotypic modification that closely mimics a known genetic mutant is called a:",
+        "o": [
+          "Phenocopy",
+          "Genocopy",
+          "Pleiotrope",
+          "Atavism"
+        ],
+        "a": 0,
+        "e": "A phenocopy is an environmentally produced condition (e.g. nutritional or drug-induced deformity) resembling a genetic defect but lacking any altered genotype.",
+        "topicId": "u2-t07",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "Which blood group system in cattle is the most complex and polymorphic, possessing over 600 recognized phenogroups/alleles?",
+        "o": [
+          "A system",
+          "B system",
+          "J system",
+          "C system"
+        ],
+        "a": 1,
+        "e": "The B blood group system in cattle is extremely complex and polymorphic with hundreds of antigenic combinations (phenogroups), highly useful in parentage verification.",
+        "topicId": "u2-t08",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "During which sub-stage of Prophase I of Meiosis does crossing over and genetic recombination physically occur?",
+        "o": [
+          "Leptotene",
+          "Zygotene",
+          "Pachytene",
+          "Diplotene"
+        ],
+        "a": 2,
+        "e": "Crossing over occurs during the Pachytene stage through the formation of recombination nodules between non-sister chromatids.",
+        "topicId": "u2-t02",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the diploid chromosome number (2n) in domestic cattle (Bos taurus and Bos indicus)?",
+        "o": [
+          "50",
+          "54",
+          "60",
+          "64"
+        ],
+        "a": 2,
+        "e": "Cattle have 2n = 60 chromosomes: 58 acrocentric autosomes, a submetacentric X chromosome, and a small submetacentric (Bos taurus) or acrocentric (Bos indicus) Y chromosome.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the diploid chromosome number (2n) of the River Buffalo (Bubalus bubalis)?",
+        "o": [
+          "48",
+          "50",
+          "54",
+          "60"
+        ],
+        "a": 1,
+        "e": "River buffalo (Murrah, Nili-Ravi) has 2n = 50 chromosomes (5 pairs of submetacentric/metacentric autosomes and 20 pairs of acrocentric autosomes). Swamp buffalo has 2n = 48.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the diploid chromosome number (2n) in domestic sheep (Ovis aries)?",
+        "o": [
+          "60",
+          "54",
+          "50",
+          "38"
+        ],
+        "a": 1,
+        "e": "Domestic sheep have 2n = 54 chromosomes (3 pairs of large metacentric autosomes and 23 pairs of acrocentric autosomes plus sex chromosomes).",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the diploid chromosome number (2n) of domestic goat (Capra hircus)?",
+        "o": [
+          "54",
+          "60",
+          "64",
+          "78"
+        ],
+        "a": 1,
+        "e": "Goat has 2n = 60 chromosomes, where all 58 autosomes are acrocentric, similar to cattle.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the diploid chromosome number (2n) of the domestic chicken (Gallus gallus domesticus)?",
+        "o": [
+          "60",
+          "78",
+          "64",
+          "54"
+        ],
+        "a": 1,
+        "e": "Chicken has 2n = 78 chromosomes, divided into 10 pairs of macrochromosomes and 29 pairs of distinct microchromosomes.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "In avian species (poultry), what is the chromosomal mechanism of sex determination?",
+        "o": [
+          "XX female, XY male",
+          "ZZ male, ZW female",
+          "XX female, XO male",
+          "Haplodiploidy"
+        ],
+        "a": 1,
+        "e": "In birds, the female is the heterogametic sex (ZW), while the male is the homogametic sex (ZZ).",
+        "topicId": "u2-t09",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The Lyon hypothesis explains dosage compensation in female mammalian somatic cells by:",
+        "o": [
+          "Doubling transcription of the single male X",
+          "Random inactivation of one X chromosome",
+          "Inactivating both parental X chromosomes",
+          "Eliminating Y chromosomes"
+        ],
+        "a": 1,
+        "e": "Mary Lyon (1961) showed that one of the two X chromosomes in female somatic cells is randomly condensed into an inactive heterochromatic Barr body.",
+        "topicId": "u2-t09",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "Tortoiseshell or calico coat coloration (orange and black patches) in domestic cats is almost exclusively observed in females because:",
+        "o": [
+          "The orange gene is Y-linked",
+          "The orange gene is X-linked and undergoes random X-inactivation",
+          "Male embryos carrying black pigment die in utero",
+          "It is an autosomal sex-limited trait"
+        ],
+        "a": 1,
+        "e": "The O (orange) locus is on the X chromosome. Heterozygous females (X^O X^B) form a mosaic of orange and black patches due to random lyonization.",
+        "topicId": "u2-t09",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "Which type of genetic trait is expressed in only one biological sex due to anatomical or physiological factors (e.g. milk yield in cows, cryptorchidism in bulls)?",
+        "o": [
+          "Sex-linked trait",
+          "Sex-influenced trait",
+          "Sex-limited trait",
+          "Holandric trait"
+        ],
+        "a": 2,
+        "e": "Sex-limited traits are governed by autosomal genes that are expressed exclusively in one sex due to anatomical limitations (e.g. egg laying, lactation).",
+        "topicId": "u2-t10",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "Horn development in Dorset/Merino sheep (dominant in males, recessive in females) is a classic example of:",
+        "o": [
+          "Sex-linked inheritance",
+          "Sex-influenced inheritance",
+          "Sex-limited inheritance",
+          "Cytoplasmic inheritance"
+        ],
+        "a": 1,
+        "e": "Sex-influenced traits are autosomal traits whose phenotypic expression and dominance relationship are altered by male or female sex hormones.",
+        "topicId": "u2-t10",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "One map unit (centiMorgan, cM) on a genetic linkage map corresponds to what percentage of recombination?",
+        "o": [
+          "0.1%",
+          "1%",
+          "10%",
+          "50%"
+        ],
+        "a": 1,
+        "e": "By definition, 1 centiMorgan (cM) equals 1% recombination frequency between two linked gene loci.",
+        "topicId": "u2-t11",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the theoretical maximum recombination frequency between two widely separated linked genes on the same chromosome?",
+        "o": [
+          "25%",
+          "50%",
+          "75%",
+          "100%"
+        ],
+        "a": 1,
+        "e": "Crossing over involves non-sister chromatids; even with multiple crossovers, the maximum recombination frequency cannot exceed 50% (independent assortment).",
+        "topicId": "u2-t11",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "A sterile heifer calf born co-twin to a bull calf with fused placental circulation exhibiting intersex gonads is called a:",
+        "o": [
+          "Hermaphrodite",
+          "Freemartin",
+          "Gynandromorph",
+          "Klinefelter heifer"
+        ],
+        "a": 1,
+        "e": "Freemartinism occurs in over 90% of heterosexual twin cattle pregnancies due to chorionic vascular anastomosis and anti-Müllerian hormone transfer from the male fetus.",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "Which structural chromosomal aberration involves the fusion of two acrocentric chromosomes at their centromeres to form a single large metacentric chromosome?",
+        "o": [
+          "Reciprocal translocation",
+          "Robertsonian translocation (Centric fusion)",
+          "Paracentric inversion",
+          "Pericentric inversion"
+        ],
+        "a": 1,
+        "e": "Robertsonian translocation (centric fusion) unites two acrocentric chromosomes, such as the famous 1/29 translocation in cattle which reduces bull fertility.",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "In livestock cytogenetics, G-banding of metaphase chromosomes is achieved by treating chromosomes with which enzyme followed by Giemsa staining?",
+        "o": [
+          "Pepsin",
+          "Trypsin",
+          "Amylase",
+          "Lysozyme"
+        ],
+        "a": 1,
+        "e": "G-banding standardly uses controlled mild trypsin digestion followed by Giemsa staining to produce alternating AT-rich dark bands and GC-rich light bands.",
+        "topicId": "u2-t14",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "Extra-chromosomal or maternal inheritance in animals is primarily mediated by genes located in:",
+        "o": [
+          "Centrosomes",
+          "Ribosomes",
+          "Mitochondrial DNA (mtDNA)",
+          "Endoplasmic reticulum"
+        ],
+        "a": 2,
+        "e": "Mitochondria possess their own circular double-stranded DNA (mtDNA) transmitted exclusively through the ovum cytoplasm, demonstrating non-Mendelian maternal inheritance.",
+        "topicId": "u2-t15",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "An inversion that does NOT include the centromere within the inverted chromosome segment is termed a:",
+        "o": [
+          "Pericentric inversion",
+          "Paracentric inversion",
+          "Reciprocal translocation",
+          "Isochromosome"
+        ],
+        "a": 1,
+        "e": "A paracentric inversion occurs entirely within one chromosome arm without involving the centromere. A pericentric inversion spans the centromere.",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "According to the Watson-Crick double helix model of B-DNA, the distance between two adjacent nucleotide base pairs is:",
+        "o": [
+          "3.4 nm",
+          "0.34 nm (3.4 Å)",
+          "2.0 nm",
+          "34 nm"
+        ],
+        "a": 1,
+        "e": "In B-DNA, each helical turn comprises 10 base pairs with a pitch of 3.4 nm, giving a distance between adjacent base pairs of 0.34 nm (3.4 Å).",
+        "topicId": "u2-t16",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "According to Chargaff's rules for double-stranded DNA:",
+        "o": [
+          "A = C and G = T",
+          "A = T and G = C",
+          "A + T = G + C",
+          "Purines < Pyrimidines"
+        ],
+        "a": 1,
+        "e": "Chargaff established that Adenine equals Thymine (A = T) and Guanine equals Cytosine (G = C), so Total Purines (A+G) = Total Pyrimidines (C+T).",
+        "topicId": "u2-t16",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "How many hydrogen bonds are formed between Guanine and Cytosine in a DNA double helix?",
+        "o": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "a": 2,
+        "e": "Guanine and Cytosine pair via three hydrogen bonds (G ≡ C), whereas Adenine and Thymine pair via two hydrogen bonds (A = T).",
+        "topicId": "u2-t16",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Meselson and Stahl (1958) experimentally proved that DNA replication is:",
+        "o": [
+          "Conservative",
+          "Semiconservative",
+          "Dispersive",
+          "Non-directional"
+        ],
+        "a": 1,
+        "e": "Using heavy nitrogen (¹⁵N) density-gradient centrifugation in E. coli, Meselson and Stahl proved that each daughter DNA molecule contains one conserved parental strand and one newly synthesized strand.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "During DNA replication, the short discontinuous fragments synthesized on the lagging strand are known as:",
+        "o": [
+          "Khorana fragments",
+          "Okazaki fragments",
+          "Watson fragments",
+          "Sanger fragments"
+        ],
+        "a": 1,
+        "e": "Okazaki fragments are short stretches of DNA (100–200 nt in eukaryotes) synthesized discontinuously on the lagging strand in the 5' to 3' direction.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which enzyme is responsible for sealing nicks in the phosphodiester backbone by joining Okazaki fragments during DNA replication?",
+        "o": [
+          "DNA Helicase",
+          "DNA Polymerase I",
+          "DNA Ligase",
+          "Topoisomerase"
+        ],
+        "a": 2,
+        "e": "DNA ligase forms a covalent phosphodiester bond between the 3'-OH and 5'-phosphate ends of adjacent Okazaki fragments.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The synthesis of an RNA molecule from a DNA template strand is formally known as:",
+        "o": [
+          "Replication",
+          "Transcription",
+          "Translation",
+          "Reverse transcription"
+        ],
+        "a": 1,
+        "e": "Transcription is the enzymatic synthesis of RNA (mRNA, tRNA, rRNA) from a complementary antisense DNA template by RNA polymerase.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which of the following codons functions as the universal initiation (start) codon for protein synthesis?",
+        "o": [
+          "UAA",
+          "UAG",
+          "AUG",
+          "UGA"
+        ],
+        "a": 2,
+        "e": "AUG is the universal start codon coding for Methionine in eukaryotes and Formyl-methionine in prokaryotes.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which triplet codons are the three termination (nonsense / stop) codons in the standard genetic code?",
+        "o": [
+          "AUG, GUG, UUG",
+          "UAA, UAG, UGA",
+          "AAA, UUU, CCC",
+          "CGA, CGU, CGC"
+        ],
+        "a": 1,
+        "e": "The three stop codons are UAA (Ochre), UAG (Amber), and UGA (Opal). They do not code for any amino acid.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The fact that more than one codon can specify the same amino acid demonstrates that the genetic code is:",
+        "o": [
+          "Ambiguous",
+          "Degenerate",
+          "Overlapping",
+          "Universal"
+        ],
+        "a": 1,
+        "e": "Degeneracy (or redundancy) of the genetic code means that 18 of the 20 standard amino acids are coded by multiple synonymous codons.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "Who invented the Polymerase Chain Reaction (PCR) technique in 1983, receiving the Nobel Prize in 1993?",
+        "o": [
+          "Frederick Sanger",
+          "Kary Mullis",
+          "Edwin Southern",
+          "James Watson"
+        ],
+        "a": 1,
+        "e": "Kary Mullis conceived and developed the Polymerase Chain Reaction (PCR) to amplify specific DNA fragments exponentially.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "What is the correct temperature sequence for the three steps of a standard PCR cycle?",
+        "o": [
+          "Denaturation (94°C) → Annealing (55°C) → Extension (72°C)",
+          "Annealing (55°C) → Denaturation (94°C) → Extension (72°C)",
+          "Denaturation (72°C) → Annealing (94°C) → Extension (55°C)",
+          "Extension (72°C) → Denaturation (55°C) → Annealing (94°C)"
+        ],
+        "a": 0,
+        "e": "A PCR cycle operates at: 1. Denaturation (94–95°C), 2. Primer Annealing (50–60°C), and 3. Taq Extension (72°C).",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The heat-stable DNA polymerase enzyme used in standard PCR is isolated from which thermophilic bacterium?",
+        "o": [
+          "Escherichia coli",
+          "Bacillus subtilis",
+          "Thermus aquaticus",
+          "Pseudomonas aeruginosa"
+        ],
+        "a": 2,
+        "e": "Taq polymerase is extracted from Thermus aquaticus, a hot-spring bacterium, allowing it to withstand 95°C denaturation temperatures.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Restriction endonucleases (molecular scissors) cleave DNA molecules specifically at:",
+        "o": [
+          "Random poly-A sequences",
+          "Palindromic recognition sequences",
+          "Promoter regions only",
+          "Telomeric repeats"
+        ],
+        "a": 1,
+        "e": "Restriction enzymes (e.g. EcoRI: 5'-GAATTC-3') cleave double-stranded DNA at specific symmetrical palindromic recognition sites.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "During agarose gel electrophoresis, DNA fragments migrate towards which electrode and why?",
+        "o": [
+          "Negative cathode; DNA is positively charged",
+          "Positive anode; DNA has a negative phosphate backbone",
+          "Positive anode; DNA is neutral",
+          "Negative cathode; histones are negatively charged"
+        ],
+        "a": 1,
+        "e": "Because of its repeating phosphate group backbone, DNA carries a net negative charge and migrates towards the positive anode (+).",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "The Sanger DNA sequencing method relies on which modified nucleotides to cause chain termination?",
+        "o": [
+          "dNTPs (deoxynucleotide triphosphates)",
+          "ddNTPs (dideoxynucleotide triphosphates)",
+          "Ribonucleotides",
+          "cAMP"
+        ],
+        "a": 1,
+        "e": "Dideoxynucleotides (ddNTPs) lack the 3'-OH group needed for phosphodiester bond formation, halting elongation upon incorporation.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "The molecular hybridization technique used to detect specific target DNA fragments immobilized on a membrane is called:",
+        "o": [
+          "Southern Blotting",
+          "Northern Blotting",
+          "Western Blotting",
+          "Eastern Blotting"
+        ],
+        "a": 0,
+        "e": "Southern blotting (developed by Edwin Southern) detects specific DNA sequences using labeled complementary probes. Northern blotting detects RNA, Western detects proteins.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Reverse transcriptase is an enzyme that synthesizes:",
+        "o": [
+          "RNA from RNA template",
+          "DNA from RNA template",
+          "Protein from DNA template",
+          "DNA from DNA template"
+        ],
+        "a": 1,
+        "e": "Reverse transcriptase (found in retroviruses like bovine leukemia virus) carries out reverse transcription: synthesizing cDNA from an RNA template.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "A group of interbreeding individuals of the same species existing concurrently in a geographic area and sharing a common gene pool is a:",
+        "o": [
+          "Clone",
+          "Mendelian population",
+          "Phenocopy",
+          "Lineage"
+        ],
+        "a": 1,
+        "e": "A Mendelian population is a community of sexually interbreeding individuals sharing a common gene pool across generations.",
+        "topicId": "u2-t19",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a herd of 100 cattle, the genotypes are 40 AA, 40 Aa, and 20 aa. What is the gene frequency of allele A (p)?",
+        "o": [
+          "0.40",
+          "0.50",
+          "0.60",
+          "0.80"
+        ],
+        "a": 2,
+        "e": "Total alleles = 200. Frequency p = (2 * 40 + 40) / 200 = (80 + 40) / 200 = 120 / 200 = 0.60.",
+        "topicId": "u2-t20",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "If the frequencies of alleles A and a are p and q respectively, what is the sum of (p + q)?",
+        "o": [
+          "0.5",
+          "1.0",
+          "2.0",
+          "100"
+        ],
+        "a": 1,
+        "e": "By biological definition, the sum of all allelic frequencies at a given genetic locus in a population must equal 1.0 (p + q = 1).",
+        "topicId": "u2-t20",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "The Hardy-Weinberg Law was independently formulated in 1908 by G.H. Hardy and:",
+        "o": [
+          "Wilhelm Weinberg",
+          "Sewall Wright",
+          "J. B. S. Haldane",
+          "R. A. Fisher"
+        ],
+        "a": 0,
+        "e": "British mathematician G. H. Hardy and German physician Wilhelm Weinberg independently discovered the equilibrium law in 1908.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "According to the Hardy-Weinberg Law, what is the expected frequency of heterozygous carriers (Aa) in an equilibrium population?",
+        "o": [
+          "p²",
+          "q²",
+          "2pq",
+          "p + q"
+        ],
+        "a": 2,
+        "e": "Under HW equilibrium, genotypic frequencies expand as (p + q)² = p²(AA) + 2pq(Aa) + q²(aa) = 1. The heterozygote frequency is 2pq.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "In a dairy herd at Hardy-Weinberg equilibrium, 16% of calves are born with a recessive black coat (aa). What is the frequency of the recessive allele a (q)?",
+        "o": [
+          "0.16",
+          "0.40",
+          "0.84",
+          "0.04"
+        ],
+        "a": 1,
+        "e": "q² = 0.16; therefore q = sqrt(0.16) = 0.40. Allele A frequency p = 1 - 0.40 = 0.60.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "Using the herd data above where q = 0.40 and p = 0.60, what percentage of the herd consists of heterozygous carriers (2pq)?",
+        "o": [
+          "24%",
+          "36%",
+          "48%",
+          "60%"
+        ],
+        "a": 2,
+        "e": "2pq = 2 * 0.60 * 0.40 = 0.48, which corresponds to 48% heterozygous carriers.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "Which of the following conditions is REQUIRED for a population to maintain Hardy-Weinberg equilibrium?",
+        "o": [
+          "Small population size",
+          "Non-random assortative mating",
+          "Random mating (panmixia) and large population size",
+          "Continuous high mutation rate"
+        ],
+        "a": 2,
+        "e": "Hardy-Weinberg equilibrium requires: 1. Infinitely large population, 2. Panmixia (random mating), 3. No selection, 4. No mutation, 5. No migration, 6. No genetic drift.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "When testing Hardy-Weinberg equilibrium for a two-allele locus using the Chi-Square goodness-of-fit test, the degrees of freedom is:",
+        "o": [
+          "1",
+          "2",
+          "3",
+          "0"
+        ],
+        "a": 0,
+        "e": "df = Number of genotypes (3) - Number of independent alleles estimated (2) = 3 - 2 = 1.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "Which evolutionary force is the ultimate original source of all new genetic variation in farm animals?",
+        "o": [
+          "Genetic drift",
+          "Migration",
+          "Mutation",
+          "Selection"
+        ],
+        "a": 2,
+        "e": "Mutation is the only fundamental biological mechanism that generates entirely novel alleles; other forces merely alter the frequencies of existing alleles.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Random fluctuations in allele frequencies from generation to generation purely due to sampling error in small populations is known as:",
+        "o": [
+          "Hardy-Weinberg equilibrium",
+          "Gene flow",
+          "Genetic drift (Sewall Wright effect)",
+          "Selection pressure"
+        ],
+        "a": 2,
+        "e": "Genetic drift refers to random sampling variation in gametes leading to erratic shifts in allele frequencies, loss of heterozygosity, or allele fixation in small herds.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "The establishment of a new herd by a very small number of founder individuals carrying an unrepresentative sample of alleles is called the:",
+        "o": [
+          "Bottleneck effect",
+          "Founder effect",
+          "Sewall Wright plateau",
+          "Inbreeding depression"
+        ],
+        "a": 1,
+        "e": "The founder effect is a special case of genetic drift occurring when a new colony is initiated by a handful of breeding animals.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "If 20% of a native herd is replaced each generation by immigrant sires from another breed (migration rate m = 0.20), the process altering gene frequencies is:",
+        "o": [
+          "Genetic drift",
+          "Gene flow (Migration)",
+          "Meiotic drive",
+          "Balanced polymorphism"
+        ],
+        "a": 1,
+        "e": "Migration (gene flow) introduces foreign alleles into a recipient population at rate m, systematically changing allele frequencies.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "The reproductive efficiency or relative survival of a genotype compared to the most favored genotype is called its:",
+        "o": [
+          "Selection coefficient (s)",
+          "Fitness / Adaptive value (W)",
+          "Heritability",
+          "Breeding value"
+        ],
+        "a": 1,
+        "e": "Biological fitness (W) is the relative reproductive success of a genotype, scaled from 0.0 to 1.0 (where s = 1 - W).",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "If a recessive lethal mutation is completely selected against (s = 1.0) in homozygous state (aa), can selection completely eliminate the recessive allele from the population?",
+        "o": [
+          "Yes, in 1 generation",
+          "Yes, in 10 generations",
+          "No, because the recessive allele hides in heterozygous carriers (Aa)",
+          "Yes, within 5 generations"
+        ],
+        "a": 2,
+        "e": "As allele frequency q becomes small, almost all recessive alleles reside in healthy heterozygous carriers (Aa), making complete eradication by phenotypic selection impossible.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "A sudden drastic reduction in population size due to an epidemic disease or famine, causing loss of genetic diversity, is called a:",
+        "o": [
+          "Genetic bottleneck",
+          "Founder effect",
+          "Assortative mating",
+          "Genetic assimilation"
+        ],
+        "a": 0,
+        "e": "A population bottleneck occurs when an event severely decimates herd numbers, drastically reducing the gene pool of surviving generations.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "In the formula for change in allele frequency due to migration, Δq = m(q_m - q₀), if immigrant frequency q_m equals native frequency q₀, then Δq is:",
+        "o": [
+          "1.0",
+          "0",
+          "0.5",
+          "Negative"
+        ],
+        "a": 1,
+        "e": "If immigrant allele frequency matches native frequency (q_m = q₀), migration produces zero change in allele frequency (Δq = 0).",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "Sewall Wright is best known in population genetics for his mathematical description of:",
+        "o": [
+          "Genetic drift and inbreeding coefficient",
+          "Polymerase Chain Reaction",
+          "Chromosome karyotyping",
+          "DNA structure"
+        ],
+        "a": 0,
+        "e": "Sewall Wright formulated the inbreeding coefficient (F), the shifting balance theory, and the mathematics of random genetic drift.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Which of the following is a classic continuous quantitative trait in dairy cattle?",
+        "o": [
+          "Coat color (Black vs Red)",
+          "Horned vs Polled condition",
+          "305-day Lactation Milk Yield",
+          "Blood group B phenogroup"
+        ],
+        "a": 2,
+        "e": "305-day lactation milk yield is a polygenic quantitative trait showing continuous phenotypic distribution influenced heavily by nutrition and environment.",
+        "topicId": "u2-t23",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "In quantitative genetics, the phenotypic value P of an individual is partitioned as:",
+        "o": [
+          "P = G + E",
+          "P = G * E",
+          "P = G / E",
+          "P = G - E"
+        ],
+        "a": 0,
+        "e": "Under the standard linear model: Phenotypic Value (P) = Genotypic Value (G) + Environmental Deviation (E).",
+        "topicId": "u2-t24",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "The genotypic value G is further partitioned into:",
+        "o": [
+          "G = A + D + I",
+          "G = A * D",
+          "G = V_P + V_E",
+          "G = h² + r"
+        ],
+        "a": 0,
+        "e": "G = Additive genetic value (A) + Dominance deviation (D) + Epistatic / Interaction deviation (I).",
+        "topicId": "u2-t25",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "The breeding value (BV) of an individual animal is judged strictly by the mean performance of its:",
+        "o": [
+          "Ancestors",
+          "Collateral relatives",
+          "Progeny (Offspring)",
+          "Full-sibs"
+        ],
+        "a": 2,
+        "e": "Breeding value is defined as the genetic merit an individual transmits to its progeny, equal to twice the deviation of its progeny mean from the population mean.",
+        "topicId": "u2-t24",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which component of genetic variance is directly transmissible from parents to offspring and responds to mass selection?",
+        "o": [
+          "Dominance variance (V_D)",
+          "Additive genetic variance (V_A)",
+          "Epistatic variance (V_I)",
+          "Permanent environmental variance"
+        ],
+        "a": 1,
+        "e": "Only individual genes (not intact diploid genotypes) are passed through gametes; thus Additive genetic variance (V_A) is the sole transmissible genetic component.",
+        "topicId": "u2-t25",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Narrow-sense heritability (h²) is mathematically defined as the ratio of:",
+        "o": [
+          "V_G / V_P",
+          "V_A / V_P",
+          "V_D / V_A",
+          "V_E / V_P"
+        ],
+        "a": 1,
+        "e": "Narrow-sense heritability is h² = V_A / V_P (Additive genetic variance divided by Total phenotypic variance). Broad-sense is H² = V_G / V_P.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which of the following classes of livestock traits characteristically exhibits low heritability (h² < 0.15)?",
+        "o": [
+          "Carcass traits",
+          "Reproductive and fertility traits (e.g. calving interval, service period)",
+          "Mature body weight",
+          "Milk butterfat percentage"
+        ],
+        "a": 1,
+        "e": "Fertility and fitness traits (calving interval, service period, hatchability) have low heritability (<0.15) and respond poorly to mass selection.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which method of estimating heritability is most widely used in farm animal breeding using sire component of variance?",
+        "o": [
+          "Paternal Half-Sib Correlation",
+          "Twin study method",
+          "Selection experiment",
+          "Offspring-parent covariance"
+        ],
+        "a": 0,
+        "e": "Paternal half-sib correlation (PHS) is the standard method in animal breeding because one bull mates with many dams, yielding large half-sib families: h² = 4 * t.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "In paternal half-sib analysis, the intraclass correlation t is multiplied by which factor to estimate heritability h²?",
+        "o": [
+          "2",
+          "3",
+          "4",
+          "0.5"
+        ],
+        "a": 2,
+        "e": "Because paternal half-sibs share 1/4th of their additive genes, the sire component σ²_s = 0.25 * V_A. Therefore, h² = 4 * t.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "In offspring-parent regression where daughter records are regressed on dam records (b_OP), heritability is estimated as:",
+        "o": [
+          "h² = b_OP",
+          "h² = 2 * b_OP",
+          "h² = 4 * b_OP",
+          "h² = 0.5 * b_OP"
+        ],
+        "a": 1,
+        "e": "The covariance between one parent and offspring equals 0.5 * V_A. Thus regression coefficient b_OP = 0.5 * h², so h² = 2 * b_OP.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "If daughter on dam regression for 305-day milk yield is b_OP = 0.15, what is the estimated heritability h²?",
+        "o": [
+          "0.15",
+          "0.30",
+          "0.60",
+          "0.075"
+        ],
+        "a": 1,
+        "e": "h² = 2 * b_OP = 2 * 0.15 = 0.30.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "Repeatability (r) measures the correlation between repeated records of the same animal and sets the theoretical upper limit to:",
+        "o": [
+          "Dominance variance",
+          "Narrow-sense heritability (h²)",
+          "Selection intensity",
+          "Environmental variance"
+        ],
+        "a": 1,
+        "e": "Because repeatability includes permanent environmental variance (r = (V_G + V_Ep) / V_P), it always sets the upper boundary: h² ≤ r.",
+        "topicId": "u2-t28",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "Which parameter is computed using repeatability to predict an animal's future productivity for culling decisions?",
+        "o": [
+          "Genomic Index",
+          "Most Probable Producing Ability (MPPA)",
+          "Inbreeding Coefficient",
+          "Selection Differential"
+        ],
+        "a": 1,
+        "e": "MPPA combines the herd average with the animal's past records weighted by repeatability: MPPA = Herd_Mean + [n*r / (1 + (n-1)r)] * (Cow_Mean - Herd_Mean).",
+        "topicId": "u2-t28",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "What are the two primary biological causes of genetic correlation (r_G) between two traits in farm animals?",
+        "o": [
+          "Pleiotropy and Linkage",
+          "Mutation and Inbreeding",
+          "Epistasis and Selection",
+          "Drift and Migration"
+        ],
+        "a": 0,
+        "e": "Pleiotropy (one gene affecting both traits) and chromosomal linkage (genes situated close together on the same chromosome) are the dual causes of genetic correlation.",
+        "topicId": "u2-t29",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "In dairy cattle breeding, the genetic correlation between milk yield and milk fat percentage is characteristically:",
+        "o": [
+          "Strongly positive (+0.80)",
+          "Negative (-0.25 to -0.40)",
+          "Zero (0.00)",
+          "Perfect positive (+1.00)"
+        ],
+        "a": 1,
+        "e": "Milk yield and fat percentage have an unfavorable negative genetic correlation (-0.25 to -0.40): selecting solely for higher milk volume tends to dilute fat percentage.",
+        "topicId": "u2-t29",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "When different genotypes perform differently in different environments (e.g. temperate vs tropical climates), this is called:",
+        "o": [
+          "Genotype × Environment (G × E) Interaction",
+          "Epistatic deviation",
+          "Pleiotropic effect",
+          "Inbreeding depression"
+        ],
+        "a": 0,
+        "e": "Genotype-Environment (GxE) interaction occurs when the relative ranking or phenotypic superiority of genotypes changes across contrasting nutritional or climatic environments.",
+        "topicId": "u2-t26",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "What is the heritability of a trait if total phenotypic variance V_P = 100 and additive genetic variance V_A = 25?",
+        "o": [
+          "0.25",
+          "0.50",
+          "2.5",
+          "4.0"
+        ],
+        "a": 0,
+        "e": "h² = V_A / V_P = 25 / 100 = 0.25 (or 25%).",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Permanent environmental effects (V_Ep) in dairy cattle include permanent damage caused by:",
+        "o": [
+          "Annual feed fluctuation",
+          "Severe clinical mastitis leading to loss of an udder quarter",
+          "Ambient temperature change",
+          "Daily milking routine"
+        ],
+        "a": 1,
+        "e": "Permanent environmental effects affect all future lactations of an animal (e.g. loss of a quarter to mastitis, calfhood lung damage), unlike temporary seasonal fluctuations.",
+        "topicId": "u2-t25",
+        "subSection": "u2-s5",
+        "diff": 2
+      }
+    ],
+    "tf": [
+      {
+        "q": "Mendel's experiments were conducted on the garden pea (Pisum sativum) and published in 1866.",
+        "a": true,
+        "e": "Gregor Mendel published 'Versuche über Pflanzen-Hybriden' in 1866 in the Proceedings of the Natural History Society of Brünn.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Mendel's laws were independently rediscovered in 1900 by Hugo de Vries, Carl Correns, and Erich von Tschermak.",
+        "a": true,
+        "e": "Three botanists working in three different European countries independently verified Mendel's principles in the year 1900.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "A testcross ratio for a monohybrid cross with complete dominance is 3:1.",
+        "a": false,
+        "e": "A monohybrid F2 phenotypic ratio is 3:1, but a monohybrid testcross (Tt x tt) yields a 1:1 ratio.",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "In incomplete dominance, the phenotypic and genotypic ratios in the F₂ generation are both 1:2:1.",
+        "a": true,
+        "e": "Because the heterozygote displays an intermediate phenotype (e.g. pink flower), the phenotypic ratio directly reflects the 1:2:1 genotypic ratio.",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "The yellow coat color gene in mice (A^Y) is a dominant lethal in homozygous condition.",
+        "a": false,
+        "e": "The yellow allele is dominant for coat color (heterozygotes are yellow), but is a RECESSIVE lethal (only homozygous A^Y A^Y die in utero).",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "A modified dihybrid ratio of 9:7 is indicative of complementary gene interaction.",
+        "a": true,
+        "e": "Complementary gene interaction yields 9 colored : 7 white, requiring both dominant genes (A-B-) to produce the trait.",
+        "topicId": "u2-t06",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "In epistasis, one gene masks or suppresses the phenotypic expression of another non-allelic gene.",
+        "a": true,
+        "e": "Epistasis is non-allelic interaction where an epistatic gene overrides the phenotypic expression of a hypostatic gene.",
+        "topicId": "u2-t06",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Multiple alleles of a gene occupy different chromosomes in the cell.",
+        "a": false,
+        "e": "Multiple alleles are alternative forms of the same gene and must occupy the exact same homologous locus on the chromosome.",
+        "topicId": "u2-t08",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "The B blood group system in cattle is considered the most polymorphic blood group system in domestic livestock.",
+        "a": true,
+        "e": "The bovine B system features more than 600 complex phenogroups, making it highly valuable for animal identification and pedigree verification.",
+        "topicId": "u2-t08",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Synapsis and formation of the synaptonemal complex between homologous chromosomes occur in the Zygotene stage of Meiosis I.",
+        "a": true,
+        "e": "Zygotene is characterized by the precise pairing (synapsis) of homologous chromosomes mediated by the synaptonemal complex.",
+        "topicId": "u2-t02",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "Domestic cattle (Bos taurus) have 2n = 60 chromosomes, with all 58 autosomes being acrocentric.",
+        "a": true,
+        "e": "In cattle, all 58 autosomes are strictly acrocentric, while the X and Y sex chromosomes are submetacentric.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "Domestic sheep and domestic goats have identical diploid chromosome numbers of 2n = 60.",
+        "a": false,
+        "e": "Goats have 2n = 60, whereas sheep have 2n = 54 (due to ancestral centric fusions creating 3 metacentric chromosome pairs).",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "In poultry (birds), the male is the heterogametic sex possessing XY chromosomes.",
+        "a": false,
+        "e": "In birds, males are homogametic (ZZ) and females are heterogametic (ZW).",
+        "topicId": "u2-t09",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "Milk production in dairy cows is an example of a sex-limited trait.",
+        "a": true,
+        "e": "Milk production is governed by autosomal genes present in both sexes but expressed exclusively in females due to physiological and anatomical limitations.",
+        "topicId": "u2-t10",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The maximum possible recombination frequency between two linked genes on a chromosome is 50%.",
+        "a": true,
+        "e": "Even when crossing over occurs in 100% of tetrads, only non-sister chromatids exchange segments, yielding a maximum of 50% recombinant gametes.",
+        "topicId": "u2-t11",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "A freemartin heifer is fertile and capable of normal reproductive cycling.",
+        "a": false,
+        "e": "Freemartin heifers are completely sterile intersexes with blind-ended vaginas and hypoplastic ovaries due to fetal anastomosis with a male twin.",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The 1/29 Robertsonian translocation in cattle involves the centric fusion of chromosomes 1 and 29, reducing fertility.",
+        "a": true,
+        "e": "The 1/29 Robertsonian translocation is the most common chromosomal defect in cattle, causing embryonic mortality and reduced conception rates.",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "Mitochondrial DNA (mtDNA) is inherited biparentally from both the sire and the dam.",
+        "a": false,
+        "e": "Mitochondrial DNA is inherited strictly maternally via the ovum cytoplasm; sperm mitochondria are degraded upon fertilization.",
+        "topicId": "u2-t15",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "In double-stranded DNA, Adenine pairs with Thymine via three hydrogen bonds.",
+        "a": false,
+        "e": "Adenine and Thymine form two hydrogen bonds (A = T). Guanine and Cytosine form three hydrogen bonds (G ≡ C).",
+        "topicId": "u2-t16",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "DNA replication proceeds in the 5' to 3' direction on both leading and lagging strands.",
+        "a": true,
+        "e": "DNA polymerase can add incoming nucleotides only to the free 3'-OH group; hence synthesis on both strands proceeds strictly 5' → 3'.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 2
+      },
+      {
+        "q": "The genetic code is overlapping, meaning adjacent codons share nucleotide bases.",
+        "a": false,
+        "e": "The genetic code is non-overlapping and commaless; each triplet is read consecutively without sharing bases with neighboring codons.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Taq DNA polymerase used in PCR is isolated from the thermophilic bacterium Thermus aquaticus.",
+        "a": true,
+        "e": "Taq polymerase is derived from Thermus aquaticus, remaining enzymatic active after repeated cycles at 95°C.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Northern blotting is the laboratory technique used for detecting specific proteins.",
+        "a": false,
+        "e": "Northern blotting detects RNA. Western blotting is used to detect proteins, while Southern blotting detects DNA.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "During PCR, primer annealing typically occurs at a temperature range of 50°C to 60°C.",
+        "a": true,
+        "e": "Annealing allows forward and reverse oligonucleotide primers to bind specifically to complementary single-stranded DNA at 50–60°C.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Okazaki fragments are formed on the leading strand during continuous DNA synthesis.",
+        "a": false,
+        "e": "Okazaki fragments are synthesized discontinuously on the LAGGING strand.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "AUG serves as the universal initiation codon coding for methionine.",
+        "a": true,
+        "e": "AUG signals the start of translation and incorporates methionine in all eukaryotic organisms.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "Restriction endonucleases recognize specific palindromic nucleotide sequences in DNA.",
+        "a": true,
+        "e": "Type II restriction enzymes cut DNA at inverted symmetrical palindromic sequences (e.g., GAATTC).",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "In a population at Hardy-Weinberg equilibrium, gene and genotypic frequencies remain constant across generations.",
+        "a": true,
+        "e": "The Hardy-Weinberg theorem establishes that allelic and genotypic frequencies remain in equilibrium indefinitely in the absence of evolutionary forces.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "If allele frequencies are p = 0.7 and q = 0.3, the expected frequency of heterozygotes in equilibrium is 0.42.",
+        "a": true,
+        "e": "Heterozygote frequency = 2pq = 2 * 0.7 * 0.3 = 0.42 (or 42%).",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Genetic drift has a much more pronounced effect in large livestock populations than in small herds.",
+        "a": false,
+        "e": "Genetic drift is inversely proportional to population size (1 / (2*Ne)); its effects are strongest in very small populations.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Mutation is the ultimate source of all novel genetic variation in biological populations.",
+        "a": true,
+        "e": "Mutations generate entirely new alleles, providing raw material for selection and evolution.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Artificial selection against a lethal recessive allele can completely eliminate the allele from a herd in a single generation.",
+        "a": false,
+        "e": "Even with 100% culling of affected homozygotes, the recessive allele persists hidden in heterozygous carriers (Aa).",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "The sum of all allelic frequencies at a single locus in a population is always equal to 1.",
+        "a": true,
+        "e": "By definition, p + q = 1 (or Σ p_i = 1 for multiple alleles).",
+        "topicId": "u2-t20",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Non-random mating changes gene frequencies in a single generation.",
+        "a": false,
+        "e": "Non-random mating (such as inbreeding) alters genotypic frequencies (increasing homozygotes), but does NOT by itself alter gene (allelic) frequencies.",
+        "topicId": "u2-t20",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "The Sewall Wright effect is another name for random genetic drift.",
+        "a": true,
+        "e": "Sewall Wright developed the mathematical theory of random genetic drift, hence the term Sewall Wright effect.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "A population bottleneck causes an increase in genetic variation in the surviving herd.",
+        "a": false,
+        "e": "A bottleneck drastically reduces the population size and results in severe loss of genetic diversity and increased inbreeding.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Narrow-sense heritability (h²) is defined as the ratio of additive genetic variance (V_A) to total phenotypic variance (V_P).",
+        "a": true,
+        "e": "Narrow-sense heritability is h² = V_A / V_P, representing the portion of variance responsive to artificial mass selection.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Heritability of a biological trait is a fixed biological constant that never changes across different herds or environments.",
+        "a": false,
+        "e": "Heritability is a population-specific parameter; it varies depending on allele frequencies, environmental variance, and management in that specific herd.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "Reproductive traits like calving interval and service period generally have high heritability (>0.50).",
+        "a": false,
+        "e": "Reproductive traits have low heritability (<0.15) and are heavily influenced by feeding, management, and environment.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Repeatability sets the theoretical upper limit for narrow-sense heritability (h² ≤ r).",
+        "a": true,
+        "e": "Because repeatability includes permanent environmental variance and total genotypic variance, h² can never exceed repeatability r.",
+        "topicId": "u2-t28",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "The breeding value of a sire is defined as twice the average deviation of his progeny from the population mean.",
+        "a": true,
+        "e": "Because a sire contributes half of his genes to each offspring, BV = 2 * (P_progeny - P_pop).",
+        "topicId": "u2-t24",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "In paternal half-sib correlation, heritability is estimated as 4 times the intraclass correlation (h² = 4*t).",
+        "a": true,
+        "e": "Paternal half-sibs share 1/4 of their additive genetic variance; thus h² = 4 * t.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "Genetic correlation between two traits is caused solely by environmental fluctuations.",
+        "a": false,
+        "e": "Genetic correlation is caused by pleiotropy and linkage. Environmental correlation is caused by shared environmental factors.",
+        "topicId": "u2-t29",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Genotype by Environment (G × E) interaction can cause a reranking of sires when daughters are evaluated in contrasting climates.",
+        "a": true,
+        "e": "GxE interaction occurs when the top-performing sire in a temperate environment is not the best in a tropical heat-stress environment.",
+        "topicId": "u2-t26",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Broad-sense heritability (H²) includes both additive and non-additive (dominance and epistatic) genetic variances.",
+        "a": true,
+        "e": "Broad-sense heritability H² = V_G / V_P = (V_A + V_D + V_I) / V_P.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      }
+    ],
+    "fib": [
+      {
+        "q": "Gregor Johann Mendel conducted his genetic hybridization experiments on the garden pea, scientifically named ______ sativum.",
+        "a": [
+          "Pisum",
+          "pisum"
+        ],
+        "a_display": "Pisum",
+        "e": "Mendel worked on the garden pea, Pisum sativum.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "The fundamental terms 'Gene', 'Genotype', and 'Phenotype' were coined in 1909 by Wilhelm ______.",
+        "a": [
+          "Johannsen",
+          "Wilhelm Johannsen"
+        ],
+        "a_display": "Johannsen",
+        "e": "Danish botanist Wilhelm Johannsen coined the terms Gene, Genotype, and Phenotype in 1909.",
+        "topicId": "u2-t01",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Mendel's First Law is known as the Law of ______.",
+        "a": [
+          "Segregation",
+          "purity of gametes"
+        ],
+        "a_display": "Segregation",
+        "e": "The Law of Segregation states that allele pairs separate during gamete formation.",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "A testcross of a heterozygous monohybrid individual (Tt × tt) produces a phenotypic ratio of ______.",
+        "a": [
+          "1:1",
+          "1 to 1"
+        ],
+        "a_display": "1:1",
+        "e": "A monohybrid testcross yields 50% dominant and 50% recessive offspring (1:1).",
+        "topicId": "u2-t04",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Roan coat color in Shorthorn cattle is a classic example of ______ where both red and white hairs are expressed.",
+        "a": [
+          "codominance"
+        ],
+        "a_display": "Codominance",
+        "e": "Codominance allows both alleles to be fully and simultaneously expressed in heterozygotes.",
+        "topicId": "u2-t05",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "In poultry, complementary gene interaction for walnut comb produces an F₂ ratio of 9 to ______.",
+        "a": [
+          "7",
+          "seven"
+        ],
+        "a_display": "7",
+        "e": "Complementary gene interaction gives a 9:7 phenotypic ratio.",
+        "topicId": "u2-t06",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "The phenomenon where a single gene affects multiple unrelated phenotypic traits is called ______.",
+        "a": [
+          "pleiotropy",
+          "pleiotropism"
+        ],
+        "a_display": "Pleiotropy",
+        "e": "Pleiotropy refers to a single locus having phenotypic consequences across multiple systems.",
+        "topicId": "u2-t07",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "An environmentally produced phenotype that simulates a genetic mutation is called a ______.",
+        "a": [
+          "phenocopy"
+        ],
+        "a_display": "Phenocopy",
+        "e": "A phenocopy mimics a mutant phenotype but has an unaltered wild-type genotype.",
+        "topicId": "u2-t07",
+        "subSection": "u2-s1",
+        "diff": 2
+      },
+      {
+        "q": "The most polymorphic and complex blood group system in cattle is the ______ system.",
+        "a": [
+          "B",
+          "B system"
+        ],
+        "a_display": "B",
+        "e": "The bovine B blood group system contains over 600 phenogroups.",
+        "topicId": "u2-t08",
+        "subSection": "u2-s1",
+        "diff": 1
+      },
+      {
+        "q": "Crossing over occurs during the ______ sub-stage of Prophase I of meiosis.",
+        "a": [
+          "pachytene"
+        ],
+        "a_display": "Pachytene",
+        "e": "Genetic crossing over and chiasma formation occur during pachytene.",
+        "topicId": "u2-t02",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The diploid chromosome number (2n) of domestic cattle is ______.",
+        "a": [
+          "60",
+          "sixty"
+        ],
+        "a_display": "60",
+        "e": "Cattle (Bos taurus and Bos indicus) possess 2n = 60 chromosomes.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The diploid chromosome number (2n) of the river buffalo is ______.",
+        "a": [
+          "50",
+          "fifty"
+        ],
+        "a_display": "50",
+        "e": "River buffalo (Bubalus bubalis) has 2n = 50 chromosomes.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The diploid chromosome number (2n) of domestic sheep is ______.",
+        "a": [
+          "54",
+          "fifty-four",
+          "fifty four"
+        ],
+        "a_display": "54",
+        "e": "Domestic sheep (Ovis aries) have 2n = 54 chromosomes.",
+        "topicId": "u2-t03",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "In birds and poultry, the heterogametic sex is the female, possessing ______ sex chromosomes.",
+        "a": [
+          "ZW",
+          "zw"
+        ],
+        "a_display": "ZW",
+        "e": "Avian females are ZW heterogametic, while males are ZZ homogametic.",
+        "topicId": "u2-t09",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The dark heterochromatic inactive X chromosome visible in female somatic cells is called a ______ body.",
+        "a": [
+          "Barr",
+          "Barr body"
+        ],
+        "a_display": "Barr",
+        "e": "Murray Barr discovered the Barr body (sex chromatin) representing the lyonized inactive X chromosome.",
+        "topicId": "u2-t09",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "One map unit on a genetic chromosome linkage map is called a ______.",
+        "a": [
+          "centiMorgan",
+          "cM",
+          "centimorgan"
+        ],
+        "a_display": "centiMorgan (cM)",
+        "e": "1 centiMorgan (cM) represents 1% recombination frequency between two linked loci.",
+        "topicId": "u2-t11",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "A sterile heifer born co-twin with a bull calf in cattle is called a ______.",
+        "a": [
+          "freemartin"
+        ],
+        "a_display": "Freemartin",
+        "e": "A freemartin is an infertile female twin modified by male fetal hormones via placental vascular fusion.",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 1
+      },
+      {
+        "q": "The centric fusion of two acrocentric chromosomes is called a ______ translocation.",
+        "a": [
+          "Robertsonian",
+          "robertsonian translocation"
+        ],
+        "a_display": "Robertsonian",
+        "e": "Robertsonian translocations involve fusion at the centromere (e.g. 1/29 translocation in cattle).",
+        "topicId": "u2-t13",
+        "subSection": "u2-s2",
+        "diff": 2
+      },
+      {
+        "q": "In DNA base pairing, Guanine pairs with Cytosine via ______ hydrogen bonds.",
+        "a": [
+          "3",
+          "three"
+        ],
+        "a_display": "3 (three)",
+        "e": "G and C pair via three hydrogen bonds (G ≡ C).",
+        "topicId": "u2-t16",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The short DNA fragments synthesized discontinuously on the lagging strand are ______ fragments.",
+        "a": [
+          "Okazaki",
+          "okazaki fragments"
+        ],
+        "a_display": "Okazaki",
+        "e": "Okazaki fragments are formed on the lagging strand during DNA replication.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The enzyme that seals nicks by creating phosphodiester bonds during DNA replication is DNA ______.",
+        "a": [
+          "ligase"
+        ],
+        "a_display": "Ligase",
+        "e": "DNA ligase joins Okazaki fragments by catalyzing phosphodiester bond formation.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The universal start codon that initiates protein translation is ______.",
+        "a": [
+          "AUG"
+        ],
+        "a_display": "AUG",
+        "e": "AUG is the universal start codon coding for methionine.",
+        "topicId": "u2-t17",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The Polymerase Chain Reaction (PCR) was invented by Kary ______ in 1983.",
+        "a": [
+          "Mullis",
+          "Kary Mullis"
+        ],
+        "a_display": "Mullis",
+        "e": "Kary Mullis conceived and developed PCR, earning the 1993 Nobel Prize in Chemistry.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The thermostable DNA polymerase used in PCR is isolated from Thermus ______.",
+        "a": [
+          "aquaticus"
+        ],
+        "a_display": "aquaticus",
+        "e": "Taq polymerase is purified from the thermophilic bacterium Thermus aquaticus.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The three steps in a PCR cycle are Denaturation, Annealing, and ______.",
+        "a": [
+          "Extension",
+          "elongation",
+          "extension/elongation"
+        ],
+        "a_display": "Extension",
+        "e": "A PCR thermal cycle consists of Denaturation (94°C), Annealing (55°C), and Extension (72°C).",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "During agarose gel electrophoresis, negatively charged DNA fragments migrate toward the positive ______.",
+        "a": [
+          "anode"
+        ],
+        "a_display": "Anode",
+        "e": "DNA carries a negative charge from its phosphate backbone and migrates toward the positive anode.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The molecular blotting technique used specifically to detect RNA molecules is ______ blotting.",
+        "a": [
+          "Northern",
+          "northern blotting"
+        ],
+        "a_display": "Northern",
+        "e": "Northern blotting detects RNA, Southern detects DNA, and Western detects proteins.",
+        "topicId": "u2-t18",
+        "subSection": "u2-s3",
+        "diff": 1
+      },
+      {
+        "q": "The sum of all allelic frequencies at a single genetic locus (p + q) is equal to ______.",
+        "a": [
+          "1",
+          "1.0",
+          "one"
+        ],
+        "a_display": "1.0",
+        "e": "In population genetics, the total frequency of all alleles at a locus equals 1 (p + q = 1).",
+        "topicId": "u2-t20",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "The Hardy-Weinberg law was formulated in the year ______.",
+        "a": [
+          "1908"
+        ],
+        "a_display": "1908",
+        "e": "G. H. Hardy and Wilhelm Weinberg formulated the equilibrium principle in 1908.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "Under Hardy-Weinberg equilibrium, the expected frequency of heterozygous individuals is 2______.",
+        "a": [
+          "pq"
+        ],
+        "a_display": "pq",
+        "e": "The genotypic expansion is p² + 2pq + q² = 1; heterozygotes are represented by 2pq.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "When testing Hardy-Weinberg equilibrium for two alleles using Chi-Square, the degrees of freedom is ______.",
+        "a": [
+          "1",
+          "one"
+        ],
+        "a_display": "1",
+        "e": "Degrees of freedom = 3 genotypes - 2 alleles = 1 df.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "Random fluctuations in allele frequency in small populations due to gametic sampling is called genetic ______.",
+        "a": [
+          "drift"
+        ],
+        "a_display": "Drift",
+        "e": "Genetic drift (Sewall Wright effect) alters allele frequencies by chance in small populations.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "The establishment of a new population by a small group with unrepresentative allele frequencies is the ______ effect.",
+        "a": [
+          "founder",
+          "founder effect"
+        ],
+        "a_display": "Founder",
+        "e": "The founder effect is a form of genetic drift seen when a small group establishes a new herd.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "The relationship between relative fitness W and the selection coefficient s is s = 1 - ______.",
+        "a": [
+          "W",
+          "w"
+        ],
+        "a_display": "W",
+        "e": "The selection coefficient measures the proportional disadvantage: s = 1 - W.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "Random mating in a population is also referred to as ______.",
+        "a": [
+          "panmixia"
+        ],
+        "a_display": "Panmixia",
+        "e": "Panmixia is the biological term for completely random mating where every individual has an equal chance of mating.",
+        "topicId": "u2-t21",
+        "subSection": "u2-s4",
+        "diff": 2
+      },
+      {
+        "q": "The ultimate biological source of all brand new genetic alleles is ______.",
+        "a": [
+          "mutation"
+        ],
+        "a_display": "Mutation",
+        "e": "Mutation generates new genetic alleles upon which other evolutionary forces act.",
+        "topicId": "u2-t22",
+        "subSection": "u2-s4",
+        "diff": 1
+      },
+      {
+        "q": "In the standard quantitative model, Phenotype = Genotype + ______.",
+        "a": [
+          "Environment",
+          "E"
+        ],
+        "a_display": "Environment",
+        "e": "Phenotypic performance is partitioned into genetic and environmental components: P = G + E.",
+        "topicId": "u2-t24",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "The genetic variance component that is directly transmissible to offspring is ______ genetic variance (V_A).",
+        "a": [
+          "additive",
+          "additive genetic"
+        ],
+        "a_display": "Additive",
+        "e": "Additive genetic variance V_A is the only transmissible component that responds to selection.",
+        "topicId": "u2-t25",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "Narrow-sense heritability (h²) is the ratio of additive genetic variance to total ______ variance.",
+        "a": [
+          "phenotypic",
+          "phenotypic variance"
+        ],
+        "a_display": "Phenotypic",
+        "e": "Narrow-sense heritability is h² = V_A / V_P.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "In paternal half-sib analysis, heritability is estimated as ______ times the intraclass correlation (t).",
+        "a": [
+          "4",
+          "four"
+        ],
+        "a_display": "4",
+        "e": "Since half-sibs share 1/4th of additive genes, h² = 4 * t.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "In offspring on single-parent regression (b_OP), heritability is estimated as ______ times b_OP.",
+        "a": [
+          "2",
+          "two"
+        ],
+        "a_display": "2",
+        "e": "Because one parent passes half its genes to its offspring, h² = 2 * b_OP.",
+        "topicId": "u2-t27",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "Repeatability sets the theoretical upper limit to narrow-sense ______.",
+        "a": [
+          "heritability",
+          "h2",
+          "h²"
+        ],
+        "a_display": "Heritability",
+        "e": "Heritability cannot exceed repeatability: h² ≤ r.",
+        "topicId": "u2-t28",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "The formula used to predict an animal's future producing performance for culling is Most Probable Producing ______ (MPPA).",
+        "a": [
+          "Ability"
+        ],
+        "a_display": "Ability",
+        "e": "MPPA (Most Probable Producing Ability) estimates future lactation yield using repeatability.",
+        "topicId": "u2-t28",
+        "subSection": "u2-s5",
+        "diff": 2
+      },
+      {
+        "q": "The primary genetic causes of genetic correlation are pleiotropy and chromosomal ______.",
+        "a": [
+          "linkage"
+        ],
+        "a_display": "Linkage",
+        "e": "Pleiotropy and genetic linkage are the two causes of genetic correlation between traits.",
+        "topicId": "u2-t29",
+        "subSection": "u2-s5",
+        "diff": 1
+      },
+      {
+        "q": "When genotypes perform differently across different management conditions, this is called Genotype by Environment ______.",
+        "a": [
+          "interaction",
+          "GxE interaction"
+        ],
+        "a_display": "Interaction",
+        "e": "G × E interaction occurs when the relative ranking of genotypes alters across environments.",
+        "topicId": "u2-t26",
+        "subSection": "u2-s5",
+        "diff": 1
+      }
+    ]
+  },
+  "unit-3": {
+    "mcq": [
+      {
+        "q": "Who is universally recognized as the 'Father of Animal Breeding' for pioneering progeny testing, sire letting, and linebreeding?",
+        "o": [
+          "Robert Bakewell",
+          "Jay L. Lush",
+          "Gregor Mendel",
+          "Charles Darwin"
+        ],
+        "a": 0,
+        "e": "Robert Bakewell (1725–1795) of Dishley, England, pioneered systematic animal breeding, sire leasing, and progeny testing.",
+        "topicId": "u3-t01",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Who is celebrated as the 'Father of Modern Animal Breeding' for writing the landmark book 'Animal Breeding Plans' (1937)?",
+        "o": [
+          "Robert Bakewell",
+          "Jay L. Lush",
+          "C. R. Henderson",
+          "Sewall Wright"
+        ],
+        "a": 1,
+        "e": "Jay L. Lush formalised the application of quantitative biometrical genetics, heritability, and selection index to livestock improvement.",
+        "topicId": "u3-t01",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Which livestock breed was developed by Robert Bakewell using systematic inbreeding and progeny selection?",
+        "o": [
+          "Dishley Leicester sheep",
+          "Shorthorn cattle",
+          "Holstein-Friesian",
+          "Jersey cattle"
+        ],
+        "a": 0,
+        "e": "Robert Bakewell created the Dishley Leicester sheep, Shire horse, and Dishley Longhorn cattle.",
+        "topicId": "u3-t01",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "In dairy cattle, the standard duration of lactation milk yield standardized for official genetic evaluation is:",
+        "o": [
+          "180 days",
+          "240 days",
+          "305 days",
+          "365 days"
+        ],
+        "a": 2,
+        "e": "Official dairy records standardise milk production to a 305-day lactation period to enable fair genetic comparisons across parities.",
+        "topicId": "u3-t03",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The period intervening between calving and the subsequent fertile conception in a dairy cow is termed the:",
+        "o": [
+          "Dry period",
+          "Service period",
+          "Gestation period",
+          "Inter-calving period"
+        ],
+        "a": 1,
+        "e": "The service period is the interval from parturition to successful conception (ideally 60–90 days for a 12–13 month calving interval).",
+        "topicId": "u3-t03",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Which economic trait in commercial broiler poultry is measured as the ratio of total feed consumed to body weight gain?",
+        "o": [
+          "Average Daily Gain (ADG)",
+          "Feed Conversion Ratio (FCR)",
+          "Protein Efficiency Ratio (PER)",
+          "Dressing percentage"
+        ],
+        "a": 1,
+        "e": "Feed Conversion Ratio (FCR = kg Feed / kg Gain) measures feed efficiency; lower FCR indicates superior feed conversion.",
+        "topicId": "u3-t03",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The difference between the mean phenotypic value of selected breeding parents and the mean of the entire parental herd is the:",
+        "o": [
+          "Genetic gain",
+          "Selection differential (S)",
+          "Selection intensity (i)",
+          "Heritability"
+        ],
+        "a": 1,
+        "e": "Selection differential (S = P_selected - P_pop) measures the superiority of selected parents over the unselected herd average.",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Selection intensity (i) is defined mathematically as the selection differential (S) divided by the:",
+        "o": [
+          "Population mean",
+          "Phenotypic standard deviation (σ_P)",
+          "Additive genetic variance",
+          "Generation interval"
+        ],
+        "a": 1,
+        "e": "Selection intensity i = S / σ_P. It standardises the selection differential in units of standard deviation.",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "The average age of parents when their offspring are born is termed the:",
+        "o": [
+          "Life expectancy",
+          "Productive life",
+          "Generation interval (L)",
+          "Calving interval"
+        ],
+        "a": 2,
+        "e": "Generation interval (L) is the average age of parents at the birth of their replacement offspring (e.g. 5–6 years in dairy cattle).",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "In the fundamental equation for annual genetic gain, ΔG = (i * r_TI * σ_A) / L, what does r_TI represent?",
+        "o": [
+          "Repeatability",
+          "Accuracy of selection",
+          "Inbreeding coefficient",
+          "Relationship coefficient"
+        ],
+        "a": 1,
+        "e": "r_TI is the accuracy of selection, defined as the correlation between the true breeding value (T) and the selection criterion (I).",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "Individual (Mass) selection is most effective and accurate for traits that have:",
+        "o": [
+          "Low heritability and sex-limited expression",
+          "High heritability and expression in both sexes",
+          "Zero heritability",
+          "Strong negative dominance"
+        ],
+        "a": 1,
+        "e": "Individual mass selection (r_TI = sqrt(h²)) works best when heritability is high and the trait can be measured directly on both sexes early in life.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "For sex-limited traits like milk production in dairy bulls, which selection basis provides the most accurate estimate of breeding value?",
+        "o": [
+          "Individual mass selection",
+          "Progeny testing",
+          "Tandem selection",
+          "Independent culling"
+        ],
+        "a": 1,
+        "e": "Progeny testing evaluates a sire based on the performance of a large group of daughters, providing high accuracy for sex-limited traits.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "What is the primary operational disadvantage of progeny testing in dairy cattle breeding?",
+        "o": [
+          "Low accuracy of sire proofs",
+          "Substantially increases generation interval and breeding costs",
+          "Decreases inbreeding",
+          "Prevents artificial insemination"
+        ],
+        "a": 1,
+        "e": "Waiting for daughters to be born, reach sexual maturity, conceive, and complete 305-day lactations delays sire proof until the bull is 5–6 years old.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "Which basis of selection is indispensable for traits that require slaughtering the animal, such as meat quality or carcass traits?",
+        "o": [
+          "Pedigree selection",
+          "Sib selection (or progeny testing)",
+          "Mass selection",
+          "Tandem selection"
+        ],
+        "a": 1,
+        "e": "Because carcass evaluation is destructive, breeding candidates are selected based on the slaughtered carcass records of their full-sibs or half-sibs.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "Selecting for a secondary trait (X) in order to achieve genetic improvement in a primary trait (Y) is called:",
+        "o": [
+          "Tandem selection",
+          "Indirect selection",
+          "Mass selection",
+          "Family selection"
+        ],
+        "a": 1,
+        "e": "Indirect selection exploits the genetic correlation between an easily measured secondary trait X and an expensive/difficult primary trait Y.",
+        "topicId": "u3-t06",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "Which multi-trait selection method selects for one trait at a time until reaching the target, and is mathematically the least efficient?",
+        "o": [
+          "Independent Culling Levels",
+          "Selection Index",
+          "Tandem Selection",
+          "BLUP selection"
+        ],
+        "a": 2,
+        "e": "Tandem selection improves one trait at a time, but genetic progress in the first trait is often eroded while selecting for subsequent negatively correlated traits.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "In which multi-trait selection method are animals culled if they fail to meet a minimum threshold in any single trait, regardless of superiority in others?",
+        "o": [
+          "Tandem selection",
+          "Selection Index",
+          "Independent Culling Levels (ICL)",
+          "Mass selection"
+        ],
+        "a": 2,
+        "e": "Independent Culling Levels establishes minimum cutoff standards for each trait; failure in any one trait results in automatic culling.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Who formulated the mathematical theory of the Selection Index in animal breeding in 1943?",
+        "o": [
+          "L. N. Hazel",
+          "Robert Bakewell",
+          "Francis Galton",
+          "C. R. Henderson"
+        ],
+        "a": 0,
+        "e": "L. N. Hazel (1943) developed the Selection Index method, which Hazel and Lush proved is mathematically the most efficient selection method.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "The mating of animals that are more closely related to each other than the average of the population is termed:",
+        "o": [
+          "Outcrossing",
+          "Crossbreeding",
+          "Inbreeding",
+          "Grading up"
+        ],
+        "a": 2,
+        "e": "Inbreeding is the mating of related individuals (e.g. parent-offspring, full-sibs) sharing common ancestors.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Who developed the formula for calculating the Inbreeding Coefficient (F) and the path analysis method in 1921?",
+        "o": [
+          "Gregor Mendel",
+          "Sewall Wright",
+          "Jay L. Lush",
+          "R. A. Fisher"
+        ],
+        "a": 1,
+        "e": "Sewall Wright (1921) formulated the Inbreeding Coefficient (F) measuring the probability of alleles being identical by descent (IBD).",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the inbreeding coefficient (F) resulting from one generation of full-sib mating (brother × sister) with non-inbred parents?",
+        "o": [
+          "0.125 (12.5%)",
+          "0.25 (25%)",
+          "0.50 (50%)",
+          "0.0625 (6.25%)"
+        ],
+        "a": 1,
+        "e": "Full-sib mating produces F = 0.25 (25% inbreeding) in the offspring. Parent-offspring mating also yields F = 0.25.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the inbreeding coefficient (F) of offspring produced by mating half-sibs (half-brother × half-sister)?",
+        "o": [
+          "0.25",
+          "0.125 (12.5%)",
+          "0.0625",
+          "0.50"
+        ],
+        "a": 1,
+        "e": "Half-sibs share one common parent; offspring from half-sib mating have F = (1/2)³ = 0.125 (12.5%).",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "What is the coefficient of relationship (R_XY) between a non-inbred parent and its offspring?",
+        "o": [
+          "1.0 (100%)",
+          "0.50 (50%)",
+          "0.25 (25%)",
+          "0.125 (12.5%)"
+        ],
+        "a": 1,
+        "e": "A parent transmits exactly 50% of its genes to each offspring; hence the coefficient of relationship R = 0.50.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "A mild, directed form of inbreeding designed to concentrate the inheritance of an outstanding ancestor (e.g. grandsire) is termed:",
+        "o": [
+          "Close inbreeding",
+          "Linebreeding",
+          "Outcrossing",
+          "Topcrossing"
+        ],
+        "a": 1,
+        "e": "Linebreeding is deliberate mild inbreeding (F usually 0.05–0.12) designed to keep high genetic relationship to a celebrated ancestor while avoiding close inbreeding.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the primary genetic consequence of continuous inbreeding in a closed livestock population?",
+        "o": [
+          "Increases heterozygosity",
+          "Increases homozygosity and prepotency",
+          "Eliminates all mutations",
+          "Increases genetic variation"
+        ],
+        "a": 1,
+        "e": "Inbreeding brings identical-by-descent alleles together, increasing homozygosity across loci and increasing prepotency (the ability to transmit uniform traits).",
+        "topicId": "u3-t10",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The reduction in vigor, fertility, and survival traits that accompanies increased inbreeding is termed:",
+        "o": [
+          "Genetic drift",
+          "Inbreeding depression",
+          "Heterosis",
+          "Atavism"
+        ],
+        "a": 1,
+        "e": "Inbreeding depression is the decline in fitness-related metric traits (reproductive rate, viability, milk yield) resulting from increased homozygosity of deleterious recessives.",
+        "topicId": "u3-t10",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Which class of economic traits suffers the greatest degree of inbreeding depression?",
+        "o": [
+          "Carcass quality traits",
+          "Skeletal conformation",
+          "Reproduction and early survival traits",
+          "Mature body size"
+        ],
+        "a": 2,
+        "e": "Traits closely linked to biological fitness (fertility, embryo survival, neonatal viability) have low heritability and suffer the most severe inbreeding depression.",
+        "topicId": "u3-t10",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "Mating unrelated animals within the very same pure breed (no common ancestor in the last 4–6 generations) is called:",
+        "o": [
+          "Outcrossing",
+          "Crossbreeding",
+          "Species hybridization",
+          "Linebreeding"
+        ],
+        "a": 0,
+        "e": "Outcrossing is the mating of unrelated individuals of the same pure breed, introducing fresh vigor without altering breed purity.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The continuous backcrossing of non-descript (scrub) females to purebred elite sires of a defined breed for several generations is:",
+        "o": [
+          "Crossbreeding",
+          "Grading up",
+          "Outcrossing",
+          "Rotational breeding"
+        ],
+        "a": 1,
+        "e": "Grading up continuously uses purebred bulls on grade/native females, reaching 99.2% purebred inheritance by the 7th generation.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "In grading up, what is the proportion of purebred inheritance in the third (F₃) generation offspring?",
+        "o": [
+          "50% (1/2)",
+          "75% (3/4)",
+          "87.5% (7/8)",
+          "93.75% (15/16)"
+        ],
+        "a": 2,
+        "e": "F1 = 50% (1/2); F2 = 75% (3/4); F3 = 87.5% (7/8); F4 = 93.75% (15/16); F5 = 96.88% (31/32).",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "A mule is a sterile interspecific hybrid produced by crossing a:",
+        "o": [
+          "Male donkey (Jack) with a female horse (Mare)",
+          "Male horse (Stallion) with a female donkey (Jennet)",
+          "Bull with a female yak",
+          "Ram with a female goat"
+        ],
+        "a": 0,
+        "e": "Mule = Jack (male donkey) × Mare (female horse). The reciprocal cross, Stallion (male horse) × Jennet (female donkey), produces a Hinny.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "What is the diploid chromosome number (2n) of a mule?",
+        "o": [
+          "60",
+          "62",
+          "63",
+          "64"
+        ],
+        "a": 2,
+        "e": "Horse provides n = 32 and Donkey provides n = 31, producing a hybrid mule with 2n = 63 chromosomes that cannot pair during meiotic meiosis, causing sterility.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "The phenomenon where crossbred offspring excel the average performance of their purebred parental breeds is called:",
+        "o": [
+          "Inbreeding depression",
+          "Heterosis (Hybrid Vigour)",
+          "Prepotency",
+          "Epistasis"
+        ],
+        "a": 1,
+        "e": "Heterosis (hybrid vigor) is the phenotypic superiority of F1 crossbreds over the average of the parental breeds.",
+        "topicId": "u3-t12",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Which genetic hypothesis explains heterosis by postulating that the heterozygous genotype (Aa) is superior to both homozygotes (AA and aa)?",
+        "o": [
+          "Dominance hypothesis",
+          "Overdominance hypothesis",
+          "Epistasis hypothesis",
+          "Complementary hypothesis"
+        ],
+        "a": 1,
+        "e": "The overdominance hypothesis (Shull and East, 1908) asserts that heterozygotes possess physiological superiority over both parental homozygotes.",
+        "topicId": "u3-t12",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "General Combining Ability (GCA) is primarily a function of which type of gene action?",
+        "o": [
+          "Additive genetic variance (V_A)",
+          "Dominance variance (V_D)",
+          "Epistatic variance (V_I)",
+          "Environmental variance"
+        ],
+        "a": 0,
+        "e": "GCA reflects the average performance of a line in hybrid combinations and is predominantly governed by additive gene action (V_A).",
+        "topicId": "u3-t13",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "Which breeding scheme developed by Comstock, Robinson, and Harvey simultaneously selects for both General and Specific Combining Ability?",
+        "o": [
+          "Tandem selection",
+          "Reciprocal Recurrent Selection (RRS)",
+          "Pedigree selection",
+          "Grading up"
+        ],
+        "a": 1,
+        "e": "RRS uses two genetically diverse populations that serve as mutual testers for each other, maximizing both additive and non-additive gene effects.",
+        "topicId": "u3-t13",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "Which celebrated indigenous dairy cattle breed of India originated in the Montgomery district (now in Pakistan) and is renowned for docility and heat tolerance?",
+        "o": [
+          "Sahiwal",
+          "Gir",
+          "Red Sindhi",
+          "Tharparkar"
+        ],
+        "a": 0,
+        "e": "Sahiwal is the premier indigenous dairy breed of India/Pakistan, with high milk yields and extensive use in tropical crossbreeding.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which indigenous dairy cattle breed of Gujarat has a convex forehead, pendulous long ears, and lyre-shaped horns?",
+        "o": [
+          "Kankrej",
+          "Gir",
+          "Dangi",
+          "Deoni"
+        ],
+        "a": 1,
+        "e": "Gir cattle from Saurashtra (Gujarat) are known for their prominent dome-like forehead and pendulous leaf-like curled ears.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Under Indian national breeding policy, what is the recommended optimal level of exotic inheritance in crossbred dairy cattle?",
+        "o": [
+          "25% to 35%",
+          "50% to 62.5% (or 5/8)",
+          "75% to 87.5%",
+          "100% purebred"
+        ],
+        "a": 1,
+        "e": "National breeding policy caps exotic inheritance at 50% to 62.5% to combine high milk yield with tropical disease resistance and heat tolerance.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The synthetic dairy cattle strain 'Karan Swiss' developed at NDRI, Karnal, was synthesized by crossing Brown Swiss with:",
+        "o": [
+          "Sahiwal and Red Sindhi",
+          "Tharparkar",
+          "Gir",
+          "Hariana"
+        ],
+        "a": 0,
+        "e": "Karan Swiss was synthesized at NDRI Karnal by crossing exotic Brown Swiss sires with indigenous Sahiwal and Red Sindhi cows.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The synthetic dairy cattle strain 'Karan Fries' developed at NDRI, Karnal, is a cross between:",
+        "o": [
+          "Holstein-Friesian and Tharparkar",
+          "Jersey and Sahiwal",
+          "Brown Swiss and Gir",
+          "Holstein-Friesian and Red Sindhi"
+        ],
+        "a": 0,
+        "e": "Karan Fries was evolved at NDRI Karnal by crossing Holstein-Friesian sires with indigenous Tharparkar cows.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The synthetic dairy cattle breed 'Frieswal' developed by ICAR-CIRC Meerut carries what proportion of Holstein-Friesian inheritance?",
+        "o": [
+          "50%",
+          "62.5% (5/8)",
+          "75%",
+          "87.5%"
+        ],
+        "a": 1,
+        "e": "Frieswal carries 62.5% (5/8) Holstein-Friesian and 37.5% (3/8) Sahiwal inheritance.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "The premier riverine dairy buffalo breed of India, renowned as the 'Black Gold' of Haryana, is the:",
+        "o": [
+          "Jaffarabadi",
+          "Murrah",
+          "Surti",
+          "Bhadawari"
+        ],
+        "a": 1,
+        "e": "Murrah buffaloes from Haryana are the world's premier dairy buffaloes, characterized by tightly curled jet-black horns and high milk yield.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which buffalo breed is famous for producing the highest milk fat percentage (up to 12–14%) with a copper-colored coat?",
+        "o": [
+          "Murrah",
+          "Mehsana",
+          "Bhadawari",
+          "Nili-Ravi"
+        ],
+        "a": 2,
+        "e": "Bhadawari buffaloes (from Uttar Pradesh/Madhya Pradesh) have a distinctive copper-colored coat and produce milk with 8–13% fat content.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Which indigenous sheep breed of Rajasthan is famous for producing the finest carpet wool and is known as the 'Merino of Rajasthan'?",
+        "o": [
+          "Magra",
+          "Nali",
+          "Chokla",
+          "Marwari"
+        ],
+        "a": 2,
+        "e": "Chokla sheep (Shekhawati tract) produce the finest carpet wool in India, earning the title 'Merino of Rajasthan'.",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The fine-wool crossbred sheep breed 'Hissardale' was synthesized at Hisar by crossing Australian Merino rams with:",
+        "o": [
+          "Bikaneri (Magra) ewes",
+          "Nellore ewes",
+          "Deccani ewes",
+          "Mandya ewes"
+        ],
+        "a": 0,
+        "e": "Hissardale was developed at the Government Livestock Farm, Hisar, by mating Australian Merino rams with Bikaneri ewes.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "Which prolific Indian goat breed of West Bengal is celebrated for high twinning rates, early sexual maturity, and tender chevon?",
+        "o": [
+          "Jamunapari",
+          "Beetal",
+          "Black Bengal",
+          "Barbari"
+        ],
+        "a": 2,
+        "e": "Black Bengal goats are renowned for multiple births (twins/triplets), excellent skin/leather quality, and superior meat tenderness.",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The world-famous luxury cashmere (Pashmina) fiber is harvested from the undercoat of which goat breed found in Ladakh?",
+        "o": [
+          "Changthangi (Cheghu)",
+          "Gaddi",
+          "Sirohi",
+          "Osmanabadi"
+        ],
+        "a": 0,
+        "e": "Changthangi and Cheghu goats living at high altitudes in Ladakh/Himalayas produce ultra-fine Pashmina cashmere fiber (<15 microns).",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "In commercial poultry broiler breeding, the sire line is typically developed from which heavy, muscular meat breed?",
+        "o": [
+          "White Leghorn",
+          "White Cornish",
+          "Rhode Island Red",
+          "Australorp"
+        ],
+        "a": 1,
+        "e": "White Cornish provides broad breast conformation, fast muscle growth, and heavy muscling for broiler sire lines.",
+        "topicId": "u3-t16",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "In commercial poultry egg layer breeding, the most widely utilized breed for white-shelled egg production is:",
+        "o": [
+          "Single Comb White Leghorn",
+          "Plymouth Rock",
+          "New Hampshire",
+          "Aseel"
+        ],
+        "a": 0,
+        "e": "Single Comb White Leghorn (SCWL) is the foundation of all modern high-producing white-egg layer strains worldwide.",
+        "topicId": "u3-t16",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Who developed the Best Linear Unbiased Prediction (BLUP) methodology and Mixed Model Equations in 1973?",
+        "o": [
+          "Charles Roy Henderson",
+          "Jay L. Lush",
+          "Sewall Wright",
+          "Robert Bakewell"
+        ],
+        "a": 0,
+        "e": "C. R. Henderson developed BLUP, which is the international gold standard algorithm for modern sire evaluation and genetic prediction.",
+        "topicId": "u3-t17",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "What is the key advantage of an Open Nucleus Breeding System (ONBS) over a Closed Nucleus Breeding System?",
+        "o": [
+          "Allows genetically superior females from commercial herds to enter the nucleus",
+          "Completely stops all gene flow",
+          "Eliminates all AI costs",
+          "Requires no record keeping"
+        ],
+        "a": 0,
+        "e": "In ONBS, elite females from commercial/farmer herds are allowed into the nucleus, broadening the gene pool and lowering the rate of inbreeding.",
+        "topicId": "u3-t18",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "The dual-purpose backyard poultry variety 'Vanaraja' was developed by which ICAR institute?",
+        "o": [
+          "ICAR-CARI, Izatnagar",
+          "ICAR-DPR, Hyderabad",
+          "ICAR-NDRI, Karnal",
+          "ICAR-IVRI, Bareilly"
+        ],
+        "a": 1,
+        "e": "Vanaraja was developed by the Directorate of Poultry Research (ICAR-DPR), Hyderabad, for rural and backyard free-range farming.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "In sire evaluation, Contemporary Comparison compares the performance of a bull's daughters against:",
+        "o": [
+          "Their own dams",
+          "Contemporary herdmates born in the same herd, year, and season",
+          "The national breed average",
+          "Full-sibs only"
+        ],
+        "a": 1,
+        "e": "Contemporary comparison adjusts for herd environmental differences by comparing daughters directly against contemporary herdmates in the same season.",
+        "topicId": "u3-t17",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "Which ICAR nodal bureau in Karnal is responsible for the identification, characterization, and registration of new livestock and poultry breeds in India?",
+        "o": [
+          "ICAR-NBAGR, Karnal",
+          "ICAR-NDRI, Karnal",
+          "ICAR-IVRI, Bareilly",
+          "ICAR-CIRC, Meerut"
+        ],
+        "a": 0,
+        "e": "The National Bureau of Animal Genetic Resources (NBAGR), Karnal, is the official nodal agency for cataloguing and registering indigenous livestock breeds.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "The conservation of endangered livestock populations within their natural agricultural habitat by local farmers is termed:",
+        "o": [
+          "In-situ conservation",
+          "Ex-situ in-vitro conservation",
+          "Cryoconservation",
+          "Ex-situ in-vivo conservation"
+        ],
+        "a": 0,
+        "e": "In-situ conservation maintains livestock populations in their original dynamic ecosystems where they continue to adapt to local conditions.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "At what ultra-low temperature is animal germplasm (semen, embryos, oocytes) cryopreserved in liquid nitrogen in National Gene Banks?",
+        "o": [
+          "-20°C",
+          "-79°C",
+          "-196°C",
+          "-273°C"
+        ],
+        "a": 2,
+        "e": "Liquid nitrogen operates at -196°C, suspending all biological enzymatic processes and preserving germplasm indefinitely.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Which flagship government mission launched in 2014 focuses on the development and genetic conservation of indigenous bovine breeds in India?",
+        "o": [
+          "Operation Flood",
+          "Rashtriya Gokul Mission (RGM)",
+          "Key Village Scheme",
+          "National Livestock Mission"
+        ],
+        "a": 1,
+        "e": "The Rashtriya Gokul Mission was launched for the genetic upgradation and conservation of indigenous bovine breeds and establishment of Gokul Grams.",
+        "topicId": "u3-t20",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In Multiple Ovulation and Embryo Transfer (MOET), on which day post-insemination are bovine embryos non-surgically flushed from the donor uterus?",
+        "o": [
+          "Day 3",
+          "Day 7",
+          "Day 14",
+          "Day 21"
+        ],
+        "a": 1,
+        "e": "Embryos reach the morula/blastocyst stage and enter the uterine horns by Day 7, which is the optimal time for non-surgical catheter flushing.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "Which hormone is standardly administered to donor cows to induce superovulation in a MOET program?",
+        "o": [
+          "Progesterone",
+          "Follicle Stimulating Hormone (FSH)",
+          "Oxytocin",
+          "Prolactin"
+        ],
+        "a": 1,
+        "e": "Pituitary-derived FSH (or eCG/PMSG) is administered over 4 days to stimulate multiple ovarian follicles to mature and ovulate simultaneously.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Flow cytometric sorting of X- and Y-bearing spermatozoa for sex-sorted semen is based on the fact that bovine X-sperm contain:",
+        "o": [
+          "3.8% to 4.2% more DNA than Y-sperm",
+          "50% more protein than Y-sperm",
+          "A negative surface charge",
+          "Two flagella"
+        ],
+        "a": 0,
+        "e": "Because the bovine X chromosome is substantially larger than the Y chromosome, X-bearing spermatozoa contain approximately 3.8–4.2% more total DNA.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "Who proposed the methodology of Genomic Selection using genome-wide dense SNP markers in 2001?",
+        "o": [
+          "Meuwissen, Hayes, and Goddard",
+          "Hazel and Lush",
+          "Robertson and Rendel",
+          "Watson and Crick"
+        ],
+        "a": 0,
+        "e": "Theo Meuwissen, Ben Hayes, and Mike Goddard (2001) proposed Genomic Selection to predict Genomic Estimated Breeding Values (GEBV) from SNP markers.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "The primary operational benefit of Genomic Selection in dairy cattle breeding is:",
+        "o": [
+          "Halving the generation interval by selecting bulls at birth",
+          "Eliminating the need for liquid nitrogen",
+          "Guaranteeing 100% female calves",
+          "Preventing all recessive mutations"
+        ],
+        "a": 0,
+        "e": "Genomic selection predicts a bull's breeding value from a DNA sample at birth, eliminating the 5–6 year waiting period for daughter milking records.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In cattle, the Major Histocompatibility Complex (MHC) linked to disease resistance and immune response is termed:",
+        "o": [
+          "HLA",
+          "BoLA (Bovine Leukocyte Antigen)",
+          "SLA",
+          "DLA"
+        ],
+        "a": 1,
+        "e": "BoLA (Bovine Leukocyte Antigen) is the bovine MHC complex, whose polymorphic alleles correlate with resistance to mastitis and tick infestation.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In commercial poultry, which blood group / MHC locus is famously linked with genetic resistance to Marek's disease?",
+        "o": [
+          "A locus",
+          "B locus (e.g. B21 allele)",
+          "C locus",
+          "D locus"
+        ],
+        "a": 1,
+        "e": "The B21 allele of the chicken MHC (B blood group system) confers strong genetic resistance to tumor formation by Marek's disease herpesvirus.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "Genetic resistance to classical Scrapie in sheep is determined by polymorphisms in which gene?",
+        "o": [
+          "BoLA-DRB3 gene",
+          "Prion Protein (PrP) gene",
+          "Myostatin gene",
+          "Kappa-casein gene"
+        ],
+        "a": 1,
+        "e": "The prion protein (PrP) gene at codons 136, 154, and 171 controls scrapie resistance; the ARR allele confers resistance, while VRQ confers susceptibility.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "The Operation Flood program that spearheaded the White Revolution in India was launched by NDDB in the year:",
+        "o": [
+          "1952",
+          "1964",
+          "1970",
+          "1991"
+        ],
+        "a": 2,
+        "e": "Operation Flood was launched in 1970 by the National Dairy Development Board (NDDB) under Dr. Verghese Kurien, transforming India into the top milk producer.",
+        "topicId": "u3-t20",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Which bovine milk protein genetic variant is widely preferred in indigenous zebu cattle due to human health benefits?",
+        "o": [
+          "A1 beta-casein",
+          "A2 beta-casein",
+          "Alpha-lactalbumin",
+          "Beta-lactoglobulin"
+        ],
+        "a": 1,
+        "e": "Indigenous Bos indicus cattle almost exclusively produce the A2 beta-casein allele (proline at position 67), which does not release inflammatory BCM-7 peptide.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In-vitro fertilization (IVF) coupled with transvaginal aspiration of immature oocytes from live cows is called:",
+        "o": [
+          "Ovum Pick-Up (OPU)",
+          "Embryo splitting",
+          "Nuclear transfer",
+          "Sperm sexing"
+        ],
+        "a": 0,
+        "e": "OPU (Ovum Pick-Up) uses ultrasound-guided needle aspiration to recover oocytes from pregnant or cycling cows for in-vitro embryo production.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "The Intensive Cattle Development Project (ICDP) in India was initiated during which decade?",
+        "o": [
+          "1950s",
+          "1960s (1964–65)",
+          "1980s",
+          "2000s"
+        ],
+        "a": 1,
+        "e": "ICDP was initiated in 1964–65 to provide intensive cattle breeding, nutrition, and disease control packages around major dairy plants.",
+        "topicId": "u3-t20",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "Which indigenous sheep breed of Rajasthan has been designated as an endangered germplasm needing urgent in-situ conservation?",
+        "o": [
+          "Chokla",
+          "Sonadi",
+          "Malpura",
+          "Pugal / Kheri"
+        ],
+        "a": 3,
+        "e": "Several native breeds with restricted geographical pockets (e.g. Pugal sheep, Toda buffalo, Punganur dwarf cow) require targeted conservation.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "In artificial insemination of cattle, the standard volume of a French mini-straw used for packaging frozen semen is:",
+        "o": [
+          "0.25 mL",
+          "0.50 mL",
+          "1.0 mL",
+          "2.0 mL"
+        ],
+        "a": 0,
+        "e": "French mini-straws hold 0.25 mL of diluted semen (containing ~20 million progressively motile spermatozoa), while medium straws hold 0.50 mL.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Which celebrated Indian sighthound breed originated in Karnataka and Maharashtra and has been inducted into the Indian Army?",
+        "o": [
+          "Mudhol Hound (Caravan Hound)",
+          "Rajapalayam",
+          "Chippiparai",
+          "Kombai"
+        ],
+        "a": 0,
+        "e": "The Mudhol Hound is an ancient Indian sighthound known for exceptional speed, stamina, and keen hunting vision.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The Rajapalayam dog breed, characterized by a milk-white coat, pink nose, and golden eyes, originated in which Indian state?",
+        "o": [
+          "Kerala",
+          "Tamil Nadu",
+          "Karnataka",
+          "Punjab"
+        ],
+        "a": 1,
+        "e": "The Rajapalayam is a royal sighthound native to Rajapalayam town in Virudhunagar district, Tamil Nadu.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "Under the Kennel Club classification, the Labrador Retriever and Golden Retriever belong to which dog breed group?",
+        "o": [
+          "Hound group",
+          "Sporting (Gun dog) group",
+          "Terrier group",
+          "Toy group"
+        ],
+        "a": 1,
+        "e": "Retrievers and spaniels belong to the Sporting (or Gun dog) group, bred to locate and retrieve game birds.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "What is the average gestation length in the domestic canine bitch?",
+        "o": [
+          "45 days",
+          "63 days (range 58–68 days)",
+          "90 days",
+          "114 days"
+        ],
+        "a": 1,
+        "e": "Canine pregnancy averages 63 days from ovulation (range 58 to 68 days).",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The canine estrous cycle stage characterized by vulvar swelling, serosanguinous discharge, and attraction of males without permitting mating is:",
+        "o": [
+          "Proestrus",
+          "Estrus",
+          "Diestrus",
+          "Anestrus"
+        ],
+        "a": 0,
+        "e": "Proestrus lasts ~9 days. The bitch displays bloody discharge and swollen vulva but will vigorously refuse mating until entering estrus.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "During canine mating, the mechanical 'copulatory tie' that locks the dog and bitch together for 15–30 minutes is caused by swelling of the:",
+        "o": [
+          "Os penis",
+          "Bulbus glandis",
+          "Prostate gland",
+          "Glans clitoridis"
+        ],
+        "a": 1,
+        "e": "The spherical swelling of the bulbus glandis of the canine penis inside the female vestibular constrictor muscle creates the copulatory lock.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "Domestic feline queens exhibit which unique ovulatory mechanism during reproduction?",
+        "o": [
+          "Spontaneous cyclical ovulation",
+          "Induced (reflex) ovulation triggered by coitus",
+          "Seasonal monoestrus only",
+          "Silent ovulation without estrus"
+        ],
+        "a": 1,
+        "e": "Cats are induced (reflex) ovulators; tactile stimulation of the cervix by the penile spines during coitus triggers the LH surge and subsequent ovulation.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "What is the average gestation length in the domestic cat (queen)?",
+        "o": [
+          "45 days",
+          "63 to 65 days",
+          "80 days",
+          "30 days"
+        ],
+        "a": 1,
+        "e": "The gestation period of domestic queens averages 63–65 days (similar to dogs).",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "What is the standard incubation period for fertile eggs of the popular pet bird, the Budgerigar (Melopsittacus undulatus)?",
+        "o": [
+          "10–12 days",
+          "18 days",
+          "28 days",
+          "35 days"
+        ],
+        "a": 1,
+        "e": "Budgerigar eggs have an average incubation period of 18 days (Cockatiels take ~19–21 days).",
+        "topicId": "u3-t26",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "In conservation genetics, the size of an idealized panmictic population that has the same rate of inbreeding or genetic drift as the actual population is the:",
+        "o": [
+          "Census population size (N)",
+          "Effective population size (N_e)",
+          "Minimum viable population (MVP)",
+          "Carrying capacity (K)"
+        ],
+        "a": 1,
+        "e": "Effective population size (N_e) accounts for unequal sex ratios and variance in family size, measuring the genetic breeding capacity of the herd.",
+        "topicId": "u3-t27",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "What is Wright's formula for effective population size (N_e) when the numbers of breeding males (N_m) and breeding females (N_f) are unequal?",
+        "o": [
+          "N_e = (4 * N_m * N_f) / (N_m + N_f)",
+          "N_e = (N_m + N_f) / 2",
+          "N_e = N_m * N_f",
+          "N_e = (2 * N_m * N_f) / (N_m + N_f)"
+        ],
+        "a": 0,
+        "e": "N_e = (4 * N_m * N_f) / (N_m + N_f). If there is only 1 breeding male and 100 females, N_e ≈ 4, causing massive genetic drift.",
+        "topicId": "u3-t27",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "According to the famous 50/500 rule in conservation biology, what minimum effective population size (N_e) is needed to avoid short-term inbreeding depression?",
+        "o": [
+          "10",
+          "50",
+          "500",
+          "5000"
+        ],
+        "a": 1,
+        "e": "Franklin and Soulé proposed N_e = 50 to prevent short-term inbreeding depression, and N_e = 500 to retain long-term evolutionary potential.",
+        "topicId": "u3-t27",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "In captive wild animal breeding in modern zoos, which document records the complete ancestry and breeding history of all captive individuals of a species?",
+        "o": [
+          "Studbook",
+          "Pedigree certificate",
+          "Herdbook",
+          "Taxonomic ledger"
+        ],
+        "a": 0,
+        "e": "International and regional Studbooks (managed by species survival coordinators) trace the full lineage of every captive individual to minimize inbreeding.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "Which statutory body oversees and regulates captive animal management and conservation breeding programs in recognized zoos across India?",
+        "o": [
+          "Central Zoo Authority (CZA)",
+          "Animal Welfare Board of India (AWBI)",
+          "Wildlife Trust of India (WTI)",
+          "National Biodiversity Authority (NBA)"
+        ],
+        "a": 0,
+        "e": "The Central Zoo Authority (CZA) is the statutory body under the Ministry of Environment, Forest and Climate Change governing Indian zoos and breeding programs.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The world-renowned Vulture Conservation Breeding Centre (VCBC) established by BNHS to breed critically endangered Gyps vultures is located at:",
+        "o": [
+          "Pinjore, Haryana",
+          "Kaziranga, Assam",
+          "Gir, Gujarat",
+          "Dehradun, Uttarakhand"
+        ],
+        "a": 0,
+        "e": "Jatayu Conservation Breeding Centre at Pinjore (Haryana) was set up by BNHS and Haryana Forest Dept to breed Gyps vultures decimated by diclofenac.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "The Padmaja Naidu Himalayan Zoological Park in Darjeeling is globally celebrated for the successful conservation breeding of which endangered species?",
+        "o": [
+          "Red Panda and Snow Leopard",
+          "Asiatic Lion",
+          "Gharial",
+          "Great Indian Bustard"
+        ],
+        "a": 0,
+        "e": "Darjeeling Zoo is internationally acclaimed for its successful captive breeding programs for Red Pandas and Snow Leopards.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "What ISO microchip frequency standard is standardly used for electronic identification of pet animals and zoo species in India?",
+        "o": [
+          "134.2 kHz (ISO 11784/11785)",
+          "125 kHz",
+          "915 MHz",
+          "2.4 GHz"
+        ],
+        "a": 0,
+        "e": "The global standard for animal RFID microchip identification is 134.2 kHz conforming to ISO 11784 (15-digit code) and ISO 11785.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "A genetic condition in purebred dogs where the femoral head does not fit properly into the acetabular pelvic socket is called:",
+        "o": [
+          "Canine Hip Dysplasia (CHD)",
+          "Patellar luxation",
+          "Ectrodactyly",
+          "Intervertebral disc disease"
+        ],
+        "a": 0,
+        "e": "Canine Hip Dysplasia (CHD) is a multifactorial polygenic inherited defect common in large breeds like German Shepherds and Labradors.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      }
+    ],
+    "tf": [
+      {
+        "q": "Robert Bakewell formulated the breeding principle 'Breed the best to the best' and pioneered sire letting.",
+        "a": true,
+        "e": "Robert Bakewell (1725–1795) transformed animal breeding into a systematic science by leasing rams and bulls to test their progeny.",
+        "topicId": "u3-t01",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The official standard lactation length for genetic evaluation of dairy cows is 305 days.",
+        "a": true,
+        "e": "Official milk yield records are standardized to 305 days to eliminate differences caused by variable lactation lengths.",
+        "topicId": "u3-t03",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Selection differential is the difference between the mean of selected parents and the mean of the unselected population.",
+        "a": true,
+        "e": "Selection differential S = P_selected - P_pop, measuring the phenotypic superiority of chosen breeders.",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Increasing the generation interval increases the annual rate of genetic gain.",
+        "a": false,
+        "e": "Because generation interval L is in the denominator (ΔG = (i * r_TI * σ_A) / L), increasing L reduces the annual rate of genetic gain.",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Progeny testing is the most reliable basis of selection for sex-limited traits of low heritability like dairy milk production.",
+        "a": true,
+        "e": "Evaluating sires on the lactation records of 30–50 daughters provides high selection accuracy for sex-limited low-heritability traits.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Tandem selection is mathematically the most efficient method of multi-trait selection.",
+        "a": false,
+        "e": "Tandem selection is the LEAST efficient method; Hazel and Lush proved that the Selection Index is mathematically the most efficient.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "In Independent Culling Levels, an animal excelling exceptionally in milk yield will be retained even if it fails the fertility culling standard.",
+        "a": false,
+        "e": "In Independent Culling Levels, failure in any single trait results in immediate disqualification, regardless of superiority in other traits.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "L. N. Hazel (1943) developed the theory and methodology of the Selection Index in animal breeding.",
+        "a": true,
+        "e": "Hazel developed the selection index combining multiple traits weighted by their economic weights and genetic covariances.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Sib selection is essential for carcass and meat quality traits where the breeding candidate cannot be slaughtered.",
+        "a": true,
+        "e": "Because measuring meat quality requires animal slaughter, candidates are chosen based on the performance of their slaughtered siblings.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "One generation of full-brother × full-sister mating produces an inbreeding coefficient of F = 0.25 (25%).",
+        "a": true,
+        "e": "Full-sib mating results in a 25% probability that two homologous alleles in the offspring are identical by descent (F = 0.25).",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The coefficient of relationship between half-sibs is 0.50.",
+        "a": false,
+        "e": "Half-sibs share one common parent and have a coefficient of relationship R = 0.25. Full-sibs share both parents and have R = 0.50.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Inbreeding increases heterozygosity and creates new genetic variation in a closed population.",
+        "a": false,
+        "e": "Inbreeding increases homozygosity and reduces heterozygosity, fixing alleles and splitting the herd into distinct inbred lines.",
+        "topicId": "u3-t10",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Inbreeding depression is most severe for reproductive and fitness traits, while carcass traits suffer minimal depression.",
+        "a": true,
+        "e": "Fitness, fertility, and survival traits have low heritability and suffer sharp inbreeding depression, whereas high-heritability carcass traits are little affected.",
+        "topicId": "u3-t10",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "Grading up continuously uses purebred elite sires on grade/non-descript females generation after generation.",
+        "a": true,
+        "e": "Grading up systematically replaces native scrub genetics with purebred inheritance, reaching 99.2% purebred blood in 7 generations.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "A mule is produced by crossing a male horse with a female donkey.",
+        "a": false,
+        "e": "A mule is Jack (male donkey) × Mare (female horse). Male horse × Female donkey produces a Hinny.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Heterosis is highest for traits that have low heritability, such as fertility and embryo survival.",
+        "a": true,
+        "e": "Heterosis and inbreeding depression are mirror opposites: traits with low heritability show the largest percentage heterosis upon crossbreeding.",
+        "topicId": "u3-t12",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The overdominance hypothesis of heterosis states that the heterozygote (Aa) is superior to both homozygotes (AA and aa).",
+        "a": true,
+        "e": "The overdominance hypothesis postulates direct single-locus heterozygous superiority.",
+        "topicId": "u3-t12",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Reciprocal Recurrent Selection (RRS) simultaneously utilizes both General Combining Ability and Specific Combining Ability.",
+        "a": true,
+        "e": "RRS uses two populations as mutual testers, exploiting both additive variance (GCA) and dominance/epistatic variance (SCA).",
+        "topicId": "u3-t13",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "Sahiwal is an indigenous dairy cattle breed of India originating from the Montgomery district.",
+        "a": true,
+        "e": "Sahiwal is renowned for heavy milk production, tick resistance, and heat tolerance in tropical dairy farming.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Indian national breeding policy recommends grading up indigenous cattle to 100% pure Holstein-Friesian.",
+        "a": false,
+        "e": "Policy strictly limits exotic inheritance to 50%–62.5% (or 5/8) to prevent heat prostration and disease breakdown in tropical field conditions.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The Frieswal synthetic dairy strain carries 62.5% Holstein-Friesian and 37.5% Sahiwal blood.",
+        "a": true,
+        "e": "Developed jointly by ICAR-CIRC Meerut and Military Farms, Frieswal carries exactly 5/8 (62.5%) HF and 3/8 (37.5%) Sahiwal inheritance.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Bhadawari buffaloes produce milk with the highest fat percentage (up to 12–14%) among Indian buffalo breeds.",
+        "a": true,
+        "e": "Bhadawari buffaloes are renowned for milk fat percentages ranging from 8% to 13%, and possess a copper-colored body coat.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Chokla sheep of Rajasthan are widely referred to as the 'Merino of Rajasthan' for fine carpet wool.",
+        "a": true,
+        "e": "Chokla produces high-quality fine carpet wool with superior staple crimp and luster.",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Black Bengal goats are known for poor prolificacy, rarely producing more than a single kid per kidding.",
+        "a": false,
+        "e": "Black Bengal is celebrated for extreme prolificacy, routinely kidding twins, triplets, and quadruplets.",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "C. R. Henderson developed the Best Linear Unbiased Prediction (BLUP) method for animal genetic evaluation.",
+        "a": true,
+        "e": "Charles Roy Henderson developed BLUP and Mixed Model Equations (MME) in 1973, revolutionizing global dairy sire proofing.",
+        "topicId": "u3-t17",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "In an Open Nucleus Breeding System (ONBS), gene flow is strictly one-way from the nucleus to commercial herds.",
+        "a": false,
+        "e": "In ONBS, gene flow is two-way: elite superior females from commercial herds are actively screened and admitted into the nucleus herd.",
+        "topicId": "u3-t18",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "Single Comb White Leghorn is the primary foundation breed for commercial white egg layer chicken lines.",
+        "a": true,
+        "e": "White Leghorns are early-maturing, small-bodied, efficient feed converters producing high numbers of large white eggs.",
+        "topicId": "u3-t16",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "ICAR-NBAGR, Karnal, is the nodal national agency responsible for registering and assigning accession numbers to new Indian livestock breeds.",
+        "a": true,
+        "e": "The National Bureau of Animal Genetic Resources in Karnal is the sole authority cataloguing and registering indigenous livestock breeds.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In-situ conservation maintains livestock populations outside their native agro-ecological habitat in national zoos.",
+        "a": false,
+        "e": "In-situ conservation maintains animals in their native natural farming habitat. Maintaining them outside in zoos or parks is ex-situ in-vivo.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Animal germplasm is cryopreserved in liquid nitrogen at -196°C in the National Gene Bank.",
+        "a": true,
+        "e": "Liquid nitrogen at -196°C arrests all biological and enzymatic degradation, storing viable semen and embryos indefinitely.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In Multiple Ovulation and Embryo Transfer (MOET), bovine embryos are flushed on Day 7 post-insemination.",
+        "a": true,
+        "e": "Day 7 blastocysts/morulae are located in the uterine horns and can be flushed non-surgically using a Foley catheter.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Genomic selection increases the generation interval in dairy cattle breeding.",
+        "a": false,
+        "e": "Genomic selection drastically REDUCES generation interval (halving it from 5–6 years down to ~1.5–2 years) because breeding values are evaluated at birth.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Bovine X-bearing spermatozoa contain approximately 3.8% to 4.2% more DNA than Y-bearing spermatozoa.",
+        "a": true,
+        "e": "The difference in DNA content allows flow cytometric sorting of Hoechst-stained live spermatozoa into X and Y populations with >90% purity.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "The B21 allele of the chicken MHC complex is linked to genetic resistance against Marek's disease virus.",
+        "a": true,
+        "e": "Chickens homozygous or heterozygous for the B21 haplotype show marked resistance to lymphoid tumor development by Marek's disease virus.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "Scrapie resistance in sheep is governed by polymorphisms in the prion protein (PrP) gene.",
+        "a": true,
+        "e": "PrP codon variations (specifically the ARR haplotype) confer high resistance to classical scrapie transmission.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "Indigenous Bos indicus (zebu) cattle predominantly produce the A1 beta-casein milk variant.",
+        "a": false,
+        "e": "Indian zebu cattle almost 100% naturally produce the beneficial A2 beta-casein variant; A1 is prevalent in European Bos taurus breeds.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "The Mudhol Hound is an indigenous Indian sighthound breed native to Karnataka and Maharashtra.",
+        "a": true,
+        "e": "The Mudhol (Caravan) Hound is a hardy sighthound developed in the Deccan plateau, used for hunting and border security.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The gestation period of a domestic canine bitch averages 63 days.",
+        "a": true,
+        "e": "Average canine pregnancy lasts 63 days from ovulation (range 58–68 days).",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The domestic cat is an induced (reflex) ovulator requiring coital stimulation for ovulation.",
+        "a": true,
+        "e": "Coitus stimulates vaginal/cervical mechanoreceptors in queens, triggering an LH surge that induces ovulation 24–48 hours later.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "In canine mating, the copulatory tie is caused by the enlargement of the bulbus glandis of the penis.",
+        "a": true,
+        "e": "Venous engorgement of the bulbus glandis locks the penis within the female vestibule for 15–30 minutes, ensuring sperm transfer.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "An unequal sex ratio (e.g. 1 male and 100 females) substantially increases the effective population size (N_e).",
+        "a": false,
+        "e": "A skewed sex ratio drastically DECREASES N_e (N_e = 4*1*100 / 101 ≈ 3.96), accelerating genetic drift and inbreeding.",
+        "topicId": "u3-t27",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "According to the 50/500 rule in conservation genetics, N_e = 50 is recommended to avoid short-term inbreeding depression.",
+        "a": true,
+        "e": "N_e = 50 limits inbreeding to 1% per generation; N_e = 500 maintains long-term quantitative genetic variation.",
+        "topicId": "u3-t27",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "A Studbook records the pedigree and demographic history of an endangered captive species across zoological parks.",
+        "a": true,
+        "e": "Studbooks prevent inadvertent inbreeding by directing optimal breeding pairings between unrelated zoo animals globally.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The Central Zoo Authority (CZA) is the statutory body regulating captive conservation breeding programs in India.",
+        "a": true,
+        "e": "CZA coordinates coordinated conservation breeding for 73 endangered species across Indian zoos.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "Standard electronic pet microchips operate at 134.2 kHz conforming to ISO 11784/11785 standards.",
+        "a": true,
+        "e": "ISO 11784/11785 134.2 kHz RFID microchips with 15-digit codes are the global standard for companion animal identification.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      }
+    ],
+    "fib": [
+      {
+        "q": "Robert ______ (1725–1795) is universally recognized as the Father of Animal Breeding.",
+        "a": [
+          "Bakewell"
+        ],
+        "a_display": "Bakewell",
+        "e": "Robert Bakewell of Dishley introduced systematic inbreeding, sire letting, and progeny testing.",
+        "topicId": "u3-t01",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The Father of Modern Animal Breeding who authored 'Animal Breeding Plans' in 1937 was Jay L. ______.",
+        "a": [
+          "Lush"
+        ],
+        "a_display": "Lush",
+        "e": "Jay L. Lush established the biometrical foundation of quantitative livestock improvement at Iowa State.",
+        "topicId": "u3-t01",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The standard duration of lactation milk yield standardized for official dairy cattle evaluation is ______ days.",
+        "a": [
+          "305",
+          "305 days"
+        ],
+        "a_display": "305",
+        "e": "305-day milk yield is the standard production period in dairy cattle breeding.",
+        "topicId": "u3-t03",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The difference between the mean performance of selected parents and the unselected herd mean is the selection ______.",
+        "a": [
+          "differential"
+        ],
+        "a_display": "Differential",
+        "e": "Selection differential S = P_selected - P_pop.",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The average age of parents when replacement offspring are born is termed the generation ______.",
+        "a": [
+          "interval"
+        ],
+        "a_display": "Interval",
+        "e": "Generation interval (L) is the turnover time of a breeding generation.",
+        "topicId": "u3-t04",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Selecting dairy sires based on the milk production of their daughters is called ______ testing.",
+        "a": [
+          "progeny",
+          "progeny testing"
+        ],
+        "a_display": "Progeny",
+        "e": "Progeny testing evaluates the transmitting ability of dairy bulls using daughter lactation records.",
+        "topicId": "u3-t05",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Selecting for a correlated trait X to achieve genetic change in trait Y is known as ______ selection.",
+        "a": [
+          "indirect"
+        ],
+        "a_display": "Indirect",
+        "e": "Indirect selection uses genetic correlation to improve difficult or sex-limited traits.",
+        "topicId": "u3-t06",
+        "subSection": "u3-s1",
+        "diff": 2
+      },
+      {
+        "q": "The multi-trait selection method that selects for only one trait at a time is ______ selection.",
+        "a": [
+          "tandem",
+          "tandem selection"
+        ],
+        "a_display": "Tandem",
+        "e": "Tandem selection is the least efficient multi-trait selection strategy.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "The linear combination score weighting multiple traits by economic and genetic values is the Selection ______.",
+        "a": [
+          "Index",
+          "selection index"
+        ],
+        "a_display": "Index",
+        "e": "Hazel's Selection Index (I = Σ b_i X_i) is the most efficient multi-trait selection method.",
+        "topicId": "u3-t07",
+        "subSection": "u3-s1",
+        "diff": 1
+      },
+      {
+        "q": "Sewall Wright formulated the inbreeding coefficient denoted by the capital letter ______.",
+        "a": [
+          "F"
+        ],
+        "a_display": "F",
+        "e": "Wright's inbreeding coefficient F measures probability of identity by descent.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The inbreeding coefficient resulting from a full-brother × full-sister mating is ______ (or 25%).",
+        "a": [
+          "0.25",
+          "25%",
+          "1/4"
+        ],
+        "a_display": "0.25 (25%)",
+        "e": "Full-sib mating produces F = 0.25 in the progeny.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The coefficient of relationship between a non-inbred dam and her calf is ______ (or 50%).",
+        "a": [
+          "0.50",
+          "0.5",
+          "50%",
+          "1/2"
+        ],
+        "a_display": "0.50 (50%)",
+        "e": "Parent and offspring share 50% of their genes (R = 0.50).",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "A mild form of inbreeding directed toward maintaining a high relationship to an outstanding ancestor is ______.",
+        "a": [
+          "linebreeding"
+        ],
+        "a_display": "Linebreeding",
+        "e": "Linebreeding concentrates the genetic contribution of a superior ancestor while keeping F low.",
+        "topicId": "u3-t09",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The decline in fitness and fertility accompanying inbreeding is called inbreeding ______.",
+        "a": [
+          "depression"
+        ],
+        "a_display": "Depression",
+        "e": "Inbreeding depression results from the manifestation of deleterious homozygous recessives.",
+        "topicId": "u3-t10",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The systematic mating of purebred sires to non-descript native females generation after generation is ______ up.",
+        "a": [
+          "grading",
+          "grading up"
+        ],
+        "a_display": "Grading",
+        "e": "Grading up replaces scrub genetics with purebred inheritance over 5–7 generations.",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "A sterile hybrid produced by mating a male donkey (jack) with a female horse (mare) is a ______.",
+        "a": [
+          "mule"
+        ],
+        "a_display": "Mule",
+        "e": "Jack × Mare = Mule (sterile, 2n = 63).",
+        "topicId": "u3-t11",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "Hybrid vigour resulting from crossbreeding is also scientifically known as ______.",
+        "a": [
+          "heterosis"
+        ],
+        "a_display": "Heterosis",
+        "e": "Heterosis is the superior performance of crossbred progeny over parental breed averages.",
+        "topicId": "u3-t12",
+        "subSection": "u3-s2",
+        "diff": 1
+      },
+      {
+        "q": "The breeding method in commercial poultry that selects simultaneously for GCA and SCA is Reciprocal Recurrent ______ (RRS).",
+        "a": [
+          "Selection",
+          "selection"
+        ],
+        "a_display": "Selection",
+        "e": "RRS (Reciprocal Recurrent Selection) uses two populations as mutual testers.",
+        "topicId": "u3-t13",
+        "subSection": "u3-s2",
+        "diff": 2
+      },
+      {
+        "q": "Under Indian breeding policy, exotic inheritance in crossbred dairy cattle is restricted between 50% and ______ percent.",
+        "a": [
+          "62.5",
+          "62.5%",
+          "5/8"
+        ],
+        "a_display": "62.5% (5/8)",
+        "e": "Exotic inheritance is capped at 50% to 62.5% to balance milk yield and environmental adaptation.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The synthetic dairy cattle breed carrying 62.5% Holstein-Friesian and 37.5% Sahiwal blood developed at Meerut is ______.",
+        "a": [
+          "Frieswal"
+        ],
+        "a_display": "Frieswal",
+        "e": "Frieswal was developed by ICAR-CIRC Meerut and the Military Farms Directorate.",
+        "topicId": "u3-t19",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The premier dairy buffalo breed of Haryana, famous as the 'Black Gold', is the ______.",
+        "a": [
+          "Murrah"
+        ],
+        "a_display": "Murrah",
+        "e": "Murrah buffalo is the highest-yielding dairy buffalo breed of India.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The copper-colored buffalo breed famous for yielding milk fat up to 13% is the ______.",
+        "a": [
+          "Bhadawari"
+        ],
+        "a_display": "Bhadawari",
+        "e": "Bhadawari buffaloes of UP/MP produce milk with the highest fat percentage.",
+        "topicId": "u3-t14",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The premier carpet-wool sheep breed known as the 'Merino of Rajasthan' is the ______.",
+        "a": [
+          "Chokla"
+        ],
+        "a_display": "Chokla",
+        "e": "Chokla sheep produce fine carpet fleece in Rajasthan.",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The prolific goat breed of West Bengal noted for multiple births and fine chevon is the Black ______.",
+        "a": [
+          "Bengal"
+        ],
+        "a_display": "Bengal",
+        "e": "Black Bengal goats excel in fecundity, twinning, and skin quality.",
+        "topicId": "u3-t15",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "Commercial broiler chicken sire lines are developed from the White ______ breed for muscling.",
+        "a": [
+          "Cornish"
+        ],
+        "a_display": "Cornish",
+        "e": "White Cornish contributes heavy breast muscle and rapid weight gain.",
+        "topicId": "u3-t16",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "The modern statistical algorithm developed by C. R. Henderson for sire evaluation is abbreviated as ______.",
+        "a": [
+          "BLUP"
+        ],
+        "a_display": "BLUP",
+        "e": "BLUP (Best Linear Unbiased Prediction) is the international standard for sire evaluation.",
+        "topicId": "u3-t17",
+        "subSection": "u3-s3",
+        "diff": 1
+      },
+      {
+        "q": "A breeding system allowing elite females from commercial herds into the nucleus is an ______ Nucleus Breeding System.",
+        "a": [
+          "Open",
+          "open nucleus"
+        ],
+        "a_display": "Open",
+        "e": "Open Nucleus Breeding Systems (ONBS) feature two-way gene flow, reducing inbreeding.",
+        "topicId": "u3-t18",
+        "subSection": "u3-s3",
+        "diff": 2
+      },
+      {
+        "q": "The ICAR bureau responsible for registration of livestock breeds in India is ICAR-______ in Karnal.",
+        "a": [
+          "NBAGR"
+        ],
+        "a_display": "NBAGR",
+        "e": "ICAR-NBAGR (National Bureau of Animal Genetic Resources) registers domestic breeds.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Preservation of livestock in their native agricultural habitat by farmers is ______-situ conservation.",
+        "a": [
+          "in",
+          "in-situ",
+          "in situ"
+        ],
+        "a_display": "In",
+        "e": "In-situ conservation maintains breeds within their natural agricultural ecosystems.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Animal semen and embryos are cryopreserved in liquid nitrogen at a temperature of -______ °C.",
+        "a": [
+          "196",
+          "196°C",
+          "196 C"
+        ],
+        "a_display": "196",
+        "e": "Liquid nitrogen maintains -196°C for indefinite germplasm cryostorage.",
+        "topicId": "u3-t21",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "The national program launched in 2014 for indigenous bovine conservation is the Rashtriya ______ Mission.",
+        "a": [
+          "Gokul"
+        ],
+        "a_display": "Gokul",
+        "e": "Rashtriya Gokul Mission (RGM) focuses on indigenous breed development.",
+        "topicId": "u3-t20",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In MOET, bovine embryos are non-surgically flushed from the donor uterus on Day ______ post-insemination.",
+        "a": [
+          "7",
+          "seven"
+        ],
+        "a_display": "7",
+        "e": "Day 7 morula/blastocyst embryos are flushed from the uterine horns.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "Genomic selection predicts a calf's breeding value using high-density ______ markers on DNA chips.",
+        "a": [
+          "SNP",
+          "snps"
+        ],
+        "a_display": "SNP",
+        "e": "Single Nucleotide Polymorphisms (SNPs) provide whole-genome markers for GEBV estimation.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "The Major Histocompatibility Complex of cattle is termed ______ (Bovine Leukocyte Antigen).",
+        "a": [
+          "BoLA"
+        ],
+        "a_display": "BoLA",
+        "e": "BoLA is the polymorphic MHC genetic complex of cattle.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "In commercial poultry, the B______ allele confers strong resistance to Marek's disease.",
+        "a": [
+          "21"
+        ],
+        "a_display": "21",
+        "e": "The B21 MHC haplotype provides genetic resistance to Marek's disease virus.",
+        "topicId": "u3-t23",
+        "subSection": "u3-s4",
+        "diff": 2
+      },
+      {
+        "q": "The French mini-straw standardly used for packaging frozen bull semen has a volume of 0.______ mL.",
+        "a": [
+          "25",
+          "25 ml"
+        ],
+        "a_display": "25",
+        "e": "French mini-straws hold 0.25 mL of cryopreserved semen.",
+        "topicId": "u3-t22",
+        "subSection": "u3-s4",
+        "diff": 1
+      },
+      {
+        "q": "The indigenous sighthound of Karnataka and Maharashtra inducted into the Indian Army is the ______ Hound.",
+        "a": [
+          "Mudhol",
+          "Caravan"
+        ],
+        "a_display": "Mudhol",
+        "e": "The Mudhol Hound is a celebrated native sighthound of Karnataka.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The royal white sighthound breed of Tamil Nadu is the ______.",
+        "a": [
+          "Rajapalayam"
+        ],
+        "a_display": "Rajapalayam",
+        "e": "Rajapalayam is an indigenous sighthound of Tamil Nadu with white coat and pink nose.",
+        "topicId": "u3-t24",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The average gestation period of the domestic canine bitch is ______ days.",
+        "a": [
+          "63",
+          "sixty three",
+          "sixty-three"
+        ],
+        "a_display": "63",
+        "e": "Canine gestation averages 63 days (58–68 days).",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "During canine mating, the copulatory tie is caused by the swelling of the ______ glandis.",
+        "a": [
+          "bulbus",
+          "bulbus glandis"
+        ],
+        "a_display": "Bulbus",
+        "e": "The bulbus glandis engorges with blood, creating the copulatory lock.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "The domestic feline queen is an ______ ovulator, requiring coitus to trigger an LH surge.",
+        "a": [
+          "induced",
+          "reflex"
+        ],
+        "a_display": "Induced",
+        "e": "Cats are induced (reflex) ovulators.",
+        "topicId": "u3-t25",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The average incubation period for fertile Budgerigar eggs is ______ days.",
+        "a": [
+          "18",
+          "eighteen"
+        ],
+        "a_display": "18",
+        "e": "Budgerigar eggs hatch after approximately 18 days of incubation.",
+        "topicId": "u3-t26",
+        "subSection": "u3-s5",
+        "diff": 2
+      },
+      {
+        "q": "In conservation genetics, the effective population size is denoted by N with subscript ______.",
+        "a": [
+          "e",
+          "E"
+        ],
+        "a_display": "e (N_e)",
+        "e": "N_e is the effective population size.",
+        "topicId": "u3-t27",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The registry that maintains the genealogical history of an endangered captive zoo species is a ______.",
+        "a": [
+          "studbook"
+        ],
+        "a_display": "Studbook",
+        "e": "Studbooks track the pedigree of captive wild animals to avoid inbreeding.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 1
+      },
+      {
+        "q": "The statutory body governing Indian zoological parks and conservation breeding is the Central ______ Authority (CZA).",
+        "a": [
+          "Zoo"
+        ],
+        "a_display": "Zoo",
+        "e": "The Central Zoo Authority (CZA) regulates captive conservation breeding in India.",
+        "topicId": "u3-t28",
+        "subSection": "u3-s5",
+        "diff": 1
+      }
+    ]
+  }
 };
