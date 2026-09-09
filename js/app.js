@@ -84,6 +84,8 @@ var app = (function () {
     atom:      '<circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(30 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(90 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(150 12 12)"/>',
     cycle:     '<path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>',
     flask:     '<path d="M10 2v5.5L4.5 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.8-3L14 7.5V2"/><path d="M8.5 2h7M7 14.5h10"/>',
+    scale:     '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10M12 3v18M3 7h18"/>',
+    brain:     '<path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v14"/>',
   };
 
   function icon(name, cls) {
@@ -2335,7 +2337,7 @@ var app = (function () {
      WHY
      ============================================================ */
   function renderWhy() {
-    var data = (window.whyData || []).filter(function (w) { return w.title; });
+    var rawData = (window.whyData || []).filter(function (w) { return w.title; });
 
     var head =
       '<div class="pagehead">' +
@@ -2345,7 +2347,7 @@ var app = (function () {
         'Each card here explains the cytogenetic, population genetic, molecular, or quantitative breeding mechanism behind phenotypic hallmarks and breeding strategies.</p>' +
       '</div>';
 
-    if (!data.length) {
+    if (!rawData.length) {
       view.innerHTML = head +
         '<div class="empty"><div class="empty__icon">' + icon("why") + '</div>' +
         '<h3>No WHY entries yet</h3>' +
@@ -2355,63 +2357,223 @@ var app = (function () {
       return;
     }
 
-    var catIcons = {
-      all: "sparkle",
-      mechanism: "pulse",
-      lesion: "microscope",
-      species: "target",
-      diagnostic: "clipboard",
-      clinical: "shield"
-    };
+    var filterCategories = [
+      { id: "all", label: "All Topics" },
+      { id: "species", label: "Species" },
+      { id: "mechanism", label: "Mechanism" },
+      { id: "clinical", label: "Clinical" },
+      { id: "diagnostic", label: "Diagnostic" },
+      { id: "unit-1", label: "Unit 1" },
+      { id: "unit-2", label: "Unit 2" },
+      { id: "unit-3", label: "Unit 3" }
+    ];
 
-    var cats = ["all", "mechanism", "lesion", "species", "diagnostic", "clinical"];
-    var chips = cats.map(function (c) {
-      return '<button class="tab' + (c === "all" ? " is-active" : "") + '" data-cat="' + c + '">' +
-        icon(catIcons[c] || "sparkle") + ' ' +
-        (c === "all" ? "All" : c.charAt(0).toUpperCase() + c.slice(1)) + '</button>';
-    }).join("");
+    var toolbarHtml =
+      '<div class="why-toolbar">' +
+        '<div class="why-search-box">' +
+          '<span class="why-search-icon">' + icon("search") + '</span>' +
+          '<input type="text" id="whySearchInput" class="why-search-input" placeholder="Search structure, species, gene, mechanism..." autocomplete="off">' +
+        '</div>' +
+        '<div class="why-filter-pills" id="whyFilterPills">' +
+          filterCategories.map(function (c, idx) {
+            return '<button class="why-pill' + (idx === 0 ? ' is-active' : '') + '" data-filter="' + c.id + '">' + esc(c.label) + '</button>';
+          }).join("") +
+        '</div>' +
+        '<button class="why-challenge-btn" id="whyChallengeBtn">' +
+          icon("brain") + ' Challenge Me' +
+        '</button>' +
+      '</div>';
 
-    view.innerHTML = head + '<div class="tabs">' + chips + '</div><div id="whygrid" class="grid grid--auto"></div>';
-
-    function paint(cat) {
-      el("#whygrid").innerHTML = data
-        .filter(function (w) { return cat === "all" || w.category === cat; })
-        .map(function (w) {
-          var catIco = catIcons[w.category] || "pulse";
-          return '<article class="card whycard" id="why-' + w.id + '">' +
-            '<div class="row row--wrap">' +
-              '<span class="chip chip--accent">' + icon(catIco) + ' ' + esc(w.category || "mechanism") + '</span>' +
-              (w.comparison ? '<span class="chip">' + icon("target") + ' ' + esc(w.comparison) + '</span>' : '') +
-              (w.unit ? '<span class="chip chip--muted">' + esc(w.unit.toUpperCase().replace('-', ' ')) + '</span>' : '') +
+    var modalHtml =
+      '<div id="whyModalOverlay" class="why-modal-overlay" role="dialog" aria-modal="true">' +
+        '<div class="why-modal-dialog" id="whyModalDialog">' +
+          '<div class="why-modal-head">' +
+            '<button class="why-modal-close" id="whyModalClose" title="Close Analysis">&times;</button>' +
+            '<div class="row row--wrap mb-2">' +
+              '<span class="card-category" id="whyModalCat"></span>' +
+              '<span class="chip chip--muted" id="whyModalUnit"></span>' +
             '</div>' +
-            '<h3 class="card__title mt-3">' + esc(w.title) + '</h3>' +
-            '<div class="card__desc">' + (w.why || "") + '</div>' +
-            (w.mechanism && w.mechanism.length
-              ? '<ol class="chain mt-4">' + w.mechanism.map(function (s) { return '<li>' + s + '</li>'; }).join("") + '</ol>'
-              : '') +
-            (w.clinical ? '<div class="callout mt-4"><div class="callout__title">' + icon("shield") + ' At the clinic</div>' + w.clinical + '</div>' : '') +
-          '</article>';
-        }).join("") || '<div class="empty"><p>Nothing in this category yet.</p></div>';
+            '<h2 class="whycard-title" style="font-size: 1.35rem; margin-bottom: 8px;" id="whyModalTitle"></h2>' +
+            '<div class="whycard-comparison" id="whyModalComparison"></div>' +
+          '</div>' +
+          '<div class="why-modal-body">' +
+            '<div class="why-modal-prose" id="whyModalWhy"></div>' +
+            '<div class="why-chain-box" id="whyModalChainBox" style="display: none;">' +
+              '<h4>' + icon("pulse") + ' Step-by-Step Biological Mechanism</h4>' +
+              '<ol class="why-chain-list" id="whyModalChainList"></ol>' +
+            '</div>' +
+            '<div class="why-modal-clinical" id="whyModalClinicalBox" style="display: none;">' +
+              '<strong>' + icon("shield") + ' At the Clinic / In the Field:</strong> ' +
+              '<span id="whyModalClinical"></span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="why-modal-foot">' +
+            '<button class="btn btn--sm btn--primary" id="whyModalCloseBtn">Done Reading</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    view.innerHTML = head + toolbarHtml + '<div id="whygrid" class="why-grid-compact"></div>' + modalHtml;
+
+    var currentFilter = "all";
+    var currentSearch = "";
+
+    function cleanSnippet(html) {
+      if (!html) return "";
+      var tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      var text = (tmp.textContent || tmp.innerText || "").trim();
+      return text.length > 175 ? text.slice(0, 175) + "…" : text;
     }
 
-    paint("all");
-    if (state.params.a) {
-      setTimeout(function () {
-        var targetCard = el("#why-" + state.params.a);
-        if (targetCard) {
-          targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
-          targetCard.style.outline = "2px solid var(--color-accent)";
-          targetCard.style.outlineOffset = "4px";
-        }
-      }, 80);
+    function openModal(item) {
+      if (!item) return;
+      el("#whyModalCat").textContent = (item.category || "mechanism").toUpperCase();
+      el("#whyModalUnit").textContent = (item.unit || "unit-2").toUpperCase().replace("-", " ");
+      el("#whyModalTitle").textContent = item.title;
+      el("#whyModalComparison").innerHTML = '<span class="comp-icon">' + icon("scale") + '</span> Comparison: ' + esc(item.comparison || "");
+      el("#whyModalWhy").innerHTML = item.why || "";
+
+      var chainBox = el("#whyModalChainBox");
+      var chainList = el("#whyModalChainList");
+      if (item.mechanism && item.mechanism.length) {
+        chainList.innerHTML = item.mechanism.map(function (step, i) {
+          return '<li class="why-chain-item"><span class="why-chain-num">' + (i + 1) + '</span>' + esc(step) + '</li>';
+        }).join("");
+        chainBox.style.display = "block";
+      } else {
+        chainBox.style.display = "none";
+      }
+
+      var clinicalBox = el("#whyModalClinicalBox");
+      var clinicalText = el("#whyModalClinical");
+      if (item.clinical) {
+        clinicalText.innerHTML = item.clinical;
+        clinicalBox.style.display = "block";
+      } else {
+        clinicalBox.style.display = "none";
+      }
+
+      var modal = el("#whyModalOverlay");
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
     }
-    els("[data-cat]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        els("[data-cat]").forEach(function (x) { x.classList.remove("is-active"); });
-        b.classList.add("is-active");
-        paint(b.getAttribute("data-cat"));
+
+    function closeModal() {
+      var modal = el("#whyModalOverlay");
+      if (modal) modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    el("#whyModalClose").addEventListener("click", closeModal);
+    el("#whyModalCloseBtn").addEventListener("click", closeModal);
+    el("#whyModalOverlay").addEventListener("click", function (e) {
+      if (e.target === el("#whyModalOverlay")) closeModal();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeModal();
+    });
+
+    function getFilteredData() {
+      return rawData.filter(function (item) {
+        var matchesFilter = (currentFilter === "all") ||
+          (item.category === currentFilter) ||
+          (item.unit === currentFilter);
+
+        var query = currentSearch.trim().toLowerCase();
+        var matchesSearch = !query ||
+          (item.title && item.title.toLowerCase().indexOf(query) !== -1) ||
+          (item.comparison && item.comparison.toLowerCase().indexOf(query) !== -1) ||
+          (item.why && item.why.toLowerCase().indexOf(query) !== -1);
+
+        return matchesFilter && matchesSearch;
+      });
+    }
+
+    function paint() {
+      var filtered = getFilteredData();
+      var grid = el("#whygrid");
+      if (!grid) return;
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty" style="grid-column: 1/-1;"><p>No WHY entries match your search or filter.</p></div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(function (w) {
+        var catClass = "category-" + (w.category || "mechanism");
+        return '<article class="whycard-compact ' + catClass + '" data-why-id="' + w.id + '">' +
+          '<div>' +
+            '<div class="whycard-header">' +
+              '<span class="card-category">' + esc(w.category || "mechanism") + '</span>' +
+              '<span class="card-arrow">&rarr;</span>' +
+            '</div>' +
+            '<h3 class="whycard-title">' + esc(w.title) + '</h3>' +
+            '<div class="whycard-comparison">' +
+              '<span class="comp-icon">' + icon("scale") + '</span> ' + esc(w.comparison || "") +
+            '</div>' +
+            '<p class="whycard-preview">' + esc(cleanSnippet(w.why)) + '</p>' +
+          '</div>' +
+          '<div class="whycard-footer">' +
+            '<button class="why-analyze-btn" data-analyze="' + w.id + '">' +
+              'Analyze ' + icon("microscope") +
+            '</button>' +
+          '</div>' +
+        '</article>';
+      }).join("");
+
+      els(".whycard-compact").forEach(function (card) {
+        card.addEventListener("click", function (e) {
+          var id = parseInt(card.getAttribute("data-why-id"), 10);
+          var item = rawData.find(function (w) { return w.id === id; });
+          if (item) openModal(item);
+        });
+      });
+    }
+
+    // Filter Pills Click Handler
+    els("#whyFilterPills .why-pill").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        els("#whyFilterPills .why-pill").forEach(function (b) { b.classList.remove("is-active"); });
+        btn.classList.add("is-active");
+        currentFilter = btn.getAttribute("data-filter") || "all";
+        paint();
       });
     });
+
+    // Live Search Input Handler
+    var searchInput = el("#whySearchInput");
+    if (searchInput) {
+      searchInput.addEventListener("input", function (e) {
+        currentSearch = e.target.value;
+        paint();
+      });
+    }
+
+    // Challenge Me Button: Spotlight a random card in the Analyze scanner
+    var challengeBtn = el("#whyChallengeBtn");
+    if (challengeBtn) {
+      challengeBtn.addEventListener("click", function () {
+        var list = getFilteredData();
+        if (!list.length) list = rawData;
+        var randomIndex = Math.floor(Math.random() * list.length);
+        openModal(list[randomIndex]);
+      });
+    }
+
+    paint();
+
+    // Direct link to specific card via URL parameter (e.g. #/why?a=1)
+    if (state.params.a) {
+      var targetId = parseInt(state.params.a, 10);
+      var targetItem = rawData.find(function (w) { return w.id === targetId; });
+      if (targetItem) {
+        setTimeout(function () {
+          openModal(targetItem);
+        }, 120);
+      }
+    }
   }
 
   /* ============================================================
