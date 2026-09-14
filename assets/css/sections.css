@@ -4411,3 +4411,105 @@
   0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
   100% { transform: scale(1.05); box-shadow: 0 0 10px 2px rgba(239, 68, 68, 0.3); }
 }
+
+
+/* ============================================================
+   GLOSSARY TERMS — inline word + definition popup beside it
+   ============================================================ */
+.glossary-term {
+  color: inherit;
+  border-bottom: 1.5px dotted var(--accent-line);
+  cursor: help;
+  border-radius: 2px;
+  transition: background-color var(--dur-fast, .15s) ease, border-color var(--dur-fast, .15s) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.glossary-term:hover,
+.glossary-term:focus-visible {
+  background: var(--accent-soft);
+  border-bottom-color: var(--accent);
+  outline: none;
+}
+
+.glossary-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99990;
+  width: min(340px, calc(100vw - 20px));
+  box-sizing: border-box;
+  padding: 12px 14px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+.glossary-tooltip.is-visible { opacity: 1; transform: none; }
+
+.glossary-tooltip-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.glossary-tooltip-title { font-weight: 700; font-size: 15px; color: var(--accent); }
+.glossary-tooltip-close {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  margin: -4px -6px 0 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.glossary-tooltip-close:hover { background: var(--surface-hover); color: var(--text); }
+.glossary-tooltip-badge {
+  display: inline-block;
+  margin: 4px 0 8px;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.glossary-tooltip-body { color: var(--text); }
+.glossary-tooltip-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.glossary-tooltip-foot button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.glossary-tooltip-foot button:hover { background: var(--surface-hover); }
+.glossary-tooltip-foot .glossary-open-btn { border-color: transparent; background: transparent; color: var(--accent); }
+.glossary-tooltip-foot .ico { width: 14px; height: 14px; }

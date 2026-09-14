@@ -12,7 +12,7 @@
    PRECACHE, otherwise students keep seeing the old version.
    ============================================================ */
 
-var CACHE_VERSION = "vgen-v5";
+var CACHE_VERSION = "vgen-v6";
 var SHELL_CACHE = CACHE_VERSION + "-shell";
 var IMG_CACHE = CACHE_VERSION + "-img";
 
