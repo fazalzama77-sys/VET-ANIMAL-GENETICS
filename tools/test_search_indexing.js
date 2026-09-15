@@ -1,5 +1,5 @@
 // tools/test_search_indexing.js
-// Tests that search.js successfully indexes all 400 glossary items
+// Tests that search.js successfully indexes all 480 glossary items
 
 const fs = require('fs');
 const path = require('path');
@@ -25,26 +25,28 @@ global.calculator = { tools: [] };
 global.examBank = { questions: [] };
 global.quizBank = { "unit-1": [], "unit-2": [], "unit-3": [] };
 
-// Check glossary.getAll() returns 400 items
+// Check glossary.getAll() returns 480 items
 const items = glossary.getAll();
-assert.strictEqual(items.length, 400, `Expected 400 items from glossary.getAll(), got ${items.length}`);
+assert.strictEqual(items.length, 480, `Expected 480 items from glossary.getAll(), got ${items.length}`);
 
 // Check specific newly added terms exist
 const checkTerms = [
-    'Weighted Arithmetic Mean',
-    'Split-Plot Design',
-    'Monohybrid Ratio',
-    'Punnett Square',
-    'Kinetochore',
-    'CRISPR-Cas9',
-    'Wobble Hypothesis',
-    'Hardy-Weinberg Equilibrium Equation',
-    'Sewall Wright Effect',
-    'Infinitesimal Model',
-    'Liability Model',
-    'Robert Bakewell',
-    'Jay L. Lush',
-    'Henderson\'s Mixed Model Equations'
+    'Class Interval',
+    'Standard Normal Distribution',
+    'Wild-Type Allele',
+    'Amorphic Allele',
+    'Maternal Inheritance',
+    'Allopolyploidy',
+    'Fluorescence In Situ Hybridization',
+    'Reverse Transcriptase',
+    'Epigenetics',
+    'Demographic Bottleneck',
+    'Coalescent Theory',
+    'Haldane\'s Rule',
+    'Kinship (Co-Ancestry) Matrix',
+    'Marker-Assisted Selection',
+    'Genome-Wide Association Study',
+    'Juvenile In-Vitro Embryo Technology'
 ];
 
 checkTerms.forEach(term => {
@@ -53,4 +55,4 @@ checkTerms.forEach(term => {
     assert(found, `Expected term matching "${term}" not found in items`);
 });
 
-console.log('✓ All 400 terms correctly retrievable via glossary.getAll() for Search indexing!');
+console.log('✓ All 480 terms correctly retrievable via glossary.getAll() for Search indexing!');

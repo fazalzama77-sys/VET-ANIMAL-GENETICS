@@ -1,11 +1,11 @@
 // tools/test_glossary_engine.js
-// Automated verification suite for the 400-term Animal Genetics & Breeding Glossary
+// Automated verification suite for the 480-term Animal Genetics & Breeding Glossary
 
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-console.log('🧪 Starting Glossary Engine Test Suite (400 Terms Target)...\n');
+console.log('🧪 Starting Glossary Engine Test Suite (480 Terms Target)...\n');
 
 const filesToTest = [
     { name: 'js/glossary.js', path: path.join(__dirname, '../js/glossary.js') },
@@ -13,12 +13,12 @@ const filesToTest = [
 ];
 
 const EXPECTED_COUNTS = {
-    "Biostatistics & Experimental Design": 70,
-    "Classical & Mendelian Genetics": 70,
-    "Cytogenetics & Molecular Genetics": 70,
-    "Population Genetics": 50,
-    "Quantitative Genetics & Inheritance": 65,
-    "Animal Breeding & Selection Systems": 75
+    "Biostatistics & Experimental Design": 80,
+    "Classical & Mendelian Genetics": 80,
+    "Cytogenetics & Molecular Genetics": 85,
+    "Population Genetics": 65,
+    "Quantitative Genetics & Inheritance": 80,
+    "Animal Breeding & Selection Systems": 90
 };
 
 filesToTest.forEach(({ name, path: filePath }) => {
@@ -46,7 +46,7 @@ filesToTest.forEach(({ name, path: filePath }) => {
     // 1. Total unique terms count
     const termKeys = Object.keys(glossary.terms);
     console.log(`  ✓ Total terms in glossary.terms: ${termKeys.length}`);
-    assert.strictEqual(termKeys.length, 400, `Expected 400 terms, found ${termKeys.length}`);
+    assert.strictEqual(termKeys.length, 480, `Expected 480 terms, found ${termKeys.length}`);
 
     // 2. Categories count and mapping
     const categoryNames = Object.keys(glossary.categories);
@@ -73,7 +73,7 @@ filesToTest.forEach(({ name, path: filePath }) => {
         });
     });
 
-    assert.strictEqual(totalKeysInCategories, 400, `Expected 400 keys across categories, found ${totalKeysInCategories}`);
+    assert.strictEqual(totalKeysInCategories, 480, `Expected 480 keys across categories, found ${totalKeysInCategories}`);
 
     // 3. Every term in terms has valid definition and term
     termKeys.forEach(k => {
@@ -88,22 +88,22 @@ filesToTest.forEach(({ name, path: filePath }) => {
     assert(typeof glossary.getAll === 'function', 'getAll method missing');
     const all = glossary.getAll();
     assert(Array.isArray(all), 'getAll() must return an array');
-    assert.strictEqual(all.length, 400, `getAll() returned length ${all.length}, expected 400`);
+    assert.strictEqual(all.length, 480, `getAll() returned length ${all.length}, expected 480`);
     assert(all[0].key && all[0].term && all[0].category && all[0].def, 'getAll() items missing required fields');
     console.log(`  ✓ getAll() returns ${all.length} complete items`);
 
     // 5. Test getSortedTerms()
     assert(typeof glossary.getSortedTerms === 'function', 'getSortedTerms method missing');
     const sorted = glossary.getSortedTerms();
-    assert.strictEqual(sorted.length, 400, `getSortedTerms() returned length ${sorted.length}, expected 400`);
+    assert.strictEqual(sorted.length, 480, `getSortedTerms() returned length ${sorted.length}, expected 480`);
     for (let i = 0; i < sorted.length - 1; i++) {
         assert(sorted[i].length >= sorted[i + 1].length, `getSortedTerms not sorted descending by length at index ${i}`);
     }
-    console.log(`  ✓ getSortedTerms() returned 400 keys sorted longest-first (longest: "${sorted[0]}" [${sorted[0].length} chars])`);
+    console.log(`  ✓ getSortedTerms() returned 480 keys sorted longest-first (longest: "${sorted[0]}" [${sorted[0].length} chars])`);
 
     // 6. Test window.glossary assignment
     assert(mockWindow.glossary === glossary, 'window.glossary was not assigned');
     console.log(`  ✓ window.glossary properly exported\n`);
 });
 
-console.log('🎉 ALL 400 GLOSSARY TESTS PASSED PERFECTLY!\n');
+console.log('🎉 ALL 480 GLOSSARY TESTS PASSED PERFECTLY!\n');
