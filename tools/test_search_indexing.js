@@ -1,5 +1,5 @@
 // tools/test_search_indexing.js
-// Tests that search.js successfully indexes all 480 glossary items
+// Tests that search.js successfully indexes all 540 glossary items
 
 const fs = require('fs');
 const path = require('path');
@@ -25,28 +25,26 @@ global.calculator = { tools: [] };
 global.examBank = { questions: [] };
 global.quizBank = { "unit-1": [], "unit-2": [], "unit-3": [] };
 
-// Check glossary.getAll() returns 480 items
+// Check glossary.getAll() returns 540 items
 const items = glossary.getAll();
-assert.strictEqual(items.length, 480, `Expected 480 items from glossary.getAll(), got ${items.length}`);
+assert.strictEqual(items.length, 540, `Expected 540 items from glossary.getAll(), got ${items.length}`);
 
 // Check specific newly added terms exist
 const checkTerms = [
-    'Class Interval',
-    'Standard Normal Distribution',
-    'Wild-Type Allele',
-    'Amorphic Allele',
-    'Maternal Inheritance',
-    'Allopolyploidy',
-    'Fluorescence In Situ Hybridization',
-    'Reverse Transcriptase',
-    'Epigenetics',
-    'Demographic Bottleneck',
-    'Coalescent Theory',
-    'Haldane\'s Rule',
-    'Kinship (Co-Ancestry) Matrix',
-    'Marker-Assisted Selection',
-    'Genome-Wide Association Study',
-    'Juvenile In-Vitro Embryo Technology'
+    'Frequency Density',
+    'Confidence Interval',
+    'Criss-Cross Inheritance',
+    'Holandric (Y-Linked) Gene',
+    'Pseudoautosomal Region',
+    'Telomerase',
+    'DNA Topoisomerase',
+    'Single Nucleotide Polymorphism',
+    'Linkage Disequilibrium Parameter',
+    'Accuracy of Breeding Value',
+    'Equal Parent Index',
+    'Contemporary Comparison Sire Proof',
+    'Henderson\'s Sparse Inverse A Matrix',
+    'Ex-Situ In-Vitro Cryo-Banking'
 ];
 
 checkTerms.forEach(term => {
@@ -55,4 +53,4 @@ checkTerms.forEach(term => {
     assert(found, `Expected term matching "${term}" not found in items`);
 });
 
-console.log('✓ All 480 terms correctly retrievable via glossary.getAll() for Search indexing!');
+console.log('✓ All 540 terms correctly retrievable via glossary.getAll() for Search indexing!');
