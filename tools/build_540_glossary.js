@@ -484,84 +484,123 @@ const glossary = {
         this.attachTooltips(rootElement);
     },
 
-    attachTooltips(root) {
-        let activeTooltip = null;
+    // One shared definition popup, anchored right next to the word that was hovered or tapped.
+    _tip: null,
+    _tipTerm: null,
+    _hoverTimer: null,
 
-        const removeTooltip = () => {
-            if (activeTooltip) {
-                activeTooltip.remove();
-                activeTooltip = null;
-            }
-        };
+    hideTooltip() {
+        clearTimeout(this._hoverTimer);
+        if (this._tip) this._tip.remove();
+        this._tip = null;
+        this._tipTerm = null;
+    },
+
+    showTooltip(el) {
+        const key = el.dataset.term;
+        const data = this.terms[key];
+        if (!data) return;
+
+        this.hideTooltip();
+
+        const tip = document.createElement('div');
+        tip.className = 'glossary-tooltip';
+        tip.setAttribute('role', 'dialog');
+        tip.innerHTML = \`
+            <div class="glossary-tooltip-head">
+                <span class="glossary-tooltip-title">\${app.esc(data.term)}</span>
+                <button class="glossary-tooltip-close" type="button" aria-label="Close">&times;</button>
+            </div>
+            <span class="glossary-tooltip-badge">\${app.esc(data.category)}</span>
+            <div class="glossary-tooltip-body">\${app.esc(data.def)}</div>
+            <div class="glossary-tooltip-foot">
+                <button class="glossary-speak-btn" type="button" aria-label="Listen to pronunciation">
+                    \${app.icon('speaker', 'ico--sm')} Listen
+                </button>
+                <button class="glossary-open-btn" type="button">Open in dictionary &rarr;</button>
+            </div>
+        \`;
+
+        document.body.appendChild(tip);
+        this._tip = tip;
+        this._tipTerm = el;
+
+        // Place it right above the word (or below when there is no room), in page
+        // coordinates so it stays glued to the word instead of jumping to the top.
+        const rect = el.getBoundingClientRect();
+        const tipRect = tip.getBoundingClientRect();
+        const gap = 8;
+
+        let top = rect.top - tipRect.height - gap;
+        if (top < 10) top = rect.bottom + gap;
+        let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+        left = Math.max(10, Math.min(left, document.documentElement.clientWidth - tipRect.width - 10));
+
+        tip.style.top = \`\${top + window.scrollY}px\`;
+        tip.style.left = \`\${left + window.scrollX}px\`;
+        tip.classList.add('is-visible');
+
+        tip.addEventListener('mouseenter', () => clearTimeout(this._hoverTimer));
+        tip.addEventListener('mouseleave', () => this.scheduleHide());
+        tip.querySelector('.glossary-tooltip-close').addEventListener('click', () => this.hideTooltip());
+        tip.querySelector('.glossary-speak-btn').addEventListener('click', () => this.speak(data.term));
+        tip.querySelector('.glossary-open-btn').addEventListener('click', () => {
+            this.hideTooltip();
+            location.hash = \`#/library/glossary/\${encodeURIComponent(key)}\`;
+        });
+    },
+
+    scheduleHide() {
+        clearTimeout(this._hoverTimer);
+        this._hoverTimer = setTimeout(() => this.hideTooltip(), 200);
+    },
+
+    attachTooltips(root) {
+        const hoverCapable = window.matchMedia('(hover: hover)').matches;
 
         root.querySelectorAll('.glossary-term').forEach(el => {
-            el.addEventListener('mouseenter', (e) => {
-                const key = el.dataset.term;
-                const data = glossary.terms[key];
-                if (!data) return;
+            if (el.dataset.glossBound) return;
+            el.dataset.glossBound = '1';
 
-                removeTooltip();
-
-                const tip = document.createElement('div');
-                tip.className = 'glossary-tooltip';
-                tip.innerHTML = \`
-                    <div class="glossary-tooltip-head">
-                        <span class="glossary-tooltip-title">\${app.esc(data.term)}</span>
-                        <span class="glossary-tooltip-badge">\${app.esc(data.category)}</span>
-                    </div>
-                    <div class="glossary-tooltip-body">\${app.esc(data.def)}</div>
-                    <div class="glossary-tooltip-foot">
-                        <button class="glossary-speak-btn" type="button" aria-label="Listen to pronunciation">
-                            \${app.icon('speaker', 'ico--sm')} Listen
-                        </button>
-                        <span class="glossary-tooltip-hint">Click for dictionary</span>
-                    </div>
-                \`;
-
-                document.body.appendChild(tip);
-                activeTooltip = tip;
-
-                const rect = el.getBoundingClientRect();
-                const tipRect = tip.getBoundingClientRect();
-
-                let top = rect.top - tipRect.height - 8;
-                let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
-
-                if (top < 10) top = rect.bottom + 8;
-                if (left < 10) left = 10;
-                if (left + tipRect.width > window.innerWidth - 10) {
-                    left = window.innerWidth - tipRect.width - 10;
-                }
-
-                tip.style.top = \`\${top + window.scrollY}px\`;
-                tip.style.left = \`\${left}px\`;
-                tip.classList.add('is-visible');
-
-                tip.querySelector('.glossary-speak-btn').addEventListener('click', (ev) => {
-                    ev.stopPropagation();
-                    glossary.speak(data.term);
+            if (hoverCapable) {
+                el.addEventListener('mouseenter', () => {
+                    clearTimeout(this._hoverTimer);
+                    if (this._tipTerm !== el) this.showTooltip(el);
                 });
-            });
-
-            el.addEventListener('mouseleave', () => {
-                setTimeout(() => {
-                    if (activeTooltip && !activeTooltip.matches(':hover')) {
-                        removeTooltip();
-                    }
-                }, 150);
-            });
-
-            el.addEventListener('click', () => {
-                removeTooltip();
-                location.hash = \`#/library/glossary?q=\${encodeURIComponent(el.dataset.term)}\`;
-            });
-        });
-
-        document.addEventListener('mouseover', (e) => {
-            if (activeTooltip && !e.target.closest('.glossary-tooltip') && !e.target.closest('.glossary-term')) {
-                removeTooltip();
+                el.addEventListener('mouseleave', () => this.scheduleHide());
             }
+
+            // Tap / click toggles the definition beside the word — it never navigates away.
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (this._tipTerm === el) this.hideTooltip();
+                else this.showTooltip(el);
+            });
+
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.showTooltip(el);
+                } else if (e.key === 'Escape') {
+                    this.hideTooltip();
+                }
+            });
         });
+
+        if (!this._globalListeners) {
+            this._globalListeners = true;
+            document.addEventListener('click', (e) => {
+                if (this._tip && !e.target.closest('.glossary-tooltip') && !e.target.closest('.glossary-term')) {
+                    this.hideTooltip();
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') this.hideTooltip();
+            });
+            window.addEventListener('hashchange', () => this.hideTooltip());
+            window.addEventListener('resize', () => this.hideTooltip());
+        }
     },
 
     speak(word) {
