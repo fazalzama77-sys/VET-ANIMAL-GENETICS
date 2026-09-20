@@ -56,6 +56,42 @@ var quizApp = (function () {
   /* ============================================================
      BUILDING A QUESTION SET
      ============================================================ */
+
+  /* The written bank leans heavily on one option position, which lets a
+     student guess by position instead of by knowledge. Every attempt now
+     re-orders the choices and moves the answer index with them.
+     Purely numeric choices are sorted ascending instead — a jumbled list
+     of numbers reads as a mistake. */
+  function orderOptions(options, answerIndex) {
+    if (!Array.isArray(options) || options.length < 2) {
+      return { o: options, a: answerIndex };
+    }
+    if (typeof answerIndex !== "number" || !options[answerIndex]) {
+      return { o: options, a: answerIndex };
+    }
+
+    var correct = options[answerIndex];
+    var allNumeric = options.every(function (opt) {
+      return String(opt).trim() !== "" && isFinite(String(opt).trim().replace(/,/g, ""));
+    });
+
+    var ordered;
+    if (allNumeric) {
+      ordered = options.slice(0).sort(function (x, y) {
+        return parseFloat(String(x).replace(/,/g, "")) - parseFloat(String(y).replace(/,/g, ""));
+      });
+    } else {
+      ordered = shuffle(options);
+    }
+
+    var newIndex = ordered.indexOf(correct);
+    // Duplicate option texts would resolve to the wrong slot; leave those untouched.
+    if (newIndex === -1 || ordered.filter(function (t) { return t === correct; }).length > 1) {
+      return { o: options, a: answerIndex };
+    }
+    return { o: ordered, a: newIndex };
+  }
+
   function bankFor(unitIds, formats, subSectionId) {
     var out = [];
     unitIds.forEach(function (uid) {
@@ -65,14 +101,15 @@ var quizApp = (function () {
         (b[f] || []).forEach(function (q, i) {
           if (!q.q || !String(q.q).trim()) return;   // skip empty template rows
           if (subSectionId && subSectionId !== "all" && q.subSection !== subSectionId) return;
+          var placed = f === "mcq" ? orderOptions(q.o, q.a) : { o: q.o, a: q.a };
           out.push({
             key: uid + ":" + f + ":" + i,
             format: f,
             unitId: uid,
             subSection: q.subSection || null,
             q: q.q,
-            o: q.o,
-            a: q.a,
+            o: placed.o,
+            a: placed.a,
             a_display: q.a_display || (Array.isArray(q.a) ? q.a[0] : q.a),
             e: q.e,
             topicId: q.topicId || null,
