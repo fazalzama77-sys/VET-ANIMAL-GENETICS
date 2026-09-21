@@ -223,6 +223,14 @@ var app = (function () {
       unit: "unit", topic: "topic", why: "why", qa: "qa",
       quiz: "quiz", dashboard: "dashboard", library: "library", me: "me"
     };
+    // Leaving the quiz entirely: stop the exam clock and drop the paper's
+    // keyboard shortcuts. The paper itself is snapshotted, so the quiz hub
+    // still offers to resume it.
+    if (state.section === "quiz" && (map[name] || "home") !== "quiz" &&
+        window.quizApp && quizApp.leave) {
+      quizApp.leave();
+    }
+
     state.section = map[name] || "home";
 
     // Section accent colour

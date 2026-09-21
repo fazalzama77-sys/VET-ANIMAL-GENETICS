@@ -191,7 +191,7 @@ var quizApp = (function () {
   }
 
   /* Paper labels are derived from the syllabus, never written by hand —
-     the hard-coded版 claimed Paper I held "Units 1, 2, 3". */
+     the hard-coded one claimed Paper I held "Units 1, 2, 3". */
   function paperUnitLabel(paperId) {
     var p = (syllabus.meta.papers || []).filter(function (x) { return x.id === paperId; })[0];
     if (!p || !p.units || !p.units.length) return "";
@@ -275,8 +275,13 @@ var quizApp = (function () {
     host = container;
     var kind = params.a;
 
-    if (run && run.active && !kind) { paintRun(); return; }
-    if (run && run.active && kind !== "attempt") { paintRun(); return; }
+    // Returning to #/quiz while a paper is open puts you back in the paper.
+    // Asking for a different screen abandons it — but it is snapshotted, so
+    // the hub always offers it back.
+    if (run && run.active) {
+      if (!kind) { paintRun(); return; }
+      leave();
+    }
 
     if (!kind) { renderHub(); return; }
     if (kind === "unit")      { renderSetup("unit", params.b); return; }
@@ -1130,10 +1135,10 @@ var quizApp = (function () {
      all ignored, and a single-character typo in a long term is accepted
      (and flagged as a spelling slip). */
   function normText(s) {
-    return String(s == null ? "" : s)
-      .toLowerCase()
-      .normalize ? String(s == null ? "" : s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
-      : String(s == null ? "" : s).toLowerCase();
+    var t = String(s == null ? "" : s).toLowerCase();
+    // Strip accents where the browser supports it; older engines just skip it.
+    if (t.normalize) t = t.normalize("NFD").replace(/[̀-ͯ]/g, "");
+    return t;
   }
 
   function normFib(s) {
@@ -2063,7 +2068,7 @@ var quizApp = (function () {
     var copy = document.getElementById("an-copy");
     if (copy) {
       copy.addEventListener("click", function () {
-        app.copyText(summaryText(attempt, items), "Result summary copied");
+        app.copyTextToClipboard(summaryText(attempt, items), "Result summary copied to clipboard");
       });
     }
   }
@@ -2136,6 +2141,9 @@ var quizApp = (function () {
 
   return {
     render: render,
+    /* The dashboard names weak modules, so it needs this table too. */
+    subSectionMeta: function (subId) { return getSubSectionMeta(null, subId); },
+    subSectionsByUnit: subSectionsByUnit,
     reset: resetRun,
     leave: leave,
     teardown: teardown

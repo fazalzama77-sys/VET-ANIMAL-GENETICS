@@ -241,7 +241,10 @@ h5 { font-size: var(--fs-md); }
 .crumbs .cur { color: var(--text); font-weight: 560; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; }
 .crumbs .ico { width: 14px; height: 14px; flex-shrink: 0; opacity: 0.8; }
 
-.pagehead h1 .ico { width: 28px; height: 28px; vertical-align: -5px; margin-right: 8px; color: var(--accent); }
+/* The global reset makes every svg a block, which dropped the heading
+   icon onto its own line. Inline it back for icons used inside text. */
+.pagehead h1 .ico { display: inline-block; width: 28px; height: 28px; vertical-align: -5px; margin-right: 8px; color: var(--accent); }
+h1 .ico, h2 .ico, h3 .ico, p .ico, b .ico, span.chip .ico, .btn .ico, a .ico { display: inline-block; }
 .block__label .ico { width: 15px; height: 15px; vertical-align: -2px; margin-right: 5px; color: var(--accent); }
 .tab .ico { width: 15px; height: 15px; vertical-align: -2px; margin-right: 5px; }
 .chip .ico { width: 13px; height: 13px; vertical-align: -2px; margin-right: 4px; }
@@ -455,8 +458,10 @@ a.card:hover, .card--link:hover {
   border-color: rgba(178, 94, 0, 0.25);
 }
 .tlist__body { min-width: 0; flex: 1; }
-.tlist__title { font-weight: 560; }
-.tlist__sub { font-size: var(--fs-sm); color: var(--text-faint); }
+/* Title and subtitle are spans, so they must be told to stack — otherwise
+   the row reads as "Animal Breeding180 questions". */
+.tlist__title { display: block; font-weight: 560; }
+.tlist__sub { display: block; font-size: var(--fs-sm); color: var(--text-faint); margin-top: 2px; line-height: var(--lh-snug); }
 .tlist__right { margin-left: auto; display: flex; align-items: center; gap: var(--s2); flex: none; }
 
 /* ---------- Empty / placeholder state ---------- */
