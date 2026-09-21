@@ -35,7 +35,9 @@ var store = (function () {
     topicGuideSeen: PREFIX + "topic-guide-seen",
     eventSeen:  PREFIX + "event-announcements-seen",
     installDismissed: PREFIX + "install-dismissed",
-    sidebarCollapsed: PREFIX + "sidebar-collapsed"
+    sidebarCollapsed: PREFIX + "sidebar-collapsed",
+    quizResume:  PREFIX + "quiz-resume",   // { ... } a paper left unfinished
+    quizPrefs:   PREFIX + "quiz-prefs"     // remembered setup choices
   };
 
   /* ---------- low level ---------- */
@@ -153,11 +155,48 @@ var store = (function () {
   }
 
   /* ---------- quiz results ---------- */
-  function getQuiz() { return read(KEYS.quiz, { attempts: [], byUnit: {} }); }
+
+  /* Per-attempt question detail is what powers the review screen, but it is
+     also the bulkiest thing we store. Keep the full detail only for the most
+     recent papers and keep bare scores for the rest, so a year of study can
+     never fill the localStorage quota. */
+  var MAX_ATTEMPTS = 120;
+  var DETAIL_KEEP = 25;
+
+  function getQuiz() {
+    var q = read(KEYS.quiz, { attempts: [], byUnit: {}, bySub: {} });
+    if (!q || typeof q !== "object") q = {};
+    if (!Array.isArray(q.attempts)) q.attempts = [];
+    if (!q.byUnit || typeof q.byUnit !== "object") q.byUnit = {};
+    if (!q.bySub || typeof q.bySub !== "object") q.bySub = {};
+    return q;
+  }
+
+  /* Attempts are addressed by a stable id, not by array position — the list
+     is trimmed from the front, so an index would point at a different paper
+     the moment the cap is reached. */
+  function getAttempt(id) {
+    var list = getQuiz().attempts;
+    for (var i = 0; i < list.length; i++) {
+      if (String(list[i].id) === String(id)) return list[i];
+    }
+    return null;
+  }
+
   function saveAttempt(attempt) {
     var q = getQuiz();
+
+    attempt.id = attempt.id || (String(attempt.at || Date.now()) + "-" +
+      Math.random().toString(36).slice(2, 7));
+
     q.attempts.push(attempt);
-    if (q.attempts.length > 200) q.attempts = q.attempts.slice(-200);
+    if (q.attempts.length > MAX_ATTEMPTS) {
+      q.attempts = q.attempts.slice(-MAX_ATTEMPTS);
+    }
+    // Strip heavy per-question detail off everything but the newest papers.
+    for (var i = 0; i < q.attempts.length - DETAIL_KEEP; i++) {
+      if (q.attempts[i].detail) delete q.attempts[i].detail;
+    }
 
     var pct = attempt.total ? Math.round(attempt.correct / attempt.total * 100) : 0;
 
@@ -183,9 +222,74 @@ var store = (function () {
       if (key !== attempt.scope) tally(key);
     });
 
+    /* Lifetime accuracy per syllabus sub-section — this is what lets the
+       dashboard name the five weakest modules instead of only whole units. */
+    var bySub = attempt.bySub || {};
+    Object.keys(bySub).forEach(function (sid) {
+      var rec = q.bySub[sid] || { total: 0, right: 0, runs: 0 };
+      rec.total += bySub[sid].total || 0;
+      rec.right += bySub[sid].right || 0;
+      rec.runs += 1;
+      rec.lastAt = attempt.at;
+      q.bySub[sid] = rec;
+    });
+
     write(KEYS.quiz, q);
     logActivity();
+    return attempt.id;
   }
+
+  /* Lifetime totals, computed once so several dashboard panels agree. */
+  function quizTotals() {
+    var attempts = getQuiz().attempts;
+    var out = {
+      runs: attempts.length, total: 0, correct: 0, attempted: 0, skipped: 0,
+      seconds: 0,
+      byFormat: { mcq: { total: 0, right: 0 }, tf: { total: 0, right: 0 }, fib: { total: 0, right: 0 } },
+      byDiff: { 1: { total: 0, right: 0 }, 2: { total: 0, right: 0 }, 3: { total: 0, right: 0 } }
+    };
+    attempts.forEach(function (a) {
+      out.total += a.total || 0;
+      out.correct += a.correct || 0;
+      out.attempted += (typeof a.attempted === "number" ? a.attempted : a.total) || 0;
+      out.skipped += a.skipped || 0;
+      out.seconds += a.seconds || ((a.minutes || 0) * 60);
+      ["mcq", "tf", "fib"].forEach(function (f) {
+        var r = a.byFormat && a.byFormat[f];
+        if (r) { out.byFormat[f].total += r.total || 0; out.byFormat[f].right += r.right || 0; }
+      });
+      [1, 2, 3].forEach(function (d) {
+        var r = a.byDiff && a.byDiff[d];
+        if (r) { out.byDiff[d].total += r.total || 0; out.byDiff[d].right += r.right || 0; }
+      });
+    });
+    return out;
+  }
+
+  function clearQuizHistory() {
+    write(KEYS.quiz, { attempts: [], byUnit: {}, bySub: {} });
+  }
+
+  /* ---------- an unfinished paper, so a refresh never loses it ---------- */
+  function getQuizResume() {
+    var r = read(KEYS.quizResume, null);
+    if (!r || !r.qs || !r.qs.length) return null;
+    // A paper abandoned more than a day ago is stale; do not offer it back.
+    if (Date.now() - (r.savedAt || 0) > 86400000) { clearQuizResume(); return null; }
+    return r;
+  }
+  function setQuizResume(snapshot) { write(KEYS.quizResume, snapshot); }
+  function clearQuizResume() {
+    try { localStorage.removeItem(KEYS.quizResume); } catch (e) {}
+  }
+
+  /* ---------- remembered setup choices ---------- */
+  function getQuizPrefs() {
+    var p = read(KEYS.quizPrefs, null);
+    if (!p || typeof p !== "object") return null;
+    return p;
+  }
+  function setQuizPrefs(p) { write(KEYS.quizPrefs, p || {}); }
 
   /* ---------- spaced repetition (Leitner boxes 1-5) ---------- */
   function getSrs() { return read(KEYS.srs, {}); }
@@ -369,7 +473,10 @@ var store = (function () {
     getNotes: getNotes, getNote: getNote, setNote: setNote,
     getHighlights: getHighlights, addHighlight: addHighlight, removeHighlight: removeHighlight,
     getHighlightColor: getHighlightColor, setHighlightColor: setHighlightColor, VALID_HL_COLORS: VALID_HL_COLORS,
-    getQuiz: getQuiz, saveAttempt: saveAttempt,
+    getQuiz: getQuiz, saveAttempt: saveAttempt, getAttempt: getAttempt,
+    quizTotals: quizTotals, clearQuizHistory: clearQuizHistory,
+    getQuizResume: getQuizResume, setQuizResume: setQuizResume, clearQuizResume: clearQuizResume,
+    getQuizPrefs: getQuizPrefs, setQuizPrefs: setQuizPrefs,
     getSrs: getSrs, gradeSrs: gradeSrs, dueSrs: dueSrs,
     getActivity: getActivity, logActivity: logActivity, computeStreak: computeStreak,
     bumpVisits: bumpVisits, getVisits: getVisits,

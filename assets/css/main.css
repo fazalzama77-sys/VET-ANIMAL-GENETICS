@@ -698,3 +698,49 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: var(--fs-base); }
   width: 16px;
   height: 16px;
 }
+
+/* ============================================================
+   UTILITY LAYER (completing the set used across the app)
+   ------------------------------------------------------------
+   dashboard.js, quiz.js and app.js reference a full set of
+   spacing / flex / type helpers. Only a handful existed, so the
+   rest silently did nothing and several panels sat unaligned.
+   ============================================================ */
+.mt-1{margin-top:var(--s1)}.mt-3{margin-top:var(--s3)}.mt-5{margin-top:var(--s5)}
+.mt-10{margin-top:var(--s10)}.mt-16{margin-top:var(--s16)}
+.mb-0{margin-bottom:0}.mb-1{margin-bottom:var(--s1)}.mb-2{margin-bottom:var(--s2)}
+.mb-3{margin-bottom:var(--s3)}.mb-5{margin-bottom:var(--s5)}.mb-12{margin-bottom:var(--s12)}
+.ml-1{margin-left:var(--s1)}.ml-2{margin-left:var(--s2)}.ml-auto{margin-left:auto}
+.mr-1{margin-right:var(--s1)}.mr-2{margin-right:var(--s2)}.mr-3{margin-right:var(--s3)}
+
+.p-3{padding:var(--s3)}.p-4{padding:var(--s4)}.p-5{padding:var(--s5)}
+
+.flex{display:flex}.inline-flex{display:inline-flex}
+.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.flex-1{flex:1 1 auto;min-width:0}
+.items-center{align-items:center}.items-start{align-items:flex-start}
+.items-end{align-items:flex-end}.items-baseline{align-items:baseline}
+.justify-center{justify-content:center}.justify-between{justify-content:space-between}
+.gap-1{gap:var(--s1)}.gap-2{gap:var(--s2)}.gap-3{gap:var(--s3)}
+.gap-4{gap:var(--s4)}.gap-5{gap:var(--s5)}.gap-6{gap:var(--s6)}
+
+.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}
+.text-muted{color:var(--text-muted)}.text-faint{color:var(--text-faint)}
+.font-mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.font-medium{font-weight:540}.font-semibold{font-weight:620}.font-bold{font-weight:700}
+.w-full{width:100%}.nowrap{white-space:nowrap}
+
+/* `.row` is a flex row; `--between` pushes the ends apart and lets
+   long headings wrap on a phone instead of squashing the action. */
+.row--between{justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--s3)}
+.row--between > * { min-width: 0; }
+
+/* Button + chip variants referenced by the dashboard and quiz */
+.btn--outline{
+  background:transparent;
+  border:1px solid var(--accent-line);
+  color:var(--accent);
+  font-weight:600;
+}
+.btn--outline:hover{background:var(--accent-soft);border-color:var(--accent)}
+.chip--subtle{background:var(--surface-2);color:var(--text-muted);border-color:var(--border)}
+.chip--sm{padding:1px 7px;font-size:var(--fs-xs)}
