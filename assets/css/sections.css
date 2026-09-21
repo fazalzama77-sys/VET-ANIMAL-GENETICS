@@ -4513,3 +4513,49 @@
 .glossary-tooltip-foot button:hover { background: var(--surface-hover); }
 .glossary-tooltip-foot .glossary-open-btn { border-color: transparent; background: transparent; color: var(--accent); }
 .glossary-tooltip-foot .ico { width: 14px; height: 14px; }
+
+
+/* ============================================================
+   QUIZ QUESTION PALETTE — exam-hall style progress strip
+   ============================================================ */
+.qpalette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.qpalette__dot {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.qpalette__dot:hover { transform: translateY(-1px); background: var(--surface-hover); }
+.qpalette__dot.is-done { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+.qpalette__dot.is-right { background: var(--ok, #2e7d32); border-color: transparent; color: #fff; }
+.qpalette__dot.is-wrong { background: var(--danger, #c62828); border-color: transparent; color: #fff; }
+.qpalette__dot.is-current {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  font-weight: 800;
+}
+
+@media (max-width: 480px) {
+  .qpalette { gap: 5px; padding: 8px; }
+  .qpalette__dot { width: 27px; height: 27px; font-size: 11px; }
+}

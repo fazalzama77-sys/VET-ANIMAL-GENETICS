@@ -593,7 +593,22 @@ var dashboardApp = (function () {
           return '<div class="tlist__row">' +
             '<span class="tlist__body">' +
               '<span class="tlist__title">' + app.esc(a.label || "Animal Genetics Quiz") + '</span>' +
-              '<span class="tlist__sub">' + dateStr + (a.exam ? ' · ⏱️ Timed Exam' : '') + '</span>' +
+              '<span class="tlist__sub">' + dateStr +
+                (a.exam ? ' · ⏱️ Timed Exam' : '') +
+                (a.orderMode ? ' · ' + (a.orderMode === "shuffle" ? "🔀 Shuffle" : "📋 Sequence") : '') +
+                (a.minutes ? ' · ' + a.minutes + ' min' : '') +
+                (a.skipped ? ' · ' + a.skipped + ' skipped' : '') +
+                (a.timedOut ? ' · ⌛ auto-submitted' : '') +
+                /* Per-format accuracy, so weak question types are visible at a glance. */
+                (a.byFormat
+                  ? '<br>' + ["mcq", "tf", "fib"].filter(function (f) {
+                      return a.byFormat[f] && a.byFormat[f].total;
+                    }).map(function (f) {
+                      var labels = { mcq: "MCQ", tf: "T/F", fib: "FIB" };
+                      return labels[f] + ' ' + a.byFormat[f].right + '/' + a.byFormat[f].total;
+                    }).join(' · ')
+                  : '') +
+              '</span>' +
             '</span>' +
             '<span class="tlist__right">' +
               '<span class="chip ' + (p >= 75 ? 'chip--ok' : p >= 50 ? 'chip--warn' : 'chip--danger') + '">' +

@@ -159,15 +159,29 @@ var store = (function () {
     q.attempts.push(attempt);
     if (q.attempts.length > 200) q.attempts = q.attempts.slice(-200);
 
-    var u = q.byUnit[attempt.scope] || { runs: 0, best: 0, totalQ: 0, totalCorrect: 0 };
-    u.runs += 1;
-    u.totalQ += attempt.total;
-    u.totalCorrect += attempt.correct;
     var pct = attempt.total ? Math.round(attempt.correct / attempt.total * 100) : 0;
-    if (pct > u.best) u.best = pct;
-    u.last = pct;
-    u.lastAt = attempt.at;
-    q.byUnit[attempt.scope] = u;
+
+    function tally(key) {
+      var u = q.byUnit[key] || { runs: 0, best: 0, totalQ: 0, totalCorrect: 0 };
+      u.runs += 1;
+      u.totalQ += attempt.total;
+      u.totalCorrect += attempt.correct;
+      if (pct > u.best) u.best = pct;
+      u.last = pct;
+      u.lastAt = attempt.at;
+      q.byUnit[key] = u;
+    }
+
+    // The exact scope keeps its own record ("unit:unit-1:u1-s2", "paper:paper-1").
+    tally(attempt.scope);
+
+    // The dashboard tracks mastery under "unit:<id>", so credit every unit the
+    // paper actually covered. Without this, sub-section tests and paper/grand
+    // mocks never moved the unit mastery bars.
+    (attempt.unitIds || []).forEach(function (uid) {
+      var key = "unit:" + uid;
+      if (key !== attempt.scope) tally(key);
+    });
 
     write(KEYS.quiz, q);
     logActivity();

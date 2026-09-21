@@ -141,6 +141,54 @@ var quizApp = (function () {
     return copy;
   }
 
+  /* The bank is stored format by format (all MCQs, then all T/F, then all
+     FIB), so simply taking the first N gave a paper of nothing but MCQs.
+     Take a share of each selected format instead, keeping the syllabus
+     2 : 1 : 1 weighting, then restore curriculum order for Sequence Mode. */
+  function pickBalanced(pool, count, orderMode, formats) {
+    var wanted = (formats && formats.length ? formats : ["mcq", "tf", "fib"]);
+    var weights = { mcq: 2, tf: 1, fib: 1 };
+
+    var buckets = {};
+    wanted.forEach(function (f) {
+      buckets[f] = pool.filter(function (q) { return q.format === f; });
+      if (orderMode === "shuffle") buckets[f] = shuffle(buckets[f]);
+    });
+
+    var present = wanted.filter(function (f) { return buckets[f].length; });
+    if (!present.length) return [];
+
+    var totalWeight = present.reduce(function (n, f) { return n + weights[f]; }, 0);
+
+    var picked = [];
+    present.forEach(function (f) {
+      var share = Math.round(count * (weights[f] / totalWeight));
+      picked = picked.concat(buckets[f].slice(0, Math.min(share, buckets[f].length)));
+    });
+
+    // Rounding, or a format running dry, can leave the paper short — top it
+    // up from whatever questions are still unused.
+    if (picked.length < count) {
+      var used = {};
+      picked.forEach(function (q) { used[q.key] = true; });
+      var spare = [];
+      present.forEach(function (f) {
+        spare = spare.concat(buckets[f].filter(function (q) { return !used[q.key]; }));
+      });
+      if (orderMode === "shuffle") spare = shuffle(spare);
+      picked = picked.concat(spare.slice(0, count - picked.length));
+    }
+
+    picked = picked.slice(0, count);
+
+    if (orderMode === "shuffle") return shuffle(picked);
+
+    // Sequence mode: hand them back in the order the bank lists them.
+    var rank = {};
+    pool.forEach(function (q, idx) { rank[q.key] = idx; });
+    return picked.sort(function (x, y) { return rank[x.key] - rank[y.key]; });
+  }
+
   function countAvailable(unitIds, subSectionId) {
     return bankFor(unitIds, ["mcq", "tf", "fib"], subSectionId).length;
   }
@@ -508,13 +556,7 @@ var quizApp = (function () {
             return;
           }
 
-          var finalQuestions;
-          if (state.orderMode === "shuffle") {
-            finalQuestions = shuffle(rawPool).slice(0, state.count);
-          } else {
-            // Sequence mode: exact curriculum sequence
-            finalQuestions = rawPool.slice(0, state.count);
-          }
+          var finalQuestions = pickBalanced(rawPool, state.count, state.orderMode, state.formats);
 
           var runLabel = label;
           var subMeta = getSubSectionMeta(id, state.subSectionId);
@@ -573,6 +615,11 @@ var quizApp = (function () {
       qs: questions,
       i: 0,
       answers: new Array(questions.length).fill(null),
+      // Feedback and SRS grading are per question, never one flag for the whole
+      // run — that was what made answered questions look unattempted after
+      // stepping back through them.
+      checked: new Array(questions.length).fill(false),
+      graded: new Array(questions.length).fill(false),
       scope: scope,
       label: label,
       orderMode: orderMode || "sequence",
@@ -581,7 +628,6 @@ var quizApp = (function () {
       exam: !!exam,
       endsAt: exam ? Date.now() + minutes * 60000 : 0,
       startedAt: Date.now(),
-      revealed: false,
       timer: null,
       streak: 0
     };
@@ -597,6 +643,31 @@ var quizApp = (function () {
     paintRun();
   }
 
+  /* An answer counts as given for 0 (option A) and for False, so test the
+     empty cases explicitly instead of relying on truthiness. */
+  function hasAnswer(v) {
+    if (v === null || v === undefined) return false;
+    if (typeof v === "string") return v.trim() !== "";
+    return true;
+  }
+
+  function answeredCount() {
+    return run.answers.filter(hasAnswer).length;
+  }
+
+  /* Grade into spaced repetition once per question per run. */
+  function gradeOnce(idx) {
+    if (run.graded[idx]) return;
+    run.graded[idx] = true;
+    store.gradeSrs(run.qs[idx].key, isCorrect(run.qs[idx], run.answers[idx]));
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= run.qs.length) return;
+    run.i = idx;
+    paintRun();
+  }
+
   function fmtTime(ms) {
     var s = Math.max(0, Math.floor(ms / 1000));
     return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
@@ -605,7 +676,10 @@ var quizApp = (function () {
   function paintRun() {
     var q = run.qs[run.i];
     var given = run.answers[run.i];
-    var showFeedback = !run.exam && run.revealed;
+    // Practice mode reveals as soon as this question is answered, and keeps
+    // showing that result whenever you come back to it. Exam mode reveals
+    // nothing until the paper is submitted.
+    var showFeedback = !run.exam && run.checked[run.i];
 
     var body;
     if (q.format === "mcq") {
@@ -659,7 +733,22 @@ var quizApp = (function () {
         '</div>';
     }
 
-    var answered = run.answers.filter(function (a) { return a !== null && a !== ""; }).length;
+    var answered = answeredCount();
+
+    // Exam-hall style question palette: see at a glance what is answered,
+    // and jump straight to anything you want to revisit.
+    var palette = '<div class="qpalette mt-3">' + run.qs.map(function (item, idx) {
+      var cls = "qpalette__dot";
+      if (idx === run.i) cls += " is-current";
+      if (hasAnswer(run.answers[idx])) {
+        cls += " is-done";
+        if (!run.exam && run.checked[idx]) {
+          cls += isCorrect(item, run.answers[idx]) ? " is-right" : " is-wrong";
+        }
+      }
+      return '<button type="button" class="' + cls + '" data-goto="' + idx + '" ' +
+        'aria-label="Question ' + (idx + 1) + '">' + (idx + 1) + '</button>';
+    }).join("") + '</div>';
 
     // Sub-section badge metadata
     var subMeta = getSubSectionMeta(q.unitId, q.subSection);
@@ -692,6 +781,8 @@ var quizApp = (function () {
         '<div class="bar bar--lg mt-3"><div class="bar__fill" style="width:' +
           (((run.i + 1) / run.qs.length) * 100) + '%"></div></div>' +
 
+        palette +
+
         '<div class="card quizcard mt-5">' +
           '<div class="quizcard__meta">' +
             '<span class="chip chip--accent font-bold">' +
@@ -719,15 +810,17 @@ var quizApp = (function () {
             : '') +
         '</div>' +
 
+        /* MCQ and True/False grade on the tap itself, so the only button
+           needed here is the one that moves you on. Fill-in-the-blank still
+           needs an explicit submit because typing has no natural end. */
         '<div class="row mt-6 items-center">' +
           '<button class="btn" id="prevbtn"' + (run.i === 0 ? ' disabled' : '') + '>← Previous</button>' +
           '<div class="push"></div>' +
           '<span class="small faint mr-3">' + answered + ' of ' + run.qs.length + ' answered</span>' +
-          (!run.exam && !run.revealed
-            ? '<button class="btn btn--primary btn--lg" id="checkbtn">Check Answer (Enter)</button>'
-            : (run.i === run.qs.length - 1
-              ? '<button class="btn btn--primary btn--lg" id="finishbtn">Finish &amp; See Results 🏆</button>'
-              : '<button class="btn btn--primary btn--lg" id="nextbtn">Next Question →</button>')) +
+          (run.i === run.qs.length - 1
+            ? '<button class="btn btn--primary btn--lg" id="finishbtn">Finish &amp; See Results 🏆</button>'
+            : '<button class="btn btn--primary btn--lg" id="nextbtn">' +
+                (hasAnswer(given) ? 'Next Question →' : 'Skip for Now →') + '</button>') +
         '</div>' +
 
         (run.exam && run.i === run.qs.length - 1
@@ -749,20 +842,50 @@ var quizApp = (function () {
     });
   }
 
+  /* Reveal the answer for the current question, award streaks and file the
+     result into spaced repetition. Practice mode only. */
+  function revealCurrent(anchorEl) {
+    if (run.exam || run.checked[run.i]) return;
+    run.checked[run.i] = true;
+    var ok = isCorrect(run.qs[run.i], run.answers[run.i]);
+    gradeOnce(run.i);
+
+    if (ok) {
+      run.streak = (run.streak || 0) + 1;
+      if (app.burstConfetti && anchorEl) app.burstConfetti(anchorEl);
+      if (run.streak === 3 && app.popMilestone) app.popMilestone("🔥 3 in a row!");
+      else if (run.streak === 5 && app.popMilestone) app.popMilestone("🚀 5 streak — unstoppable!");
+      else if (run.streak === 7 && app.popMilestone) app.popMilestone("⚡ 7 straight — pure genius!");
+      else if (run.streak === 10 && app.popMilestone) app.popMilestone("👑 10 streak — Master Animal Geneticist!");
+    } else {
+      run.streak = 0;
+    }
+  }
+
   function wireRun(q) {
-    // Option picking for MCQ and TF
+    // One tap answers the question: it records the choice and, in practice
+    // mode, grades it immediately. No second "check" tap.
     document.querySelectorAll("[data-pick]").forEach(function (b) {
       b.addEventListener("click", function () {
+        if (!run.exam && run.checked[run.i]) return;   // already locked in
         var raw = b.getAttribute("data-pick");
         run.answers[run.i] = (q.format === "tf") ? (raw === "true") : parseInt(raw, 10);
+        revealCurrent(b);
         paintRun();
+      });
+    });
+
+    // Question palette: jump to any question, answered or not.
+    document.querySelectorAll("[data-goto]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        goTo(parseInt(b.getAttribute("data-goto"), 10));
       });
     });
 
     // FIB input
     var fib = document.getElementById("fibinput");
     if (fib) {
-      if (!run.revealed && !run.exam) {
+      if (!run.checked[run.i]) {
         setTimeout(function () { fib.focus(); }, 50);
       }
       fib.addEventListener("input", function () {
@@ -770,59 +893,41 @@ var quizApp = (function () {
       });
       fib.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
+          e.preventDefault();
           run.answers[run.i] = fib.value;
-          var cb = document.getElementById("checkbtn") || document.getElementById("nextbtn") || document.getElementById("finishbtn");
-          if (cb) cb.click();
+          submitFib();
         }
       });
     }
 
-    var fibSubmit = document.getElementById("fibsubmit");
-    if (fibSubmit) {
-      fibSubmit.addEventListener("click", function () {
-        var cb = document.getElementById("checkbtn");
-        if (cb) cb.click();
-      });
-    }
-
-    // Check answer button
-    var check = document.getElementById("checkbtn");
-    if (check) check.addEventListener("click", function () {
-      if (run.answers[run.i] === null || run.answers[run.i] === "") {
-        app.toast("Please select or type an answer first");
+    function submitFib() {
+      if (!hasAnswer(run.answers[run.i])) {
+        app.toast("Type your answer first");
         return;
       }
-      run.revealed = true;
-      var ok = isCorrect(q, run.answers[run.i]);
-      store.gradeSrs(q.key, ok);
-
-      if (ok) {
-        run.streak = (run.streak || 0) + 1;
-        if (app.burstConfetti) app.burstConfetti(check);
-        if (run.streak === 3 && app.popMilestone) app.popMilestone("🔥 3 in a row!");
-        else if (run.streak === 5 && app.popMilestone) app.popMilestone("🚀 5 streak — unstoppable!");
-        else if (run.streak === 7 && app.popMilestone) app.popMilestone("⚡ 7 straight — pure genius!");
-        else if (run.streak === 10 && app.popMilestone) app.popMilestone("👑 10 streak — Master Animal Geneticist!");
-      } else {
-        run.streak = 0;
+      if (run.exam || run.checked[run.i]) {
+        advance();
+        return;
       }
+      revealCurrent(document.getElementById("fibsubmit"));
       paintRun();
-    });
+    }
 
-    // Navigation buttons
+    var fibSubmit = document.getElementById("fibsubmit");
+    if (fibSubmit) fibSubmit.addEventListener("click", submitFib);
+
+    function advance() {
+      if (run.i === run.qs.length - 1) finish(false);
+      else goTo(run.i + 1);
+    }
+
+    // Navigation buttons — answers and their feedback are kept per question,
+    // so moving back and forth never clears what you already did.
     var next = document.getElementById("nextbtn");
-    if (next) next.addEventListener("click", function () {
-      run.i++;
-      run.revealed = false;
-      paintRun();
-    });
+    if (next) next.addEventListener("click", function () { goTo(run.i + 1); });
 
     var prev = document.getElementById("prevbtn");
-    if (prev) prev.addEventListener("click", function () {
-      run.i--;
-      run.revealed = false;
-      paintRun();
-    });
+    if (prev) prev.addEventListener("click", function () { goTo(run.i - 1); });
 
     var fin = document.getElementById("finishbtn");
     if (fin) fin.addEventListener("click", function () { finish(false); });
@@ -843,25 +948,31 @@ var quizApp = (function () {
 
     // Global keyboard shortcuts (1-4 or A-D for MCQ, T/F for True/False, Enter for Next)
     function handleKey(e) {
+      if (!run || !run.active) return;                 // quiz already left or finished
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
 
-      if (!run.revealed && !run.exam) {
+      var locked = !run.exam && run.checked[run.i];
+      if (!locked) {
         if (q.format === "mcq") {
           var map = { "1": 0, "2": 1, "3": 2, "4": 3, "a": 0, "b": 1, "c": 2, "d": 3, "A": 0, "B": 1, "C": 2, "D": 3 };
-          if (map[e.key] !== undefined) {
+          if (map[e.key] !== undefined && map[e.key] < (q.o || []).length) {
             run.answers[run.i] = map[e.key];
+            revealCurrent(null);
             paintRun();
             return;
           }
         } else if (q.format === "tf") {
-          if (e.key === "t" || e.key === "T" || e.key === "1") { run.answers[run.i] = true; paintRun(); return; }
-          if (e.key === "f" || e.key === "F" || e.key === "2") { run.answers[run.i] = false; paintRun(); return; }
+          if (e.key === "t" || e.key === "T" || e.key === "1") { run.answers[run.i] = true; revealCurrent(null); paintRun(); return; }
+          if (e.key === "f" || e.key === "F" || e.key === "2") { run.answers[run.i] = false; revealCurrent(null); paintRun(); return; }
         }
       }
 
+      if (e.key === "ArrowRight") { e.preventDefault(); goTo(run.i + 1); return; }
+      if (e.key === "ArrowLeft") { e.preventDefault(); goTo(run.i - 1); return; }
+
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        var cb = document.getElementById("checkbtn") || document.getElementById("nextbtn") || document.getElementById("finishbtn");
+        var cb = document.getElementById("nextbtn") || document.getElementById("finishbtn");
         if (cb) cb.click();
       }
     }
@@ -878,6 +989,9 @@ var quizApp = (function () {
   function finish(timedOut) {
     if (run && run.timer) clearInterval(run.timer);
     if (run && run._keyHandler) window.removeEventListener("keydown", run._keyHandler);
+    // The run is over: without this the quiz tab would re-open this paper
+    // instead of the hub the next time it is visited.
+    if (run) run.active = false;
 
     var correct = 0;
     var wrongList = [];
@@ -896,12 +1010,23 @@ var quizApp = (function () {
       } else {
         wrongList.push({ q: q, given: run.answers[i] });
       }
-      if (run.exam) store.gradeSrs(q.key, ok);
+      // Anything not graded during the run (exam answers, skipped questions)
+      // is filed into spaced repetition now — exactly once each.
+      gradeOnce(i);
     });
 
     var total = run.qs.length;
     var percent = app.pct(correct, total);
     var mins = Math.round((Date.now() - run.startedAt) / 60000) || 1;
+
+    // Every unit this paper touched, so unit mastery on the dashboard also
+    // moves for sub-section tests, paper mocks and grand mocks.
+    var unitIds = [];
+    run.qs.forEach(function (q) {
+      if (q.unitId && unitIds.indexOf(q.unitId) === -1) unitIds.push(q.unitId);
+    });
+
+    var answeredTotal = answeredCount();
 
     store.saveAttempt({
       at: Date.now(),
@@ -909,9 +1034,24 @@ var quizApp = (function () {
       label: run.label,
       total: total,
       correct: correct,
+      attempted: answeredTotal,
+      skipped: total - answeredTotal,
       exam: run.exam,
-      minutes: mins
+      minutes: mins,
+      unitIds: unitIds,
+      subSectionId: run.subSectionId,
+      orderMode: run.orderMode,
+      timedOut: !!timedOut,
+      byFormat: formatStats
     });
+
+    // A timed paper can run out while the student is reading another tab.
+    // The score is saved above either way; only skip drawing the result over
+    // a screen that no longer belongs to the quiz.
+    if (!host || !document.body.contains(host)) {
+      if (timedOut && app.toast) app.toast("Time expired — your paper was submitted");
+      return;
+    }
 
     var verdict = percent >= 85 ? "Rank 1 Distinction" : percent >= 70 ? "Strong First Class" : percent >= 50 ? "Passing Grade" : "Needs Revision";
     var chipCls = percent >= 85 ? "chip--ok" : percent >= 70 ? "chip--accent" : percent >= 50 ? "chip--warn" : "chip--danger";
