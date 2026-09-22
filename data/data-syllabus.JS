@@ -124,7 +124,7 @@ var syllabus = {
         },
         {
           "id": "u1-t22",
-          "title": "MS-Office in Veterinary Applications and Statistical Data Analysis using MS-Excel"
+          "title": "MS-Office in Veterinary Applications, Statistical Data Analysis using MS-Excel and Computer Networks (Internet & E-mail)"
         }
       ]
     },

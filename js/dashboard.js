@@ -137,8 +137,8 @@ var dashboardApp = (function () {
               '<div class="dash-metrics-grid">' +
                 '<div class="dash-metric-card">' +
                   '<div class="dash-metric-head">Streak <span class="streak-flame">' + app.icon("flame") + '</span></div>' +
-                  '<div class="dash-metric-val">' + streak.current + ' <small style="font-size:14px;font-weight:600">days</small></div>' +
-                  '<div class="dash-metric-sub">Best: ' + streak.longest + ' days</div>' +
+                  '<div class="dash-metric-val">' + streak.current + ' <small style="font-size:14px;font-weight:600">' + (streak.current === 1 ? 'day' : 'days') + '</small></div>' +
+                  '<div class="dash-metric-sub">Best: ' + plural(streak.longest, 'day') + '</div>' +
                 '</div>' +
 
                 '<div class="dash-metric-card">' +
@@ -227,6 +227,9 @@ var dashboardApp = (function () {
     return '<span class="xp-chip" title="' + label + ': ' + got + ' of ' + max + ' XP">' +
       '<i style="width:' + p + '%"></i><b>' + label + '</b><span>' + got + '</span></span>';
   }
+
+  /* "1 days" reads like a bug even when the number is right. */
+  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
 
   function scoreChip(p) {
     return p >= 85 ? "chip--ok" : p >= 70 ? "chip--accent" : p >= 50 ? "chip--warn" : "chip--danger";
@@ -796,7 +799,7 @@ var dashboardApp = (function () {
           '<h3>Study activity heatmap</h3>' +
           '<p class="muted small mt-1">The past 12 weeks of study actions.</p>' +
         '</div>' +
-        '<span class="chip font-mono">' + totalInteractions + ' actions</span>' +
+        '<span class="chip font-mono">' + plural(totalInteractions, 'action') + '</span>' +
       '</div>' +
 
       '<div class="heatmap-grid-scroll mt-4">' +
@@ -810,7 +813,7 @@ var dashboardApp = (function () {
 
       '<div class="heatmap-summary-strip">' +
         '<div>Active days: <b>' + activeDaysCount + ' / ' + DAYS + '</b></div>' +
-        '<div>Longest streak: <b>' + streak.longest + ' days</b></div>' +
+        '<div>Longest streak: <b>' + plural(streak.longest, 'day') + '</b></div>' +
         '<div class="row small faint" style="gap:4px">' +
           '<span>Less</span>' +
           [0, 1, 2, 3, 4].map(function (l) { return '<div class="hm__cell" style="width:11px;height:11px" data-lvl="' + l + '"></div>'; }).join("") +
