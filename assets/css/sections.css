@@ -4855,3 +4855,7 @@
   .an-q { padding: var(--s4); }
   .an-actions .btn { flex: 1 1 100%; justify-content: center; }
 }
+
+/* "Exam Top" module card — stands out from the syllabus sub-sections */
+.subsec-card--exam { border-color: var(--warn); background: linear-gradient(135deg, var(--warn-soft), var(--surface)); }
+.subsec-card--exam.is-active { box-shadow: 0 0 0 2px var(--warn); }

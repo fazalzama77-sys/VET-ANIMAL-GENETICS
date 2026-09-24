@@ -53,8 +53,16 @@ var quizApp = (function () {
   var DIFF_LABEL = { 1: "Foundational", 2: "Core UG", 3: "Rank 1 Classic" };
   var DIFF_STARS = { 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐" };
 
+  /* "exam" is not a syllabus sub-section: it is the hand-picked set of the
+     50 most examinable questions per unit (flagged "exam": true in the bank). */
+  var EXAM_META = {
+    id: "exam", icon: "🔥", title: "Exam Top — most important questions",
+    desc: "The hand-picked questions most likely to be asked in the annual exam, spread across the whole unit syllabus."
+  };
+
   function getSubSectionMeta(unitId, subId) {
     if (!subId || subId === "all") return null;
+    if (subId === "exam") return EXAM_META;
     var list = subSectionsByUnit[unitId] || [];
     for (var i = 0; i < list.length; i++) {
       if (list[i].id === subId) return list[i];
@@ -147,7 +155,9 @@ var quizApp = (function () {
       formats.forEach(function (f) {
         (b[f] || []).forEach(function (q, i) {
           if (!q.q || !String(q.q).trim()) return;   // skip empty template rows
-          if (subSectionId && subSectionId !== "all" && q.subSection !== subSectionId) return;
+          if (subSectionId === "exam") {
+            if (!q.exam) return;
+          } else if (subSectionId && subSectionId !== "all" && q.subSection !== subSectionId) return;
           var placed = f === "mcq" ? orderOptions(q.o, q.a) : { o: q.o, a: q.a };
           out.push({
             key: uid + ":" + f + ":" + i,
@@ -160,7 +170,8 @@ var quizApp = (function () {
             a_display: q.a_display || (Array.isArray(q.a) ? q.a[0] : q.a),
             e: q.e,
             topicId: q.topicId || null,
-            diff: q.diff || 1
+            diff: q.diff || 1,
+            exam: !!q.exam
           });
         });
       });
@@ -286,7 +297,7 @@ var quizApp = (function () {
     if (!kind) { renderHub(); return; }
     if (kind === "unit")      { renderSetup("unit", params.b); return; }
     if (kind === "paper")     { renderSetup("paper", params.b); return; }
-    if (kind === "grand")     { renderSetup("grand", null); return; }
+    if (kind === "grand")     { renderSetup("grand", null, params.b === "exam"); return; }
     if (kind === "practical") { renderSetup("practical", null); return; }
     if (kind === "review")    { renderReview(); return; }
     if (kind === "resume")    { resumeSaved(); return; }
@@ -317,7 +328,9 @@ var quizApp = (function () {
         '<span class="tlist__no">U' + u.no + '</span>' +
         '<span class="tlist__body"><span class="tlist__title">' + app.esc(u.short) + '</span>' +
         '<span class="tlist__sub">' +
-          (n ? '<b>' + n + ' questions</b> · ' + subList.length + ' modular sub-sections' : 'No questions added yet') +
+          (n ? '<b>' + n + ' questions</b> · ' + subList.length + ' modular sub-sections' +
+            (countAvailable([u.id], "exam") ? ' · 🔥 ' + countAvailable([u.id], "exam") + ' Exam Top' : '')
+            : 'No questions added yet') +
         '</span></span>' +
         '<span class="tlist__right">' +
           (rec ? '<span class="chip ' + scoreChip(rec.best) + '">Best ' + rec.best + '%</span>' : '') +
@@ -382,6 +395,7 @@ var quizApp = (function () {
         modeCard("Paper I", "Biostatistics & Animal Genetics (" + paperUnitLabel("paper-1") + ")", countAvailable(scopeUnits("paper", "paper-1")), "#/quiz/paper/paper-1", false, "theory") +
         modeCard("Paper II", "Principles of Animal Breeding (" + paperUnitLabel("paper-2") + ")", countAvailable(scopeUnits("paper", "paper-2")), "#/quiz/paper/paper-2", false, "theory") +
         modeCard("Grand test", "All three theory units", countAvailable(theoryIds), "#/quiz/grand", false, "trophy") +
+        modeCard("🔥 Exam Top " + countAvailable(theoryIds, "exam"), "The most important questions of all three units — last-minute revision", countAvailable(theoryIds, "exam"), "#/quiz/grand/exam", false, "target") +
         modeCard("Practical", "All three practical units", countAvailable(pracIds), "#/quiz/practical", false, "practical") +
         modeCard("Smart Review", due + " question" + (due === 1 ? "" : "s") + " due today", due, "#/quiz/review", true, "repeat") +
       '</div>' +
@@ -452,7 +466,7 @@ var quizApp = (function () {
   /* ============================================================
      SETUP SCREEN WITH SUB-SECTION PICKER & SEQUENCE/SHUFFLE TOGGLE
      ============================================================ */
-  function renderSetup(kind, id) {
+  function renderSetup(kind, id, preselectExam) {
     resetRun();
     var unitIds = scopeUnits(kind, id);
     var subSections = (kind === "unit" && subSectionsByUnit[id]) ? subSectionsByUnit[id] : [];
@@ -477,7 +491,7 @@ var quizApp = (function () {
 
     var prefs = store.getQuizPrefs() || {};
     var state = {
-      subSectionId: "all",
+      subSectionId: preselectExam ? "exam" : "all",
       orderMode: prefs.orderMode === "shuffle" ? "shuffle" : "sequence",
       formats: Array.isArray(prefs.formats) && prefs.formats.length ? prefs.formats.slice(0) : ["mcq", "tf", "fib"],
       count: typeof prefs.count === "number" ? prefs.count : 20,
@@ -511,6 +525,7 @@ var quizApp = (function () {
       var subSecHtml = "";
       if (subSections.length > 0) {
         var allCount = bankFor(unitIds, ["mcq", "tf", "fib"], "all").length;
+        var examCount = bankFor(unitIds, ["mcq", "tf", "fib"], "exam").length;
         subSecHtml =
           '<div class="setup__row subsec-selector-row">' +
             '<div>' +
@@ -526,6 +541,16 @@ var quizApp = (function () {
                 '</div>' +
                 '<p class="subsec-card__desc">Complete unit test covering all topics in the 2 : 1 : 1 exam ratio.</p>' +
               '</button>' +
+              (examCount
+                ? '<button type="button" class="subsec-card subsec-card--exam' + (state.subSectionId === 'exam' ? ' is-active' : '') + '" data-sub="exam">' +
+                    '<div class="subsec-card__head">' +
+                      '<span class="subsec-card__icon">' + EXAM_META.icon + '</span>' +
+                      '<span class="subsec-card__title">' + app.esc(EXAM_META.title) + '</span>' +
+                      '<span class="chip chip--warn subsec-card__badge">' + examCount + ' Qs</span>' +
+                    '</div>' +
+                    '<p class="subsec-card__desc">' + app.esc(EXAM_META.desc) + '</p>' +
+                  '</button>'
+                : '') +
               subSections.map(function (sub) {
                 var c = bankFor(unitIds, ["mcq", "tf", "fib"], sub.id).length;
                 var active = state.subSectionId === sub.id ? ' is-active' : '';
@@ -562,6 +587,17 @@ var quizApp = (function () {
 
         '<div class="card setup quiz-setup-card">' +
           subSecHtml +
+
+          (!subSections.length && bankFor(unitIds, ["mcq", "tf", "fib"], "exam").length
+            ? '<div class="setup__row">' +
+                '<div>' +
+                  '<b>🔥 Exam Top questions only</b>' +
+                  '<p class="small muted">Restrict this mock to the hand-picked most important questions of each unit (' +
+                    bankFor(unitIds, ["mcq", "tf", "fib"], "exam").length + ' available).</p>' +
+                '</div>' +
+                '<label class="switch"><input type="checkbox" id="examonly"' + (state.subSectionId === "exam" ? ' checked' : '') + '><span></span></label>' +
+              '</div>'
+            : '') +
 
           /* Order Mode Toggle (Sequence vs Shuffle) */
           '<div class="setup__row">' +
@@ -697,6 +733,14 @@ var quizApp = (function () {
         });
       });
 
+      var examOnly = document.getElementById("examonly");
+      if (examOnly) {
+        examOnly.addEventListener("change", function () {
+          state.subSectionId = examOnly.checked ? "exam" : "all";
+          updateView();
+        });
+      }
+
       var examChk = document.getElementById("exammode");
       if (examChk) {
         examChk.addEventListener("change", function (e) {
@@ -728,7 +772,8 @@ var quizApp = (function () {
           var finalQuestions = pickBalanced(rawPool, state.count, state.orderMode, state.formats);
           var runLabel = label;
           var subMeta = getSubSectionMeta(id, state.subSectionId);
-          if (subMeta) runLabel = subMeta.icon + " " + subMeta.title;
+          if (subMeta && state.subSectionId === "exam") runLabel = label + " · 🔥 Exam Top";
+          else if (subMeta) runLabel = subMeta.icon + " " + subMeta.title;
 
           savePrefs();
           start({
@@ -1068,6 +1113,7 @@ var quizApp = (function () {
             '<span class="chip">' + app.esc((syllabus.unitById[q.unitId] || {}).short || q.unitId) + '</span>' +
             subBadge +
             diffBadge +
+            (q.exam ? '<span class="chip chip--warn">🔥 Exam Top</span>' : '') +
             '<button type="button" class="flagbtn' + (run.flags[run.i] ? ' is-on' : '') + '" id="flagbtn" ' +
               'title="Flag this question to come back to it">' +
               '🚩 <span>' + (run.flags[run.i] ? 'Flagged' : 'Flag for review') + '</span>' +
