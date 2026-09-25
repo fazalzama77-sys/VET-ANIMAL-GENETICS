@@ -133,7 +133,15 @@ var app = (function () {
     if (typeof h === "string") return { text: h, color: "yellow" };
     var valid = (store.VALID_HL_COLORS || ["yellow", "green", "blue", "pink", "orange", "purple"]);
     var col = (h.color && valid.indexOf(h.color) !== -1) ? h.color : "yellow";
-    return { text: h.text || "", color: col };
+    return {
+      text: h.text || "",
+      color: col,
+      // Where in the lesson it was made. Missing on highlights saved before
+      // positions were recorded; those fall back to the best whole-word match.
+      occ: typeof h.occ === "number" ? h.occ : undefined,
+      prefix: h.prefix || "",
+      suffix: h.suffix || ""
+    };
   }
 
   /* How many topics in a unit are marked read */
@@ -1533,40 +1541,33 @@ var app = (function () {
         return '<li class="hl-item--' + esc(h.color) + '">' +
           '<span class="hl-chip hl-chip--' + esc(h.color) + '">' + esc(h.color) + '</span>' +
           '<span class="hllist__text">' + esc(h.text) + '</span>' +
-          '<button class="hllist__x" data-unhl="' + esc(h.text) + '" aria-label="Remove highlight" title="Remove highlight">&times;</button></li>';
+          '<button class="hllist__x" data-unhl="' + esc(h.text) + '"' +
+            (typeof h.occ === "number" ? ' data-unhl-occ="' + h.occ + '"' : '') +
+            ' aria-label="Remove highlight" title="Remove highlight">&times;</button></li>';
       }).join("") + '</ul></div></section>';
   }
 
-  /* Inline highlights in the lesson text.
-     Run against the whole lesson at once (not block by block) so that
-     "first occurrence" means first in the lesson, not first in each block. */
-  function applyDomHighlights(container, list) {
-    if (!container || !list || !list.length) return;
-    var items = list.map(normHl).filter(function (h) {
-      return h.text && h.text.trim().length >= 2;
-    }).sort(function (a, b) {
-      return b.text.length - a.text.length;   // longest first, so it wins any overlap
-    });
-    if (!items.length) return;
-
-    items.forEach(function (item) {
-      highlightInElement(container, item.text, item.color);
-    });
-  }
-
   /* ------------------------------------------------------------
-     Inline highlighting across element boundaries.
+     Inline highlights in the lesson text.
 
-     A student's selection routinely crosses <b> and <i> tags, wraps
-     over several lines, and may start or end in the middle of a word.
-     Searching inside one text node at a time therefore fails silently
-     on exactly the selections people actually make. Instead we flatten
-     the whole block into one string, find the phrase there, then wrap
-     each text node the match passes through in its own <mark>.
+     A highlight must land on the exact words the student selected.
+     Saving only the words and searching for them later paints the
+     first match in the lesson instead — often in the opening
+     sentence, and even inside a longer word ("gene" in "genetics").
+
+     So each highlight also stores where it was:
+       occ     which match of that text in the lesson it was (0-based)
+       prefix  a little of the text just before it
+       suffix  a little of the text just after it
+     The surrounding text is what keeps it on the right words when
+     the lesson itself is later edited; occ breaks any ties.
      ------------------------------------------------------------ */
+  var HL_CONTEXT = 32;
 
-  /* Text nodes we are allowed to highlight — never inside an existing mark,
-     and never inside the "My highlights" summary list at the top. */
+  /* Every text node that belongs to the lesson, in reading order. Text
+     already inside a highlight is included on purpose: positions must be
+     measured the same way when saving and when restoring. Only the
+     "My highlights" summary list is left out, because its content changes. */
   function collectTextNodes(root) {
     var out = [];
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -1574,7 +1575,6 @@ var app = (function () {
         if (!n.nodeValue || !n.nodeValue.length) return NodeFilter.FILTER_REJECT;
         var p = n.parentElement;
         if (!p) return NodeFilter.FILTER_REJECT;
-        if (p.closest("mark.hl-inline")) return NodeFilter.FILTER_REJECT;
         if (p.closest(".block--hl")) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       }
@@ -1583,80 +1583,201 @@ var app = (function () {
     return out;
   }
 
-  /* Find and wrap the first occurrence. Returns true if one was wrapped. */
-  function wrapFirstMatch(root, re, color, key) {
+  /* The lesson as one string, plus where each text node sits inside it. */
+  function flattenText(root) {
     var nodes = collectTextNodes(root);
-    if (!nodes.length) return false;
-
-    // Flatten to a single string, remembering where each node sits in it.
     var full = "";
     var bounds = [];
     for (var i = 0; i < nodes.length; i++) {
       var v = nodes[i].nodeValue;
-      bounds.push({ start: full.length, end: full.length + v.length, i: i });
+      bounds.push({ start: full.length, end: full.length + v.length });
       full += v;
     }
+    return { nodes: nodes, bounds: bounds, full: full };
+  }
 
+  function squash(s) { return String(s || "").replace(/\s+/g, " ").trim().toLowerCase(); }
+
+  /* Whitespace in a selection does not match the DOM exactly (paragraph
+     breaks, re-flowed lines), so words may be separated by any whitespace
+     or none at all. */
+  function highlightPattern(text) {
+    var words = String(text).trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return null;
+    var body = words.map(function (w) {
+      return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }).join("\\s*");
+    try { return new RegExp(body, "gi"); } catch (e) { return null; }
+  }
+
+  function allMatches(full, re) {
+    var out = [];
     re.lastIndex = 0;
-    var m = re.exec(full);
-    if (!m || !m[0].length) return false;
+    var m;
+    while ((m = re.exec(full)) !== null) {
+      if (!m[0].length) { re.lastIndex++; continue; }
+      out.push({ start: m.index, end: m.index + m[0].length });
+    }
+    return out;
+  }
 
+  /* Character position in the flattened lesson of one end of a Range. */
+  function pointToOffset(flat, container, offset) {
+    if (container.nodeType === 3) {
+      var idx = flat.nodes.indexOf(container);
+      if (idx !== -1) return flat.bounds[idx].start + Math.min(offset, container.nodeValue.length);
+    }
+    // Element boundary (or a node we skip): the first lesson text node at or
+    // after that point is where the position falls.
+    var probe = document.createRange();
+    try { probe.setStart(container, offset); } catch (e) { return -1; }
+    for (var i = 0; i < flat.nodes.length; i++) {
+      if (probe.comparePoint(flat.nodes[i], 0) >= 0) return flat.bounds[i].start;
+    }
+    return flat.full.length;
+  }
+
+  /* Build the saved position for a live selection inside the lesson. */
+  function anchorForRange(root, range, text) {
+    var flat = flattenText(root);
+    var re = highlightPattern(text);
+    if (!re) return null;
+
+    var startOff = pointToOffset(flat, range.startContainer, range.startOffset);
+    if (startOff < 0) return null;
+
+    var matches = allMatches(flat.full, re);
+    if (!matches.length) return null;
+
+    // The match that begins nearest the selection start is the one selected.
+    // Leading spaces in a selection can put the start slightly before it.
+    var occ = 0, best = Infinity;
+    for (var i = 0; i < matches.length; i++) {
+      var d = Math.abs(matches[i].start - startOff);
+      if (d < best) { best = d; occ = i; }
+    }
+    var hit = matches[occ];
+    return {
+      occ: occ,
+      prefix: flat.full.slice(Math.max(0, hit.start - HL_CONTEXT), hit.start),
+      suffix: flat.full.slice(hit.end, hit.end + HL_CONTEXT)
+    };
+  }
+
+  /* How closely the text around a candidate matches the saved context.
+     Compared from the highlight outwards, so the nearest characters count. */
+  function contextScore(full, match, prefix, suffix) {
+    var score = 0;
+    var before = squash(full.slice(Math.max(0, match.start - HL_CONTEXT * 2), match.start));
+    var after = squash(full.slice(match.end, match.end + HL_CONTEXT * 2));
+    var p = squash(prefix), s = squash(suffix);
+    for (var i = 1; i <= p.length && i <= before.length; i++) {
+      if (p.charAt(p.length - i) !== before.charAt(before.length - i)) break;
+      score++;
+    }
+    for (var j = 0; j < s.length && j < after.length; j++) {
+      if (s.charAt(j) !== after.charAt(j)) break;
+      score++;
+    }
+    return score;
+  }
+
+  function isWholeWord(full, match) {
+    var before = match.start > 0 ? full.charAt(match.start - 1) : " ";
+    var after = match.end < full.length ? full.charAt(match.end) : " ";
+    return !/[a-z0-9]/i.test(before) && !/[a-z0-9]/i.test(after);
+  }
+
+  /* Pick which match a saved highlight belongs to. */
+  function chooseMatch(full, matches, h) {
+    if (!matches.length) return null;
+
+    var hasContext = (h.prefix && h.prefix.trim()) || (h.suffix && h.suffix.trim());
+    if (hasContext) {
+      var bestIdx = -1, bestScore = -1;
+      for (var i = 0; i < matches.length; i++) {
+        var sc = contextScore(full, matches[i], h.prefix, h.suffix);
+        // A tie goes to the match whose position agrees with occ.
+        if (sc > bestScore || (sc === bestScore && i === h.occ)) { bestScore = sc; bestIdx = i; }
+      }
+      if (bestScore > 0) return matches[bestIdx];
+    }
+
+    if (typeof h.occ === "number" && matches[h.occ]) return matches[h.occ];
+
+    // Highlights saved before positions were recorded: prefer a whole word,
+    // so "gene" is not painted inside "genetics".
+    for (var k = 0; k < matches.length; k++) {
+      if (isWholeWord(full, matches[k])) return matches[k];
+    }
+    return matches[0];
+  }
+
+  /* Wrap the characters [start, end) of the flattened lesson in marks — one
+     per text node the span passes through, because a selection routinely
+     crosses <b>, <i> and glossary tags. */
+  function wrapSpan(flat, start, end, h) {
     function locate(pos) {
-      for (var b = 0; b < bounds.length; b++) {
-        if (pos >= bounds[b].start && pos < bounds[b].end) {
-          return { n: bounds[b].i, o: pos - bounds[b].start };
+      for (var b = 0; b < flat.bounds.length; b++) {
+        if (pos >= flat.bounds[b].start && pos < flat.bounds[b].end) {
+          return { n: b, o: pos - flat.bounds[b].start };
         }
       }
       return null;
     }
-
-    var from = locate(m.index);
-    var to = locate(m.index + m[0].length - 1);
+    var from = locate(start);
+    var to = locate(end - 1);
     if (!from || !to) return false;
 
-    // Wrap from the LAST node backwards, so offsets in earlier nodes stay valid.
+    var key = h.text.trim();
+    // Work from the last node backwards so earlier offsets stay valid.
     for (var k = to.n; k >= from.n; k--) {
-      var node = nodes[k];
+      var node = flat.nodes[k];
       if (!node || !node.parentNode) continue;
-
       var s = (k === from.n) ? from.o : 0;
       var e = (k === to.n) ? to.o + 1 : node.nodeValue.length;
       if (e <= s) continue;
 
       var mid = node;
-      if (e < mid.nodeValue.length) mid.splitText(e);   // trim the tail off
-      if (s > 0) mid = mid.splitText(s);                // trim the head off
+      if (e < mid.nodeValue.length) mid.splitText(e);
+      if (s > 0) mid = mid.splitText(s);
+      if (!mid.nodeValue.trim()) continue;   // don't paint the gap between paragraphs
 
       var mark = document.createElement("mark");
-      mark.className = "hl-inline hl-inline--" + color;
-      mark.setAttribute("data-hl-color", color);
+      mark.className = "hl-inline hl-inline--" + h.color;
+      mark.setAttribute("data-hl-color", h.color);
       mark.setAttribute("data-hl-text", key);
-      mark.title = "Highlighted in " + color + " — click to remove";
+      if (typeof h.occ === "number") mark.setAttribute("data-hl-occ", String(h.occ));
+      mark.title = "Highlighted in " + h.color + " — tap to remove";
       mid.parentNode.replaceChild(mark, mid);
       mark.appendChild(mid);
     }
     return true;
   }
 
-  function highlightInElement(root, searchText, color) {
-    if (!root || !searchText) return;
-    var needle = String(searchText).trim();
-    if (needle.length < 2) return;
+  /* Paint one saved highlight onto the lesson. */
+  function highlightInElement(root, h) {
+    if (!root || !h || !h.text) return false;
+    if (h.text.trim().length < 2) return false;
+    var re = highlightPattern(h.text);
+    if (!re) return false;
+    var flat = flattenText(root);
+    var hit = chooseMatch(flat.full, allMatches(flat.full, re), h);
+    if (!hit) return false;
+    return wrapSpan(flat, hit.start, hit.end, h);
+  }
 
-    // Whitespace in the saved text will not match the DOM exactly once the
-    // text has been re-flowed, so treat any run of whitespace as equivalent.
-    var pattern = needle
-      .split(/\s+/)
-      .map(function (w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); })
-      .join("\\s+");
-
-    var re;
-    try { re = new RegExp(pattern, "i"); } catch (e) { return; }
-
-    // Only the FIRST occurrence is marked. One saved highlight should show as
-    // one passage on the page, exactly as the student selected it — marking
-    // every repetition of the phrase would splatter colour across the lesson.
-    wrapFirstMatch(root, re, color, needle);
+  /* Restore every saved highlight when a lesson opens. Positions are measured
+     with highlighted text included, so painting one never shifts another. */
+  function applyDomHighlights(container, list) {
+    if (!container || !list || !list.length) return;
+    list.map(normHl).filter(function (h) {
+      return h.text && h.text.trim().length >= 2;
+    }).sort(function (a, b) {
+      return b.text.length - a.text.length;   // longest first, so it wins any overlap
+    }).forEach(function (h) {
+      highlightInElement(container, h);
+    });
   }
 
   /* Strip tags so the text-to-speech engine reads words, not markup */
@@ -1870,9 +1991,20 @@ var app = (function () {
         var text = popup.dataset.text;
         if (!text) return;
 
-        store.addHighlight(topicId, text, color);
+        // Pin the highlight to the exact words selected, not to the first
+        // place those words happen to appear in the lesson.
+        var anchor = popup._range ? anchorForRange(panel, popup._range, text) : null;
+        var h = {
+          text: text,
+          color: color,
+          occ: anchor ? anchor.occ : undefined,
+          prefix: anchor ? anchor.prefix : "",
+          suffix: anchor ? anchor.suffix : ""
+        };
+
+        store.addHighlight(topicId, text, color, anchor);
         store.setHighlightColor(color);
-        highlightInElement(panel, text, color);
+        highlightInElement(panel, h);
 
         // re-wire click to remove on marks
         wireInlineMarks(topicId);
@@ -1932,10 +2064,17 @@ var app = (function () {
     }
   }
 
+  /* "occ" identifies which copy of a repeated phrase a highlight belongs to,
+     so removing one leaves the others in place. */
+  function occAttr(elm, name) {
+    var v = elm.getAttribute(name);
+    return v === null || v === "" ? undefined : parseInt(v, 10);
+  }
+
   function wireUnhlButtons(topicId) {
     els("[data-unhl]").forEach(function (b) {
       b.onclick = function () {
-        store.removeHighlight(topicId, b.getAttribute("data-unhl"));
+        store.removeHighlight(topicId, b.getAttribute("data-unhl"), occAttr(b, "data-unhl-occ"));
         renderTopic();
       };
     });
@@ -1947,7 +2086,7 @@ var app = (function () {
         e.stopPropagation();
         var txt = m.getAttribute("data-hl-text");
         var col = m.getAttribute("data-hl-color") || "highlight";
-        store.removeHighlight(topicId, txt);
+        store.removeHighlight(topicId, txt, occAttr(m, "data-hl-occ"));
         toast("Removed " + col + " highlight");
         renderTopic();
       };
@@ -2217,33 +2356,41 @@ var app = (function () {
     // Attach floating selection toolbar directly to the lesson container
     attachHighlightSelectionUI(lessonMain, t.id);
 
-    // Track text selection so clicking the picker doesn't lose it
+    // Track the selection — its text AND where it is — so opening the picker
+    // doesn't lose it and the highlight lands on the words actually chosen.
     var savedSelection = "";
+    var savedRange = null;
+    var lessonMain = el(".lesson__main");
+
+    function rememberSelection() {
+      var ws = window.getSelection();
+      var s = (ws || "").toString().trim();
+      if (!s || s.length > 400) return;
+      savedSelection = s;
+      try {
+        var r = ws.getRangeAt(0);
+        savedRange = (lessonMain && lessonMain.contains(r.commonAncestorContainer)) ? r.cloneRange() : null;
+      } catch (e) {
+        savedRange = null;
+      }
+    }
+
     function getLessonSel() {
       var s = (window.getSelection() || "").toString().trim();
+      if (s) rememberSelection();
       return s || savedSelection;
     }
 
-    var lessonMain = el(".lesson__main");
     if (lessonMain) {
-      lessonMain.addEventListener("mouseup", function () {
-        var s = (window.getSelection() || "").toString().trim();
-        if (s && s.length <= 400) savedSelection = s;
-      });
-      lessonMain.addEventListener("touchend", function () {
-        var s = (window.getSelection() || "").toString().trim();
-        if (s && s.length <= 400) savedSelection = s;
-      });
+      lessonMain.addEventListener("mouseup", rememberSelection);
+      lessonMain.addEventListener("touchend", rememberSelection);
     }
 
     var hlBtn = el("#hlbtn");
     var hlPicker = el("#hlpicker");
 
     if (hlBtn && hlPicker) {
-      hlBtn.addEventListener("mousedown", function () {
-        var s = (window.getSelection() || "").toString().trim();
-        if (s && s.length <= 400) savedSelection = s;
-      });
+      hlBtn.addEventListener("mousedown", rememberSelection);
 
       hlBtn.addEventListener("click", function (e) {
         e.stopPropagation();
@@ -2271,9 +2418,11 @@ var app = (function () {
               toast("That selection is too long — choose a shorter passage");
               return;
             }
-            store.addHighlight(t.id, sel, col);
+            var anchor = savedRange ? anchorForRange(lessonMain, savedRange, sel) : null;
+            store.addHighlight(t.id, sel, col, anchor);
             if (window.getSelection()) window.getSelection().removeAllRanges();
             savedSelection = "";
+            savedRange = null;
             hlPicker.setAttribute("hidden", "");
             toast("Highlighted in " + col + " — saved to Library");
             renderTopic();

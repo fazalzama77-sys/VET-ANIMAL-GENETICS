@@ -123,32 +123,50 @@ var store = (function () {
     return color;
   }
   function getHighlights() { return read(KEYS.highlights, {}); }
-  function addHighlight(id, text, color) {
+  /* anchor = { occ, prefix, suffix } — where in the lesson the words were
+     selected, so the colour is painted on those words and not on the first
+     place the same words appear. The same phrase may be highlighted in
+     several places; each place is its own highlight. */
+  function sameHighlight(item, text, occ) {
+    var itemText = typeof item === "string" ? item : (item ? item.text : "");
+    if (itemText !== text) return false;
+    var itemOcc = (item && typeof item.occ === "number") ? item.occ : undefined;
+    // A highlight saved before positions were recorded matches any position.
+    if (itemOcc === undefined || occ === undefined) return true;
+    return itemOcc === occ;
+  }
+
+  function addHighlight(id, text, color, anchor) {
     color = (color && VALID_HL_COLORS.indexOf(color) !== -1) ? color : getHighlightColor();
     var m = getHighlights();
     if (!m[id]) m[id] = [];
+
+    var entry = { text: text, color: color };
+    if (anchor && typeof anchor.occ === "number") {
+      entry.occ = anchor.occ;
+      entry.prefix = anchor.prefix || "";
+      entry.suffix = anchor.suffix || "";
+    }
+
     var found = false;
     for (var i = 0; i < m[id].length; i++) {
-      var item = m[id][i];
-      var itemText = typeof item === "string" ? item : (item ? item.text : "");
-      if (itemText === text) {
-        m[id][i] = { text: text, color: color };
+      if (sameHighlight(m[id][i], text, entry.occ)) {
+        m[id][i] = entry;          // re-colouring the same spot, or upgrading an old one
         found = true;
         break;
       }
     }
-    if (!found) {
-      m[id].push({ text: text, color: color });
-    }
+    if (!found) m[id].push(entry);
     write(KEYS.highlights, m);
     logActivity();
   }
-  function removeHighlight(id, text) {
+
+  /* occ given → remove only that spot; occ omitted → every copy of the text. */
+  function removeHighlight(id, text, occ) {
     var m = getHighlights();
     if (!m[id]) return;
     m[id] = m[id].filter(function (t) {
-      var itemText = typeof t === "string" ? t : (t ? t.text : "");
-      return itemText !== text;
+      return !sameHighlight(t, text, occ);
     });
     if (!m[id].length) delete m[id];
     write(KEYS.highlights, m);
