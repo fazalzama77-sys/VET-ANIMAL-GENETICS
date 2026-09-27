@@ -28,10 +28,10 @@ var quizBank = {
       {
         "q": "Which of the following characteristics is an inherent feature of biological data compared to physical data?",
         "o": [
-          "Deterministic replication",
-          "Absence of variation",
+          "Deterministic physical replication",
+          "Complete absence of variation",
           "Inherent biological variation",
-          "Zero sampling error"
+          "Zero random experimental error"
         ],
         "a": 2,
         "e": "Living organisms possess inherent biological variation due to genetic diversity and micro-environmental influences.",
@@ -42,10 +42,10 @@ var quizBank = {
       {
         "q": "Classification of biological data according to geographical location or region is known as:",
         "o": [
-          "Chronological classification",
+          "Chronological / Temporal classification",
           "Spatial / Geographical classification",
-          "Qualitative classification",
-          "Quantitative classification"
+          "Qualitative / Attribute-based classification",
+          "Quantitative / Magnitude-based classification"
         ],
         "a": 1,
         "e": "Spatial or geographical classification arranges biological data according to geographical areas, zones, or administrative regions.",
@@ -84,10 +84,10 @@ var quizBank = {
       {
         "q": "Which graphic representation is specifically used to locate the median of a continuous frequency distribution?",
         "o": [
-          "Histogram",
-          "Frequency polygon",
+          "Histogram (class frequency rectangle plot)",
+          "Frequency polygon (midpoint line diagram)",
           "Ogive curve (cumulative frequency curve)",
-          "Pie diagram"
+          "Pie diagram (proportional circular sector)"
         ],
         "a": 2,
         "e": "The median can be determined graphically from the intersection point of the 'less than' and 'more than' ogives (or at N/2 on cumulative frequency axis).",
@@ -154,10 +154,10 @@ var quizBank = {
       {
         "q": "The measure of dispersion that is defined as half the difference between the third and first quartiles is:",
         "o": [
-          "Mean deviation",
+          "Mean deviation (Average absolute deviation)",
           "Quartile deviation (Semi-interquartile range)",
-          "Standard deviation",
-          "Variance"
+          "Standard deviation (Root mean square deviation)",
+          "Variance (Mean squared deviation from mean)"
         ],
         "a": 1,
         "e": "Quartile Deviation (QD) = (Q3 - Q1) / 2. It is also known as the semi-interquartile range.",
@@ -169,9 +169,9 @@ var quizBank = {
         "q": "The positive square root of the arithmetic mean of the squared deviations from the mean is called:",
         "o": [
           "Standard deviation",
-          "Variance",
-          "Mean deviation",
-          "Range"
+          "Variance of distribution",
+          "Mean absolute deviation",
+          "Semi-interquartile range"
         ],
         "a": 0,
         "e": "Standard deviation (SD or σ) is defined as the positive square root of variance: σ = sqrt(Σ(X - μ)² / N).",
@@ -196,10 +196,10 @@ var quizBank = {
       {
         "q": "Which relative measure of dispersion is used to compare variability between two biological groups with different units or means?",
         "o": [
-          "Variance",
-          "Standard error",
+          "Standard Error of the Mean (SEM)",
+          "Coefficient of Quartile Deviation",
           "Coefficient of Variation (CV)",
-          "Mean deviation"
+          "Relative Mean Absolute Deviation"
         ],
         "a": 2,
         "e": "Coefficient of Variation (CV = (SD / Mean) * 100) is a unitless percentage used to compare dispersion across different traits or populations.",
@@ -295,9 +295,9 @@ var quizBank = {
         "q": "According to the addition theorem of probability, for any two non-mutually exclusive events A and B:",
         "o": [
           "P(A ∪ B) = P(A) + P(B) - P(A ∩ B)",
-          "P(A ∪ B) = P(A) * P(B)",
-          "P(A ∪ B) = P(A) + P(B)",
-          "P(A ∪ B) = P(A) / P(B)"
+          "P(A ∪ B) = P(A) + P(B) + P(A ∩ B)",
+          "P(A ∪ B) = P(A) * P(B) - P(A ∩ B)",
+          "P(A ∪ B) = P(A) + P(B) / P(A ∩ B)"
         ],
         "a": 0,
         "e": "For general events, P(A or B) = P(A) + P(B) - P(A and B) to avoid double counting the intersection.",
@@ -350,10 +350,10 @@ var quizBank = {
       {
         "q": "In a Poisson distribution with parameter λ, which property is uniquely true?",
         "o": [
-          "Mean > Variance",
-          "Mean < Variance",
+          "Mean > Variance (μ > σ²)",
+          "Mean < Variance (μ < σ²)",
           "Mean = Variance = λ",
-          "Mean = λ²"
+          "Mean = λ² and Variance = λ"
         ],
         "a": 2,
         "e": "A hallmark of the Poisson distribution is that its mean and variance are identical and equal to the parameter λ.",
@@ -378,9 +378,9 @@ var quizBank = {
       {
         "q": "The normal distribution curve is symmetrical about which central value?",
         "o": [
-          "Mean only",
-          "Median only",
-          "Mode only",
+          "Arithmetic Mean only",
+          "Median position only",
+          "Modal peak value only",
           "Mean = Median = Mode"
         ],
         "a": 3,
@@ -546,10 +546,10 @@ var quizBank = {
       {
         "q": "Karl Pearson's coefficient of correlation is independent of:",
         "o": [
-          "Change of origin only",
-          "Change of scale only",
+          "Change of origin only (translation of axis)",
+          "Change of scale only (multiplication factor)",
           "Both change of origin and change of scale",
-          "Neither origin nor scale"
+          "Neither change of origin nor change of scale"
         ],
         "a": 2,
         "e": "Correlation coefficient r is a pure dimensionless number, invariant to both shift of origin (adding/subtracting) and change of scale (multiplying/dividing).",
@@ -561,9 +561,9 @@ var quizBank = {
         "q": "Spearman's rank correlation coefficient (ρ) formula is given by:",
         "o": [
           "1 - [6 Σ d² / (n(n² - 1))]",
-          "1 - [Σ d² / n]",
-          "6 Σ d² / (n² - 1)",
-          "[6 Σ d² / n(n - 1)] - 1"
+          "1 - [6 Σ d² / (n²(n - 1))]",
+          "1 - [12 Σ d² / (n(n² - 1))]",
+          "[6 Σ d² / (n(n² - 1))] - 1"
         ],
         "a": 0,
         "e": "Spearman's rank correlation formula is ρ = 1 - [6 Σ d² / (n(n² - 1))], where d is difference in ranks.",
@@ -574,10 +574,10 @@ var quizBank = {
       {
         "q": "The geometric mean of the two regression coefficients b_yx and b_xy is equal to:",
         "o": [
-          "Variance",
+          "Coefficient of determination (r²)",
           "Correlation coefficient (r)",
-          "Covariance",
-          "Standard error"
+          "Covariance between X and Y (Cov_xy)",
+          "Standard error of estimate (s_yx)"
         ],
         "a": 1,
         "e": "By mathematical rule: r = ± sqrt(b_yx * b_xy). The geometric mean of the regression coefficients equals correlation coefficient r.",
@@ -616,10 +616,10 @@ var quizBank = {
       {
         "q": "The two regression lines of Y on X and X on Y intersect each other at the point:",
         "o": [
-          "(0, 0)",
+          "(0, 0) origin coordinate",
           "(X_bar, Y_bar)",
-          "(1, 1)",
-          "(σx, σy)"
+          "(1, 1) unit intersection",
+          "(σ_x, σ_y) deviation pt"
         ],
         "a": 1,
         "e": "Both regression lines always pass through the mean values of the two variables, intersecting at (X_bar, Y_bar).",
@@ -644,10 +644,10 @@ var quizBank = {
       {
         "q": "The proportion of total variation in Y explained by variation in X is measured by the:",
         "o": [
-          "Correlation coefficient (r)",
+          "Linear correlation coefficient (r)",
           "Coefficient of determination (r²)",
-          "Regression slope (b)",
-          "Covariance"
+          "Regression slope coefficient (b_yx)",
+          "Covariance between variables (Cov)"
         ],
         "a": 1,
         "e": "The coefficient of determination (r²) measures the percentage of total variance in the dependent variable explained by the independent variable.",
@@ -659,9 +659,9 @@ var quizBank = {
         "q": "Sampling in which each individual in the population has a known and equal chance of being selected is:",
         "o": [
           "Simple random sampling",
-          "Purposive sampling",
-          "Quota sampling",
-          "Judgment sampling"
+          "Stratified quota sampling",
+          "Purposive judgment sampling",
+          "Systematic interval sampling"
         ],
         "a": 0,
         "e": "In Simple Random Sampling (SRS), every sampling unit has an equal and independent probability of inclusion.",
@@ -672,10 +672,10 @@ var quizBank = {
       {
         "q": "Which sampling technique divides a heterogeneous livestock population into homogeneous sub-groups before sampling?",
         "o": [
-          "Cluster sampling",
+          "Multi-stage cluster sampling",
           "Stratified random sampling",
-          "Systematic sampling",
-          "Convenience sampling"
+          "Systematic interval sampling",
+          "Purposive judgment sampling"
         ],
         "a": 1,
         "e": "Stratified random sampling divides a heterogeneous population into internally homogeneous groups (strata, e.g. age or breed) and samples from each.",
@@ -728,10 +728,10 @@ var quizBank = {
       {
         "q": "Non-sampling errors can occur in:",
         "o": [
-          "Sample surveys only",
-          "Complete census only",
+          "Sample surveys only (due to frame flaws)",
+          "Complete census only (due to scale size)",
           "Both sample surveys and complete census",
-          "Neither surveys nor census"
+          "Neither sample surveys nor full censuses"
         ],
         "a": 2,
         "e": "Non-sampling errors (data entry errors, faulty instruments, non-response) arise in both sample surveys and complete population enumerations.",
@@ -742,10 +742,10 @@ var quizBank = {
       {
         "q": "The regression coefficient of Y on X (b_yx) represents the:",
         "o": [
-          "Value of Y when X is zero",
+          "Predicted value of Y when X equals zero",
           "Average change in Y per unit change in X",
-          "Ratio of means",
-          "Total variation"
+          "Ratio of standard deviations (σ_y / σ_x)",
+          "Proportion of total variation explained"
         ],
         "a": 1,
         "e": "b_yx is the slope of the regression line, indicating the expected change in dependent variable Y for every one unit increase in independent variable X.",
@@ -756,10 +756,10 @@ var quizBank = {
       {
         "q": "If r = -0.90 between parasite egg count and daily body weight gain in lambs, the association is:",
         "o": [
-          "Weak positive",
-          "Strong positive",
+          "Weak negative association",
+          "Strong positive correlation",
           "Strong negative (inverse)",
-          "No association"
+          "Negligible zero correlation"
         ],
         "a": 2,
         "e": "An r = -0.90 demonstrates a very strong negative linear relationship: higher parasite burden corresponds to significantly lower weight gain.",
@@ -910,10 +910,10 @@ var quizBank = {
       {
         "q": "Yates' continuity correction is applied to a 2 × 2 Chi-Square contingency table when:",
         "o": [
-          "Degrees of freedom > 5",
+          "Total observed sample size is less than 40",
           "Any expected cell frequency is less than 5",
-          "Total sample size exceeds 500",
-          "All frequencies are equal"
+          "Degrees of freedom of the table exceeds 1",
+          "All observed marginal frequencies are equal"
         ],
         "a": 1,
         "e": "Yates' correction for continuity is mandatory in a 2 × 2 table (df = 1) whenever an expected cell frequency is small (less than 5).",
@@ -925,9 +925,9 @@ var quizBank = {
         "q": "What are the three fundamental principles of experimental design formulated by Sir Ronald A. Fisher?",
         "o": [
           "Randomization, Replication, Local Control",
-          "Selection, Migration, Mutation",
-          "Mean, Variance, Covariance",
-          "Hypothesis, Experiment, Conclusion"
+          "Selection, Migration, Mutation pressure",
+          "Mean, Variance, Covariance estimation",
+          "Hypothesis, Experimentation, Conclusion"
         ],
         "a": 0,
         "e": "Fisher's three cardinal principles of experimental design are: Randomization (validity), Replication (precision/error estimation), and Local Control (error reduction).",
@@ -938,10 +938,10 @@ var quizBank = {
       {
         "q": "Which experimental design does NOT utilize the principle of Local Control?",
         "o": [
-          "Randomized Block Design (RBD)",
+          "Randomized Block Design (RBD layout)",
           "Completely Randomized Design (CRD)",
-          "Latin Square Design (LSD)",
-          "Split Plot Design"
+          "Latin Square Design (two-way LSD)",
+          "Split Plot Design (main/sub-plot)"
         ],
         "a": 1,
         "e": "In a Completely Randomized Design (CRD), experimental units are homogeneous (e.g. lab animals), so blocking (local control) is not applied.",
@@ -1022,10 +1022,10 @@ var quizBank = {
       {
         "q": "Which component of the Central Processing Unit (CPU) performs arithmetic and logical calculations?",
         "o": [
-          "Control Unit (CU)",
+          "Control Unit supervisor (CU)",
           "Arithmetic and Logic Unit (ALU)",
-          "Cache Memory",
-          "Hard Disk Drive"
+          "High-Speed Cache Memory (L1/L2)",
+          "Memory Management Unit (MMU)"
         ],
         "a": 1,
         "e": "The Arithmetic and Logic Unit (ALU) is responsible for executing all mathematical additions, subtractions, and logical comparison operations.",
@@ -1036,10 +1036,10 @@ var quizBank = {
       {
         "q": "Which type of computer memory is volatile and loses its stored contents when power is turned off?",
         "o": [
-          "ROM (Read Only Memory)",
+          "ROM (Read-Only Firmware Memory)",
           "RAM (Random Access Memory)",
-          "Hard Disk",
-          "Flash Drive"
+          "Magnetic Hard Disk Storage Drive",
+          "Solid-State Flash Drive Memory"
         ],
         "a": 1,
         "e": "RAM is primary volatile memory; all data held in RAM is lost as soon as the system power supply is interrupted.",
@@ -1064,10 +1064,10 @@ var quizBank = {
       {
         "q": "In a Relational Database Management System (RDBMS), a table row is formally termed a:",
         "o": [
-          "Attribute",
+          "Attribute (Field Column)",
           "Tuple (or Record)",
-          "Domain",
-          "Relation"
+          "Domain (Permissible Values)",
+          "Relation (Database Table)"
         ],
         "a": 1,
         "e": "In relational database theory, a row in a table is called a Tuple or Record, while a column is called an Attribute.",
@@ -1162,10 +1162,10 @@ var quizBank = {
       {
         "q": "Which Excel chart type is the standard choice for displaying a scatter plot and fitting a linear regression trendline?",
         "o": [
-          "Pie Chart",
-          "Line Chart",
+          "Clustered Bar Chart",
+          "Smooth Line Chart",
           "X Y (Scatter) Chart",
-          "Column Chart"
+          "Stacked Area Chart"
         ],
         "a": 2,
         "e": "The X Y (Scatter) chart plots paired numerical coordinates and allows adding linear trendlines and showing R² equations.",
@@ -1176,10 +1176,10 @@ var quizBank = {
       {
         "q": "The MS-Excel add-in that provides advanced statistical tools including ANOVA, F-test, and regression analysis is:",
         "o": [
-          "Solver Add-in",
+          "Solver Optimization Add-in",
           "Data Analysis ToolPak",
-          "Power Pivot",
-          "VBA Macro"
+          "Power Pivot Analytics Engine",
+          "VBA Macro Automation Module"
         ],
         "a": 1,
         "e": "The Data Analysis ToolPak provides ready-to-use statistical procedures including Descriptive Statistics, ANOVA, Regression, and t-tests.",
@@ -1290,9 +1290,9 @@ var quizBank = {
         "q": "A statistical table in which data are classified according to only ONE characteristic is called a:",
         "o": [
           "Simple (one-way) table",
-          "Two-way table",
-          "Manifold table",
-          "Complex table"
+          "Two-way (double) table",
+          "Manifold (multi-way) table",
+          "Complex (cross) table"
         ],
         "a": 0,
         "e": "A simple or one-way table shows one characteristic only (e.g., number of cattle by breed). Two-way tables show two characteristics; manifold (complex) tables show three or more.",
@@ -1530,9 +1530,9 @@ var quizBank = {
         "q": "The lottery method and tables of random numbers are used for drawing a:",
         "o": [
           "Simple random sample",
-          "Purposive sample",
-          "Quota sample",
-          "Judgement sample"
+          "Stratified quota sample",
+          "Purposive judgement sample",
+          "Systematic interval sample"
         ],
         "a": 0,
         "e": "In simple random sampling every unit has an equal chance of selection, ensured by the lottery method or random number tables (Tippett's, Fisher & Yates). Purposive, quota and judgement samples are non-random.",
@@ -1605,9 +1605,9 @@ var quizBank = {
         "q": "The non-parametric alternative to the paired t-test is the:",
         "o": [
           "Wilcoxon signed-rank test",
-          "Kruskal–Wallis H test",
-          "Chi-square test",
-          "F-test"
+          "Kruskal-Wallis H rank test",
+          "Friedman two-way ANOVA test",
+          "Mann-Whitney U rank test"
         ],
         "a": 0,
         "e": "The Wilcoxon signed-rank test compares paired observations without assuming normality. Mann–Whitney U replaces the unpaired t-test; Kruskal–Wallis replaces one-way ANOVA.",
@@ -2850,9 +2850,9 @@ var quizBank = {
         "q": "Who is universally recognized as the 'Father of Genetics' for discovering the fundamental laws of inheritance in Pisum sativum?",
         "o": [
           "Gregor Johann Mendel",
-          "William Bateson",
+          "William Bateson FRS",
           "Thomas Hunt Morgan",
-          "Wilhelm Johannsen"
+          "Wilhelm Ludvig Johannsen"
         ],
         "a": 0,
         "e": "Gregor Johann Mendel conducted his famous hybridization experiments on the garden pea from 1856 to 1863, establishing particulate inheritance.",
@@ -2863,10 +2863,10 @@ var quizBank = {
       {
         "q": "The term 'Genetics' was coined in the year 1905 by which pioneer scientist?",
         "o": [
-          "Gregor Mendel",
+          "Gregor Johann Mendel",
           "William Bateson",
-          "Carl Correns",
-          "Hugo de Vries"
+          "Carl Erich Correns",
+          "Hugo Marie de Vries"
         ],
         "a": 1,
         "e": "William Bateson coined the term 'Genetics' in 1905, along with terms like 'allele', 'homozygote', 'heterozygote', and 'F1 generation'.",
@@ -2949,8 +2949,8 @@ var quizBank = {
         "o": [
           "Complete dominance",
           "Incomplete dominance",
-          "Codominance",
-          "Recessive epistasis"
+          "Codominant expression",
+          "Recessive epistatic mask"
         ],
         "a": 1,
         "e": "Incomplete dominance results in an intermediate heterozygous phenotype (blue plumage in Andalusian fowl, pink in Mirabilis jalapa) with a 1:2:1 F2 ratio.",
@@ -2991,8 +2991,8 @@ var quizBank = {
         "o": [
           "A homozygous recessive lethal gene",
           "A homozygous dominant lethal gene",
-          "A sex-linked recessive gene",
-          "Mitochondrial mutation"
+          "A sex-linked hemizygous lethal gene",
+          "A maternal mitochondrial lethal defect"
         ],
         "a": 0,
         "e": "In Dexter cattle, heterozygous calves are short-legged (Dexter type), but homozygous lethal calves exhibit severe achondroplasia ('Bulldog calf') and are aborted.",
@@ -3213,10 +3213,10 @@ var quizBank = {
       {
         "q": "Tortoiseshell or calico coat coloration (orange and black patches) in domestic cats is almost exclusively observed in females because:",
         "o": [
-          "The orange gene is Y-linked",
+          "The orange allele is Y-linked and repressed in the presence of an X chromosome",
           "The orange gene is X-linked and undergoes random X-inactivation",
-          "Male embryos carrying black pigment die in utero",
-          "It is an autosomal sex-limited trait"
+          "Male hemizygous embryos carrying black pigment die in utero before implantation",
+          "It is an autosomal sex-limited gene whose expression is triggered by estrogens"
         ],
         "a": 1,
         "e": "The O (orange) locus is on the X chromosome. Heterozygous females (X^O X^B) form a mosaic of orange and black patches due to random lyonization.",
@@ -3241,10 +3241,10 @@ var quizBank = {
       {
         "q": "Horn development in Dorset/Merino sheep (dominant in males, recessive in females) is a classic example of:",
         "o": [
-          "Sex-linked inheritance",
+          "Sex-linked gene inheritance",
           "Sex-influenced inheritance",
-          "Sex-limited inheritance",
-          "Cytoplasmic inheritance"
+          "Sex-limited trait expression",
+          "Cytoplasmic maternal inheritance"
         ],
         "a": 1,
         "e": "Sex-influenced traits are autosomal traits whose phenotypic expression and dominance relationship are altered by male or female sex hormones.",
@@ -3297,10 +3297,10 @@ var quizBank = {
       {
         "q": "Which structural chromosomal aberration involves the fusion of two acrocentric chromosomes at their centromeres to form a single large metacentric chromosome?",
         "o": [
-          "Reciprocal translocation",
+          "Reciprocal translocation (segment exchange)",
           "Robertsonian translocation (Centric fusion)",
-          "Paracentric inversion",
-          "Pericentric inversion"
+          "Paracentric inversion (arm-restricted loop)",
+          "Pericentric inversion (centromere-spanning)"
         ],
         "a": 1,
         "e": "Robertsonian translocation (centric fusion) unites two acrocentric chromosomes, such as the famous 1/29 translocation in cattle which reduces bull fertility.",
@@ -3325,10 +3325,10 @@ var quizBank = {
       {
         "q": "Extra-chromosomal or maternal inheritance in animals is primarily mediated by genes located in:",
         "o": [
-          "Centrosomes",
-          "Ribosomes",
+          "Centrosomal microfilaments",
+          "Ribosomal ribonucleoproteins",
           "Mitochondrial DNA (mtDNA)",
-          "Endoplasmic reticulum"
+          "Endoplasmic reticulum cisternae"
         ],
         "a": 2,
         "e": "Mitochondria possess their own circular double-stranded DNA (mtDNA) transmitted exclusively through the ovum cytoplasm, demonstrating non-Mendelian maternal inheritance.",
@@ -3353,10 +3353,10 @@ var quizBank = {
       {
         "q": "According to the Watson-Crick double helix model of B-DNA, the distance between two adjacent nucleotide base pairs is:",
         "o": [
-          "3.4 nm",
+          "3.40 nm (34.0 Å)",
           "0.34 nm (3.4 Å)",
-          "2.0 nm",
-          "34 nm"
+          "2.00 nm (20.0 Å)",
+          "0.20 nm (2.0 Å)"
         ],
         "a": 1,
         "e": "In B-DNA, each helical turn comprises 10 base pairs with a pitch of 3.4 nm, giving a distance between adjacent base pairs of 0.34 nm (3.4 Å).",
@@ -3395,10 +3395,10 @@ var quizBank = {
       {
         "q": "Meselson and Stahl (1958) experimentally proved that DNA replication is:",
         "o": [
-          "Conservative",
+          "Fully conservative mode",
           "Semiconservative",
-          "Dispersive",
-          "Non-directional"
+          "Dispersive fragmented mode",
+          "Random non-directional mode"
         ],
         "a": 1,
         "e": "Using heavy nitrogen (¹⁵N) density-gradient centrifugation in E. coli, Meselson and Stahl proved that each daughter DNA molecule contains one conserved parental strand and one newly synthesized strand.",
@@ -3535,10 +3535,10 @@ var quizBank = {
       {
         "q": "Restriction endonucleases (molecular scissors) cleave DNA molecules specifically at:",
         "o": [
-          "Random poly-A sequences",
+          "Random poly-adenylation sequences",
           "Palindromic recognition sequences",
-          "Promoter regions only",
-          "Telomeric repeats"
+          "Core promoter TATA box sequences",
+          "Terminal telomeric repeat sequences"
         ],
         "a": 1,
         "e": "Restriction enzymes (e.g. EcoRI: 5'-GAATTC-3') cleave double-stranded DNA at specific symmetrical palindromic recognition sites.",
@@ -3549,10 +3549,10 @@ var quizBank = {
       {
         "q": "During agarose gel electrophoresis, DNA fragments migrate towards which electrode and why?",
         "o": [
-          "Negative cathode; DNA is positively charged",
+          "Negative cathode; DNA carries a positive basic charge",
           "Positive anode; DNA has a negative phosphate backbone",
-          "Positive anode; DNA is neutral",
-          "Negative cathode; histones are negatively charged"
+          "Positive anode; purine bases carry net negative charges",
+          "Negative cathode; ribose sugars carry net basic polarity"
         ],
         "a": 1,
         "e": "Because of its repeating phosphate group backbone, DNA carries a net negative charge and migrates towards the positive anode (+).",
@@ -3565,8 +3565,8 @@ var quizBank = {
         "o": [
           "dNTPs (deoxynucleotide triphosphates)",
           "ddNTPs (dideoxynucleotide triphosphates)",
-          "Ribonucleotides",
-          "cAMP"
+          "NTPs (ribonucleoside triphosphates)",
+          "cNMPs (cyclic nucleotide monophosphates)"
         ],
         "a": 1,
         "e": "Dideoxynucleotides (ddNTPs) lack the 3'-OH group needed for phosphodiester bond formation, halting elongation upon incorporation.",
@@ -3605,10 +3605,10 @@ var quizBank = {
       {
         "q": "A group of interbreeding individuals of the same species existing concurrently in a geographic area and sharing a common gene pool is a:",
         "o": [
-          "Clone",
+          "Panmictic clone cohort",
           "Mendelian population",
-          "Phenocopy",
-          "Lineage"
+          "Induced phenocopy group",
+          "Isogenic ancestral lineage"
         ],
         "a": 1,
         "e": "A Mendelian population is a community of sexually interbreeding individuals sharing a common gene pool across generations.",
@@ -3703,10 +3703,10 @@ var quizBank = {
       {
         "q": "Which of the following conditions is REQUIRED for a population to maintain Hardy-Weinberg equilibrium?",
         "o": [
-          "Small population size",
-          "Non-random assortative mating",
+          "Extremely small effective population size and genetic drift",
+          "Directional assortative mating and selective migration",
           "Random mating (panmixia) and large population size",
-          "Continuous high mutation rate"
+          "Continuous high mutation rate and directional selection"
         ],
         "a": 2,
         "e": "Hardy-Weinberg equilibrium requires: 1. Infinitely large population, 2. Panmixia (random mating), 3. No selection, 4. No mutation, 5. No migration, 6. No genetic drift.",
@@ -3745,10 +3745,10 @@ var quizBank = {
       {
         "q": "Random fluctuations in allele frequencies from generation to generation purely due to sampling error in small populations is known as:",
         "o": [
-          "Hardy-Weinberg equilibrium",
-          "Gene flow",
+          "Genetic equilibrium (Hardy-Weinberg law)",
+          "Gene flow (inter-population migration)",
           "Genetic drift (Sewall Wright effect)",
-          "Selection pressure"
+          "Selection pressure (fitness differential)"
         ],
         "a": 2,
         "e": "Genetic drift refers to random sampling variation in gametes leading to erratic shifts in allele frequencies, loss of heterozygosity, or allele fixation in small herds.",
@@ -3789,8 +3789,8 @@ var quizBank = {
         "o": [
           "Selection coefficient (s)",
           "Fitness / Adaptive value (W)",
-          "Heritability",
-          "Breeding value"
+          "Narrow-sense heritability (h²)",
+          "Estimated breeding value (EBV)"
         ],
         "a": 1,
         "e": "Biological fitness (W) is the relative reproductive success of a genotype, scaled from 0.0 to 1.0 (where s = 1 - W).",
@@ -3801,10 +3801,10 @@ var quizBank = {
       {
         "q": "If a recessive lethal mutation is completely selected against (s = 1.0) in homozygous state (aa), can selection completely eliminate the recessive allele from the population?",
         "o": [
-          "Yes, in 1 generation",
-          "Yes, in 10 generations",
+          "Yes, because complete selection against homozygotes eliminates all mutant alleles",
+          "Yes, because random mating rapidly purges non-expressed recessive alleles",
           "No, because the recessive allele hides in heterozygous carriers (Aa)",
-          "Yes, within 5 generations"
+          "Yes, provided the initial recessive gene frequency is below five percent"
         ],
         "a": 2,
         "e": "As allele frequency q becomes small, almost all recessive alleles reside in healthy heterozygous carriers (Aa), making complete eradication by phenotypic selection impossible.",
@@ -3844,9 +3844,9 @@ var quizBank = {
         "q": "Sewall Wright is best known in population genetics for his mathematical description of:",
         "o": [
           "Genetic drift and inbreeding coefficient",
-          "Polymerase Chain Reaction",
-          "Chromosome karyotyping",
-          "DNA structure"
+          "Polymerase chain reaction thermal cycling",
+          "Fluorescent in situ hybridization banding",
+          "Semi-conservative double helical replication"
         ],
         "a": 0,
         "e": "Sewall Wright formulated the inbreeding coefficient (F), the shifting balance theory, and the mathematics of random genetic drift.",
@@ -3857,10 +3857,10 @@ var quizBank = {
       {
         "q": "Which of the following is a classic continuous quantitative trait in dairy cattle?",
         "o": [
-          "Coat color (Black vs Red)",
-          "Horned vs Polled condition",
+          "Coat color phenotype (Black vs Red)",
+          "Horned vs Polled anatomical condition",
           "305-day Lactation Milk Yield",
-          "Blood group B phenogroup"
+          "Blood group B polymorphic phenogroup"
         ],
         "a": 2,
         "e": "305-day lactation milk yield is a polygenic quantitative trait showing continuous phenotypic distribution influenced heavily by nutrition and environment.",
@@ -3941,10 +3941,10 @@ var quizBank = {
       {
         "q": "Which of the following classes of livestock traits characteristically exhibits low heritability (h² < 0.15)?",
         "o": [
-          "Carcass traits",
+          "Carcass and meat quality traits (e.g. dressing percentage, loin eye area)",
           "Reproductive and fertility traits (e.g. calving interval, service period)",
-          "Mature body weight",
-          "Milk butterfat percentage"
+          "Structural skeletal body size traits (e.g. mature body weight, wither height)",
+          "Milk composition quality traits (e.g. milk butterfat and protein percentage)"
         ],
         "a": 1,
         "e": "Fertility and fitness traits (calving interval, service period, hatchability) have low heritability (<0.15) and respond poorly to mass selection.",
@@ -3956,9 +3956,9 @@ var quizBank = {
         "q": "Which method of estimating heritability is most widely used in farm animal breeding using sire component of variance?",
         "o": [
           "Paternal Half-Sib Correlation",
-          "Twin study method",
-          "Selection experiment",
-          "Offspring-parent covariance"
+          "Identical Monozygotic Twin Study",
+          "Two-Way Divergent Selection Study",
+          "Offspring-Parent Regression Analysis"
         ],
         "a": 0,
         "e": "Paternal half-sib correlation (PHS) is the standard method in animal breeding because one bull mates with many dams, yielding large half-sib families: h² = 4 * t.",
@@ -4011,10 +4011,10 @@ var quizBank = {
       {
         "q": "Repeatability (r) measures the correlation between repeated records of the same animal and sets the theoretical upper limit to:",
         "o": [
-          "Dominance variance",
+          "Non-additive dominance variance (V_D)",
           "Narrow-sense heritability (h²)",
-          "Selection intensity",
-          "Environmental variance"
+          "Standardized selection intensity (i)",
+          "Temporary environmental variance (V_Et)"
         ],
         "a": 1,
         "e": "Because repeatability includes permanent environmental variance (r = (V_G + V_Ep) / V_P), it always sets the upper boundary: h² ≤ r.",
@@ -4025,10 +4025,10 @@ var quizBank = {
       {
         "q": "Which parameter is computed using repeatability to predict an animal's future productivity for culling decisions?",
         "o": [
-          "Genomic Index",
+          "Genomic Estimated Breeding Value (GEBV)",
           "Most Probable Producing Ability (MPPA)",
-          "Inbreeding Coefficient",
-          "Selection Differential"
+          "Individual Inbreeding Coefficient (F_x)",
+          "Standardized Selection Differential (S_d)"
         ],
         "a": 1,
         "e": "MPPA combines the herd average with the animal's past records weighted by repeatability: MPPA = Herd_Mean + [n*r / (1 + (n-1)r)] * (Cow_Mean - Herd_Mean).",
@@ -4068,9 +4068,9 @@ var quizBank = {
         "q": "When different genotypes perform differently in different environments (e.g. temperate vs tropical climates), this is called:",
         "o": [
           "Genotype × Environment (G × E) Interaction",
-          "Epistatic deviation",
-          "Pleiotropic effect",
-          "Inbreeding depression"
+          "Epistatic non-allelic interaction deviation",
+          "Pleiotropic multi-trait gene expression",
+          "Cumulative inbreeding depression effect"
         ],
         "a": 0,
         "e": "Genotype-Environment (GxE) interaction occurs when the relative ranking or phenotypic superiority of genotypes changes across contrasting nutritional or climatic environments.",
@@ -4095,10 +4095,10 @@ var quizBank = {
       {
         "q": "Permanent environmental effects (V_Ep) in dairy cattle include permanent damage caused by:",
         "o": [
-          "Annual feed fluctuation",
+          "Seasonal dietary energy fluctuations causing reversible milk drop",
           "Severe clinical mastitis leading to loss of an udder quarter",
-          "Ambient temperature change",
-          "Daily milking routine"
+          "Acute ambient temperature heat stress during a single summer week",
+          "Routine machine milking frequency changes during mid-lactation stages"
         ],
         "a": 1,
         "e": "Permanent environmental effects affect all future lactations of an animal (e.g. loss of a quarter to mastitis, calfhood lung damage), unlike temporary seasonal fluctuations.",
@@ -4110,9 +4110,9 @@ var quizBank = {
         "q": "Thomas Hunt Morgan's experiments on Drosophila established the principle of:",
         "o": [
           "Linkage and sex-linked inheritance",
-          "Independent assortment",
-          "Operon model of gene regulation",
-          "Hardy–Weinberg equilibrium"
+          "Independent assortment of non-homologues",
+          "Operon model of prokaryotic gene control",
+          "Panmictic Hardy–Weinberg equilibrium laws"
         ],
         "a": 0,
         "e": "Morgan (Nobel Prize 1933) showed with the white-eye mutant of Drosophila that genes lie on chromosomes, are linked, and can be sex-linked.",
@@ -4140,9 +4140,9 @@ var quizBank = {
         "q": "A modified dihybrid F₂ ratio of 15:1 indicates:",
         "o": [
           "Duplicate dominant genes",
-          "Complementary genes",
-          "Dominant epistasis",
-          "Supplementary genes"
+          "Complementary gene action (9:7 ratio)",
+          "Dominant epistatic masking (12:3:1)",
+          "Supplementary gene action (9:3:4 ratio)"
         ],
         "a": 0,
         "e": "15:1 arises when a dominant allele at either locus gives the same phenotype (duplicate gene action); only aabb shows the other phenotype. Complementary = 9:7, dominant epistasis = 12:3:1, supplementary (recessive epistasis) = 9:3:4.",
@@ -4335,9 +4335,9 @@ var quizBank = {
         "q": "Ultraviolet (UV) radiation causes mutation mainly by forming:",
         "o": [
           "Thymine (pyrimidine) dimers",
-          "Double-strand breaks only",
-          "Base analogues",
-          "Deamination of cytosine"
+          "Double-strand DNA breaks (DSBs)",
+          "5-bromouracil base analogues",
+          "Cytosine hydrolytic deamination"
         ],
         "a": 0,
         "e": "UV light links adjacent pyrimidines (mainly thymine–thymine) on the same strand into dimers that distort the helix. Ionising radiation (X-rays, gamma rays) causes strand breaks.",
@@ -4380,9 +4380,9 @@ var quizBank = {
         "q": "Which feature distinguishes extra-chromosomal (cytoplasmic) inheritance from Mendelian inheritance?",
         "o": [
           "Reciprocal crosses give different results",
-          "Traits segregate in a 3:1 ratio",
-          "Genes are located on autosomes",
-          "Both parents contribute equally"
+          "Offspring segregate in a classical 3:1 phenotypic ratio",
+          "Target loci reside stably on nuclear autosomal chromosomes",
+          "Male and female gametes provide equal genomic contributions"
         ],
         "a": 0,
         "e": "Cytoplasmic genes (e.g., mitochondrial DNA) come mainly through the egg, so reciprocal crosses differ and the trait follows the mother. Mendelian ratios are not obtained.",
@@ -4410,9 +4410,9 @@ var quizBank = {
         "q": "The mathematical foundations of population genetics were laid mainly by:",
         "o": [
           "R. A. Fisher, J. B. S. Haldane and Sewall Wright",
-          "Mendel, Morgan and Bateson",
-          "Watson, Crick and Wilkins",
-          "Darwin, Lamarck and Wallace"
+          "G. J. Mendel, T. H. Morgan and William Bateson",
+          "J. D. Watson, F. H. C. Crick and M. H. F. Wilkins",
+          "C. R. Darwin, J. B. Lamarck and A. R. Wallace"
         ],
         "a": 0,
         "e": "Fisher, Haldane and Wright (1918–1932) combined Mendelian genetics with natural selection, founding population and quantitative genetics.",
@@ -4425,9 +4425,9 @@ var quizBank = {
         "q": "Selection against a completely recessive gene becomes very slow when its frequency (q) is low because:",
         "o": [
           "Most recessive alleles are carried, hidden, in heterozygotes",
-          "The mutation rate becomes very high",
-          "Heterozygotes are always culled",
-          "Dominant alleles are lost by drift"
+          "Reverse mutation pressure from 'a' to 'A' increases exponentially",
+          "Breeders consistently cull all heterozygous carrier animals at birth",
+          "Random genetic drift actively eliminates the dominant wild-type allele"
         ],
         "a": 0,
         "e": "When q is small, q² (affected animals) is tiny while 2pq (carriers) is far larger, so culling affected animals removes very few alleles. Carrier detection (test mating, DNA tests) is needed to eliminate such genes.",
@@ -4455,9 +4455,9 @@ var quizBank = {
         "q": "For a sex-linked gene whose frequencies differ between males and females, Hardy–Weinberg equilibrium is attained:",
         "o": [
           "Gradually, with oscillation over several generations",
-          "In a single generation of random mating",
-          "Never, under random mating",
-          "Only after selection is applied"
+          "Immediately in a single generation of panmictic random mating",
+          "Never, because allele frequencies oscillate endlessly without limit",
+          "Only when artificial truncation selection is vigorously practiced"
         ],
         "a": 0,
         "e": "With sex-linked genes, the difference in gene frequency between the sexes halves (and changes sign) each generation, so equilibrium is approached gradually — unlike autosomal genes, which reach it in one generation.",
@@ -4485,9 +4485,9 @@ var quizBank = {
         "q": "Genotype × environment (G × E) interaction is said to exist when:",
         "o": [
           "The relative performance of genotypes changes from one environment to another",
-          "All genotypes perform equally in every environment",
-          "Environment has no effect on phenotype",
-          "Genotypic and environmental values are correlated"
+          "All evaluated animal genotypes display identical performance across every test herd",
+          "Environmental variations exert absolutely zero phenotypic influence across all ages",
+          "Genotypic breeding values and micro-environmental errors maintain a correlation of 1"
         ],
         "a": 0,
         "e": "G × E means genotypes rank or differ differently across environments — e.g., an exotic crossbred superior on an organised farm but not under village conditions. Genotype–environment correlation is a different concept.",
@@ -5674,9 +5674,9 @@ var quizBank = {
         "q": "Who is universally recognized as the 'Father of Animal Breeding' for pioneering progeny testing, sire letting, and linebreeding?",
         "o": [
           "Robert Bakewell",
-          "Jay L. Lush",
-          "Gregor Mendel",
-          "Charles Darwin"
+          "Jay Laurence Lush",
+          "Gregor Johann Mendel",
+          "Charles Robert Darwin"
         ],
         "a": 0,
         "e": "Robert Bakewell (1725–1795) of Dishley, England, pioneered systematic animal breeding, sire leasing, and progeny testing.",
@@ -5702,9 +5702,9 @@ var quizBank = {
         "q": "Which livestock breed was developed by Robert Bakewell using systematic inbreeding and progeny selection?",
         "o": [
           "Dishley Leicester sheep",
-          "Shorthorn cattle",
-          "Holstein-Friesian",
-          "Jersey cattle"
+          "Improved Shorthorn cattle",
+          "Holstein-Friesian cattle",
+          "Island Jersey dairy cattle"
         ],
         "a": 0,
         "e": "Robert Bakewell created the Dishley Leicester sheep, Shire horse, and Dishley Longhorn cattle.",
@@ -5757,10 +5757,10 @@ var quizBank = {
       {
         "q": "The difference between the mean phenotypic value of selected breeding parents and the mean of the entire parental herd is the:",
         "o": [
-          "Genetic gain",
+          "Expected genetic gain (ΔG)",
           "Selection differential (S)",
           "Selection intensity (i)",
-          "Heritability"
+          "Realized heritability (h²)"
         ],
         "a": 1,
         "e": "Selection differential (S = P_selected - P_pop) measures the superiority of selected parents over the unselected herd average.",
@@ -5771,10 +5771,10 @@ var quizBank = {
       {
         "q": "Selection intensity (i) is defined mathematically as the selection differential (S) divided by the:",
         "o": [
-          "Population mean",
+          "Parental population mean (μ_P)",
           "Phenotypic standard deviation (σ_P)",
-          "Additive genetic variance",
-          "Generation interval"
+          "Additive genetic standard deviation (σ_A)",
+          "Mean generation interval in years (L)"
         ],
         "a": 1,
         "e": "Selection intensity i = S / σ_P. It standardises the selection differential in units of standard deviation.",
@@ -5785,10 +5785,10 @@ var quizBank = {
       {
         "q": "The average age of parents when their offspring are born is termed the:",
         "o": [
-          "Life expectancy",
-          "Productive life",
+          "Total life expectancy (LE)",
+          "Herd productive life (HPL)",
           "Generation interval (L)",
-          "Calving interval"
+          "Average calving interval (CI)"
         ],
         "a": 2,
         "e": "Generation interval (L) is the average age of parents at the birth of their replacement offspring (e.g. 5–6 years in dairy cattle).",
@@ -5815,8 +5815,8 @@ var quizBank = {
         "o": [
           "Low heritability and sex-limited expression",
           "High heritability and expression in both sexes",
-          "Zero heritability",
-          "Strong negative dominance"
+          "Zero heritability and massive maternal effects",
+          "Low heritability and high epistatic dominance"
         ],
         "a": 1,
         "e": "Individual mass selection (r_TI = sqrt(h²)) works best when heritability is high and the trait can be measured directly on both sexes early in life.",
@@ -5841,10 +5841,10 @@ var quizBank = {
       {
         "q": "What is the primary operational disadvantage of progeny testing in dairy cattle breeding?",
         "o": [
-          "Low accuracy of sire proofs",
+          "Drastically reduces the statistical accuracy of sire proofs",
           "Substantially increases generation interval and breeding costs",
-          "Decreases inbreeding",
-          "Prevents artificial insemination"
+          "Promotes rapid outcrossing and excessive maternal heterosis",
+          "Completely prevents cryopreservation of elite bull semen doses"
         ],
         "a": 1,
         "e": "Waiting for daughters to be born, reach sexual maturity, conceive, and complete 305-day lactations delays sire proof until the bull is 5–6 years old.",
@@ -5855,10 +5855,10 @@ var quizBank = {
       {
         "q": "Which basis of selection is indispensable for traits that require slaughtering the animal, such as meat quality or carcass traits?",
         "o": [
-          "Pedigree selection",
+          "Ancestral pedigree selection record",
           "Sib selection (or progeny testing)",
-          "Mass selection",
-          "Tandem selection"
+          "Individual mass phenotypic selection",
+          "Sequential tandem single-trait culling"
         ],
         "a": 1,
         "e": "Because carcass evaluation is destructive, breeding candidates are selected based on the slaughtered carcass records of their full-sibs or half-sibs.",
@@ -5869,10 +5869,10 @@ var quizBank = {
       {
         "q": "Selecting for a secondary trait (X) in order to achieve genetic improvement in a primary trait (Y) is called:",
         "o": [
-          "Tandem selection",
+          "Tandem selection scheme",
           "Indirect selection",
-          "Mass selection",
-          "Family selection"
+          "Mass individual selection",
+          "Within-family selection"
         ],
         "a": 1,
         "e": "Indirect selection exploits the genetic correlation between an easily measured secondary trait X and an expensive/difficult primary trait Y.",
@@ -5897,10 +5897,10 @@ var quizBank = {
       {
         "q": "In which multi-trait selection method are animals culled if they fail to meet a minimum threshold in any single trait, regardless of superiority in others?",
         "o": [
-          "Tandem selection",
-          "Selection Index",
+          "Sequential Tandem Selection Method",
+          "Total Score / Selection Index (Hazel)",
           "Independent Culling Levels (ICL)",
-          "Mass selection"
+          "Mass Phenotypic Individual Selection"
         ],
         "a": 2,
         "e": "Independent Culling Levels establishes minimum cutoff standards for each trait; failure in any one trait results in automatic culling.",
@@ -5967,10 +5967,10 @@ var quizBank = {
       {
         "q": "What is the inbreeding coefficient (F) of offspring produced by mating half-sibs (half-brother × half-sister)?",
         "o": [
-          "0.25",
+          "0.250 (25.0%)",
           "0.125 (12.5%)",
-          "0.0625",
-          "0.50"
+          "0.0625 (6.25%)",
+          "0.500 (50.0%)"
         ],
         "a": 1,
         "e": "Half-sibs share one common parent; offspring from half-sib mating have F = (1/2)³ = 0.125 (12.5%).",
@@ -6009,10 +6009,10 @@ var quizBank = {
       {
         "q": "What is the primary genetic consequence of continuous inbreeding in a closed livestock population?",
         "o": [
-          "Increases heterozygosity",
+          "Increases overall herd heterozygosity",
           "Increases homozygosity and prepotency",
-          "Eliminates all mutations",
-          "Increases genetic variation"
+          "Completely eliminates deleterious alleles",
+          "Maximizes additive genetic variance pool"
         ],
         "a": 1,
         "e": "Inbreeding brings identical-by-descent alleles together, increasing homozygosity across loci and increasing prepotency (the ability to transmit uniform traits).",
@@ -6023,10 +6023,10 @@ var quizBank = {
       {
         "q": "The reduction in vigor, fertility, and survival traits that accompanies increased inbreeding is termed:",
         "o": [
-          "Genetic drift",
+          "Random genetic drift",
           "Inbreeding depression",
-          "Heterosis",
-          "Atavism"
+          "Hybrid vigor / Heterosis",
+          "Reversion / Atavism state"
         ],
         "a": 1,
         "e": "Inbreeding depression is the decline in fitness-related metric traits (reproductive rate, viability, milk yield) resulting from increased homozygosity of deleterious recessives.",
@@ -6037,10 +6037,10 @@ var quizBank = {
       {
         "q": "Which class of economic traits suffers the greatest degree of inbreeding depression?",
         "o": [
-          "Carcass quality traits",
-          "Skeletal conformation",
+          "Carcass yield and meat quality traits",
+          "Mature skeletal conformation traits",
           "Reproduction and early survival traits",
-          "Mature body size"
+          "Adult body weight and wither height"
         ],
         "a": 2,
         "e": "Traits closely linked to biological fitness (fertility, embryo survival, neonatal viability) have low heritability and suffer the most severe inbreeding depression.",
@@ -6121,10 +6121,10 @@ var quizBank = {
       {
         "q": "The phenomenon where crossbred offspring excel the average performance of their purebred parental breeds is called:",
         "o": [
-          "Inbreeding depression",
+          "Inbreeding depression effect",
           "Heterosis (Hybrid Vigour)",
-          "Prepotency",
-          "Epistasis"
+          "Genetic prepotency power",
+          "Non-allelic gene epistasis"
         ],
         "a": 1,
         "e": "Heterosis (hybrid vigor) is the phenotypic superiority of F1 crossbreds over the average of the parental breeds.",
@@ -6150,9 +6150,9 @@ var quizBank = {
         "q": "General Combining Ability (GCA) is primarily a function of which type of gene action?",
         "o": [
           "Additive genetic variance (V_A)",
-          "Dominance variance (V_D)",
-          "Epistatic variance (V_I)",
-          "Environmental variance"
+          "Intra-allelic dominance variance (V_D)",
+          "Inter-allelic epistatic variance (V_I)",
+          "Micro-environmental error variance (V_E)"
         ],
         "a": 0,
         "e": "GCA reflects the average performance of a line in hybrid combinations and is predominantly governed by additive gene action (V_A).",
@@ -6163,10 +6163,10 @@ var quizBank = {
       {
         "q": "Which breeding scheme developed by Comstock, Robinson, and Harvey simultaneously selects for both General and Specific Combining Ability?",
         "o": [
-          "Tandem selection",
+          "Tandem Selection Scheme (TSS)",
           "Reciprocal Recurrent Selection (RRS)",
-          "Pedigree selection",
-          "Grading up"
+          "Pedigree Selection Index (PSI)",
+          "Systematic Grading Up (SGU)"
         ],
         "a": 1,
         "e": "RRS uses two genetically diverse populations that serve as mutual testers for each other, maximizing both additive and non-additive gene effects.",
@@ -6205,10 +6205,10 @@ var quizBank = {
       {
         "q": "Under Indian national breeding policy, what is the recommended optimal level of exotic inheritance in crossbred dairy cattle?",
         "o": [
-          "25% to 35%",
+          "25% to 37.5% (or 1/4 to 3/8)",
           "50% to 62.5% (or 5/8)",
-          "75% to 87.5%",
-          "100% purebred"
+          "75% to 87.5% (or 3/4 to 7/8)",
+          "100% purebred (or 8/8 full blood)"
         ],
         "a": 1,
         "e": "National breeding policy caps exotic inheritance at 50% to 62.5% to combine high milk yield with tropical disease resistance and heat tolerance.",
@@ -6220,9 +6220,9 @@ var quizBank = {
         "q": "The synthetic dairy cattle strain 'Karan Swiss' developed at NDRI, Karnal, was synthesized by crossing Brown Swiss with:",
         "o": [
           "Sahiwal and Red Sindhi",
-          "Tharparkar",
-          "Gir",
-          "Hariana"
+          "Tharparkar and Kankrej",
+          "Gir and Deoni breeds",
+          "Hariana and Ongole cows"
         ],
         "a": 0,
         "e": "Karan Swiss was synthesized at NDRI Karnal by crossing exotic Brown Swiss sires with indigenous Sahiwal and Red Sindhi cows.",
@@ -6247,10 +6247,10 @@ var quizBank = {
       {
         "q": "The synthetic dairy cattle breed 'Frieswal' developed by ICAR-CIRC Meerut carries what proportion of Holstein-Friesian inheritance?",
         "o": [
-          "50%",
+          "50.0% (1/2)",
           "62.5% (5/8)",
-          "75%",
-          "87.5%"
+          "75.0% (3/4)",
+          "87.5% (7/8)"
         ],
         "a": 1,
         "e": "Frieswal carries 62.5% (5/8) Holstein-Friesian and 37.5% (3/8) Sahiwal inheritance.",
@@ -6304,9 +6304,9 @@ var quizBank = {
         "q": "The fine-wool crossbred sheep breed 'Hissardale' was synthesized at Hisar by crossing Australian Merino rams with:",
         "o": [
           "Bikaneri (Magra) ewes",
-          "Nellore ewes",
-          "Deccani ewes",
-          "Mandya ewes"
+          "Nellore (Palla) ewes",
+          "Deccani hairy ewes",
+          "Mandya mutton ewes"
         ],
         "a": 0,
         "e": "Hissardale was developed at the Government Livestock Farm, Hisar, by mating Australian Merino rams with Bikaneri ewes.",
@@ -6317,10 +6317,10 @@ var quizBank = {
       {
         "q": "Which prolific Indian goat breed of West Bengal is celebrated for high twinning rates, early sexual maturity, and tender chevon?",
         "o": [
-          "Jamunapari",
-          "Beetal",
+          "Jamunapari tall breed",
+          "Beetal dual-purpose",
           "Black Bengal",
-          "Barbari"
+          "Barbari urban breed"
         ],
         "a": 2,
         "e": "Black Bengal goats are renowned for multiple births (twins/triplets), excellent skin/leather quality, and superior meat tenderness.",
@@ -6332,9 +6332,9 @@ var quizBank = {
         "q": "The world-famous luxury cashmere (Pashmina) fiber is harvested from the undercoat of which goat breed found in Ladakh?",
         "o": [
           "Changthangi (Cheghu)",
-          "Gaddi",
-          "Sirohi",
-          "Osmanabadi"
+          "Gaddi hill goat",
+          "Sirohi meat goat",
+          "Osmanabadi breed"
         ],
         "a": 0,
         "e": "Changthangi and Cheghu goats living at high altitudes in Ladakh/Himalayas produce ultra-fine Pashmina cashmere fiber (<15 microns).",
@@ -6360,9 +6360,9 @@ var quizBank = {
         "q": "In commercial poultry egg layer breeding, the most widely utilized breed for white-shelled egg production is:",
         "o": [
           "Single Comb White Leghorn",
-          "Plymouth Rock",
-          "New Hampshire",
-          "Aseel"
+          "Barred Plymouth Rock",
+          "Rhode Island Red hen",
+          "Indigenous Aseel fowl"
         ],
         "a": 0,
         "e": "Single Comb White Leghorn (SCWL) is the foundation of all modern high-producing white-egg layer strains worldwide.",
@@ -6374,9 +6374,9 @@ var quizBank = {
         "q": "Who developed the Best Linear Unbiased Prediction (BLUP) methodology and Mixed Model Equations in 1973?",
         "o": [
           "Charles Roy Henderson",
-          "Jay L. Lush",
-          "Sewall Wright",
-          "Robert Bakewell"
+          "Jay Laurence Lush",
+          "Sewall Green Wright",
+          "Robert Bakewell FRS"
         ],
         "a": 0,
         "e": "C. R. Henderson developed BLUP, which is the international gold standard algorithm for modern sire evaluation and genetic prediction.",
@@ -6388,9 +6388,9 @@ var quizBank = {
         "q": "What is the key advantage of an Open Nucleus Breeding System (ONBS) over a Closed Nucleus Breeding System?",
         "o": [
           "Allows genetically superior females from commercial herds to enter the nucleus",
-          "Completely stops all gene flow",
-          "Eliminates all AI costs",
-          "Requires no record keeping"
+          "Completely seals the nucleus against incoming superior external germplasm",
+          "Eliminates the operational necessity for pedigree recording in multipliers",
+          "Maximizes the rate of herd inbreeding while avoiding artificial selection"
         ],
         "a": 0,
         "e": "In ONBS, elite females from commercial/farmer herds are allowed into the nucleus, broadening the gene pool and lowering the rate of inbreeding.",
@@ -6415,10 +6415,10 @@ var quizBank = {
       {
         "q": "In sire evaluation, Contemporary Comparison compares the performance of a bull's daughters against:",
         "o": [
-          "Their own dams",
+          "Their own maternal dams evaluated across preceding lactation cycles",
           "Contemporary herdmates born in the same herd, year, and season",
-          "The national breed average",
-          "Full-sibs only"
+          "The national breed historical average regardless of season or feeding",
+          "Full-sib sisters managed concurrently in an isolated research station"
         ],
         "a": 1,
         "e": "Contemporary comparison adjusts for herd environmental differences by comparing daughters directly against contemporary herdmates in the same season.",
@@ -6471,10 +6471,10 @@ var quizBank = {
       {
         "q": "Which flagship government mission launched in 2014 focuses on the development and genetic conservation of indigenous bovine breeds in India?",
         "o": [
-          "Operation Flood",
+          "Operation Flood (White Revolution)",
           "Rashtriya Gokul Mission (RGM)",
-          "Key Village Scheme",
-          "National Livestock Mission"
+          "Key Village Scheme (KVS project)",
+          "National Livestock Mission (NLM)"
         ],
         "a": 1,
         "e": "The Rashtriya Gokul Mission was launched for the genetic upgradation and conservation of indigenous bovine breeds and establishment of Gokul Grams.",
@@ -6499,10 +6499,10 @@ var quizBank = {
       {
         "q": "Which hormone is standardly administered to donor cows to induce superovulation in a MOET program?",
         "o": [
-          "Progesterone",
+          "Progesterone (P4 hormone)",
           "Follicle Stimulating Hormone (FSH)",
-          "Oxytocin",
-          "Prolactin"
+          "Luteinizing Hormone (LH trigger)",
+          "Prostaglandin F2-alpha (PGF2α)"
         ],
         "a": 1,
         "e": "Pituitary-derived FSH (or eCG/PMSG) is administered over 4 days to stimulate multiple ovarian follicles to mature and ovulate simultaneously.",
@@ -6514,9 +6514,9 @@ var quizBank = {
         "q": "Flow cytometric sorting of X- and Y-bearing spermatozoa for sex-sorted semen is based on the fact that bovine X-sperm contain:",
         "o": [
           "3.8% to 4.2% more DNA than Y-sperm",
-          "50% more protein than Y-sperm",
-          "A negative surface charge",
-          "Two flagella"
+          "10.5% to 12.0% greater lipid mass",
+          "Specific negative surface charge",
+          "Two distinct swimming flagella"
         ],
         "a": 0,
         "e": "Because the bovine X chromosome is substantially larger than the Y chromosome, X-bearing spermatozoa contain approximately 3.8–4.2% more total DNA.",
@@ -6528,9 +6528,9 @@ var quizBank = {
         "q": "Who proposed the methodology of Genomic Selection using genome-wide dense SNP markers in 2001?",
         "o": [
           "Meuwissen, Hayes, and Goddard",
-          "Hazel and Lush",
-          "Robertson and Rendel",
-          "Watson and Crick"
+          "Lanoy Nelson Hazel and Jay L. Lush",
+          "Alan Robertson and J. M. Rendel",
+          "James Watson and Francis Crick"
         ],
         "a": 0,
         "e": "Theo Meuwissen, Ben Hayes, and Mike Goddard (2001) proposed Genomic Selection to predict Genomic Estimated Breeding Values (GEBV) from SNP markers.",
@@ -6542,9 +6542,9 @@ var quizBank = {
         "q": "The primary operational benefit of Genomic Selection in dairy cattle breeding is:",
         "o": [
           "Halving the generation interval by selecting bulls at birth",
-          "Eliminating the need for liquid nitrogen",
-          "Guaranteeing 100% female calves",
-          "Preventing all recessive mutations"
+          "Completely eliminating the operational requirement for cryogenic AI storage",
+          "Biologically guaranteeing one hundred percent female progeny in all matings",
+          "Permanently removing every lethal recessive mutation from the donor genome"
         ],
         "a": 0,
         "e": "Genomic selection predicts a bull's breeding value from a DNA sample at birth, eliminating the 5–6 year waiting period for daughter milking records.",
@@ -6555,10 +6555,10 @@ var quizBank = {
       {
         "q": "In cattle, the Major Histocompatibility Complex (MHC) linked to disease resistance and immune response is termed:",
         "o": [
-          "HLA",
+          "HLA (Human Leukocyte Antigen)",
           "BoLA (Bovine Leukocyte Antigen)",
-          "SLA",
-          "DLA"
+          "SLA (Swine Leukocyte Antigen)",
+          "DLA (Dog Leukocyte Antigen)"
         ],
         "a": 1,
         "e": "BoLA (Bovine Leukocyte Antigen) is the bovine MHC complex, whose polymorphic alleles correlate with resistance to mastitis and tick infestation.",
@@ -6569,10 +6569,10 @@ var quizBank = {
       {
         "q": "In commercial poultry, which blood group / MHC locus is famously linked with genetic resistance to Marek's disease?",
         "o": [
-          "A locus",
+          "A locus (e.g. A1 allele)",
           "B locus (e.g. B21 allele)",
-          "C locus",
-          "D locus"
+          "C locus (e.g. C3 allele)",
+          "E locus (e.g. E7 allele)"
         ],
         "a": 1,
         "e": "The B21 allele of the chicken MHC (B blood group system) confers strong genetic resistance to tumor formation by Marek's disease herpesvirus.",
@@ -6583,10 +6583,10 @@ var quizBank = {
       {
         "q": "Genetic resistance to classical Scrapie in sheep is determined by polymorphisms in which gene?",
         "o": [
-          "BoLA-DRB3 gene",
+          "BoLA-DRB3 immune gene",
           "Prion Protein (PrP) gene",
-          "Myostatin gene",
-          "Kappa-casein gene"
+          "Myostatin (MSTN) gene",
+          "Kappa-casein (CSN3) gene"
         ],
         "a": 1,
         "e": "The prion protein (PrP) gene at codons 136, 154, and 171 controls scrapie resistance; the ARR allele confers resistance, while VRQ confers susceptibility.",
@@ -6626,9 +6626,9 @@ var quizBank = {
         "q": "In-vitro fertilization (IVF) coupled with transvaginal aspiration of immature oocytes from live cows is called:",
         "o": [
           "Ovum Pick-Up (OPU)",
-          "Embryo splitting",
-          "Nuclear transfer",
-          "Sperm sexing"
+          "Embryo Bisection (EB)",
+          "Somatic Cell Transfer (SCNT)",
+          "Flow Sperm Sorting (FSS)"
         ],
         "a": 0,
         "e": "OPU (Ovum Pick-Up) uses ultrasound-guided needle aspiration to recover oocytes from pregnant or cycling cows for in-vitro embryo production.",
@@ -6639,10 +6639,10 @@ var quizBank = {
       {
         "q": "The Intensive Cattle Development Project (ICDP) in India was initiated during which decade?",
         "o": [
-          "1950s",
+          "1950s (1951–52)",
           "1960s (1964–65)",
-          "1980s",
-          "2000s"
+          "1970s (1974–75)",
+          "1980s (1985–86)"
         ],
         "a": 1,
         "e": "ICDP was initiated in 1964–65 to provide intensive cattle breeding, nutrition, and disease control packages around major dairy plants.",
@@ -6653,9 +6653,9 @@ var quizBank = {
       {
         "q": "Which indigenous sheep breed of Rajasthan has been designated as an endangered germplasm needing urgent in-situ conservation?",
         "o": [
-          "Chokla",
-          "Sonadi",
-          "Malpura",
+          "Chokla / Shekhawati",
+          "Sonadi / Chanothar",
+          "Malpura carpet breed",
           "Pugal / Kheri"
         ],
         "a": 3,
@@ -6682,9 +6682,9 @@ var quizBank = {
         "q": "Which celebrated Indian sighthound breed originated in Karnataka and Maharashtra and has been inducted into the Indian Army?",
         "o": [
           "Mudhol Hound (Caravan Hound)",
-          "Rajapalayam",
-          "Chippiparai",
-          "Kombai"
+          "Rajapalayam (Poligar Hound)",
+          "Chippiparai (Tamil Sighthound)",
+          "Kombai (Indian Guard Dog)"
         ],
         "a": 0,
         "e": "The Mudhol Hound is an ancient Indian sighthound known for exceptional speed, stamina, and keen hunting vision.",
@@ -6695,10 +6695,10 @@ var quizBank = {
       {
         "q": "The Rajapalayam dog breed, characterized by a milk-white coat, pink nose, and golden eyes, originated in which Indian state?",
         "o": [
-          "Kerala",
+          "Kerala state",
           "Tamil Nadu",
-          "Karnataka",
-          "Punjab"
+          "Karnataka state",
+          "Punjab region"
         ],
         "a": 1,
         "e": "The Rajapalayam is a royal sighthound native to Rajapalayam town in Virudhunagar district, Tamil Nadu.",
@@ -6709,10 +6709,10 @@ var quizBank = {
       {
         "q": "Under the Kennel Club classification, the Labrador Retriever and Golden Retriever belong to which dog breed group?",
         "o": [
-          "Hound group",
+          "Hound (Scent/Sight) group",
           "Sporting (Gun dog) group",
-          "Terrier group",
-          "Toy group"
+          "Terrier (Earth dog) group",
+          "Working (Utility) group"
         ],
         "a": 1,
         "e": "Retrievers and spaniels belong to the Sporting (or Gun dog) group, bred to locate and retrieve game birds.",
@@ -6723,10 +6723,10 @@ var quizBank = {
       {
         "q": "What is the average gestation length in the domestic canine bitch?",
         "o": [
-          "45 days",
+          "42 days (range 38–46 days)",
           "63 days (range 58–68 days)",
-          "90 days",
-          "114 days"
+          "90 days (range 85–95 days)",
+          "114 days (range 110–118 days)"
         ],
         "a": 1,
         "e": "Canine pregnancy averages 63 days from ovulation (range 58 to 68 days).",
@@ -6738,9 +6738,9 @@ var quizBank = {
         "q": "The canine estrous cycle stage characterized by vulvar swelling, serosanguinous discharge, and attraction of males without permitting mating is:",
         "o": [
           "Proestrus",
-          "Estrus",
-          "Diestrus",
-          "Anestrus"
+          "True estrus",
+          "Metestrus",
+          "Diestrus"
         ],
         "a": 0,
         "e": "Proestrus lasts ~9 days. The bitch displays bloody discharge and swollen vulva but will vigorously refuse mating until entering estrus.",
@@ -6765,10 +6765,10 @@ var quizBank = {
       {
         "q": "Domestic feline queens exhibit which unique ovulatory mechanism during reproduction?",
         "o": [
-          "Spontaneous cyclical ovulation",
+          "Spontaneous cyclical ovulation governed by photoperiod",
           "Induced (reflex) ovulation triggered by coitus",
-          "Seasonal monoestrus only",
-          "Silent ovulation without estrus"
+          "Obligate seasonal monoestrus restricted to winter months",
+          "Silent sub-estrus ovulation without behavioral receptivity"
         ],
         "a": 1,
         "e": "Cats are induced (reflex) ovulators; tactile stimulation of the cervix by the penile spines during coitus triggers the LH surge and subsequent ovulation.",
@@ -6779,10 +6779,10 @@ var quizBank = {
       {
         "q": "What is the average gestation length in the domestic cat (queen)?",
         "o": [
-          "45 days",
+          "42 to 45 days",
           "63 to 65 days",
-          "80 days",
-          "30 days"
+          "78 to 82 days",
+          "28 to 32 days"
         ],
         "a": 1,
         "e": "The gestation period of domestic queens averages 63–65 days (similar to dogs).",
@@ -6892,9 +6892,9 @@ var quizBank = {
         "q": "The Padmaja Naidu Himalayan Zoological Park in Darjeeling is globally celebrated for the successful conservation breeding of which endangered species?",
         "o": [
           "Red Panda and Snow Leopard",
-          "Asiatic Lion",
-          "Gharial",
-          "Great Indian Bustard"
+          "Asiatic Lion and Bengal Tiger",
+          "Indian Gharial and Mugger Crocodile",
+          "Great Indian Bustard and Bengal Florican"
         ],
         "a": 0,
         "e": "Darjeeling Zoo is internationally acclaimed for its successful captive breeding programs for Red Pandas and Snow Leopards.",
@@ -6906,9 +6906,9 @@ var quizBank = {
         "q": "What ISO microchip frequency standard is standardly used for electronic identification of pet animals and zoo species in India?",
         "o": [
           "134.2 kHz (ISO 11784/11785)",
-          "125 kHz",
-          "915 MHz",
-          "2.4 GHz"
+          "125.0 kHz (ISO 14443 Type A)",
+          "915.0 MHz (ISO 18000-6C EPC)",
+          "2.45 GHz (ISO 18000-4 Active)"
         ],
         "a": 0,
         "e": "The global standard for animal RFID microchip identification is 134.2 kHz conforming to ISO 11784 (15-digit code) and ISO 11785.",
@@ -6964,9 +6964,9 @@ var quizBank = {
         "q": "The Hariana breed of cattle is classified as a:",
         "o": [
           "Dual-purpose breed",
-          "Milch breed",
-          "Draught breed",
-          "Beef breed"
+          "Typical milch dairy breed",
+          "Specialized draught breed",
+          "European beef cattle breed"
         ],
         "a": 0,
         "e": "Hariana cows are fair milkers and the bullocks are good draught animals, so Hariana is a dual-purpose breed.",
@@ -7039,9 +7039,9 @@ var quizBank = {
         "q": "In a selection index, each trait is weighted according to its:",
         "o": [
           "Relative economic value, heritability and genetic/phenotypic correlations",
-          "Phenotypic mean only",
-          "Order of measurement",
-          "Number of records only"
+          "Phenotypic population mean and simple phenotypic standard deviation",
+          "Chronological recording order and maternal parity sequence records",
+          "Total number of lactations and lifetime survival records in herd"
         ],
         "a": 0,
         "e": "Hazel's index I = b₁P₁ + b₂P₂ + … uses weights derived from economic values, heritabilities and genetic and phenotypic (co)variances, making it the most efficient multi-trait method.",
@@ -7069,9 +7069,9 @@ var quizBank = {
         "q": "Indirect selection for trait X through a correlated trait Y is more effective than direct selection when:",
         "o": [
           "Y has a higher heritability than X and the genetic correlation between them is high",
-          "The genetic correlation between X and Y is zero",
-          "X is easy and cheap to measure early in life",
-          "Y has lower heritability than X"
+          "The genetic correlation between X and Y is zero and both traits express equally",
+          "Trait X can be measured cheaply and accurately in both sexes at juvenile stages",
+          "Trait Y exhibits much lower heritability than trait X and negative covariance"
         ],
         "a": 0,
         "e": "Correlated response exceeds direct response when i_Y · h_Y · r_G > i_X · h_X — i.e., Y is more heritable, strongly genetically correlated with X, or measurable earlier or more intensely.",
@@ -7114,9 +7114,9 @@ var quizBank = {
         "q": "Crossbreeding in which purebred sires of two breeds are used alternately in successive generations is called:",
         "o": [
           "Criss-crossing",
-          "Grading up",
-          "Topcrossing",
-          "Backcrossing"
+          "Systematic grading up",
+          "Inbred line topcrossing",
+          "Recurrent backcrossing"
         ],
         "a": 0,
         "e": "Criss-crossing is two-breed rotational crossing; bringing in a third breed makes it triple crossing or three-breed rotation.",
@@ -7174,9 +7174,9 @@ var quizBank = {
         "q": "'Wall eyes' (whitish, walled eyes) are a characteristic feature of which buffalo breed?",
         "o": [
           "Nili-Ravi",
-          "Murrah",
-          "Mehsana",
-          "Surti"
+          "Murrah breed",
+          "Mehsana breed",
+          "Surti breed"
         ],
         "a": 0,
         "e": "Nili-Ravi (Punjab) buffaloes typically have wall eyes and white markings on the forehead, face, legs and tail switch ('panch kalyani').",
@@ -7189,9 +7189,9 @@ var quizBank = {
         "q": "The Jamunapari goat, noted for its Roman nose and long pendulous ears, originates from:",
         "o": [
           "Etawah district, Uttar Pradesh",
-          "Barmer, Rajasthan",
-          "West Bengal",
-          "Kutch, Gujarat"
+          "Barmer district, Rajasthan",
+          "Birbhum district, West Bengal",
+          "Kutch district, Gujarat state"
         ],
         "a": 0,
         "e": "Jamunapari (Chakarnagar, Etawah, UP) is a large dual-purpose milk and meat goat. Black Bengal is the prolific meat goat of West Bengal.",
@@ -7204,9 +7204,9 @@ var quizBank = {
         "q": "Kadaknath, an indigenous chicken breed famous for its black meat, belongs to:",
         "o": [
           "Madhya Pradesh (Jhabua and Dhar)",
-          "Assam",
-          "Andhra Pradesh",
-          "Kerala"
+          "Assam state (Kamrup and Darrang)",
+          "Andhra Pradesh (Guntur and Krishna)",
+          "Kerala state (Kollam and Wayanad)"
         ],
         "a": 0,
         "e": "Kadaknath ('Kali Masi') has fibromelanosis — black skin, flesh and bones — and holds a GI tag for Jhabua, Madhya Pradesh.",
@@ -7219,9 +7219,9 @@ var quizBank = {
         "q": "The contemporary comparison method of sire evaluation was developed by:",
         "o": [
           "Robertson and Rendel (1954)",
-          "C. R. Henderson (1973)",
-          "L. N. Hazel (1943)",
-          "J. L. Lush (1937)"
+          "C. R. Henderson (Cornell, 1973)",
+          "L. N. Hazel and J. L. Lush (1943)",
+          "Jay L. Lush (Iowa State, 1937)"
         ],
         "a": 0,
         "e": "Robertson and Rendel's contemporary comparison compares a bull's daughters with the daughters of other bulls calving in the same herd, year and season. Henderson developed BLUP; Hazel the selection index.",
@@ -7294,9 +7294,9 @@ var quizBank = {
         "q": "In adult budgerigars, the sexes are usually told apart by the colour of the cere, which is:",
         "o": [
           "Blue in males, brown or beige in females",
-          "Brown in males, blue in females",
-          "Red in males, white in females",
-          "Identical in both sexes"
+          "Brown in males, deep blue in females",
+          "Bright red in males, pure white in females",
+          "Identical neutral beige in both adult sexes"
         ],
         "a": 0,
         "e": "The cere (fleshy band above the beak) is blue in mature cocks and brown, tan or whitish-blue in hens — the simplest way to form breeding pairs.",
@@ -7309,9 +7309,9 @@ var quizBank = {
         "q": "A captive herd of an endangered deer breeds with 1 male and 9 females. Its effective population size (Ne) is:",
         "o": [
           "3.6",
-          "10",
-          "9",
-          "4"
+          "10.0",
+          "9.0",
+          "4.5"
         ],
         "a": 0,
         "e": "Ne = 4NmNf / (Nm + Nf) = (4 × 1 × 9) / (1 + 9) = 36/10 = 3.6. A skewed sex ratio makes Ne far smaller than the 10 animals counted.",

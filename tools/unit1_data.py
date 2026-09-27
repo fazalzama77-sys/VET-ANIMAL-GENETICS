@@ -18,7 +18,7 @@ unit1_mcq = [
     },
     {
         "q": "Which of the following characteristics is an inherent feature of biological data compared to physical data?",
-        "o": ["Deterministic replication", "Absence of variation", "Inherent biological variation", "Zero sampling error"],
+        "o": ["Deterministic physical replication", "Complete absence of variation", "Inherent biological variation", "Zero random experimental error"],
         "a": 2,
         "e": "Living organisms possess inherent biological variation due to genetic diversity and micro-environmental influences.",
         "topicId": "u1-t01",
@@ -27,7 +27,7 @@ unit1_mcq = [
     },
     {
         "q": "Classification of biological data according to geographical location or region is known as:",
-        "o": ["Chronological classification", "Spatial / Geographical classification", "Qualitative classification", "Quantitative classification"],
+        "o": ["Chronological / Temporal classification", "Spatial / Geographical classification", "Qualitative / Attribute-based classification", "Quantitative / Magnitude-based classification"],
         "a": 1,
         "e": "Spatial or geographical classification arranges biological data according to geographical areas, zones, or administrative regions.",
         "topicId": "u1-t02",
@@ -54,7 +54,7 @@ unit1_mcq = [
     },
     {
         "q": "Which graphic representation is specifically used to locate the median of a continuous frequency distribution?",
-        "o": ["Histogram", "Frequency polygon", "Ogive curve (cumulative frequency curve)", "Pie diagram"],
+        "o": ["Histogram (class frequency rectangle plot)", "Frequency polygon (midpoint line diagram)", "Ogive curve (cumulative frequency curve)", "Pie diagram (proportional circular sector)"],
         "a": 2,
         "e": "The median can be determined graphically from the intersection point of the 'less than' and 'more than' ogives (or at N/2 on cumulative frequency axis).",
         "topicId": "u1-t04",
@@ -99,7 +99,7 @@ unit1_mcq = [
     },
     {
         "q": "The measure of dispersion that is defined as half the difference between the third and first quartiles is:",
-        "o": ["Mean deviation", "Quartile deviation (Semi-interquartile range)", "Standard deviation", "Variance"],
+        "o": ["Mean deviation (Average absolute deviation)", "Quartile deviation (Semi-interquartile range)", "Standard deviation (Root mean square deviation)", "Variance (Mean squared deviation from mean)"],
         "a": 1,
         "e": "Quartile Deviation (QD) = (Q3 - Q1) / 2. It is also known as the semi-interquartile range.",
         "topicId": "u1-t06",
@@ -108,7 +108,7 @@ unit1_mcq = [
     },
     {
         "q": "The positive square root of the arithmetic mean of the squared deviations from the mean is called:",
-        "o": ["Standard deviation", "Variance", "Mean deviation", "Range"],
+        "o": ["Standard deviation", "Variance of distribution", "Mean absolute deviation", "Semi-interquartile range"],
         "a": 0,
         "e": "Standard deviation (SD or σ) is defined as the positive square root of variance: σ = sqrt(Σ(X - μ)² / N).",
         "topicId": "u1-t06",
@@ -126,7 +126,7 @@ unit1_mcq = [
     },
     {
         "q": "Which relative measure of dispersion is used to compare variability between two biological groups with different units or means?",
-        "o": ["Variance", "Standard error", "Coefficient of Variation (CV)", "Mean deviation"],
+        "o": ["Standard Error of the Mean (SEM)", "Coefficient of Quartile Deviation", "Coefficient of Variation (CV)", "Relative Mean Absolute Deviation"],
         "a": 2,
         "e": "Coefficient of Variation (CV = (SD / Mean) * 100) is a unitless percentage used to compare dispersion across different traits or populations.",
         "topicId": "u1-t07",
@@ -193,7 +193,7 @@ unit1_mcq = [
     },
     {
         "q": "According to the addition theorem of probability, for any two non-mutually exclusive events A and B:",
-        "o": ["P(A ∪ B) = P(A) + P(B) - P(A ∩ B)", "P(A ∪ B) = P(A) * P(B)", "P(A ∪ B) = P(A) + P(B)", "P(A ∪ B) = P(A) / P(B)"],
+        "o": ["P(A ∪ B) = P(A) + P(B) - P(A ∩ B)", "P(A ∪ B) = P(A) + P(B) + P(A ∩ B)", "P(A ∪ B) = P(A) * P(B) - P(A ∩ B)", "P(A ∪ B) = P(A) + P(B) / P(A ∩ B)"],
         "a": 0,
         "e": "For general events, P(A or B) = P(A) + P(B) - P(A and B) to avoid double counting the intersection.",
         "topicId": "u1-t09",
@@ -229,7 +229,7 @@ unit1_mcq = [
     },
     {
         "q": "In a Poisson distribution with parameter λ, which property is uniquely true?",
-        "o": ["Mean > Variance", "Mean < Variance", "Mean = Variance = λ", "Mean = λ²"],
+        "o": ["Mean > Variance (μ > σ²)", "Mean < Variance (μ < σ²)", "Mean = Variance = λ", "Mean = λ² and Variance = λ"],
         "a": 2,
         "e": "A hallmark of the Poisson distribution is that its mean and variance are identical and equal to the parameter λ.",
         "topicId": "u1-t10",
@@ -247,7 +247,7 @@ unit1_mcq = [
     },
     {
         "q": "The normal distribution curve is symmetrical about which central value?",
-        "o": ["Mean only", "Median only", "Mode only", "Mean = Median = Mode"],
+        "o": ["Arithmetic Mean only", "Median position only", "Modal peak value only", "Mean = Median = Mode"],
         "a": 3,
         "e": "In a perfectly symmetrical bell-shaped normal curve, the Mean, Median, and Mode coincide at the center (X = μ).",
         "topicId": "u1-t11",
@@ -359,7 +359,7 @@ unit1_mcq = [
     },
     {
         "q": "Karl Pearson's coefficient of correlation is independent of:",
-        "o": ["Change of origin only", "Change of scale only", "Both change of origin and change of scale", "Neither origin nor scale"],
+        "o": ["Change of origin only (translation of axis)", "Change of scale only (multiplication factor)", "Both change of origin and change of scale", "Neither change of origin nor change of scale"],
         "a": 2,
         "e": "Correlation coefficient r is a pure dimensionless number, invariant to both shift of origin (adding/subtracting) and change of scale (multiplying/dividing).",
         "topicId": "u1-t12",
@@ -368,7 +368,7 @@ unit1_mcq = [
     },
     {
         "q": "Spearman's rank correlation coefficient (ρ) formula is given by:",
-        "o": ["1 - [6 Σ d² / (n(n² - 1))]", "1 - [Σ d² / n]", "6 Σ d² / (n² - 1)", "[6 Σ d² / n(n - 1)] - 1"],
+        "o": ["1 - [6 Σ d² / (n(n² - 1))]", "1 - [6 Σ d² / (n²(n - 1))]", "1 - [12 Σ d² / (n(n² - 1))]", "[6 Σ d² / (n(n² - 1))] - 1"],
         "a": 0,
         "e": "Spearman's rank correlation formula is ρ = 1 - [6 Σ d² / (n(n² - 1))], where d is difference in ranks.",
         "topicId": "u1-t12",
@@ -377,7 +377,7 @@ unit1_mcq = [
     },
     {
         "q": "The geometric mean of the two regression coefficients b_yx and b_xy is equal to:",
-        "o": ["Variance", "Correlation coefficient (r)", "Covariance", "Standard error"],
+        "o": ["Coefficient of determination (r²)", "Correlation coefficient (r)", "Covariance between X and Y (Cov_xy)", "Standard error of estimate (s_yx)"],
         "a": 1,
         "e": "By mathematical rule: r = ± sqrt(b_yx * b_xy). The geometric mean of the regression coefficients equals correlation coefficient r.",
         "topicId": "u1-t13",
@@ -404,7 +404,7 @@ unit1_mcq = [
     },
     {
         "q": "The two regression lines of Y on X and X on Y intersect each other at the point:",
-        "o": ["(0, 0)", "(X_bar, Y_bar)", "(1, 1)", "(σx, σy)"],
+        "o": ["(0, 0) origin coordinate", "(X_bar, Y_bar)", "(1, 1) unit intersection", "(σ_x, σ_y) deviation pt"],
         "a": 1,
         "e": "Both regression lines always pass through the mean values of the two variables, intersecting at (X_bar, Y_bar).",
         "topicId": "u1-t13",
@@ -422,7 +422,7 @@ unit1_mcq = [
     },
     {
         "q": "The proportion of total variation in Y explained by variation in X is measured by the:",
-        "o": ["Correlation coefficient (r)", "Coefficient of determination (r²)", "Regression slope (b)", "Covariance"],
+        "o": ["Linear correlation coefficient (r)", "Coefficient of determination (r²)", "Regression slope coefficient (b_yx)", "Covariance between variables (Cov)"],
         "a": 1,
         "e": "The coefficient of determination (r²) measures the percentage of total variance in the dependent variable explained by the independent variable.",
         "topicId": "u1-t13",
@@ -431,7 +431,7 @@ unit1_mcq = [
     },
     {
         "q": "Sampling in which each individual in the population has a known and equal chance of being selected is:",
-        "o": ["Simple random sampling", "Purposive sampling", "Quota sampling", "Judgment sampling"],
+        "o": ["Simple random sampling", "Stratified quota sampling", "Purposive judgment sampling", "Systematic interval sampling"],
         "a": 0,
         "e": "In Simple Random Sampling (SRS), every sampling unit has an equal and independent probability of inclusion.",
         "topicId": "u1-t14",
@@ -440,7 +440,7 @@ unit1_mcq = [
     },
     {
         "q": "Which sampling technique divides a heterogeneous livestock population into homogeneous sub-groups before sampling?",
-        "o": ["Cluster sampling", "Stratified random sampling", "Systematic sampling", "Convenience sampling"],
+        "o": ["Multi-stage cluster sampling", "Stratified random sampling", "Systematic interval sampling", "Purposive judgment sampling"],
         "a": 1,
         "e": "Stratified random sampling divides a heterogeneous population into internally homogeneous groups (strata, e.g. age or breed) and samples from each.",
         "topicId": "u1-t14",
@@ -476,7 +476,7 @@ unit1_mcq = [
     },
     {
         "q": "Non-sampling errors can occur in:",
-        "o": ["Sample surveys only", "Complete census only", "Both sample surveys and complete census", "Neither surveys nor census"],
+        "o": ["Sample surveys only (due to frame flaws)", "Complete census only (due to scale size)", "Both sample surveys and complete census", "Neither sample surveys nor full censuses"],
         "a": 2,
         "e": "Non-sampling errors (data entry errors, faulty instruments, non-response) arise in both sample surveys and complete population enumerations.",
         "topicId": "u1-t14",
@@ -485,7 +485,7 @@ unit1_mcq = [
     },
     {
         "q": "The regression coefficient of Y on X (b_yx) represents the:",
-        "o": ["Value of Y when X is zero", "Average change in Y per unit change in X", "Ratio of means", "Total variation"],
+        "o": ["Predicted value of Y when X equals zero", "Average change in Y per unit change in X", "Ratio of standard deviations (σ_y / σ_x)", "Proportion of total variation explained"],
         "a": 1,
         "e": "b_yx is the slope of the regression line, indicating the expected change in dependent variable Y for every one unit increase in independent variable X.",
         "topicId": "u1-t13",
@@ -494,7 +494,7 @@ unit1_mcq = [
     },
     {
         "q": "If r = -0.90 between parasite egg count and daily body weight gain in lambs, the association is:",
-        "o": ["Weak positive", "Strong positive", "Strong negative (inverse)", "No association"],
+        "o": ["Weak negative association", "Strong positive correlation", "Strong negative (inverse)", "Negligible zero correlation"],
         "a": 2,
         "e": "An r = -0.90 demonstrates a very strong negative linear relationship: higher parasite burden corresponds to significantly lower weight gain.",
         "topicId": "u1-t12",
@@ -597,7 +597,7 @@ unit1_mcq = [
     },
     {
         "q": "Yates' continuity correction is applied to a 2 × 2 Chi-Square contingency table when:",
-        "o": ["Degrees of freedom > 5", "Any expected cell frequency is less than 5", "Total sample size exceeds 500", "All frequencies are equal"],
+        "o": ["Total observed sample size is less than 40", "Any expected cell frequency is less than 5", "Degrees of freedom of the table exceeds 1", "All observed marginal frequencies are equal"],
         "a": 1,
         "e": "Yates' correction for continuity is mandatory in a 2 × 2 table (df = 1) whenever an expected cell frequency is small (less than 5).",
         "topicId": "u1-t17",
@@ -606,7 +606,7 @@ unit1_mcq = [
     },
     {
         "q": "What are the three fundamental principles of experimental design formulated by Sir Ronald A. Fisher?",
-        "o": ["Randomization, Replication, Local Control", "Selection, Migration, Mutation", "Mean, Variance, Covariance", "Hypothesis, Experiment, Conclusion"],
+        "o": ["Randomization, Replication, Local Control", "Selection, Migration, Mutation pressure", "Mean, Variance, Covariance estimation", "Hypothesis, Experimentation, Conclusion"],
         "a": 0,
         "e": "Fisher's three cardinal principles of experimental design are: Randomization (validity), Replication (precision/error estimation), and Local Control (error reduction).",
         "topicId": "u1-t18",
@@ -615,7 +615,7 @@ unit1_mcq = [
     },
     {
         "q": "Which experimental design does NOT utilize the principle of Local Control?",
-        "o": ["Randomized Block Design (RBD)", "Completely Randomized Design (CRD)", "Latin Square Design (LSD)", "Split Plot Design"],
+        "o": ["Randomized Block Design (RBD layout)", "Completely Randomized Design (CRD)", "Latin Square Design (two-way LSD)", "Split Plot Design (main/sub-plot)"],
         "a": 1,
         "e": "In a Completely Randomized Design (CRD), experimental units are homogeneous (e.g. lab animals), so blocking (local control) is not applied.",
         "topicId": "u1-t18",
@@ -673,7 +673,7 @@ unit1_mcq = [
     # ============================================================
     {
         "q": "Which component of the Central Processing Unit (CPU) performs arithmetic and logical calculations?",
-        "o": ["Control Unit (CU)", "Arithmetic and Logic Unit (ALU)", "Cache Memory", "Hard Disk Drive"],
+        "o": ["Control Unit supervisor (CU)", "Arithmetic and Logic Unit (ALU)", "High-Speed Cache Memory (L1/L2)", "Memory Management Unit (MMU)"],
         "a": 1,
         "e": "The Arithmetic and Logic Unit (ALU) is responsible for executing all mathematical additions, subtractions, and logical comparison operations.",
         "topicId": "u1-t21",
@@ -682,7 +682,7 @@ unit1_mcq = [
     },
     {
         "q": "Which type of computer memory is volatile and loses its stored contents when power is turned off?",
-        "o": ["ROM (Read Only Memory)", "RAM (Random Access Memory)", "Hard Disk", "Flash Drive"],
+        "o": ["ROM (Read-Only Firmware Memory)", "RAM (Random Access Memory)", "Magnetic Hard Disk Storage Drive", "Solid-State Flash Drive Memory"],
         "a": 1,
         "e": "RAM is primary volatile memory; all data held in RAM is lost as soon as the system power supply is interrupted.",
         "topicId": "u1-t21",
@@ -700,7 +700,7 @@ unit1_mcq = [
     },
     {
         "q": "In a Relational Database Management System (RDBMS), a table row is formally termed a:",
-        "o": ["Attribute", "Tuple (or Record)", "Domain", "Relation"],
+        "o": ["Attribute (Field Column)", "Tuple (or Record)", "Domain (Permissible Values)", "Relation (Database Table)"],
         "a": 1,
         "e": "In relational database theory, a row in a table is called a Tuple or Record, while a column is called an Attribute.",
         "topicId": "u1-t21",
@@ -763,7 +763,7 @@ unit1_mcq = [
     },
     {
         "q": "Which Excel chart type is the standard choice for displaying a scatter plot and fitting a linear regression trendline?",
-        "o": ["Pie Chart", "Line Chart", "X Y (Scatter) Chart", "Column Chart"],
+        "o": ["Clustered Bar Chart", "Smooth Line Chart", "X Y (Scatter) Chart", "Stacked Area Chart"],
         "a": 2,
         "e": "The X Y (Scatter) chart plots paired numerical coordinates and allows adding linear trendlines and showing R² equations.",
         "topicId": "u1-t22",
@@ -772,7 +772,7 @@ unit1_mcq = [
     },
     {
         "q": "The MS-Excel add-in that provides advanced statistical tools including ANOVA, F-test, and regression analysis is:",
-        "o": ["Solver Add-in", "Data Analysis ToolPak", "Power Pivot", "VBA Macro"],
+        "o": ["Solver Optimization Add-in", "Data Analysis ToolPak", "Power Pivot Analytics Engine", "VBA Macro Automation Module"],
         "a": 1,
         "e": "The Data Analysis ToolPak provides ready-to-use statistical procedures including Descriptive Statistics, ANOVA, Regression, and t-tests.",
         "topicId": "u1-t22",

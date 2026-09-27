@@ -35,7 +35,7 @@ exam_unit1_mcq = [
     },
     {
         "q": "A statistical table in which data are classified according to only ONE characteristic is called a:",
-        "o": ["Simple (one-way) table", "Two-way table", "Manifold table", "Complex table"],
+        "o": ["Simple (one-way) table", "Two-way (double) table", "Manifold (multi-way) table", "Complex (cross) table"],
         "a": 0,
         "e": "A simple or one-way table shows one characteristic only (e.g., number of cattle by breed). Two-way tables show two characteristics; manifold (complex) tables show three or more.",
         "topicId": "u1-t02", "subSection": "u1-s1", "diff": 1
@@ -151,7 +151,7 @@ exam_unit1_mcq = [
     },
     {
         "q": "The lottery method and tables of random numbers are used for drawing a:",
-        "o": ["Simple random sample", "Purposive sample", "Quota sample", "Judgement sample"],
+        "o": ["Simple random sample", "Stratified quota sample", "Purposive judgement sample", "Systematic interval sample"],
         "a": 0,
         "e": "In simple random sampling every unit has an equal chance of selection, ensured by the lottery method or random number tables (Tippett's, Fisher & Yates). Purposive, quota and judgement samples are non-random.",
         "topicId": "u1-t14", "subSection": "u1-s3", "diff": 1
@@ -188,7 +188,7 @@ exam_unit1_mcq = [
     },
     {
         "q": "The non-parametric alternative to the paired t-test is the:",
-        "o": ["Wilcoxon signed-rank test", "Kruskal–Wallis H test", "Chi-square test", "F-test"],
+        "o": ["Wilcoxon signed-rank test", "Kruskal-Wallis H rank test", "Friedman two-way ANOVA test", "Mann-Whitney U rank test"],
         "a": 0,
         "e": "The Wilcoxon signed-rank test compares paired observations without assuming normality. Mann–Whitney U replaces the unpaired t-test; Kruskal–Wallis replaces one-way ANOVA.",
         "topicId": "u1-t20", "subSection": "u1-s4", "diff": 2
@@ -387,7 +387,7 @@ exam_unit2_mcq = [
     # ---- u2-s1: Mendelian genetics, gene interaction, pleiotropy, alleles ----
     {
         "q": "Thomas Hunt Morgan's experiments on Drosophila established the principle of:",
-        "o": ["Linkage and sex-linked inheritance", "Independent assortment", "Operon model of gene regulation", "Hardy–Weinberg equilibrium"],
+        "o": ["Linkage and sex-linked inheritance", "Independent assortment of non-homologues", "Operon model of prokaryotic gene control", "Panmictic Hardy–Weinberg equilibrium laws"],
         "a": 0,
         "e": "Morgan (Nobel Prize 1933) showed with the white-eye mutant of Drosophila that genes lie on chromosomes, are linked, and can be sex-linked.",
         "topicId": "u2-t01", "subSection": "u2-s1", "diff": 1
@@ -401,7 +401,7 @@ exam_unit2_mcq = [
     },
     {
         "q": "A modified dihybrid F₂ ratio of 15:1 indicates:",
-        "o": ["Duplicate dominant genes", "Complementary genes", "Dominant epistasis", "Supplementary genes"],
+        "o": ["Duplicate dominant genes", "Complementary gene action (9:7 ratio)", "Dominant epistatic masking (12:3:1)", "Supplementary gene action (9:3:4 ratio)"],
         "a": 0,
         "e": "15:1 arises when a dominant allele at either locus gives the same phenotype (duplicate gene action); only aabb shows the other phenotype. Complementary = 9:7, dominant epistasis = 12:3:1, supplementary (recessive epistasis) = 9:3:4.",
         "topicId": "u2-t06", "subSection": "u2-s1", "diff": 2
@@ -494,7 +494,7 @@ exam_unit2_mcq = [
     },
     {
         "q": "Ultraviolet (UV) radiation causes mutation mainly by forming:",
-        "o": ["Thymine (pyrimidine) dimers", "Double-strand breaks only", "Base analogues", "Deamination of cytosine"],
+        "o": ["Thymine (pyrimidine) dimers", "Double-strand DNA breaks (DSBs)", "5-bromouracil base analogues", "Cytosine hydrolytic deamination"],
         "a": 0,
         "e": "UV light links adjacent pyrimidines (mainly thymine–thymine) on the same strand into dimers that distort the helix. Ionising radiation (X-rays, gamma rays) causes strand breaks.",
         "topicId": "u2-t12", "subSection": "u2-s2", "diff": 2
@@ -515,7 +515,7 @@ exam_unit2_mcq = [
     },
     {
         "q": "Which feature distinguishes extra-chromosomal (cytoplasmic) inheritance from Mendelian inheritance?",
-        "o": ["Reciprocal crosses give different results", "Traits segregate in a 3:1 ratio", "Genes are located on autosomes", "Both parents contribute equally"],
+        "o": ["Reciprocal crosses give different results", "Offspring segregate in a classical 3:1 phenotypic ratio", "Target loci reside stably on nuclear autosomal chromosomes", "Male and female gametes provide equal genomic contributions"],
         "a": 0,
         "e": "Cytoplasmic genes (e.g., mitochondrial DNA) come mainly through the egg, so reciprocal crosses differ and the trait follows the mother. Mendelian ratios are not obtained.",
         "topicId": "u2-t15", "subSection": "u2-s2", "diff": 2
@@ -533,14 +533,14 @@ exam_unit2_mcq = [
     # ---- u2-s4: population genetics ----
     {
         "q": "The mathematical foundations of population genetics were laid mainly by:",
-        "o": ["R. A. Fisher, J. B. S. Haldane and Sewall Wright", "Mendel, Morgan and Bateson", "Watson, Crick and Wilkins", "Darwin, Lamarck and Wallace"],
+        "o": ["R. A. Fisher, J. B. S. Haldane and Sewall Wright", "G. J. Mendel, T. H. Morgan and William Bateson", "J. D. Watson, F. H. C. Crick and M. H. F. Wilkins", "C. R. Darwin, J. B. Lamarck and A. R. Wallace"],
         "a": 0,
         "e": "Fisher, Haldane and Wright (1918–1932) combined Mendelian genetics with natural selection, founding population and quantitative genetics.",
         "topicId": "u2-t19", "subSection": "u2-s4", "diff": 1
     },
     {
         "q": "Selection against a completely recessive gene becomes very slow when its frequency (q) is low because:",
-        "o": ["Most recessive alleles are carried, hidden, in heterozygotes", "The mutation rate becomes very high", "Heterozygotes are always culled", "Dominant alleles are lost by drift"],
+        "o": ["Most recessive alleles are carried, hidden, in heterozygotes", "Reverse mutation pressure from 'a' to 'A' increases exponentially", "Breeders consistently cull all heterozygous carrier animals at birth", "Random genetic drift actively eliminates the dominant wild-type allele"],
         "a": 0,
         "e": "When q is small, q² (affected animals) is tiny while 2pq (carriers) is far larger, so culling affected animals removes very few alleles. Carrier detection (test mating, DNA tests) is needed to eliminate such genes.",
         "topicId": "u2-t22", "subSection": "u2-s4", "diff": 2
@@ -554,7 +554,7 @@ exam_unit2_mcq = [
     },
     {
         "q": "For a sex-linked gene whose frequencies differ between males and females, Hardy–Weinberg equilibrium is attained:",
-        "o": ["Gradually, with oscillation over several generations", "In a single generation of random mating", "Never, under random mating", "Only after selection is applied"],
+        "o": ["Gradually, with oscillation over several generations", "Immediately in a single generation of panmictic random mating", "Never, because allele frequencies oscillate endlessly without limit", "Only when artificial truncation selection is vigorously practiced"],
         "a": 0,
         "e": "With sex-linked genes, the difference in gene frequency between the sexes halves (and changes sign) each generation, so equilibrium is approached gradually — unlike autosomal genes, which reach it in one generation.",
         "topicId": "u2-t21", "subSection": "u2-s4", "diff": 3
@@ -570,7 +570,7 @@ exam_unit2_mcq = [
     },
     {
         "q": "Genotype × environment (G × E) interaction is said to exist when:",
-        "o": ["The relative performance of genotypes changes from one environment to another", "All genotypes perform equally in every environment", "Environment has no effect on phenotype", "Genotypic and environmental values are correlated"],
+        "o": ["The relative performance of genotypes changes from one environment to another", "All evaluated animal genotypes display identical performance across every test herd", "Environmental variations exert absolutely zero phenotypic influence across all ages", "Genotypic breeding values and micro-environmental errors maintain a correlation of 1"],
         "a": 0,
         "e": "G × E means genotypes rank or differ differently across environments — e.g., an exotic crossbred superior on an organised farm but not under village conditions. Genotype–environment correlation is a different concept.",
         "topicId": "u2-t26", "subSection": "u2-s5", "diff": 2
@@ -760,7 +760,7 @@ exam_unit3_mcq = [
     },
     {
         "q": "The Hariana breed of cattle is classified as a:",
-        "o": ["Dual-purpose breed", "Milch breed", "Draught breed", "Beef breed"],
+        "o": ["Dual-purpose breed", "Typical milch dairy breed", "Specialized draught breed", "European beef cattle breed"],
         "a": 0,
         "e": "Hariana cows are fair milkers and the bullocks are good draught animals, so Hariana is a dual-purpose breed.",
         "topicId": "u3-t02", "subSection": "u3-s1", "diff": 1
@@ -795,7 +795,7 @@ exam_unit3_mcq = [
     },
     {
         "q": "In a selection index, each trait is weighted according to its:",
-        "o": ["Relative economic value, heritability and genetic/phenotypic correlations", "Phenotypic mean only", "Order of measurement", "Number of records only"],
+        "o": ["Relative economic value, heritability and genetic/phenotypic correlations", "Phenotypic population mean and simple phenotypic standard deviation", "Chronological recording order and maternal parity sequence records", "Total number of lactations and lifetime survival records in herd"],
         "a": 0,
         "e": "Hazel's index I = b₁P₁ + b₂P₂ + … uses weights derived from economic values, heritabilities and genetic and phenotypic (co)variances, making it the most efficient multi-trait method.",
         "topicId": "u3-t07", "subSection": "u3-s1", "diff": 2
@@ -809,7 +809,7 @@ exam_unit3_mcq = [
     },
     {
         "q": "Indirect selection for trait X through a correlated trait Y is more effective than direct selection when:",
-        "o": ["Y has a higher heritability than X and the genetic correlation between them is high", "The genetic correlation between X and Y is zero", "X is easy and cheap to measure early in life", "Y has lower heritability than X"],
+        "o": ["Y has a higher heritability than X and the genetic correlation between them is high", "The genetic correlation between X and Y is zero and both traits express equally", "Trait X can be measured cheaply and accurately in both sexes at juvenile stages", "Trait Y exhibits much lower heritability than trait X and negative covariance"],
         "a": 0,
         "e": "Correlated response exceeds direct response when i_Y · h_Y · r_G > i_X · h_X — i.e., Y is more heritable, strongly genetically correlated with X, or measurable earlier or more intensely.",
         "topicId": "u3-t06", "subSection": "u3-s1", "diff": 3
@@ -832,7 +832,7 @@ exam_unit3_mcq = [
     },
     {
         "q": "Crossbreeding in which purebred sires of two breeds are used alternately in successive generations is called:",
-        "o": ["Criss-crossing", "Grading up", "Topcrossing", "Backcrossing"],
+        "o": ["Criss-crossing", "Systematic grading up", "Inbred line topcrossing", "Recurrent backcrossing"],
         "a": 0,
         "e": "Criss-crossing is two-breed rotational crossing; bringing in a third breed makes it triple crossing or three-breed rotation.",
         "topicId": "u3-t11", "subSection": "u3-s2", "diff": 1
@@ -862,28 +862,28 @@ exam_unit3_mcq = [
     # ---- u3-s3: breeding strategies, sire evaluation, new breeds ----
     {
         "q": "'Wall eyes' (whitish, walled eyes) are a characteristic feature of which buffalo breed?",
-        "o": ["Nili-Ravi", "Murrah", "Mehsana", "Surti"],
+        "o": ["Nili-Ravi", "Murrah breed", "Mehsana breed", "Surti breed"],
         "a": 0,
         "e": "Nili-Ravi (Punjab) buffaloes typically have wall eyes and white markings on the forehead, face, legs and tail switch ('panch kalyani').",
         "topicId": "u3-t14", "subSection": "u3-s3", "diff": 1
     },
     {
         "q": "The Jamunapari goat, noted for its Roman nose and long pendulous ears, originates from:",
-        "o": ["Etawah district, Uttar Pradesh", "Barmer, Rajasthan", "West Bengal", "Kutch, Gujarat"],
+        "o": ["Etawah district, Uttar Pradesh", "Barmer district, Rajasthan", "Birbhum district, West Bengal", "Kutch district, Gujarat state"],
         "a": 0,
         "e": "Jamunapari (Chakarnagar, Etawah, UP) is a large dual-purpose milk and meat goat. Black Bengal is the prolific meat goat of West Bengal.",
         "topicId": "u3-t15", "subSection": "u3-s3", "diff": 1
     },
     {
         "q": "Kadaknath, an indigenous chicken breed famous for its black meat, belongs to:",
-        "o": ["Madhya Pradesh (Jhabua and Dhar)", "Assam", "Andhra Pradesh", "Kerala"],
+        "o": ["Madhya Pradesh (Jhabua and Dhar)", "Assam state (Kamrup and Darrang)", "Andhra Pradesh (Guntur and Krishna)", "Kerala state (Kollam and Wayanad)"],
         "a": 0,
         "e": "Kadaknath ('Kali Masi') has fibromelanosis — black skin, flesh and bones — and holds a GI tag for Jhabua, Madhya Pradesh.",
         "topicId": "u3-t16", "subSection": "u3-s3", "diff": 1
     },
     {
         "q": "The contemporary comparison method of sire evaluation was developed by:",
-        "o": ["Robertson and Rendel (1954)", "C. R. Henderson (1973)", "L. N. Hazel (1943)", "J. L. Lush (1937)"],
+        "o": ["Robertson and Rendel (1954)", "C. R. Henderson (Cornell, 1973)", "L. N. Hazel and J. L. Lush (1943)", "Jay L. Lush (Iowa State, 1937)"],
         "a": 0,
         "e": "Robertson and Rendel's contemporary comparison compares a bull's daughters with the daughters of other bulls calving in the same herd, year and season. Henderson developed BLUP; Hazel the selection index.",
         "topicId": "u3-t17", "subSection": "u3-s3", "diff": 3
@@ -922,14 +922,14 @@ exam_unit3_mcq = [
     },
     {
         "q": "In adult budgerigars, the sexes are usually told apart by the colour of the cere, which is:",
-        "o": ["Blue in males, brown or beige in females", "Brown in males, blue in females", "Red in males, white in females", "Identical in both sexes"],
+        "o": ["Blue in males, brown or beige in females", "Brown in males, deep blue in females", "Bright red in males, pure white in females", "Identical neutral beige in both adult sexes"],
         "a": 0,
         "e": "The cere (fleshy band above the beak) is blue in mature cocks and brown, tan or whitish-blue in hens — the simplest way to form breeding pairs.",
         "topicId": "u3-t26", "subSection": "u3-s5", "diff": 2
     },
     {
         "q": "A captive herd of an endangered deer breeds with 1 male and 9 females. Its effective population size (Ne) is:",
-        "o": ["3.6", "10", "9", "4"],
+        "o": ["3.6", "10.0", "9.0", "4.5"],
         "a": 0,
         "e": "Ne = 4NmNf / (Nm + Nf) = (4 × 1 × 9) / (1 + 9) = 36/10 = 3.6. A skewed sex ratio makes Ne far smaller than the 10 animals counted.",
         "topicId": "u3-t27", "subSection": "u3-s5", "diff": 3

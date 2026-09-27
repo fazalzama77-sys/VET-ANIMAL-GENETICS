@@ -9,7 +9,7 @@ unit3_mcq = [
     # ============================================================
     {
         "q": "Who is universally recognized as the 'Father of Animal Breeding' for pioneering progeny testing, sire letting, and linebreeding?",
-        "o": ["Robert Bakewell", "Jay L. Lush", "Gregor Mendel", "Charles Darwin"],
+        "o": ["Robert Bakewell", "Jay Laurence Lush", "Gregor Johann Mendel", "Charles Robert Darwin"],
         "a": 0,
         "e": "Robert Bakewell (1725–1795) of Dishley, England, pioneered systematic animal breeding, sire leasing, and progeny testing.",
         "topicId": "u3-t01",
@@ -27,7 +27,7 @@ unit3_mcq = [
     },
     {
         "q": "Which livestock breed was developed by Robert Bakewell using systematic inbreeding and progeny selection?",
-        "o": ["Dishley Leicester sheep", "Shorthorn cattle", "Holstein-Friesian", "Jersey cattle"],
+        "o": ["Dishley Leicester sheep", "Improved Shorthorn cattle", "Holstein-Friesian cattle", "Island Jersey dairy cattle"],
         "a": 0,
         "e": "Robert Bakewell created the Dishley Leicester sheep, Shire horse, and Dishley Longhorn cattle.",
         "topicId": "u3-t01",
@@ -63,7 +63,7 @@ unit3_mcq = [
     },
     {
         "q": "The difference between the mean phenotypic value of selected breeding parents and the mean of the entire parental herd is the:",
-        "o": ["Genetic gain", "Selection differential (S)", "Selection intensity (i)", "Heritability"],
+        "o": ["Expected genetic gain (ΔG)", "Selection differential (S)", "Selection intensity (i)", "Realized heritability (h²)"],
         "a": 1,
         "e": "Selection differential (S = P_selected - P_pop) measures the superiority of selected parents over the unselected herd average.",
         "topicId": "u3-t04",
@@ -72,7 +72,7 @@ unit3_mcq = [
     },
     {
         "q": "Selection intensity (i) is defined mathematically as the selection differential (S) divided by the:",
-        "o": ["Population mean", "Phenotypic standard deviation (σ_P)", "Additive genetic variance", "Generation interval"],
+        "o": ["Parental population mean (μ_P)", "Phenotypic standard deviation (σ_P)", "Additive genetic standard deviation (σ_A)", "Mean generation interval in years (L)"],
         "a": 1,
         "e": "Selection intensity i = S / σ_P. It standardises the selection differential in units of standard deviation.",
         "topicId": "u3-t04",
@@ -81,7 +81,7 @@ unit3_mcq = [
     },
     {
         "q": "The average age of parents when their offspring are born is termed the:",
-        "o": ["Life expectancy", "Productive life", "Generation interval (L)", "Calving interval"],
+        "o": ["Total life expectancy (LE)", "Herd productive life (HPL)", "Generation interval (L)", "Average calving interval (CI)"],
         "a": 2,
         "e": "Generation interval (L) is the average age of parents at the birth of their replacement offspring (e.g. 5–6 years in dairy cattle).",
         "topicId": "u3-t04",
@@ -99,7 +99,7 @@ unit3_mcq = [
     },
     {
         "q": "Individual (Mass) selection is most effective and accurate for traits that have:",
-        "o": ["Low heritability and sex-limited expression", "High heritability and expression in both sexes", "Zero heritability", "Strong negative dominance"],
+        "o": ["Low heritability and sex-limited expression", "High heritability and expression in both sexes", "Zero heritability and massive maternal effects", "Low heritability and high epistatic dominance"],
         "a": 1,
         "e": "Individual mass selection (r_TI = sqrt(h²)) works best when heritability is high and the trait can be measured directly on both sexes early in life.",
         "topicId": "u3-t05",
@@ -117,7 +117,7 @@ unit3_mcq = [
     },
     {
         "q": "What is the primary operational disadvantage of progeny testing in dairy cattle breeding?",
-        "o": ["Low accuracy of sire proofs", "Substantially increases generation interval and breeding costs", "Decreases inbreeding", "Prevents artificial insemination"],
+        "o": ["Drastically reduces the statistical accuracy of sire proofs", "Substantially increases generation interval and breeding costs", "Promotes rapid outcrossing and excessive maternal heterosis", "Completely prevents cryopreservation of elite bull semen doses"],
         "a": 1,
         "e": "Waiting for daughters to be born, reach sexual maturity, conceive, and complete 305-day lactations delays sire proof until the bull is 5–6 years old.",
         "topicId": "u3-t05",
@@ -126,7 +126,7 @@ unit3_mcq = [
     },
     {
         "q": "Which basis of selection is indispensable for traits that require slaughtering the animal, such as meat quality or carcass traits?",
-        "o": ["Pedigree selection", "Sib selection (or progeny testing)", "Mass selection", "Tandem selection"],
+        "o": ["Ancestral pedigree selection record", "Sib selection (or progeny testing)", "Individual mass phenotypic selection", "Sequential tandem single-trait culling"],
         "a": 1,
         "e": "Because carcass evaluation is destructive, breeding candidates are selected based on the slaughtered carcass records of their full-sibs or half-sibs.",
         "topicId": "u3-t05",
@@ -135,7 +135,7 @@ unit3_mcq = [
     },
     {
         "q": "Selecting for a secondary trait (X) in order to achieve genetic improvement in a primary trait (Y) is called:",
-        "o": ["Tandem selection", "Indirect selection", "Mass selection", "Family selection"],
+        "o": ["Tandem selection scheme", "Indirect selection", "Mass individual selection", "Within-family selection"],
         "a": 1,
         "e": "Indirect selection exploits the genetic correlation between an easily measured secondary trait X and an expensive/difficult primary trait Y.",
         "topicId": "u3-t06",
@@ -153,7 +153,7 @@ unit3_mcq = [
     },
     {
         "q": "In which multi-trait selection method are animals culled if they fail to meet a minimum threshold in any single trait, regardless of superiority in others?",
-        "o": ["Tandem selection", "Selection Index", "Independent Culling Levels (ICL)", "Mass selection"],
+        "o": ["Sequential Tandem Selection Method", "Total Score / Selection Index (Hazel)", "Independent Culling Levels (ICL)", "Mass Phenotypic Individual Selection"],
         "a": 2,
         "e": "Independent Culling Levels establishes minimum cutoff standards for each trait; failure in any one trait results in automatic culling.",
         "topicId": "u3-t07",
@@ -202,7 +202,7 @@ unit3_mcq = [
     },
     {
         "q": "What is the inbreeding coefficient (F) of offspring produced by mating half-sibs (half-brother × half-sister)?",
-        "o": ["0.25", "0.125 (12.5%)", "0.0625", "0.50"],
+        "o": ["0.250 (25.0%)", "0.125 (12.5%)", "0.0625 (6.25%)", "0.500 (50.0%)"],
         "a": 1,
         "e": "Half-sibs share one common parent; offspring from half-sib mating have F = (1/2)³ = 0.125 (12.5%).",
         "topicId": "u3-t09",
@@ -229,7 +229,7 @@ unit3_mcq = [
     },
     {
         "q": "What is the primary genetic consequence of continuous inbreeding in a closed livestock population?",
-        "o": ["Increases heterozygosity", "Increases homozygosity and prepotency", "Eliminates all mutations", "Increases genetic variation"],
+        "o": ["Increases overall herd heterozygosity", "Increases homozygosity and prepotency", "Completely eliminates deleterious alleles", "Maximizes additive genetic variance pool"],
         "a": 1,
         "e": "Inbreeding brings identical-by-descent alleles together, increasing homozygosity across loci and increasing prepotency (the ability to transmit uniform traits).",
         "topicId": "u3-t10",
@@ -238,7 +238,7 @@ unit3_mcq = [
     },
     {
         "q": "The reduction in vigor, fertility, and survival traits that accompanies increased inbreeding is termed:",
-        "o": ["Genetic drift", "Inbreeding depression", "Heterosis", "Atavism"],
+        "o": ["Random genetic drift", "Inbreeding depression", "Hybrid vigor / Heterosis", "Reversion / Atavism state"],
         "a": 1,
         "e": "Inbreeding depression is the decline in fitness-related metric traits (reproductive rate, viability, milk yield) resulting from increased homozygosity of deleterious recessives.",
         "topicId": "u3-t10",
@@ -247,7 +247,7 @@ unit3_mcq = [
     },
     {
         "q": "Which class of economic traits suffers the greatest degree of inbreeding depression?",
-        "o": ["Carcass quality traits", "Skeletal conformation", "Reproduction and early survival traits", "Mature body size"],
+        "o": ["Carcass yield and meat quality traits", "Mature skeletal conformation traits", "Reproduction and early survival traits", "Adult body weight and wither height"],
         "a": 2,
         "e": "Traits closely linked to biological fitness (fertility, embryo survival, neonatal viability) have low heritability and suffer the most severe inbreeding depression.",
         "topicId": "u3-t10",
@@ -301,7 +301,7 @@ unit3_mcq = [
     },
     {
         "q": "The phenomenon where crossbred offspring excel the average performance of their purebred parental breeds is called:",
-        "o": ["Inbreeding depression", "Heterosis (Hybrid Vigour)", "Prepotency", "Epistasis"],
+        "o": ["Inbreeding depression effect", "Heterosis (Hybrid Vigour)", "Genetic prepotency power", "Non-allelic gene epistasis"],
         "a": 1,
         "e": "Heterosis (hybrid vigor) is the phenotypic superiority of F1 crossbreds over the average of the parental breeds.",
         "topicId": "u3-t12",
@@ -319,7 +319,7 @@ unit3_mcq = [
     },
     {
         "q": "General Combining Ability (GCA) is primarily a function of which type of gene action?",
-        "o": ["Additive genetic variance (V_A)", "Dominance variance (V_D)", "Epistatic variance (V_I)", "Environmental variance"],
+        "o": ["Additive genetic variance (V_A)", "Intra-allelic dominance variance (V_D)", "Inter-allelic epistatic variance (V_I)", "Micro-environmental error variance (V_E)"],
         "a": 0,
         "e": "GCA reflects the average performance of a line in hybrid combinations and is predominantly governed by additive gene action (V_A).",
         "topicId": "u3-t13",
@@ -328,7 +328,7 @@ unit3_mcq = [
     },
     {
         "q": "Which breeding scheme developed by Comstock, Robinson, and Harvey simultaneously selects for both General and Specific Combining Ability?",
-        "o": ["Tandem selection", "Reciprocal Recurrent Selection (RRS)", "Pedigree selection", "Grading up"],
+        "o": ["Tandem Selection Scheme (TSS)", "Reciprocal Recurrent Selection (RRS)", "Pedigree Selection Index (PSI)", "Systematic Grading Up (SGU)"],
         "a": 1,
         "e": "RRS uses two genetically diverse populations that serve as mutual testers for each other, maximizing both additive and non-additive gene effects.",
         "topicId": "u3-t13",
@@ -359,7 +359,7 @@ unit3_mcq = [
     },
     {
         "q": "Under Indian national breeding policy, what is the recommended optimal level of exotic inheritance in crossbred dairy cattle?",
-        "o": ["25% to 35%", "50% to 62.5% (or 5/8)", "75% to 87.5%", "100% purebred"],
+        "o": ["25% to 37.5% (or 1/4 to 3/8)", "50% to 62.5% (or 5/8)", "75% to 87.5% (or 3/4 to 7/8)", "100% purebred (or 8/8 full blood)"],
         "a": 1,
         "e": "National breeding policy caps exotic inheritance at 50% to 62.5% to combine high milk yield with tropical disease resistance and heat tolerance.",
         "topicId": "u3-t14",
@@ -368,7 +368,7 @@ unit3_mcq = [
     },
     {
         "q": "The synthetic dairy cattle strain 'Karan Swiss' developed at NDRI, Karnal, was synthesized by crossing Brown Swiss with:",
-        "o": ["Sahiwal and Red Sindhi", "Tharparkar", "Gir", "Hariana"],
+        "o": ["Sahiwal and Red Sindhi", "Tharparkar and Kankrej", "Gir and Deoni breeds", "Hariana and Ongole cows"],
         "a": 0,
         "e": "Karan Swiss was synthesized at NDRI Karnal by crossing exotic Brown Swiss sires with indigenous Sahiwal and Red Sindhi cows.",
         "topicId": "u3-t19",
@@ -386,7 +386,7 @@ unit3_mcq = [
     },
     {
         "q": "The synthetic dairy cattle breed 'Frieswal' developed by ICAR-CIRC Meerut carries what proportion of Holstein-Friesian inheritance?",
-        "o": ["50%", "62.5% (5/8)", "75%", "87.5%"],
+        "o": ["50.0% (1/2)", "62.5% (5/8)", "75.0% (3/4)", "87.5% (7/8)"],
         "a": 1,
         "e": "Frieswal carries 62.5% (5/8) Holstein-Friesian and 37.5% (3/8) Sahiwal inheritance.",
         "topicId": "u3-t19",
@@ -422,7 +422,7 @@ unit3_mcq = [
     },
     {
         "q": "The fine-wool crossbred sheep breed 'Hissardale' was synthesized at Hisar by crossing Australian Merino rams with:",
-        "o": ["Bikaneri (Magra) ewes", "Nellore ewes", "Deccani ewes", "Mandya ewes"],
+        "o": ["Bikaneri (Magra) ewes", "Nellore (Palla) ewes", "Deccani hairy ewes", "Mandya mutton ewes"],
         "a": 0,
         "e": "Hissardale was developed at the Government Livestock Farm, Hisar, by mating Australian Merino rams with Bikaneri ewes.",
         "topicId": "u3-t19",
@@ -431,7 +431,7 @@ unit3_mcq = [
     },
     {
         "q": "Which prolific Indian goat breed of West Bengal is celebrated for high twinning rates, early sexual maturity, and tender chevon?",
-        "o": ["Jamunapari", "Beetal", "Black Bengal", "Barbari"],
+        "o": ["Jamunapari tall breed", "Beetal dual-purpose", "Black Bengal", "Barbari urban breed"],
         "a": 2,
         "e": "Black Bengal goats are renowned for multiple births (twins/triplets), excellent skin/leather quality, and superior meat tenderness.",
         "topicId": "u3-t15",
@@ -440,7 +440,7 @@ unit3_mcq = [
     },
     {
         "q": "The world-famous luxury cashmere (Pashmina) fiber is harvested from the undercoat of which goat breed found in Ladakh?",
-        "o": ["Changthangi (Cheghu)", "Gaddi", "Sirohi", "Osmanabadi"],
+        "o": ["Changthangi (Cheghu)", "Gaddi hill goat", "Sirohi meat goat", "Osmanabadi breed"],
         "a": 0,
         "e": "Changthangi and Cheghu goats living at high altitudes in Ladakh/Himalayas produce ultra-fine Pashmina cashmere fiber (<15 microns).",
         "topicId": "u3-t15",
@@ -458,7 +458,7 @@ unit3_mcq = [
     },
     {
         "q": "In commercial poultry egg layer breeding, the most widely utilized breed for white-shelled egg production is:",
-        "o": ["Single Comb White Leghorn", "Plymouth Rock", "New Hampshire", "Aseel"],
+        "o": ["Single Comb White Leghorn", "Barred Plymouth Rock", "Rhode Island Red hen", "Indigenous Aseel fowl"],
         "a": 0,
         "e": "Single Comb White Leghorn (SCWL) is the foundation of all modern high-producing white-egg layer strains worldwide.",
         "topicId": "u3-t16",
@@ -467,7 +467,7 @@ unit3_mcq = [
     },
     {
         "q": "Who developed the Best Linear Unbiased Prediction (BLUP) methodology and Mixed Model Equations in 1973?",
-        "o": ["Charles Roy Henderson", "Jay L. Lush", "Sewall Wright", "Robert Bakewell"],
+        "o": ["Charles Roy Henderson", "Jay Laurence Lush", "Sewall Green Wright", "Robert Bakewell FRS"],
         "a": 0,
         "e": "C. R. Henderson developed BLUP, which is the international gold standard algorithm for modern sire evaluation and genetic prediction.",
         "topicId": "u3-t17",
@@ -476,7 +476,7 @@ unit3_mcq = [
     },
     {
         "q": "What is the key advantage of an Open Nucleus Breeding System (ONBS) over a Closed Nucleus Breeding System?",
-        "o": ["Allows genetically superior females from commercial herds to enter the nucleus", "Completely stops all gene flow", "Eliminates all AI costs", "Requires no record keeping"],
+        "o": ["Allows genetically superior females from commercial herds to enter the nucleus", "Completely seals the nucleus against incoming superior external germplasm", "Eliminates the operational necessity for pedigree recording in multipliers", "Maximizes the rate of herd inbreeding while avoiding artificial selection"],
         "a": 0,
         "e": "In ONBS, elite females from commercial/farmer herds are allowed into the nucleus, broadening the gene pool and lowering the rate of inbreeding.",
         "topicId": "u3-t18",
@@ -494,7 +494,7 @@ unit3_mcq = [
     },
     {
         "q": "In sire evaluation, Contemporary Comparison compares the performance of a bull's daughters against:",
-        "o": ["Their own dams", "Contemporary herdmates born in the same herd, year, and season", "The national breed average", "Full-sibs only"],
+        "o": ["Their own maternal dams evaluated across preceding lactation cycles", "Contemporary herdmates born in the same herd, year, and season", "The national breed historical average regardless of season or feeding", "Full-sib sisters managed concurrently in an isolated research station"],
         "a": 1,
         "e": "Contemporary comparison adjusts for herd environmental differences by comparing daughters directly against contemporary herdmates in the same season.",
         "topicId": "u3-t17",
@@ -534,7 +534,7 @@ unit3_mcq = [
     },
     {
         "q": "Which flagship government mission launched in 2014 focuses on the development and genetic conservation of indigenous bovine breeds in India?",
-        "o": ["Operation Flood", "Rashtriya Gokul Mission (RGM)", "Key Village Scheme", "National Livestock Mission"],
+        "o": ["Operation Flood (White Revolution)", "Rashtriya Gokul Mission (RGM)", "Key Village Scheme (KVS project)", "National Livestock Mission (NLM)"],
         "a": 1,
         "e": "The Rashtriya Gokul Mission was launched for the genetic upgradation and conservation of indigenous bovine breeds and establishment of Gokul Grams.",
         "topicId": "u3-t20",
@@ -552,7 +552,7 @@ unit3_mcq = [
     },
     {
         "q": "Which hormone is standardly administered to donor cows to induce superovulation in a MOET program?",
-        "o": ["Progesterone", "Follicle Stimulating Hormone (FSH)", "Oxytocin", "Prolactin"],
+        "o": ["Progesterone (P4 hormone)", "Follicle Stimulating Hormone (FSH)", "Luteinizing Hormone (LH trigger)", "Prostaglandin F2-alpha (PGF2α)"],
         "a": 1,
         "e": "Pituitary-derived FSH (or eCG/PMSG) is administered over 4 days to stimulate multiple ovarian follicles to mature and ovulate simultaneously.",
         "topicId": "u3-t22",
@@ -561,7 +561,7 @@ unit3_mcq = [
     },
     {
         "q": "Flow cytometric sorting of X- and Y-bearing spermatozoa for sex-sorted semen is based on the fact that bovine X-sperm contain:",
-        "o": ["3.8% to 4.2% more DNA than Y-sperm", "50% more protein than Y-sperm", "A negative surface charge", "Two flagella"],
+        "o": ["3.8% to 4.2% more DNA than Y-sperm", "10.5% to 12.0% greater lipid mass", "Specific negative surface charge", "Two distinct swimming flagella"],
         "a": 0,
         "e": "Because the bovine X chromosome is substantially larger than the Y chromosome, X-bearing spermatozoa contain approximately 3.8–4.2% more total DNA.",
         "topicId": "u3-t22",
@@ -570,7 +570,7 @@ unit3_mcq = [
     },
     {
         "q": "Who proposed the methodology of Genomic Selection using genome-wide dense SNP markers in 2001?",
-        "o": ["Meuwissen, Hayes, and Goddard", "Hazel and Lush", "Robertson and Rendel", "Watson and Crick"],
+        "o": ["Meuwissen, Hayes, and Goddard", "Lanoy Nelson Hazel and Jay L. Lush", "Alan Robertson and J. M. Rendel", "James Watson and Francis Crick"],
         "a": 0,
         "e": "Theo Meuwissen, Ben Hayes, and Mike Goddard (2001) proposed Genomic Selection to predict Genomic Estimated Breeding Values (GEBV) from SNP markers.",
         "topicId": "u3-t22",
@@ -579,7 +579,7 @@ unit3_mcq = [
     },
     {
         "q": "The primary operational benefit of Genomic Selection in dairy cattle breeding is:",
-        "o": ["Halving the generation interval by selecting bulls at birth", "Eliminating the need for liquid nitrogen", "Guaranteeing 100% female calves", "Preventing all recessive mutations"],
+        "o": ["Halving the generation interval by selecting bulls at birth", "Completely eliminating the operational requirement for cryogenic AI storage", "Biologically guaranteeing one hundred percent female progeny in all matings", "Permanently removing every lethal recessive mutation from the donor genome"],
         "a": 0,
         "e": "Genomic selection predicts a bull's breeding value from a DNA sample at birth, eliminating the 5–6 year waiting period for daughter milking records.",
         "topicId": "u3-t22",
@@ -588,7 +588,7 @@ unit3_mcq = [
     },
     {
         "q": "In cattle, the Major Histocompatibility Complex (MHC) linked to disease resistance and immune response is termed:",
-        "o": ["HLA", "BoLA (Bovine Leukocyte Antigen)", "SLA", "DLA"],
+        "o": ["HLA (Human Leukocyte Antigen)", "BoLA (Bovine Leukocyte Antigen)", "SLA (Swine Leukocyte Antigen)", "DLA (Dog Leukocyte Antigen)"],
         "a": 1,
         "e": "BoLA (Bovine Leukocyte Antigen) is the bovine MHC complex, whose polymorphic alleles correlate with resistance to mastitis and tick infestation.",
         "topicId": "u3-t23",
@@ -597,7 +597,7 @@ unit3_mcq = [
     },
     {
         "q": "In commercial poultry, which blood group / MHC locus is famously linked with genetic resistance to Marek's disease?",
-        "o": ["A locus", "B locus (e.g. B21 allele)", "C locus", "D locus"],
+        "o": ["A locus (e.g. A1 allele)", "B locus (e.g. B21 allele)", "C locus (e.g. C3 allele)", "E locus (e.g. E7 allele)"],
         "a": 1,
         "e": "The B21 allele of the chicken MHC (B blood group system) confers strong genetic resistance to tumor formation by Marek's disease herpesvirus.",
         "topicId": "u3-t23",
@@ -606,7 +606,7 @@ unit3_mcq = [
     },
     {
         "q": "Genetic resistance to classical Scrapie in sheep is determined by polymorphisms in which gene?",
-        "o": ["BoLA-DRB3 gene", "Prion Protein (PrP) gene", "Myostatin gene", "Kappa-casein gene"],
+        "o": ["BoLA-DRB3 immune gene", "Prion Protein (PrP) gene", "Myostatin (MSTN) gene", "Kappa-casein (CSN3) gene"],
         "a": 1,
         "e": "The prion protein (PrP) gene at codons 136, 154, and 171 controls scrapie resistance; the ARR allele confers resistance, while VRQ confers susceptibility.",
         "topicId": "u3-t23",
@@ -633,7 +633,7 @@ unit3_mcq = [
     },
     {
         "q": "In-vitro fertilization (IVF) coupled with transvaginal aspiration of immature oocytes from live cows is called:",
-        "o": ["Ovum Pick-Up (OPU)", "Embryo splitting", "Nuclear transfer", "Sperm sexing"],
+        "o": ["Ovum Pick-Up (OPU)", "Embryo Bisection (EB)", "Somatic Cell Transfer (SCNT)", "Flow Sperm Sorting (FSS)"],
         "a": 0,
         "e": "OPU (Ovum Pick-Up) uses ultrasound-guided needle aspiration to recover oocytes from pregnant or cycling cows for in-vitro embryo production.",
         "topicId": "u3-t22",
@@ -642,7 +642,7 @@ unit3_mcq = [
     },
     {
         "q": "The Intensive Cattle Development Project (ICDP) in India was initiated during which decade?",
-        "o": ["1950s", "1960s (1964–65)", "1980s", "2000s"],
+        "o": ["1950s (1951–52)", "1960s (1964–65)", "1970s (1974–75)", "1980s (1985–86)"],
         "a": 1,
         "e": "ICDP was initiated in 1964–65 to provide intensive cattle breeding, nutrition, and disease control packages around major dairy plants.",
         "topicId": "u3-t20",
@@ -651,7 +651,7 @@ unit3_mcq = [
     },
     {
         "q": "Which indigenous sheep breed of Rajasthan has been designated as an endangered germplasm needing urgent in-situ conservation?",
-        "o": ["Chokla", "Sonadi", "Malpura", "Pugal / Kheri"],
+        "o": ["Chokla / Shekhawati", "Sonadi / Chanothar", "Malpura carpet breed", "Pugal / Kheri"],
         "a": 3,
         "e": "Several native breeds with restricted geographical pockets (e.g. Pugal sheep, Toda buffalo, Punganur dwarf cow) require targeted conservation.",
         "topicId": "u3-t21",
@@ -673,7 +673,7 @@ unit3_mcq = [
     # ============================================================
     {
         "q": "Which celebrated Indian sighthound breed originated in Karnataka and Maharashtra and has been inducted into the Indian Army?",
-        "o": ["Mudhol Hound (Caravan Hound)", "Rajapalayam", "Chippiparai", "Kombai"],
+        "o": ["Mudhol Hound (Caravan Hound)", "Rajapalayam (Poligar Hound)", "Chippiparai (Tamil Sighthound)", "Kombai (Indian Guard Dog)"],
         "a": 0,
         "e": "The Mudhol Hound is an ancient Indian sighthound known for exceptional speed, stamina, and keen hunting vision.",
         "topicId": "u3-t24",
@@ -682,7 +682,7 @@ unit3_mcq = [
     },
     {
         "q": "The Rajapalayam dog breed, characterized by a milk-white coat, pink nose, and golden eyes, originated in which Indian state?",
-        "o": ["Kerala", "Tamil Nadu", "Karnataka", "Punjab"],
+        "o": ["Kerala state", "Tamil Nadu", "Karnataka state", "Punjab region"],
         "a": 1,
         "e": "The Rajapalayam is a royal sighthound native to Rajapalayam town in Virudhunagar district, Tamil Nadu.",
         "topicId": "u3-t24",
@@ -691,7 +691,7 @@ unit3_mcq = [
     },
     {
         "q": "Under the Kennel Club classification, the Labrador Retriever and Golden Retriever belong to which dog breed group?",
-        "o": ["Hound group", "Sporting (Gun dog) group", "Terrier group", "Toy group"],
+        "o": ["Hound (Scent/Sight) group", "Sporting (Gun dog) group", "Terrier (Earth dog) group", "Working (Utility) group"],
         "a": 1,
         "e": "Retrievers and spaniels belong to the Sporting (or Gun dog) group, bred to locate and retrieve game birds.",
         "topicId": "u3-t24",
@@ -700,7 +700,7 @@ unit3_mcq = [
     },
     {
         "q": "What is the average gestation length in the domestic canine bitch?",
-        "o": ["45 days", "63 days (range 58–68 days)", "90 days", "114 days"],
+        "o": ["42 days (range 38–46 days)", "63 days (range 58–68 days)", "90 days (range 85–95 days)", "114 days (range 110–118 days)"],
         "a": 1,
         "e": "Canine pregnancy averages 63 days from ovulation (range 58 to 68 days).",
         "topicId": "u3-t25",
@@ -709,7 +709,7 @@ unit3_mcq = [
     },
     {
         "q": "The canine estrous cycle stage characterized by vulvar swelling, serosanguinous discharge, and attraction of males without permitting mating is:",
-        "o": ["Proestrus", "Estrus", "Diestrus", "Anestrus"],
+        "o": ["Proestrus", "True estrus", "Metestrus", "Diestrus"],
         "a": 0,
         "e": "Proestrus lasts ~9 days. The bitch displays bloody discharge and swollen vulva but will vigorously refuse mating until entering estrus.",
         "topicId": "u3-t25",
@@ -727,7 +727,7 @@ unit3_mcq = [
     },
     {
         "q": "Domestic feline queens exhibit which unique ovulatory mechanism during reproduction?",
-        "o": ["Spontaneous cyclical ovulation", "Induced (reflex) ovulation triggered by coitus", "Seasonal monoestrus only", "Silent ovulation without estrus"],
+        "o": ["Spontaneous cyclical ovulation governed by photoperiod", "Induced (reflex) ovulation triggered by coitus", "Obligate seasonal monoestrus restricted to winter months", "Silent sub-estrus ovulation without behavioral receptivity"],
         "a": 1,
         "e": "Cats are induced (reflex) ovulators; tactile stimulation of the cervix by the penile spines during coitus triggers the LH surge and subsequent ovulation.",
         "topicId": "u3-t25",
@@ -736,7 +736,7 @@ unit3_mcq = [
     },
     {
         "q": "What is the average gestation length in the domestic cat (queen)?",
-        "o": ["45 days", "63 to 65 days", "80 days", "30 days"],
+        "o": ["42 to 45 days", "63 to 65 days", "78 to 82 days", "28 to 32 days"],
         "a": 1,
         "e": "The gestation period of domestic queens averages 63–65 days (similar to dogs).",
         "topicId": "u3-t25",
@@ -808,7 +808,7 @@ unit3_mcq = [
     },
     {
         "q": "The Padmaja Naidu Himalayan Zoological Park in Darjeeling is globally celebrated for the successful conservation breeding of which endangered species?",
-        "o": ["Red Panda and Snow Leopard", "Asiatic Lion", "Gharial", "Great Indian Bustard"],
+        "o": ["Red Panda and Snow Leopard", "Asiatic Lion and Bengal Tiger", "Indian Gharial and Mugger Crocodile", "Great Indian Bustard and Bengal Florican"],
         "a": 0,
         "e": "Darjeeling Zoo is internationally acclaimed for its successful captive breeding programs for Red Pandas and Snow Leopards.",
         "topicId": "u3-t28",
@@ -817,7 +817,7 @@ unit3_mcq = [
     },
     {
         "q": "What ISO microchip frequency standard is standardly used for electronic identification of pet animals and zoo species in India?",
-        "o": ["134.2 kHz (ISO 11784/11785)", "125 kHz", "915 MHz", "2.4 GHz"],
+        "o": ["134.2 kHz (ISO 11784/11785)", "125.0 kHz (ISO 14443 Type A)", "915.0 MHz (ISO 18000-6C EPC)", "2.45 GHz (ISO 18000-4 Active)"],
         "a": 0,
         "e": "The global standard for animal RFID microchip identification is 134.2 kHz conforming to ISO 11784 (15-digit code) and ISO 11785.",
         "topicId": "u3-t24",

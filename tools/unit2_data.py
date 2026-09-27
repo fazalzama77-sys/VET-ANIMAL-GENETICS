@@ -9,7 +9,7 @@ unit2_mcq = [
     # ============================================================
     {
         "q": "Who is universally recognized as the 'Father of Genetics' for discovering the fundamental laws of inheritance in Pisum sativum?",
-        "o": ["Gregor Johann Mendel", "William Bateson", "Thomas Hunt Morgan", "Wilhelm Johannsen"],
+        "o": ["Gregor Johann Mendel", "William Bateson FRS", "Thomas Hunt Morgan", "Wilhelm Ludvig Johannsen"],
         "a": 0,
         "e": "Gregor Johann Mendel conducted his famous hybridization experiments on the garden pea from 1856 to 1863, establishing particulate inheritance.",
         "topicId": "u2-t01",
@@ -18,7 +18,7 @@ unit2_mcq = [
     },
     {
         "q": "The term 'Genetics' was coined in the year 1905 by which pioneer scientist?",
-        "o": ["Gregor Mendel", "William Bateson", "Carl Correns", "Hugo de Vries"],
+        "o": ["Gregor Johann Mendel", "William Bateson", "Carl Erich Correns", "Hugo Marie de Vries"],
         "a": 1,
         "e": "William Bateson coined the term 'Genetics' in 1905, along with terms like 'allele', 'homozygote', 'heterozygote', and 'F1 generation'.",
         "topicId": "u2-t01",
@@ -72,7 +72,7 @@ unit2_mcq = [
     },
     {
         "q": "In Andalusian fowl, crossing a true-breeding black fowl with a splashed white fowl produces 100% blue offspring. This is a classic example of:",
-        "o": ["Complete dominance", "Incomplete dominance", "Codominance", "Recessive epistasis"],
+        "o": ["Complete dominance", "Incomplete dominance", "Codominant expression", "Recessive epistatic mask"],
         "a": 1,
         "e": "Incomplete dominance results in an intermediate heterozygous phenotype (blue plumage in Andalusian fowl, pink in Mirabilis jalapa) with a 1:2:1 F2 ratio.",
         "topicId": "u2-t05",
@@ -99,7 +99,7 @@ unit2_mcq = [
     },
     {
         "q": "The lethal condition known as 'Bulldog Calf' (severe chondrodysplasia and abortion) in Dexter cattle is caused by:",
-        "o": ["A homozygous recessive lethal gene", "A homozygous dominant lethal gene", "A sex-linked recessive gene", "Mitochondrial mutation"],
+        "o": ["A homozygous recessive lethal gene", "A homozygous dominant lethal gene", "A sex-linked hemizygous lethal gene", "A maternal mitochondrial lethal defect"],
         "a": 0,
         "e": "In Dexter cattle, heterozygous calves are short-legged (Dexter type), but homozygous lethal calves exhibit severe achondroplasia ('Bulldog calf') and are aborted.",
         "topicId": "u2-t05",
@@ -247,7 +247,7 @@ unit2_mcq = [
     },
     {
         "q": "Tortoiseshell or calico coat coloration (orange and black patches) in domestic cats is almost exclusively observed in females because:",
-        "o": ["The orange gene is Y-linked", "The orange gene is X-linked and undergoes random X-inactivation", "Male embryos carrying black pigment die in utero", "It is an autosomal sex-limited trait"],
+        "o": ["The orange allele is Y-linked and repressed in the presence of an X chromosome", "The orange gene is X-linked and undergoes random X-inactivation", "Male hemizygous embryos carrying black pigment die in utero before implantation", "It is an autosomal sex-limited gene whose expression is triggered by estrogens"],
         "a": 1,
         "e": "The O (orange) locus is on the X chromosome. Heterozygous females (X^O X^B) form a mosaic of orange and black patches due to random lyonization.",
         "topicId": "u2-t09",
@@ -265,7 +265,7 @@ unit2_mcq = [
     },
     {
         "q": "Horn development in Dorset/Merino sheep (dominant in males, recessive in females) is a classic example of:",
-        "o": ["Sex-linked inheritance", "Sex-influenced inheritance", "Sex-limited inheritance", "Cytoplasmic inheritance"],
+        "o": ["Sex-linked gene inheritance", "Sex-influenced inheritance", "Sex-limited trait expression", "Cytoplasmic maternal inheritance"],
         "a": 1,
         "e": "Sex-influenced traits are autosomal traits whose phenotypic expression and dominance relationship are altered by male or female sex hormones.",
         "topicId": "u2-t10",
@@ -301,7 +301,7 @@ unit2_mcq = [
     },
     {
         "q": "Which structural chromosomal aberration involves the fusion of two acrocentric chromosomes at their centromeres to form a single large metacentric chromosome?",
-        "o": ["Reciprocal translocation", "Robertsonian translocation (Centric fusion)", "Paracentric inversion", "Pericentric inversion"],
+        "o": ["Reciprocal translocation (segment exchange)", "Robertsonian translocation (Centric fusion)", "Paracentric inversion (arm-restricted loop)", "Pericentric inversion (centromere-spanning)"],
         "a": 1,
         "e": "Robertsonian translocation (centric fusion) unites two acrocentric chromosomes, such as the famous 1/29 translocation in cattle which reduces bull fertility.",
         "topicId": "u2-t13",
@@ -319,7 +319,7 @@ unit2_mcq = [
     },
     {
         "q": "Extra-chromosomal or maternal inheritance in animals is primarily mediated by genes located in:",
-        "o": ["Centrosomes", "Ribosomes", "Mitochondrial DNA (mtDNA)", "Endoplasmic reticulum"],
+        "o": ["Centrosomal microfilaments", "Ribosomal ribonucleoproteins", "Mitochondrial DNA (mtDNA)", "Endoplasmic reticulum cisternae"],
         "a": 2,
         "e": "Mitochondria possess their own circular double-stranded DNA (mtDNA) transmitted exclusively through the ovum cytoplasm, demonstrating non-Mendelian maternal inheritance.",
         "topicId": "u2-t15",
@@ -341,7 +341,7 @@ unit2_mcq = [
     # ============================================================
     {
         "q": "According to the Watson-Crick double helix model of B-DNA, the distance between two adjacent nucleotide base pairs is:",
-        "o": ["3.4 nm", "0.34 nm (3.4 Å)", "2.0 nm", "34 nm"],
+        "o": ["3.40 nm (34.0 Å)", "0.34 nm (3.4 Å)", "2.00 nm (20.0 Å)", "0.20 nm (2.0 Å)"],
         "a": 1,
         "e": "In B-DNA, each helical turn comprises 10 base pairs with a pitch of 3.4 nm, giving a distance between adjacent base pairs of 0.34 nm (3.4 Å).",
         "topicId": "u2-t16",
@@ -368,7 +368,7 @@ unit2_mcq = [
     },
     {
         "q": "Meselson and Stahl (1958) experimentally proved that DNA replication is:",
-        "o": ["Conservative", "Semiconservative", "Dispersive", "Non-directional"],
+        "o": ["Fully conservative mode", "Semiconservative", "Dispersive fragmented mode", "Random non-directional mode"],
         "a": 1,
         "e": "Using heavy nitrogen (¹⁵N) density-gradient centrifugation in E. coli, Meselson and Stahl proved that each daughter DNA molecule contains one conserved parental strand and one newly synthesized strand.",
         "topicId": "u2-t17",
@@ -458,7 +458,7 @@ unit2_mcq = [
     },
     {
         "q": "Restriction endonucleases (molecular scissors) cleave DNA molecules specifically at:",
-        "o": ["Random poly-A sequences", "Palindromic recognition sequences", "Promoter regions only", "Telomeric repeats"],
+        "o": ["Random poly-adenylation sequences", "Palindromic recognition sequences", "Core promoter TATA box sequences", "Terminal telomeric repeat sequences"],
         "a": 1,
         "e": "Restriction enzymes (e.g. EcoRI: 5'-GAATTC-3') cleave double-stranded DNA at specific symmetrical palindromic recognition sites.",
         "topicId": "u2-t18",
@@ -467,7 +467,7 @@ unit2_mcq = [
     },
     {
         "q": "During agarose gel electrophoresis, DNA fragments migrate towards which electrode and why?",
-        "o": ["Negative cathode; DNA is positively charged", "Positive anode; DNA has a negative phosphate backbone", "Positive anode; DNA is neutral", "Negative cathode; histones are negatively charged"],
+        "o": ["Negative cathode; DNA carries a positive basic charge", "Positive anode; DNA has a negative phosphate backbone", "Positive anode; purine bases carry net negative charges", "Negative cathode; ribose sugars carry net basic polarity"],
         "a": 1,
         "e": "Because of its repeating phosphate group backbone, DNA carries a net negative charge and migrates towards the positive anode (+).",
         "topicId": "u2-t18",
@@ -476,7 +476,7 @@ unit2_mcq = [
     },
     {
         "q": "The Sanger DNA sequencing method relies on which modified nucleotides to cause chain termination?",
-        "o": ["dNTPs (deoxynucleotide triphosphates)", "ddNTPs (dideoxynucleotide triphosphates)", "Ribonucleotides", "cAMP"],
+        "o": ["dNTPs (deoxynucleotide triphosphates)", "ddNTPs (dideoxynucleotide triphosphates)", "NTPs (ribonucleoside triphosphates)", "cNMPs (cyclic nucleotide monophosphates)"],
         "a": 1,
         "e": "Dideoxynucleotides (ddNTPs) lack the 3'-OH group needed for phosphodiester bond formation, halting elongation upon incorporation.",
         "topicId": "u2-t18",
@@ -507,7 +507,7 @@ unit2_mcq = [
     # ============================================================
     {
         "q": "A group of interbreeding individuals of the same species existing concurrently in a geographic area and sharing a common gene pool is a:",
-        "o": ["Clone", "Mendelian population", "Phenocopy", "Lineage"],
+        "o": ["Panmictic clone cohort", "Mendelian population", "Induced phenocopy group", "Isogenic ancestral lineage"],
         "a": 1,
         "e": "A Mendelian population is a community of sexually interbreeding individuals sharing a common gene pool across generations.",
         "topicId": "u2-t19",
@@ -570,7 +570,7 @@ unit2_mcq = [
     },
     {
         "q": "Which of the following conditions is REQUIRED for a population to maintain Hardy-Weinberg equilibrium?",
-        "o": ["Small population size", "Non-random assortative mating", "Random mating (panmixia) and large population size", "Continuous high mutation rate"],
+        "o": ["Extremely small effective population size and genetic drift", "Directional assortative mating and selective migration", "Random mating (panmixia) and large population size", "Continuous high mutation rate and directional selection"],
         "a": 2,
         "e": "Hardy-Weinberg equilibrium requires: 1. Infinitely large population, 2. Panmixia (random mating), 3. No selection, 4. No mutation, 5. No migration, 6. No genetic drift.",
         "topicId": "u2-t21",
@@ -597,7 +597,7 @@ unit2_mcq = [
     },
     {
         "q": "Random fluctuations in allele frequencies from generation to generation purely due to sampling error in small populations is known as:",
-        "o": ["Hardy-Weinberg equilibrium", "Gene flow", "Genetic drift (Sewall Wright effect)", "Selection pressure"],
+        "o": ["Genetic equilibrium (Hardy-Weinberg law)", "Gene flow (inter-population migration)", "Genetic drift (Sewall Wright effect)", "Selection pressure (fitness differential)"],
         "a": 2,
         "e": "Genetic drift refers to random sampling variation in gametes leading to erratic shifts in allele frequencies, loss of heterozygosity, or allele fixation in small herds.",
         "topicId": "u2-t22",
@@ -624,7 +624,7 @@ unit2_mcq = [
     },
     {
         "q": "The reproductive efficiency or relative survival of a genotype compared to the most favored genotype is called its:",
-        "o": ["Selection coefficient (s)", "Fitness / Adaptive value (W)", "Heritability", "Breeding value"],
+        "o": ["Selection coefficient (s)", "Fitness / Adaptive value (W)", "Narrow-sense heritability (h²)", "Estimated breeding value (EBV)"],
         "a": 1,
         "e": "Biological fitness (W) is the relative reproductive success of a genotype, scaled from 0.0 to 1.0 (where s = 1 - W).",
         "topicId": "u2-t22",
@@ -633,7 +633,7 @@ unit2_mcq = [
     },
     {
         "q": "If a recessive lethal mutation is completely selected against (s = 1.0) in homozygous state (aa), can selection completely eliminate the recessive allele from the population?",
-        "o": ["Yes, in 1 generation", "Yes, in 10 generations", "No, because the recessive allele hides in heterozygous carriers (Aa)", "Yes, within 5 generations"],
+        "o": ["Yes, because complete selection against homozygotes eliminates all mutant alleles", "Yes, because random mating rapidly purges non-expressed recessive alleles", "No, because the recessive allele hides in heterozygous carriers (Aa)", "Yes, provided the initial recessive gene frequency is below five percent"],
         "a": 2,
         "e": "As allele frequency q becomes small, almost all recessive alleles reside in healthy heterozygous carriers (Aa), making complete eradication by phenotypic selection impossible.",
         "topicId": "u2-t22",
@@ -660,7 +660,7 @@ unit2_mcq = [
     },
     {
         "q": "Sewall Wright is best known in population genetics for his mathematical description of:",
-        "o": ["Genetic drift and inbreeding coefficient", "Polymerase Chain Reaction", "Chromosome karyotyping", "DNA structure"],
+        "o": ["Genetic drift and inbreeding coefficient", "Polymerase chain reaction thermal cycling", "Fluorescent in situ hybridization banding", "Semi-conservative double helical replication"],
         "a": 0,
         "e": "Sewall Wright formulated the inbreeding coefficient (F), the shifting balance theory, and the mathematics of random genetic drift.",
         "topicId": "u2-t22",
@@ -673,7 +673,7 @@ unit2_mcq = [
     # ============================================================
     {
         "q": "Which of the following is a classic continuous quantitative trait in dairy cattle?",
-        "o": ["Coat color (Black vs Red)", "Horned vs Polled condition", "305-day Lactation Milk Yield", "Blood group B phenogroup"],
+        "o": ["Coat color phenotype (Black vs Red)", "Horned vs Polled anatomical condition", "305-day Lactation Milk Yield", "Blood group B polymorphic phenogroup"],
         "a": 2,
         "e": "305-day lactation milk yield is a polygenic quantitative trait showing continuous phenotypic distribution influenced heavily by nutrition and environment.",
         "topicId": "u2-t23",
@@ -727,7 +727,7 @@ unit2_mcq = [
     },
     {
         "q": "Which of the following classes of livestock traits characteristically exhibits low heritability (h² < 0.15)?",
-        "o": ["Carcass traits", "Reproductive and fertility traits (e.g. calving interval, service period)", "Mature body weight", "Milk butterfat percentage"],
+        "o": ["Carcass and meat quality traits (e.g. dressing percentage, loin eye area)", "Reproductive and fertility traits (e.g. calving interval, service period)", "Structural skeletal body size traits (e.g. mature body weight, wither height)", "Milk composition quality traits (e.g. milk butterfat and protein percentage)"],
         "a": 1,
         "e": "Fertility and fitness traits (calving interval, service period, hatchability) have low heritability (<0.15) and respond poorly to mass selection.",
         "topicId": "u2-t27",
@@ -736,7 +736,7 @@ unit2_mcq = [
     },
     {
         "q": "Which method of estimating heritability is most widely used in farm animal breeding using sire component of variance?",
-        "o": ["Paternal Half-Sib Correlation", "Twin study method", "Selection experiment", "Offspring-parent covariance"],
+        "o": ["Paternal Half-Sib Correlation", "Identical Monozygotic Twin Study", "Two-Way Divergent Selection Study", "Offspring-Parent Regression Analysis"],
         "a": 0,
         "e": "Paternal half-sib correlation (PHS) is the standard method in animal breeding because one bull mates with many dams, yielding large half-sib families: h² = 4 * t.",
         "topicId": "u2-t27",
@@ -772,7 +772,7 @@ unit2_mcq = [
     },
     {
         "q": "Repeatability (r) measures the correlation between repeated records of the same animal and sets the theoretical upper limit to:",
-        "o": ["Dominance variance", "Narrow-sense heritability (h²)", "Selection intensity", "Environmental variance"],
+        "o": ["Non-additive dominance variance (V_D)", "Narrow-sense heritability (h²)", "Standardized selection intensity (i)", "Temporary environmental variance (V_Et)"],
         "a": 1,
         "e": "Because repeatability includes permanent environmental variance (r = (V_G + V_Ep) / V_P), it always sets the upper boundary: h² ≤ r.",
         "topicId": "u2-t28",
@@ -781,7 +781,7 @@ unit2_mcq = [
     },
     {
         "q": "Which parameter is computed using repeatability to predict an animal's future productivity for culling decisions?",
-        "o": ["Genomic Index", "Most Probable Producing Ability (MPPA)", "Inbreeding Coefficient", "Selection Differential"],
+        "o": ["Genomic Estimated Breeding Value (GEBV)", "Most Probable Producing Ability (MPPA)", "Individual Inbreeding Coefficient (F_x)", "Standardized Selection Differential (S_d)"],
         "a": 1,
         "e": "MPPA combines the herd average with the animal's past records weighted by repeatability: MPPA = Herd_Mean + [n*r / (1 + (n-1)r)] * (Cow_Mean - Herd_Mean).",
         "topicId": "u2-t28",
@@ -808,7 +808,7 @@ unit2_mcq = [
     },
     {
         "q": "When different genotypes perform differently in different environments (e.g. temperate vs tropical climates), this is called:",
-        "o": ["Genotype × Environment (G × E) Interaction", "Epistatic deviation", "Pleiotropic effect", "Inbreeding depression"],
+        "o": ["Genotype × Environment (G × E) Interaction", "Epistatic non-allelic interaction deviation", "Pleiotropic multi-trait gene expression", "Cumulative inbreeding depression effect"],
         "a": 0,
         "e": "Genotype-Environment (GxE) interaction occurs when the relative ranking or phenotypic superiority of genotypes changes across contrasting nutritional or climatic environments.",
         "topicId": "u2-t26",
@@ -826,7 +826,7 @@ unit2_mcq = [
     },
     {
         "q": "Permanent environmental effects (V_Ep) in dairy cattle include permanent damage caused by:",
-        "o": ["Annual feed fluctuation", "Severe clinical mastitis leading to loss of an udder quarter", "Ambient temperature change", "Daily milking routine"],
+        "o": ["Seasonal dietary energy fluctuations causing reversible milk drop", "Severe clinical mastitis leading to loss of an udder quarter", "Acute ambient temperature heat stress during a single summer week", "Routine machine milking frequency changes during mid-lactation stages"],
         "a": 1,
         "e": "Permanent environmental effects affect all future lactations of an animal (e.g. loss of a quarter to mastitis, calfhood lung damage), unlike temporary seasonal fluctuations.",
         "topicId": "u2-t25",
