@@ -403,7 +403,7 @@ unit3_mcq = [
         "diff": 1
     },
     {
-        "q": "Which buffalo breed is famous for producing the highest milk fat percentage (up to 12–14%) with a copper-colored coat?",
+        "q": "Which buffalo breed is famous for producing the highest milk fat percentage (up to 13%) with a copper-colored coat?",
         "o": ["Murrah", "Mehsana", "Bhadawari", "Nili-Ravi"],
         "a": 2,
         "e": "Bhadawari buffaloes (from Uttar Pradesh/Madhya Pradesh) have a distinctive copper-colored coat and produce milk with 8–13% fat content.",
@@ -1016,7 +1016,7 @@ unit3_tf = [
         "diff": 1
     },
     {
-        "q": "Bhadawari buffaloes produce milk with the highest fat percentage (up to 12–14%) among Indian buffalo breeds.",
+        "q": "Bhadawari buffaloes produce milk with the highest fat percentage (up to 13%) among Indian buffalo breeds.",
         "a": True,
         "e": "Bhadawari buffaloes are renowned for milk fat percentages ranging from 8% to 13%, and possess a copper-colored body coat.",
         "topicId": "u3-t14",

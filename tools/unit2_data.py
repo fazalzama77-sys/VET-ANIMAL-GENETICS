@@ -99,9 +99,14 @@ unit2_mcq = [
     },
     {
         "q": "The lethal condition known as 'Bulldog Calf' (severe chondrodysplasia and abortion) in Dexter cattle is caused by:",
-        "o": ["A homozygous recessive lethal gene", "A homozygous dominant lethal gene", "A sex-linked hemizygous lethal gene", "A maternal mitochondrial lethal defect"],
+        "o": [
+            "An incompletely dominant gene that is lethal in homozygous state",
+            "A completely dominant lethal gene causing death in heterozygotes",
+            "A sex-linked recessive lethal gene on the X chromosome",
+            "A maternal mitochondrial lethal defect"
+        ],
         "a": 0,
-        "e": "In Dexter cattle, heterozygous calves are short-legged (Dexter type), but homozygous lethal calves exhibit severe achondroplasia ('Bulldog calf') and are aborted.",
+        "e": "In Dexter cattle, the chondrodysplasia gene (ACAN mutation) is incompletely dominant: heterozygous calves (Dd) are short-legged Dexter dwarf type, while homozygous calves (DD) exhibit severe lethal chondrodysplasia ('Bulldog calf') and abort or die at birth.",
         "topicId": "u2-t05",
         "subSection": "u2-s1",
         "diff": 2
@@ -119,7 +124,7 @@ unit2_mcq = [
         "q": "A modified dihybrid F₂ phenotypic ratio of 12:3:1 is characteristic of:",
         "o": ["Dominant epistasis", "Recessive epistasis", "Duplicate dominant genes", "Inhibitory gene interaction"],
         "a": 0,
-        "e": "In dominant epistasis (e.g. fruit color in summer squash, feather color in Leghorn fowl), a single dominant allele at one locus masks both alleles at the other locus, yielding 12:3:1.",
+        "e": "In dominant epistasis (e.g. fruit color in summer squash, coat color in dogs), a single dominant allele at one locus masks both alleles at the other locus, yielding 12:3:1.",
         "topicId": "u2-t06",
         "subSection": "u2-s1",
         "diff": 2
@@ -195,7 +200,7 @@ unit2_mcq = [
         "q": "What is the diploid chromosome number (2n) of the River Buffalo (Bubalus bubalis)?",
         "o": ["48", "50", "54", "60"],
         "a": 1,
-        "e": "River buffalo (Murrah, Nili-Ravi) has 2n = 50 chromosomes (5 pairs of submetacentric/metacentric autosomes and 20 pairs of acrocentric autosomes). Swamp buffalo has 2n = 48.",
+        "e": "River buffalo (Murrah, Nili-Ravi) has 2n = 50 chromosomes (5 pairs of submetacentric autosomes and 19 pairs of acrocentric autosomes plus 1 pair of sex chromosomes). Swamp buffalo has 2n = 48.",
         "topicId": "u2-t03",
         "subSection": "u2-s2",
         "diff": 1
@@ -1267,10 +1272,10 @@ unit2_fib = [
         "diff": 1
     },
     {
-        "q": "In poultry, complementary gene interaction for walnut comb produces an F₂ ratio of 9 to ______.",
+        "q": "In sweet pea (Lathyrus odoratus) flower colour, complementary gene interaction produces an F₂ ratio of 9 to ______.",
         "a": ["7", "seven"],
         "a_display": "7",
-        "e": "Complementary gene interaction gives a 9:7 phenotypic ratio.",
+        "e": "Complementary gene interaction (duplicate recessive epistasis) gives a 9:7 phenotypic ratio (e.g. purple vs white flower color in sweet peas).",
         "topicId": "u2-t06",
         "subSection": "u2-s1",
         "diff": 2

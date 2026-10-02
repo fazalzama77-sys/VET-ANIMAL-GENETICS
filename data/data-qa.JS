@@ -1434,7 +1434,7 @@ var qaBank = {
         "Clear definition of epistasis (epistatic vs hypostatic gene loci).",
         "Biochemical pathway foundation for departure from 9:3:3:1.",
         "Recessive Epistasis (9:3:4) with Labrador retriever coat color (B and E loci).",
-        "Dominant Epistasis (12:3:1) with White Leghorn poultry plumage (I and C loci).",
+        "Dominant Epistasis (12:3:1) with dog coat color (I and B loci) or summer squash.",
         "Inhibitory Epistasis (13:3) and Complementary Epistasis (9:7).",
         "Duplicate Dominant Epistasis (15:1) with feathered shanks in fowl.",
         "Comprehensive comparative summary table of all epistatic ratios."
@@ -1475,9 +1475,9 @@ var qaBank = {
             "12 : 3 : 1",
             "White (9)",
             "White (3)",
-            "Colored (3)",
-            "White (1)",
-            "Plumage color in White Leghorn fowl (I/C loci)"
+            "Black (3)",
+            "Brown (1)",
+            "Coat color in dogs (pigment inhibitor I) / Summer squash"
           ],
           [
             "Inhibitory Epistasis",

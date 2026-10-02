@@ -61,7 +61,7 @@ questions = [
             "Clear definition of epistasis (epistatic vs hypostatic gene loci).",
             "Biochemical pathway foundation for departure from 9:3:3:1.",
             "Recessive Epistasis (9:3:4) with Labrador retriever coat color (B and E loci).",
-            "Dominant Epistasis (12:3:1) with White Leghorn poultry plumage (I and C loci).",
+            "Dominant Epistasis (12:3:1) with dog coat color (I and B loci) or summer squash.",
             "Inhibitory Epistasis (13:3) and Complementary Epistasis (9:7).",
             "Duplicate Dominant Epistasis (15:1) with feathered shanks in fowl.",
             "Comprehensive comparative summary table of all epistatic ratios."
@@ -73,7 +73,7 @@ questions = [
             "rows": [
                 ["Classical Dihybrid Cross", "9 : 3 : 3 : 1", "Phenotype 1", "Phenotype 2", "Phenotype 3", "Phenotype 4", "Mendelian independent assortment"],
                 ["Recessive Epistasis", "9 : 3 : 4", "Black (9)", "Chocolate (3)", "Yellow (3)", "Yellow (1)", "Coat color in Labrador Retrievers (B/E loci)"],
-                ["Dominant Epistasis", "12 : 3 : 1", "White (9)", "White (3)", "Colored (3)", "White (1)", "Plumage color in White Leghorn fowl (I/C loci)"],
+                ["Dominant Epistasis", "12 : 3 : 1", "White (9)", "White (3)", "Black (3)", "Brown (1)", "Coat color in dogs (pigment inhibitor I) / Summer squash"],
                 ["Inhibitory Epistasis", "13 : 3", "Inhibited (9)", "Inhibited (3)", "Expressed (3)", "Inhibited (1)", "Feather color inhibition in poultry"],
                 ["Complementary Epistasis", "9 : 7", "Colored (9)", "White (3)", "White (3)", "White (1)", "Purple/White flower color; congenital deafness"],
                 ["Duplicate Dominant Epistasis", "15 : 1", "Feathered (9)", "Feathered (3)", "Feathered (3)", "Clean (1)", "Feathered vs Clean shanks in domestic fowl"],
