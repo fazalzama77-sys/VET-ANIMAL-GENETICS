@@ -1,0 +1,422 @@
+{
+  "theory": {
+    "u1-t03": {
+      "img": "images/theory/u1-t03.png",
+      "caption": "Population versus Sample: Extracting a representative random sample (statistic) from a biological population (parameter)."
+    },
+    "u1-t04": {
+      "img": "images/theory/u1-t04.png",
+      "caption": "Graphical Representation of Data: Histogram and frequency distribution curve of continuous variables."
+    },
+    "u1-t06": {
+      "img": "images/theory/u1-t06.png",
+      "caption": "Measures of Dispersion: Standard Deviation (σ) bands and cumulative dispersion around the population mean."
+    },
+    "u1-t07": {
+      "img": "images/theory/u1-t07.png",
+      "caption": "Standard Error of the Mean (SEM) & Coefficient of Variation: Convergence of sample mean distributions toward a normal curve as sample size (n) increases."
+    },
+    "u1-t09": {
+      "img": "images/theory/u1-t09.png",
+      "caption": "Elementary Probability Theory: Sample space, intersection (A ∩ B), union (A ∪ B), and conditional probability relationships."
+    },
+    "u1-t10": {
+      "img": "images/theory/u1-t10.png",
+      "caption": "Binomial & Poisson Probability Distributions: Discrete probability mass function (PMF) across varying parameters (n, p)."
+    },
+    "u1-t11": {
+      "img": "images/theory/u1-t11.png",
+      "caption": "Normal (Gaussian) Distribution: Bell-shaped probability density curve showing empirical ±1σ (68.27%), ±2σ (95.45%), and ±3σ (99.73%) intervals."
+    },
+    "u1-t12": {
+      "img": "images/theory/u1-t12.png",
+      "caption": "Correlation Analysis: Scatter diagrams illustrating strength and direction of Pearson's linear correlation coefficient (r)."
+    },
+    "u1-t13": {
+      "img": "images/theory/u1-t13.png",
+      "caption": "Linear Regression Analysis: Least-squares regression line (Y = a + bX) fitted to bivariate observations."
+    },
+    "u1-t14": {
+      "img": "images/theory/u1-t14.png",
+      "caption": "Sampling Methods: Stratified and random sampling partitioning a heterogeneous population into homogeneous strata."
+    },
+    "u1-t15": {
+      "img": "images/theory/u1-t15.png",
+      "caption": "Large Sample Z-Test & Hypothesis Testing: Standard normal critical rejection regions and p-value thresholds."
+    },
+    "u1-t16": {
+      "img": "images/theory/u1-t16.png",
+      "caption": "Small Sample Student's t-Test: Family of t-distribution curves across degrees of freedom (ν) approaching the standard normal curve."
+    },
+    "u1-t17": {
+      "img": "images/theory/u1-t17.png",
+      "caption": "Chi-Square (χ²) Test of Significance: Probability density curves across degrees of freedom for Goodness of Fit and Independence."
+    },
+    "u1-t19": {
+      "img": "images/theory/u1-t19.png",
+      "caption": "Analysis of Variance (ANOVA) & F-Test: Snedecor's F-distribution curves comparing between-group to within-group variance."
+    },
+    "u1-t20": {
+      "img": "images/theory/u1-t20.png",
+      "caption": "Non-Parametric Statistical Tests: Distribution-free cumulative empirical comparison for rank and ordinal biological data."
+    },
+    "u1-t22": {
+      "img": "images/theory/u1-t22.png",
+      "caption": "Veterinary Data Analysis using Spreadsheets: Automated tabular cells, statistical formulas, and graphical chart generation."
+    },
+    "u2-t01": {
+      "img": "images/theory/u2-t01.jpg",
+      "caption": "History of Animal Genetics: Gregor Johann Mendel and the foundational laws of particulate inheritance."
+    },
+    "u2-t02": {
+      "img": "images/theory/u2-t02.png",
+      "caption": "Cell Division (Mitosis vs. Meiosis): Chromosomal replication, homologous pairing, crossing over, and reductional division."
+    },
+    "u2-t03": {
+      "img": "images/theory/u2-t03.png",
+      "caption": "Chromosome Morphology & Classification: Structural organization of chromatids, centromere constriction, and telomeres."
+    },
+    "u2-t04": {
+      "img": "images/theory/u2-t04.png",
+      "caption": "Mendelian Principles: Segregation of alleles and independent assortment illustrated by Mendelian cross diagrams."
+    },
+    "u2-t05": {
+      "img": "images/theory/u2-t05.png",
+      "caption": "Modified Mendelian Inheritance: Autosomal dominance, incomplete dominance, and codominant allele expression."
+    },
+    "u2-t06": {
+      "img": "images/theory/u2-t06.png",
+      "caption": "Epistasis & Gene Interactions: Non-allelic interaction modifying classical dihybrid ratios (e.g., coat colour inheritance)."
+    },
+    "u2-t07": {
+      "img": "images/theory/u2-t07.jpg",
+      "caption": "Pleiotropy, Penetrance & Expressivity: Genotype-to-phenotype mapping where single loci affect multiple biological traits."
+    },
+    "u2-t08": {
+      "img": "images/theory/u2-t08.png",
+      "caption": "Multiple Alleles & Blood Group Systems: Co-dominant and multi-allelic cell-surface antigen inheritance."
+    },
+    "u2-t09": {
+      "img": "images/theory/u2-t09.png",
+      "caption": "Chromosomal Sex Determination Mechanisms: Comparative XX/XY (mammalian) and ZZ/ZW (avian) chromosomal systems."
+    },
+    "u2-t11": {
+      "img": "images/theory/u2-t11.png",
+      "caption": "Genetic Linkage & Crossing Over: Chiasma formation and reciprocal exchange of chromatid segments during pachytene."
+    },
+    "u2-t12": {
+      "img": "images/theory/u2-t12.png",
+      "caption": "Gene Mutations: Molecular mechanisms of base substitution (transition, transversion) and frameshift mutations."
+    },
+    "u2-t13": {
+      "img": "images/theory/u2-t13.png",
+      "caption": "Chromosomal Aberrations: Structural chromosome mutations — Deletion, Duplication, Inversion, and Translocation."
+    },
+    "u2-t14": {
+      "img": "images/theory/u2-t14.png",
+      "caption": "Cytogenetics & Karyotyping: G-banded metaphase chromosome idiogram arranged by size and centromere position."
+    },
+    "u2-t15": {
+      "img": "images/theory/u2-t15.jpg",
+      "caption": "Extra-Chromosomal (Mitochondrial) Inheritance: Circular maternal mtDNA genome encoding oxidative phosphorylation genes."
+    },
+    "u2-t16": {
+      "img": "images/theory/u2-t16.png",
+      "caption": "Molecular Structure of Nucleic Acids: Watson-Crick DNA double helix showing sugar-phosphate backbone and complementary base pairs."
+    },
+    "u2-t17": {
+      "img": "images/theory/u2-t17.png",
+      "caption": "DNA Replication & Central Dogma: Semiconservative replication fork with leading and lagging strands, helicase, and DNA polymerase."
+    },
+    "u2-t18": {
+      "img": "images/theory/u2-t18.png",
+      "caption": "Molecular Techniques (PCR, RFLP, Sequencing): Exponential amplification of target DNA via thermal cycling."
+    },
+    "u2-t21": {
+      "img": "images/theory/u2-t21.png",
+      "caption": "Hardy-Weinberg Equilibrium Law: Parabolic relationship between allele frequencies (p, q) and genotype frequencies (p², 2pq, q²)."
+    },
+    "u2-t26": {
+      "img": "images/theory/u2-t26.jpg",
+      "caption": "Genotype × Environment (G × E) Interaction: Reaction norms illustrating differential phenotypic expression across environments."
+    },
+    "u2-t29": {
+      "img": "images/theory/u2-t29.png",
+      "caption": "Genetic & Phenotypic Correlations: Bivariate association and correlated response between quantitative traits."
+    },
+    "u3-t01": {
+      "img": "images/theory/u3-t01.png",
+      "caption": "History of Animal Breeding: Artificial selection and domestication transforming ancestral wild types into specialized breeds."
+    },
+    "u3-t02": {
+      "img": "images/theory/u3-t02.jpg",
+      "caption": "Classification of Livestock Breeds: Indigenous humped Zebu cattle (Bos indicus) adapted to tropical climates."
+    },
+    "u3-t03": {
+      "img": "images/theory/u3-t03.jpg",
+      "caption": "Economic Traits of Dairy Livestock: Mammary conformation and 305-day lactation production characteristics."
+    },
+    "u3-t05": {
+      "img": "images/theory/u3-t05.png",
+      "caption": "Bases of Selection: Standard pedigree chart tracking ancestral and collateral performance across generations."
+    },
+    "u3-t06": {
+      "img": "images/theory/u3-t06.png",
+      "caption": "Combined & Indirect Selection: Combining individual and family genetic information to maximize selection accuracy."
+    },
+    "u3-t07": {
+      "img": "images/theory/u3-t07.png",
+      "caption": "Methods of Selection: Truncation selection threshold retaining elite breeding individuals above the culling point."
+    },
+    "u3-t08": {
+      "img": "images/theory/u3-t08.png",
+      "caption": "Classification of Mating Systems: Genetic pairing schemas comparing random panmixia and targeted assortative matings."
+    },
+    "u3-t13": {
+      "img": "images/theory/u3-t13.jpg",
+      "caption": "Selection for Combining Ability (RRS): Reciprocal recurrent hybridization maximizing specific combining ability."
+    },
+    "u3-t14": {
+      "img": "images/theory/u3-t14.jpg",
+      "caption": "Breeding Strategies for Dairy Cattle: Indigenous Sahiwal dairy cattle — premier milch zebu breed of India."
+    },
+    "u3-t15": {
+      "img": "images/theory/u3-t15.jpg",
+      "caption": "Breeding Strategies for Sheep, Goats & Swine: Indigenous Jamnapari goat breed utilized in meat and milk improvement."
+    },
+    "u3-t16": {
+      "img": "images/theory/u3-t16.jpg",
+      "caption": "Commercial Poultry Breeding: White Leghorn strain selected for high egg production and feed efficiency."
+    },
+    "u3-t17": {
+      "img": "images/theory/u3-t17.jpg",
+      "caption": "Sire Evaluation & Progeny Testing (BLUP): Elite dairy genetics evaluated across contemporary herd-year-season groups."
+    },
+    "u3-t19": {
+      "img": "images/theory/u3-t19.jpg",
+      "caption": "Development of New Breeds & Synthetic Strains: Indigenous Gir cattle genetics used in synthetic crossbred strains."
+    },
+    "u3-t20": {
+      "img": "images/theory/u3-t20.jpg",
+      "caption": "National Livestock Breeding Policies in India: Elite Murrah riverine buffalo — cornerstone of Indian dairy improvement."
+    },
+    "u3-t21": {
+      "img": "images/theory/u3-t21.jpg",
+      "caption": "Conservation of Animal Genetic Resources (AnGR): Ex-situ cryoconservation in liquid nitrogen gene banks (-196°C)."
+    },
+    "u3-t22": {
+      "img": "images/theory/u3-t22.png",
+      "caption": "Reproductive Biotechnologies (AI, MOET, IVF): Artificial insemination and assisted reproductive technology in cattle."
+    },
+    "u3-t23": {
+      "img": "images/theory/u3-t23.jpg",
+      "caption": "Breeding for Disease Resistance: MHC (BoLA) molecular structure mediating genetic resistance to pathogens."
+    },
+    "u3-t24": {
+      "img": "images/theory/u3-t24.jpg",
+      "caption": "Dog & Cat Breeds and Conformation Standards: Working dog anatomical conformation and breed standard morphology."
+    },
+    "u3-t26": {
+      "img": "images/theory/u3-t26.jpg",
+      "caption": "Common Pet Birds & Avian Breeding Management: Captive breeding and colour genetics in Budgerigars."
+    },
+    "u3-t28": {
+      "img": "images/theory/u3-t28.jpg",
+      "caption": "Planned Wildlife Breeding & Conservation: Captive breeding and reintroduction programme for endangered species."
+    },
+    "u1-t01": {
+      "img": "images/theory/u1-t01.png",
+      "caption": "Biostatistical Analysis Framework: Visual summary of descriptive and inferential statistical distributions in biological sciences."
+    },
+    "u1-t02": {
+      "img": "images/theory/u1-t02.png",
+      "caption": "Tabulation & Frequency Distribution: Grouped class intervals and frequency distribution of continuous measurements."
+    },
+    "u1-t05": {
+      "img": "images/theory/u1-t05.png",
+      "caption": "Measures of Central Tendency: Geometric position of Mode, Median, and Arithmetic Mean across skewed and symmetric curves."
+    },
+    "u1-t08": {
+      "img": "images/theory/u1-t08.png",
+      "caption": "Moments, Skewness & Kurtosis: Asymmetry (positive vs. negative skewness) and peakedness in probability distributions."
+    },
+    "u1-t18": {
+      "img": "images/theory/u1-t18.jpg",
+      "caption": "Experimental Designs (CRD & RBD): Controlling nuisance environmental gradients through blocking and randomization."
+    },
+    "u1-t21": {
+      "img": "images/theory/u1-t21.png",
+      "caption": "Database Management Systems (DBMS): Relational table structure with primary keys, records (rows), and attributes (columns)."
+    },
+    "u2-t10": {
+      "img": "images/theory/u2-t10.png",
+      "caption": "Sex-Linked Inheritance: Criss-cross transmission of X-linked alleles from carrier dams to affected male progeny."
+    },
+    "u2-t19": {
+      "img": "images/theory/u2-t19.png",
+      "caption": "Population Genetics Foundations: Distribution and transmission of alleles across segregating loci in a population."
+    },
+    "u2-t20": {
+      "img": "images/theory/u2-t20.jpg",
+      "caption": "Genetic Structure of a Population: Genotypic values and allele frequency distribution across a diploid locus."
+    },
+    "u2-t22": {
+      "img": "images/theory/u2-t22.jpg",
+      "caption": "Forces Changing Gene Frequency: Stochastic allele frequency fluctuations (Genetic Drift) in small vs. large populations."
+    },
+    "u2-t23": {
+      "img": "images/theory/u2-t23.jpg",
+      "caption": "Quantitative vs. Qualitative Genetics: Continuous polygenic inheritance and genome-wide QTL distribution across multiple additive loci."
+    },
+    "u2-t24": {
+      "img": "images/theory/u2-t24.png",
+      "caption": "Average Effect of Gene & Breeding Value: Partitioning genotypic values into linear additive effects (BV) and dominance deviations."
+    },
+    "u2-t25": {
+      "img": "images/theory/u2-t25.jpg",
+      "caption": "Components of Phenotypic Variance: Quantitative Trait Locus (QTL) mapping and partitioning of genetic variance."
+    },
+    "u2-t27": {
+      "img": "images/theory/u2-t27.jpg",
+      "caption": "Heritability (h²) & Selection Response: Relationship between narrow-sense heritability (slope) and genetic gain (R = h²S)."
+    },
+    "u2-t28": {
+      "img": "images/theory/u2-t28.png",
+      "caption": "Repeatability (r): Intraclass correlation measuring consistency of repeated longitudinal measurements on the same animal."
+    },
+    "u3-t04": {
+      "img": "images/theory/u3-t04.png",
+      "caption": "Selection in Animal Breeding: Directional, Stabilizing, and Disruptive selection shifting population genetic mean."
+    },
+    "u3-t09": {
+      "img": "images/theory/u3-t09.png",
+      "caption": "Inbreeding Coefficient (FX) & Relationship (RXY): Pedigree path loop showing identity by descent (IBD) from common ancestors."
+    },
+    "u3-t10": {
+      "img": "images/theory/u3-t10.png",
+      "caption": "Inbreeding Depression: Fitness and performance decline resulting from increased homozygosity of deleterious recessives."
+    },
+    "u3-t11": {
+      "img": "images/theory/u3-t11.jpg",
+      "caption": "Outbreeding & Crossbreeding Systems: Grading up and backcrossing schema progressively replacing indigenous genes."
+    },
+    "u3-t12": {
+      "img": "images/theory/u3-t12.png",
+      "caption": "Heterosis (Hybrid Vigour): F1 crossbred superiority exceeding the mid-parent average due to dominance and overdominance."
+    },
+    "u3-t18": {
+      "img": "images/theory/u3-t18.jpg",
+      "caption": "Open Nucleus Breeding System (ONBS): Gene flow between elite nucleus breeding herds and base populations."
+    },
+    "u3-t25": {
+      "img": "images/theory/u3-t25.png",
+      "caption": "Breeding Management & Estrous Detection: Hormonal fluctuations (Estrogen, LH surge, Progesterone) across the estrous cycle."
+    },
+    "u3-t27": {
+      "img": "images/theory/u3-t27.jpg",
+      "caption": "Effective Population Size (Ne) & Wildlife Dynamics: Genetic bottleneck reducing allelic diversity in small captive populations."
+    }
+  },
+  "practical": {
+    "p1-t01": {
+      "img": "images/theory/u1-t02.png",
+      "caption": "Frequency Distribution & Histogram: Organizing raw livestock production records into class intervals."
+    },
+    "p1-t02": {
+      "img": "images/theory/u1-t04.png",
+      "caption": "Diagrammatic & Graphical Presentation: Histogram and frequency curve of continuous biological data."
+    },
+    "p1-t03": {
+      "img": "images/theory/u1-t05.png",
+      "caption": "Measures of Central Tendency: Geometric comparison of Mean, Median, and Mode."
+    },
+    "p1-t04": {
+      "img": "images/theory/u1-t06.png",
+      "caption": "Measures of Dispersion: Standard Deviation (σ) bands around the sample mean."
+    },
+    "p1-t05": {
+      "img": "images/theory/u1-t11.png",
+      "caption": "Standard Normal Distribution: Area under the normal curve within ±1σ, ±2σ, and ±3σ."
+    },
+    "p1-t06": {
+      "img": "images/theory/u1-t13.png",
+      "caption": "Correlation & Linear Regression: Least-squares regression line (Y = a + bX) fitted to experimental data."
+    },
+    "p1-t07": {
+      "img": "images/theory/u1-t15.png",
+      "caption": "Large Sample Z-Test: Critical rejection region and null hypothesis acceptance zone."
+    },
+    "p1-t08": {
+      "img": "images/theory/u1-t16.png",
+      "caption": "Student's t-Test: Probability density curves across degrees of freedom (ν) for small samples."
+    },
+    "p1-t09": {
+      "img": "images/theory/u1-t17.png",
+      "caption": "Chi-Square (χ²) Test: Distribution curves for Goodness of Fit and Contingency Table Independence."
+    },
+    "p1-t10": {
+      "img": "images/theory/u1-t19.png",
+      "caption": "Analysis of Variance (ANOVA): Snedecor's F-distribution for CRD and RBD experimental designs."
+    },
+    "p1-t11": {
+      "img": "images/theory/u1-t22.png",
+      "caption": "Spreadsheet Statistical Analysis: Tabular data entry, formula bar, and chart plotting."
+    },
+    "p2-t01": {
+      "img": "images/theory/u2-t04.png",
+      "caption": "Monohybrid & Dihybrid Crosses: Mendelian segregation and independent assortment Punnett square."
+    },
+    "p2-t02": {
+      "img": "images/theory/u2-t06.png",
+      "caption": "Modified Mendelian Ratios & Epistasis: Non-allelic gene interaction modifying classical dihybrid ratios."
+    },
+    "p2-t03": {
+      "img": "images/theory/u2-t11.png",
+      "caption": "Linkage & Recombination Frequency: Homologous chiasma formation and crossing over."
+    },
+    "p2-t04": {
+      "img": "images/theory/u2-t14.png",
+      "caption": "Lymphocyte Culture & Karyotyping: G-banded metaphase chromosome idiogram."
+    },
+    "p2-t05": {
+      "img": "images/theory/u2-t20.jpg",
+      "caption": "Gene & Genotypic Frequencies: Allelic and genotypic distribution across a diploid locus."
+    },
+    "p2-t06": {
+      "img": "images/theory/u2-t21.png",
+      "caption": "Testing Hardy-Weinberg Equilibrium: Parabolic relationship of p², 2pq, and q² genotype frequencies."
+    },
+    "p2-t07": {
+      "img": "images/theory/u2-t22.jpg",
+      "caption": "Forces Changing Gene Frequency: Allele frequency trajectories under genetic drift and selection."
+    },
+    "p2-t08": {
+      "img": "images/theory/u2-t27.jpg",
+      "caption": "Heritability, Repeatability & Breeding Value: Parent-offspring regression and response to selection."
+    },
+    "p3-t01": {
+      "img": "images/theory/u3-t07.png",
+      "caption": "Selection Differential (S) & Intensity (i): Truncation selection threshold in a normal population."
+    },
+    "p3-t02": {
+      "img": "images/theory/u3-t04.png",
+      "caption": "Expected Genetic Gain (ΔG): Directional shift of population mean under artificial selection."
+    },
+    "p3-t03": {
+      "img": "images/theory/u2-t28.png",
+      "caption": "EPA & MPPA Estimation: Repeatability and intraclass correlation across repeated lactation records."
+    },
+    "p3-t04": {
+      "img": "images/theory/u3-t09.png",
+      "caption": "Inbreeding Coefficient (F) & Relationship (R): Pedigree path analysis tracing common ancestors."
+    },
+    "p3-t05": {
+      "img": "images/theory/u3-t12.png",
+      "caption": "Heterosis (Hybrid Vigour) Percentage: F1 hybrid performance exceeding mid-parent average."
+    },
+    "p3-t06": {
+      "img": "images/theory/u3-t17.jpg",
+      "caption": "Sire Indices & Selection Index: Dairy sire progeny evaluation across contemporary groups."
+    }
+  }
+}

@@ -97,7 +97,9 @@ practicalData["prac-unit-1"] = {
       "Tally Marks",
       "Tabulation",
       "Sahiwal Milk Yield"
-    ]
+    ],
+    "img": "images/theory/u1-t02.png",
+    "imgCaption": "Frequency Distribution & Histogram: Organizing raw livestock production records into class intervals."
   },
   "p1-t02": {
     "summary": "Construction and graphical presentation of biological data using histograms, frequency polygons, frequency curves, and cumulative ogives to locate partition values.",
@@ -179,7 +181,9 @@ practicalData["prac-unit-1"] = {
       "Median",
       "Mode",
       "Graphical Presentation"
-    ]
+    ],
+    "img": "images/theory/u1-t04.png",
+    "imgCaption": "Diagrammatic & Graphical Presentation: Histogram and frequency curve of continuous biological data."
   },
   "p1-t03": {
     "summary": "Step-by-step computation of Arithmetic Mean, Median, and Mode for ungrouped and continuous grouped livestock data with model exam solutions.",
@@ -269,7 +273,9 @@ practicalData["prac-unit-1"] = {
       "Central Tendency",
       "Assumed Mean",
       "Grouping Method"
-    ]
+    ],
+    "img": "images/theory/u1-t05.png",
+    "imgCaption": "Measures of Central Tendency: Geometric comparison of Mean, Median, and Mode."
   },
   "p1-t04": {
     "summary": "Estimation of Range, Variance, Standard Deviation, Standard Error of Mean, and Coefficient of Variation for livestock phenotypic traits with full model calculation.",
@@ -373,7 +379,9 @@ practicalData["prac-unit-1"] = {
       "CV%",
       "Bessel's Correction",
       "Sum of Squares"
-    ]
+    ],
+    "img": "images/theory/u1-t06.png",
+    "imgCaption": "Measures of Dispersion: Standard Deviation (σ) bands around the sample mean."
   },
   "p1-t05": {
     "summary": "Practical numerical problem solving on additive/multiplicative probability rules and finding probabilities under the Standard Normal Curve (Z-distribution).",
@@ -463,7 +471,9 @@ practicalData["prac-unit-1"] = {
       "Standard Normal Curve",
       "Z-Table",
       "Milk Yield"
-    ]
+    ],
+    "img": "images/theory/u1-t11.png",
+    "imgCaption": "Standard Normal Distribution: Area under the normal curve within ±1σ, ±2σ, and ±3σ."
   },
   "p1-t06": {
     "summary": "Computation of Pearson's Correlation Coefficient (r) and linear regression equations (Y on X) from animal experimental data with full test of significance.",
@@ -561,7 +571,9 @@ practicalData["prac-unit-1"] = {
       "Heart Girth",
       "Body Weight",
       "Prediction Equation"
-    ]
+    ],
+    "img": "images/theory/u1-t13.png",
+    "imgCaption": "Correlation & Linear Regression: Least-squares regression line (Y = a + bX) fitted to experimental data."
   },
   "p1-t07": {
     "summary": "Application of Large Sample Z-tests for testing the significance of single mean, difference between two means, single proportion, and difference between two proportions.",
@@ -637,7 +649,9 @@ practicalData["prac-unit-1"] = {
       "Null Hypothesis",
       "Murrah Buffalo",
       "Bypass Fat"
-    ]
+    ],
+    "img": "images/theory/u1-t15.png",
+    "imgCaption": "Large Sample Z-Test: Critical rejection region and null hypothesis acceptance zone."
   },
   "p1-t08": {
     "summary": "Student's t-test applications for small samples (n < 30): One-sample t-test, Independent Two-sample t-test (equal variance), and Paired t-test for before-and-after clinical trials.",
@@ -735,7 +749,9 @@ practicalData["prac-unit-1"] = {
       "Haemonchus",
       "Anthelmintic",
       "Degrees of Freedom"
-    ]
+    ],
+    "img": "images/theory/u1-t16.png",
+    "imgCaption": "Student's t-Test: Probability density curves across degrees of freedom (ν) for small samples."
   },
   "p1-t09": {
     "summary": "Chi-Square (χ²) test applications in animal genetics: Test of Goodness of Fit for Mendelian ratios, 2x2 contingency tables, test of independence, and Yates' correction for continuity.",
@@ -801,7 +817,9 @@ practicalData["prac-unit-1"] = {
       "Yates' Correction",
       "Mendelian Ratio",
       "Mastitis"
-    ]
+    ],
+    "img": "images/theory/u1-t17.png",
+    "imgCaption": "Chi-Square (χ²) Test: Distribution curves for Goodness of Fit and Contingency Table Independence."
   },
   "p1-t10": {
     "summary": "Analysis of Variance (ANOVA) for Completely Randomized Design (CRD) and Randomized Block Design (RBD) with Sums of Squares, F-test, and Critical Difference (CD).",
@@ -868,7 +886,9 @@ practicalData["prac-unit-1"] = {
       "Critical Difference",
       "Broiler Rations",
       "Sum of Squares"
-    ]
+    ],
+    "img": "images/theory/u1-t19.png",
+    "imgCaption": "Analysis of Variance (ANOVA): Snedecor's F-distribution for CRD and RBD experimental designs."
   },
   "p1-t11": {
     "summary": "Practical execution of livestock data entry, statistical formula syntax, descriptive statistics, correlation, and ANOVA using MS-Excel in veterinary bio-computing.",
@@ -945,7 +965,9 @@ practicalData["prac-unit-1"] = {
       "CORREL",
       "ANOVA Toolpak",
       "Data Analysis"
-    ]
+    ],
+    "img": "images/theory/u1-t22.png",
+    "imgCaption": "Spreadsheet Statistical Analysis: Tabular data entry, formula bar, and chart plotting."
   }
 };
 
@@ -1018,7 +1040,9 @@ practicalData["prac-unit-2"] = {
       "Test Cross",
       "Polled Gene",
       "Coat Color"
-    ]
+    ],
+    "img": "images/theory/u2-t04.png",
+    "imgCaption": "Monohybrid & Dihybrid Crosses: Mendelian segregation and independent assortment Punnett square."
   },
   "p2-t02": {
     "summary": "Numerical problem solving on modified Mendelian ratios (incomplete dominance, codominance, lethals), epistasis interactions, and sex-linked crisscross inheritance in poultry and livestock.",
@@ -1094,7 +1118,9 @@ practicalData["prac-unit-2"] = {
       "Crisscross Inheritance",
       "Sex-Linkage",
       "Auto-Sexing"
-    ]
+    ],
+    "img": "images/theory/u2-t06.png",
+    "imgCaption": "Modified Mendelian Ratios & Epistasis: Non-allelic gene interaction modifying classical dihybrid ratios."
   },
   "p2-t03": {
     "summary": "Estimation of linkage, recombination frequency (RF), construction of genetic chromosome maps, and calculation of Coefficient of Coincidence and Interference.",
@@ -1199,7 +1225,9 @@ practicalData["prac-unit-2"] = {
       "Interference",
       "Coincidence",
       "Three-Point Cross"
-    ]
+    ],
+    "img": "images/theory/u2-t11.png",
+    "imgCaption": "Linkage & Recombination Frequency: Homologous chiasma formation and crossing over."
   },
   "p2-t04": {
     "summary": "Laboratory protocol for peripheral blood sampling, lymphocyte culture, Colchicine metaphase arrest, hypotonic shock, slide preparation, GTG-banding, and karyotyping in livestock.",
@@ -1298,7 +1326,9 @@ practicalData["prac-unit-2"] = {
       "Carnoy's Fixative",
       "2n Numbers",
       "rob(1;29)"
-    ]
+    ],
+    "img": "images/theory/u2-t14.png",
+    "imgCaption": "Lymphocyte Culture & Karyotyping: G-banded metaphase chromosome idiogram."
   },
   "p2-t05": {
     "summary": "Step-by-step calculation of gene and genotypic frequencies in livestock populations for codominant systems (gene counting) and dominant systems (square root method).",
@@ -1375,7 +1405,9 @@ practicalData["prac-unit-2"] = {
       "Hardy-Weinberg",
       "Hariana Cattle",
       "Hemoglobin"
-    ]
+    ],
+    "img": "images/theory/u2-t20.jpg",
+    "imgCaption": "Gene & Genotypic Frequencies: Allelic and genotypic distribution across a diploid locus."
   },
   "p2-t06": {
     "summary": "Testing animal populations for Hardy-Weinberg Equilibrium using Chi-Square Goodness of Fit test with degrees of freedom df = k - 1 - m.",
@@ -1450,7 +1482,9 @@ practicalData["prac-unit-2"] = {
       "Garole Sheep",
       "Transferrin",
       "Fixation Index"
-    ]
+    ],
+    "img": "images/theory/u2-t21.png",
+    "imgCaption": "Testing Hardy-Weinberg Equilibrium: Parabolic relationship of p², 2pq, and q² genotype frequencies."
   },
   "p2-t07": {
     "summary": "Mathematical calculation of directional changes in gene frequency (Δq) driven by Mutation, Migration, Artificial Selection, and Random Genetic Drift.",
@@ -1541,7 +1575,9 @@ practicalData["prac-unit-2"] = {
       "Genetic Drift",
       "BLAD",
       "CVM"
-    ]
+    ],
+    "img": "images/theory/u2-t22.jpg",
+    "imgCaption": "Forces Changing Gene Frequency: Allele frequency trajectories under genetic drift and selection."
   },
   "p2-t08": {
     "summary": "Estimation of Heritability (h²) via Paternal Half-Sib analysis, Repeatability (r) via intraclass correlation, Breeding Value (EBV), and Genetic Correlation.",
@@ -1604,7 +1640,9 @@ practicalData["prac-unit-2"] = {
       "Paternal Half-Sib",
       "ANOVA",
       "PTA"
-    ]
+    ],
+    "img": "images/theory/u2-t27.jpg",
+    "imgCaption": "Heritability, Repeatability & Breeding Value: Parent-offspring regression and response to selection."
   }
 };
 
@@ -1682,7 +1720,9 @@ practicalData["prac-unit-3"] = {
       "Generation Interval",
       "Breeder's Equation",
       "Sahiwal Cattle"
-    ]
+    ],
+    "img": "images/theory/u3-t07.png",
+    "imgCaption": "Selection Differential (S) & Intensity (i): Truncation selection threshold in a normal population."
   },
   "p3-t02": {
     "summary": "Estimation of expected genetic gain per generation (ΔG), annual genetic progress (ΔG/yr), and correlated response to indirect selection (CRY).",
@@ -1751,7 +1791,9 @@ practicalData["prac-unit-3"] = {
       "Relative Efficiency",
       "Indirect Selection",
       "Malpura Sheep"
-    ]
+    ],
+    "img": "images/theory/u3-t04.png",
+    "imgCaption": "Expected Genetic Gain (ΔG): Directional shift of population mean under artificial selection."
   },
   "p3-t03": {
     "summary": "Estimation of Estimated Producing Ability (EPA) and Most Probable Producing Ability (MPPA) for repeated records using repeatability (r) to guide cow culling.",
@@ -1835,7 +1877,9 @@ practicalData["prac-unit-3"] = {
       "Murrah Buffalo",
       "Producing Ability",
       "Lactation Records"
-    ]
+    ],
+    "img": "images/theory/u2-t28.png",
+    "imgCaption": "EPA & MPPA Estimation: Repeatability and intraclass correlation across repeated lactation records."
   },
   "p3-t04": {
     "summary": "Computation of Wright's Inbreeding Coefficient (Fx) and Coefficient of Relationship (Rxy) from directed pedigree charts and arrow diagrams.",
@@ -1925,7 +1969,9 @@ practicalData["prac-unit-3"] = {
       "Arrow Diagram",
       "Coefficient of Relationship",
       "Full-Sibs"
-    ]
+    ],
+    "img": "images/theory/u3-t09.png",
+    "imgCaption": "Inbreeding Coefficient (F) & Relationship (R): Pedigree path analysis tracing common ancestors."
   },
   "p3-t05": {
     "summary": "Estimation of Mid-Parent Heterosis, Heterobeltiosis, and retained heterosis percentage in rotational crossbreeding and composite livestock breeds.",
@@ -2002,7 +2048,9 @@ practicalData["prac-unit-3"] = {
       "Karan Fries",
       "Avishaan",
       "F2 Breakdown"
-    ]
+    ],
+    "img": "images/theory/u3-t12.png",
+    "imgCaption": "Heterosis (Hybrid Vigour) Percentage: F1 hybrid performance exceeding mid-parent average."
   },
   "p3-t06": {
     "summary": "Computation of historical sire evaluation indices (Daughter Average, Mount Hope, Contemporary Comparison) and mathematical construction of multi-trait selection indexes.",
@@ -2079,6 +2127,8 @@ practicalData["prac-unit-3"] = {
       "Hazel",
       "Economic Weight",
       "BLUP"
-    ]
+    ],
+    "img": "images/theory/u3-t17.jpg",
+    "imgCaption": "Sire Indices & Selection Index: Dairy sire progeny evaluation across contemporary groups."
   }
 };

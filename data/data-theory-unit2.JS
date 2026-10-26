@@ -72,7 +72,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t01.svg",
+    "img": "images/theory/u2-t01.jpg",
     "tags": [
       "history-of-genetics",
       "mendel",
@@ -82,7 +82,7 @@ theoryData["unit-2"] = {
       "jay-lush",
       "rediscovery"
     ],
-    "imgCaption": "U2-T01 Scientific Visual Reference: The history and development of animal genetics spans the transition from pre-Mendelian speculative theories to Mendelian transmission genetics, the chromosome theory, and modern quantitative animal breeding"
+    "imgCaption": "History of Animal Genetics: Gregor Johann Mendel and the foundational laws of particulate inheritance."
   },
   "u2-t02": {
     "summary": "Mitosis is equational somatic cell division producing two genetically identical diploid daughter cells, whereas Meiosis is two-stage reductional germ-cell division producing four genetically distinct haploid gametes through crossing over.",
@@ -160,7 +160,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t02.svg",
+    "img": "images/theory/u2-t02.png",
     "tags": [
       "mitosis",
       "meiosis",
@@ -171,7 +171,7 @@ theoryData["unit-2"] = {
       "spermatogenesis",
       "oogenesis"
     ],
-    "imgCaption": "U2-T02 Scientific Visual Reference: Mitosis is equational somatic cell division producing two genetically identical diploid daughter cells, whereas Meiosis is two-stage reductional germ-cell division producing four genetically distinct haploid gametes through crossing over"
+    "imgCaption": "Cell Division (Mitosis vs. Meiosis): Chromosomal replication, homologous pairing, crossing over, and reductional division."
   },
   "u2-t03": {
     "summary": "Chromosome numbers and morphologies vary systematically across livestock and poultry species, classified morphologically by centromere position into metacentric, submetacentric, acrocentric, and telocentric forms.",
@@ -265,7 +265,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t03.svg",
+    "img": "images/theory/u2-t03.png",
     "tags": [
       "chromosome-numbers",
       "karyotype",
@@ -275,7 +275,7 @@ theoryData["unit-2"] = {
       "macrochromosomes",
       "microchromosomes"
     ],
-    "imgCaption": "Morphological Classification of Chromosomes by Centromere Position and Karyotype Arm Ratios (Levan et al.)"
+    "imgCaption": "Chromosome Morphology & Classification: Structural organization of chromatids, centromere constriction, and telomeres."
   },
   "u2-t04": {
     "summary": "Mendelian genetics establishes the laws of particulate inheritance through the Law of Segregation (equal separation of alleles into gametes) and the Law of Independent Assortment (independent distribution of non-allelic genes).",
@@ -344,7 +344,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t04.svg",
+    "img": "images/theory/u2-t04.png",
     "tags": [
       "mendelism",
       "law-of-segregation",
@@ -353,7 +353,7 @@ theoryData["unit-2"] = {
       "dihybrid-cross",
       "test-cross"
     ],
-    "imgCaption": "U2-T04 Scientific Visual Reference: Mendelian genetics establishes the laws of particulate inheritance through the Law of Segregation (equal separation of alleles into gametes) and the Law of Independent Assortment (independent distribution of non-allelic genes)"
+    "imgCaption": "Mendelian Principles: Segregation of alleles and independent assortment illustrated by Mendelian cross diagrams."
   },
   "u2-t05": {
     "summary": "Modified Mendelian inheritance encompasses non-classical allelic interactions including Incomplete Dominance (intermediate 1:2:1 phenotype), Codominance (full dual expression), and Lethal Genes (distorting ratios to 2:1).",
@@ -416,7 +416,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t05.svg",
+    "img": "images/theory/u2-t05.png",
     "tags": [
       "incomplete-dominance",
       "codominance",
@@ -426,7 +426,7 @@ theoryData["unit-2"] = {
       "bulldog-calf",
       "blad"
     ],
-    "imgCaption": "U2-T05 Scientific Visual Reference: Modified Mendelian inheritance encompasses non-classical allelic interactions including Incomplete Dominance (intermediate 1:2:1 phenotype), Codominance (full dual expression), and Lethal Genes (distorting ratios to 2:1)"
+    "imgCaption": "Modified Mendelian Inheritance: Autosomal dominance, incomplete dominance, and codominant allele expression."
   },
   "u2-t06": {
     "summary": "Gene interaction and epistasis describe non-allelic interactions where one gene locus masks, inhibits, or modifies the phenotypic expression of a second independent gene locus, generating classic modified dihybrid ratios.",
@@ -507,7 +507,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t06.svg",
+    "img": "images/theory/u2-t06.png",
     "tags": [
       "epistasis",
       "gene-interaction",
@@ -516,7 +516,7 @@ theoryData["unit-2"] = {
       "comb-types-poultry",
       "labrador-coat-color"
     ],
-    "imgCaption": "The Six Classical Modified Dihybrid Epistatic Ratios Resulting from Multi-Step Biochemical Interactions"
+    "imgCaption": "Epistasis & Gene Interactions: Non-allelic interaction modifying classical dihybrid ratios (e.g., coat colour inheritance)."
   },
   "u2-t07": {
     "summary": "Pleiotropy defines single genes controlling multiple phenotypic effects, while Penetrance, Expressivity, and Phenocopy describe how genetic and environmental modifiers modulate the expression of an individual genotype.",
@@ -579,7 +579,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t07.svg",
+    "img": "images/theory/u2-t07.jpg",
     "tags": [
       "pleiotropy",
       "penetrance",
@@ -589,7 +589,7 @@ theoryData["unit-2"] = {
       "polled-intersex",
       "white-heifer-disease"
     ],
-    "imgCaption": "U2-T07 Scientific Visual Reference: Pleiotropy defines single genes controlling multiple phenotypic effects, while Penetrance, Expressivity, and Phenocopy describe how genetic and environmental modifiers modulate the expression of an individual genotype"
+    "imgCaption": "Pleiotropy, Penetrance & Expressivity: Genotype-to-phenotype mapping where single loci affect multiple biological traits."
   },
   "u2-t08": {
     "summary": "Multiple alleles represent three or more alternative forms of a gene occupying the same locus across a population, governing diverse livestock blood group systems used in parentage verification and forensic testing.",
@@ -653,7 +653,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t08.svg",
+    "img": "images/theory/u2-t08.png",
     "tags": [
       "multiple-alleles",
       "blood-groups",
@@ -662,7 +662,7 @@ theoryData["unit-2"] = {
       "parentage-testing",
       "dea-system"
     ],
-    "imgCaption": "U2-T08 Scientific Visual Reference: Multiple alleles represent three or more alternative forms of a gene occupying the same locus across a population, governing diverse livestock blood group systems used in parentage verification and forensic testing"
+    "imgCaption": "Multiple Alleles & Blood Group Systems: Co-dominant and multi-allelic cell-surface antigen inheritance."
   },
   "u2-t09": {
     "summary": "Sex determination mechanisms define the genetic and chromosomal triggers directing gonadogenesis, balanced by dosage compensation mechanisms like X-inactivation in mammals to equalize X-linked gene expression between sexes.",
@@ -725,7 +725,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t09.svg",
+    "img": "images/theory/u2-t09.png",
     "tags": [
       "sex-determination",
       "sry-gene",
@@ -735,7 +735,7 @@ theoryData["unit-2"] = {
       "calico-cat",
       "dmrt1"
     ],
-    "imgCaption": "U2-T09 Scientific Visual Reference: Sex determination mechanisms define the genetic and chromosomal triggers directing gonadogenesis, balanced by dosage compensation mechanisms like X-inactivation in mammals to equalize X-linked gene expression between sexes"
+    "imgCaption": "Chromosomal Sex Determination Mechanisms: Comparative XX/XY (mammalian) and ZZ/ZW (avian) chromosomal systems."
   },
   "u2-t10": {
     "summary": "Sex-related inheritance includes Sex-Linked traits (governed by genes on sex chromosomes showing criss-cross transmission), Sex-Limited traits (expressed exclusively in one sex), and Sex-Influenced traits (where dominance shifts with sex).",
@@ -798,7 +798,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t10.svg",
+    "img": "images/theory/u2-t10.png",
     "tags": [
       "sex-linked",
       "sex-limited",
@@ -808,7 +808,7 @@ theoryData["unit-2"] = {
       "sheep-horns",
       "cryptorchidism"
     ],
-    "imgCaption": "U2-T10 Scientific Visual Reference: Sex-related inheritance includes Sex-Linked traits (governed by genes on sex chromosomes showing criss-cross transmission), Sex-Limited traits (expressed exclusively in one sex), and Sex-Influenced traits (where dominance shifts with sex)"
+    "imgCaption": "Sex-Linked Inheritance: Criss-cross transmission of X-linked alleles from carrier dams to affected male progeny."
   },
   "u2-t11": {
     "summary": "Linkage describes syntenic genes on the same chromosome inherited together, broken by crossing over during meiotic pachytene, with recombination frequencies used to construct linear genetic linkage maps.",
@@ -866,7 +866,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t11.svg",
+    "img": "images/theory/u2-t11.png",
     "tags": [
       "linkage",
       "crossing-over",
@@ -876,7 +876,7 @@ theoryData["unit-2"] = {
       "three-point-testcross",
       "interference"
     ],
-    "imgCaption": "U2-T11 Scientific Visual Reference: Linkage describes syntenic genes on the same chromosome inherited together, broken by crossing over during meiotic pachytene, with recombination frequencies used to construct linear genetic linkage maps"
+    "imgCaption": "Genetic Linkage & Crossing Over: Chiasma formation and reciprocal exchange of chromatid segments during pachytene."
   },
   "u2-t12": {
     "summary": "Gene mutations are sudden, heritable changes in the nucleotide sequence of DNA, classified into point mutations (transitions, transversions, frameshifts) and induced by physical, chemical, or biological mutagens.",
@@ -946,7 +946,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t12.svg",
+    "img": "images/theory/u2-t12.png",
     "tags": [
       "mutations",
       "point-mutation",
@@ -957,7 +957,7 @@ theoryData["unit-2"] = {
       "thymine-dimers",
       "blad"
     ],
-    "imgCaption": "U2-T12 Scientific Visual Reference: Gene mutations are sudden, heritable changes in the nucleotide sequence of DNA, classified into point mutations (transitions, transversions, frameshifts) and induced by physical, chemical, or biological mutagens"
+    "imgCaption": "Gene Mutations: Molecular mechanisms of base substitution (transition, transversion) and frameshift mutations."
   },
   "u2-t13": {
     "summary": "Chromosomal aberrations are large-scale alterations in chromosome structure (deletions, duplications, inversions, translocations) or number (aneuploidy, polyploidy) causing severe congenital malformations and livestock subfertility.",
@@ -1040,7 +1040,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t13.svg",
+    "img": "images/theory/u2-t13.png",
     "tags": [
       "chromosomal-aberrations",
       "aneuploidy",
@@ -1050,7 +1050,7 @@ theoryData["unit-2"] = {
       "turner-syndrome",
       "inversion"
     ],
-    "imgCaption": "U2-T13 Scientific Visual Reference: Chromosomal aberrations are large-scale alterations in chromosome structure (deletions, duplications, inversions, translocations) or number (aneuploidy, polyploidy) causing severe congenital malformations and livestock subfertility"
+    "imgCaption": "Chromosomal Aberrations: Structural chromosome mutations — Deletion, Duplication, Inversion, and Translocation."
   },
   "u2-t14": {
     "summary": "Cytogenetics investigates the structure, function, and abnormalities of chromosomes using peripheral blood lymphocyte cultures, karyotype construction, and advanced banding techniques (G, Q, C, R, and NOR banding).",
@@ -1114,7 +1114,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t14.svg",
+    "img": "images/theory/u2-t14.png",
     "tags": [
       "cytogenetics",
       "lymphocyte-culture",
@@ -1125,7 +1125,7 @@ theoryData["unit-2"] = {
       "c-banding",
       "nor-banding"
     ],
-    "imgCaption": "U2-T14 Scientific Visual Reference: Cytogenetics investigates the structure, function, and abnormalities of chromosomes using peripheral blood lymphocyte cultures, karyotype construction, and advanced banding techniques (G, Q, C, R, and NOR banding)"
+    "imgCaption": "Cytogenetics & Karyotyping: G-banded metaphase chromosome idiogram arranged by size and centromere position."
   },
   "u2-t15": {
     "summary": "Extra-chromosomal (cytoplasmic/maternal) inheritance describes the transmission of traits governed by non-nuclear organellar DNA, characterized by maternal uniparental inheritance and non-Mendelian reciprocal cross differences.",
@@ -1182,7 +1182,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t15.svg",
+    "img": "images/theory/u2-t15.jpg",
     "tags": [
       "extra-chromosomal-inheritance",
       "mitochondrial-dna",
@@ -1191,7 +1191,7 @@ theoryData["unit-2"] = {
       "maternal-effect",
       "heteroplasmy"
     ],
-    "imgCaption": "U2-T15 Scientific Visual Reference: Extra-chromosomal (cytoplasmic/maternal) inheritance describes the transmission of traits governed by non-nuclear organellar DNA, characterized by maternal uniparental inheritance and non-Mendelian reciprocal cross differences"
+    "imgCaption": "Extra-Chromosomal (Mitochondrial) Inheritance: Circular maternal mtDNA genome encoding oxidative phosphorylation genes."
   },
   "u2-t16": {
     "summary": "Nucleic acids (DNA and RNA) are biological macromolecules composed of nucleotide building blocks, structured into Watson-Crick double helices or diverse ribonucleic forms to store and execute genetic information.",
@@ -1254,7 +1254,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t16.svg",
+    "img": "images/theory/u2-t16.png",
     "tags": [
       "nucleic-acids",
       "dna-structure",
@@ -1264,7 +1264,7 @@ theoryData["unit-2"] = {
       "b-dna",
       "hyperchromic-effect"
     ],
-    "imgCaption": "Watson-Crick B-DNA Double Helix Model: Structural Dimensions, Antiparallel 5' to 3' Polarity, and Hydrogen-Bonded Base Pairs"
+    "imgCaption": "Molecular Structure of Nucleic Acids: Watson-Crick DNA double helix showing sugar-phosphate backbone and complementary base pairs."
   },
   "u2-t17": {
     "summary": "The modern gene concept defines the gene as a tripartite molecular unit (cistron, recon, muton), replicated semi-conservatively by DNA polymerases and expressed through the Central Dogma via transcription and translation.",
@@ -1333,7 +1333,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t17.svg",
+    "img": "images/theory/u2-t17.png",
     "tags": [
       "modern-gene-concept",
       "cistron",
@@ -1343,7 +1343,7 @@ theoryData["unit-2"] = {
       "reverse-transcriptase",
       "telomerase"
     ],
-    "imgCaption": "U2-T17 Scientific Visual Reference: The modern gene concept defines the gene as a tripartite molecular unit (cistron, recon, muton), replicated semi-conservatively by DNA polymerases and expressed through the Central Dogma via transcription and translation"
+    "imgCaption": "DNA Replication & Central Dogma: Semiconservative replication fork with leading and lagging strands, helicase, and DNA polymerase."
   },
   "u2-t18": {
     "summary": "Molecular techniques including PCR, RFLP, and modern DNA sequencing provide powerful diagnostic tools for identifying genetic defects, performing parentage verification, and executing marker-assisted selection in livestock.",
@@ -1406,7 +1406,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t18.svg",
+    "img": "images/theory/u2-t18.png",
     "tags": [
       "molecular-genetics",
       "pcr",
@@ -1417,7 +1417,7 @@ theoryData["unit-2"] = {
       "snps",
       "genomic-selection"
     ],
-    "imgCaption": "The Three Mechanisms of Horizontal Gene Transfer and Recombination in Bacteria: Transformation, Conjugation, and Transduction"
+    "imgCaption": "Molecular Techniques (PCR, RFLP, Sequencing): Exponential amplification of target DNA via thermal cycling."
   },
   "u2-t19": {
     "summary": "Population genetics investigates the dynamics of genes and genotypes across Mendelian populations, transitioning from individual transmission genetics to aggregate gene pool analysis.",
@@ -1479,7 +1479,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t19.svg",
+    "img": "images/theory/u2-t19.png",
     "tags": [
       "population-genetics",
       "mendelian-population",
@@ -1488,7 +1488,7 @@ theoryData["unit-2"] = {
       "zygotic-array",
       "effective-population-size"
     ],
-    "imgCaption": "U2-T19 Scientific Visual Reference: Population genetics investigates the dynamics of genes and genotypes across Mendelian populations, transitioning from individual transmission genetics to aggregate gene pool analysis"
+    "imgCaption": "Population Genetics Foundations: Distribution and transmission of alleles across segregating loci in a population."
   },
   "u2-t20": {
     "summary": "The genetic structure of a population is quantified by gene (allelic) and genotypic frequencies, describing the mathematical distribution and proportional representation of alleles in a gene pool.",
@@ -1545,7 +1545,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t20.svg",
+    "img": "images/theory/u2-t20.jpg",
     "tags": [
       "gene-frequency",
       "genotypic-frequency",
@@ -1554,7 +1554,7 @@ theoryData["unit-2"] = {
       "shorthorn-roan",
       "carrier-frequency"
     ],
-    "imgCaption": "U2-T20 Scientific Visual Reference: The genetic structure of a population is quantified by gene (allelic) and genotypic frequencies, describing the mathematical distribution and proportional representation of alleles in a gene pool"
+    "imgCaption": "Genetic Structure of a Population: Genotypic values and allele frequency distribution across a diploid locus."
   },
   "u2-t21": {
     "summary": "The Hardy-Weinberg Law states that gene and genotypic frequencies remain constant from generation to generation in a large, randomly mating population in the absence of evolutionary forces, establishing the (p+q)² equilibrium.",
@@ -1611,7 +1611,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t21.svg",
+    "img": "images/theory/u2-t21.png",
     "tags": [
       "hardy-weinberg",
       "population-equilibrium",
@@ -1621,7 +1621,7 @@ theoryData["unit-2"] = {
       "degrees-of-freedom-1",
       "a2-milk"
     ],
-    "imgCaption": "The Hardy-Weinberg Equilibrium Law: Parabolic Genotypic Frequencies (p², 2pq, q²) across Allele Frequencies (p + q = 1)"
+    "imgCaption": "Hardy-Weinberg Equilibrium Law: Parabolic relationship between allele frequencies (p, q) and genotype frequencies (p², 2pq, q²)."
   },
   "u2-t22": {
     "summary": "Forces changing gene and genotypic frequencies include systematic forces (mutation, migration, selection) that act predictably in direction and magnitude, and the dispersive stochastic force of genetic drift in finite populations.",
@@ -1679,7 +1679,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t22.svg",
+    "img": "images/theory/u2-t22.jpg",
     "tags": [
       "evolutionary-forces",
       "mutation-pressure",
@@ -1689,7 +1689,7 @@ theoryData["unit-2"] = {
       "sewall-wright",
       "founder-effect"
     ],
-    "imgCaption": "U2-T22 Scientific Visual Reference: Forces changing gene and genotypic frequencies include systematic forces (mutation, migration, selection) that act predictably in direction and magnitude, and the dispersive stochastic force of genetic drift in finite populations"
+    "imgCaption": "Forces Changing Gene Frequency: Stochastic allele frequency fluctuations (Genetic Drift) in small vs. large populations."
   },
   "u2-t23": {
     "summary": "Quantitative traits exhibit continuous metric variation governed by multiple additive polygenes and environmental influences, contrasting sharply with discrete, single-gene Mendelian qualitative traits.",
@@ -1751,7 +1751,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t23.svg",
+    "img": "images/theory/u2-t23.jpg",
     "tags": [
       "quantitative-genetics",
       "qualitative-traits",
@@ -1760,7 +1760,7 @@ theoryData["unit-2"] = {
       "r-a-fisher",
       "multiple-factor-hypothesis"
     ],
-    "imgCaption": "U2-T23 Scientific Visual Reference: Quantitative traits exhibit continuous metric variation governed by multiple additive polygenes and environmental influences, contrasting sharply with discrete, single-gene Mendelian qualitative traits"
+    "imgCaption": "Quantitative vs. Qualitative Genetics: Continuous polygenic inheritance and genome-wide QTL distribution across multiple additive loci."
   },
   "u2-t24": {
     "summary": "The average effect of a gene and gene substitution quantify the expected phenotypic change from allele transmission, establishing Breeding Value (additive genetic value) as the parent's value in livestock genetic improvement.",
@@ -1812,7 +1812,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t24.svg",
+    "img": "images/theory/u2-t24.png",
     "tags": [
       "breeding-value",
       "average-effect",
@@ -1822,7 +1822,7 @@ theoryData["unit-2"] = {
       "transmitting-ability",
       "epd"
     ],
-    "imgCaption": "U2-T24 Scientific Visual Reference: The average effect of a gene and gene substitution quantify the expected phenotypic change from allele transmission, establishing Breeding Value (additive genetic value) as the parent's value in livestock genetic improvement"
+    "imgCaption": "Average Effect of Gene & Breeding Value: Partitioning genotypic values into linear additive effects (BV) and dominance deviations."
   },
   "u2-t25": {
     "summary": "Phenotypic variance partitions into additive genetic variance (the sole driver of selection progress), non-additive dominance and epistatic variances, and environmental variance components.",
@@ -1886,7 +1886,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t25.svg",
+    "img": "images/theory/u2-t25.jpg",
     "tags": [
       "phenotypic-variance",
       "additive-variance",
@@ -1896,7 +1896,7 @@ theoryData["unit-2"] = {
       "v-a",
       "v-e"
     ],
-    "imgCaption": "U2-T25 Scientific Visual Reference: Phenotypic variance partitions into additive genetic variance (the sole driver of selection progress), non-additive dominance and epistatic variances, and environmental variance components"
+    "imgCaption": "Components of Phenotypic Variance: Quantitative Trait Locus (QTL) mapping and partitioning of genetic variance."
   },
   "u2-t26": {
     "summary": "Genotype by Environment (G × E) interaction occurs when the relative phenotypic performance or ranking of different genotypes changes across differing environmental conditions, dictating breed adaptability.",
@@ -1952,7 +1952,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t26.svg",
+    "img": "images/theory/u2-t26.jpg",
     "tags": [
       "gxe-interaction",
       "reaction-norm",
@@ -1961,7 +1961,7 @@ theoryData["unit-2"] = {
       "genotype-environment-correlation",
       "tropical-adaptation"
     ],
-    "imgCaption": "U2-T26 Scientific Visual Reference: Genotype by Environment (G × E) interaction occurs when the relative phenotypic performance or ranking of different genotypes changes across differing environmental conditions, dictating breed adaptability"
+    "imgCaption": "Genotype × Environment (G × E) Interaction: Reaction norms illustrating differential phenotypic expression across environments."
   },
   "u2-t27": {
     "summary": "Heritability (h²) quantifies the proportion of phenotypic variation attributable to genetic differences among individuals, with narrow-sense heritability (V_A/V_P) serving as the fundamental predictor of selection response.",
@@ -2045,7 +2045,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t27.svg",
+    "img": "images/theory/u2-t27.jpg",
     "tags": [
       "heritability",
       "narrow-sense-heritability",
@@ -2054,7 +2054,7 @@ theoryData["unit-2"] = {
       "selection-response",
       "progeny-testing"
     ],
-    "imgCaption": "U2-T27 Scientific Visual Reference: Heritability (h²) quantifies the proportion of phenotypic variation attributable to genetic differences among individuals, with narrow-sense heritability (V_A/V_P) serving as the fundamental predictor of selection response"
+    "imgCaption": "Heritability (h²) & Selection Response: Relationship between narrow-sense heritability (slope) and genetic gain (R = h²S)."
   },
   "u2-t28": {
     "summary": "Repeatability (r) measures the correlation between repeated phenotypic records of the same animal over time, setting the upper limit of heritability and enabling the calculation of Most Probable Producing Ability (MPPA).",
@@ -2117,7 +2117,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t28.svg",
+    "img": "images/theory/u2-t28.png",
     "tags": [
       "repeatability",
       "mppa",
@@ -2126,7 +2126,7 @@ theoryData["unit-2"] = {
       "early-culling",
       "most-probable-producing-ability"
     ],
-    "imgCaption": "U2-T28 Scientific Visual Reference: Repeatability (r) measures the correlation between repeated phenotypic records of the same animal over time, setting the upper limit of heritability and enabling the calculation of Most Probable Producing Ability (MPPA)"
+    "imgCaption": "Repeatability (r): Intraclass correlation measuring consistency of repeated longitudinal measurements on the same animal."
   },
   "u2-t29": {
     "summary": "Genetic and phenotypic correlations measure the mutual association between different economic traits, caused biologically by pleiotropy and linkage, governing correlated responses to selection in breeding programs.",
@@ -2203,7 +2203,7 @@ theoryData["unit-2"] = {
         ]
       }
     ],
-    "img": "images/theory/u2-t29.svg",
+    "img": "images/theory/u2-t29.png",
     "tags": [
       "genetic-correlation",
       "phenotypic-correlation",
@@ -2212,6 +2212,6 @@ theoryData["unit-2"] = {
       "indirect-selection",
       "antagonistic-correlation"
     ],
-    "imgCaption": "U2-T29 Scientific Visual Reference: Genetic and phenotypic correlations measure the mutual association between different economic traits, caused biologically by pleiotropy and linkage, governing correlated responses to selection in breeding programs"
+    "imgCaption": "Genetic & Phenotypic Correlations: Bivariate association and correlated response between quantitative traits."
   }
 };

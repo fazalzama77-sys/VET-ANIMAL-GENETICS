@@ -56,7 +56,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t01.svg",
+    "img": "images/theory/u1-t01.png",
     "tags": [
       "biostatistics",
       "introduction",
@@ -64,7 +64,7 @@ theoryData["unit-1"] = {
       "r-a-fisher",
       "veterinary-science"
     ],
-    "imgCaption": "Foundations of Biometry: From Biological Variation to Genetic Inference and Breeding Values (Sir R.A. Fisher Framework)"
+    "imgCaption": "Biostatistical Analysis Framework: Visual summary of descriptive and inferential statistical distributions in biological sciences."
   },
   "u1-t02": {
     "summary": "Classification and tabulation is the systematic organization of raw biological data into homogeneous groups and structured tabular matrices to reveal underlying patterns, simplify comparisons, and enable statistical analysis.",
@@ -150,7 +150,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t02.svg",
+    "img": "images/theory/u1-t02.png",
     "tags": [
       "classification",
       "tabulation",
@@ -158,7 +158,7 @@ theoryData["unit-1"] = {
       "frequency-distribution",
       "table-parts"
     ],
-    "imgCaption": "Classification Framework & Anatomy of a Formal Statistical Table (Stub, Caption, Body, and Headnote)"
+    "imgCaption": "Tabulation & Frequency Distribution: Grouped class intervals and frequency distribution of continuous measurements."
   },
   "u1-t03": {
     "summary": "Parameters are fixed numerical constants describing an entire population, whereas statistics are sample-derived estimates that vary between samples and are used to draw probabilistic inferences about population parameters.",
@@ -249,7 +249,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t03.svg",
+    "img": "images/theory/u1-t03.png",
     "tags": [
       "parameter",
       "statistic",
@@ -258,7 +258,7 @@ theoryData["unit-1"] = {
       "sampling-error",
       "discrete-variable"
     ],
-    "imgCaption": "U1-T03 Scientific Visual Reference: Parameters are fixed numerical constants describing an entire population, whereas statistics are sample-derived estimates that vary between samples and are used to draw probabilistic inferences about population parameters"
+    "imgCaption": "Population versus Sample: Extracting a representative random sample (statistic) from a biological population (parameter)."
   },
   "u1-t04": {
     "summary": "Diagrammatic and graphical techniques provide visual geometric representations of biological data, translating complex numerical tables into intuitive, interpretable visual forms and enabling the direct estimation of positional averages.",
@@ -344,7 +344,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t04.svg",
+    "img": "images/theory/u1-t04.png",
     "tags": [
       "diagrams",
       "histogram",
@@ -353,7 +353,7 @@ theoryData["unit-1"] = {
       "graphical-representation",
       "mode-location"
     ],
-    "imgCaption": "U1-T04 Scientific Visual Reference: Diagrammatic and graphical techniques provide visual geometric representations of biological data, translating complex numerical tables into intuitive, interpretable visual forms and enabling the direct estimation of positional averages"
+    "imgCaption": "Graphical Representation of Data: Histogram and frequency distribution curve of continuous variables."
   },
   "u1-t05": {
     "summary": "Measures of central tendency are single summary values that locate the center or point of typical concentration of a biological distribution, with Arithmetic Mean, Median, and Mode representing the primary metrics.",
@@ -458,7 +458,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t05.svg",
+    "img": "images/theory/u1-t05.png",
     "tags": [
       "central-tendency",
       "arithmetic-mean",
@@ -467,7 +467,7 @@ theoryData["unit-1"] = {
       "geometric-mean",
       "harmonic-mean"
     ],
-    "imgCaption": "U1-T05 Scientific Visual Reference: Measures of central tendency are single summary values that locate the center or point of typical concentration of a biological distribution, with Arithmetic Mean, Median, and Mode representing the primary metrics"
+    "imgCaption": "Measures of Central Tendency: Geometric position of Mode, Median, and Arithmetic Mean across skewed and symmetric curves."
   },
   "u1-t06": {
     "summary": "Measures of dispersion quantify the extent of scatter, variability, or spread of biological observations around their central average, with Standard Deviation and Variance serving as the mathematically fundamental metrics.",
@@ -554,7 +554,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t06.svg",
+    "img": "images/theory/u1-t06.png",
     "tags": [
       "dispersion",
       "variance",
@@ -563,7 +563,7 @@ theoryData["unit-1"] = {
       "quartile-deviation",
       "range"
     ],
-    "imgCaption": "U1-T06 Scientific Visual Reference: Measures of dispersion quantify the extent of scatter, variability, or spread of biological observations around their central average, with Standard Deviation and Variance serving as the mathematically fundamental metrics"
+    "imgCaption": "Measures of Dispersion: Standard Deviation (σ) bands and cumulative dispersion around the population mean."
   },
   "u1-t07": {
     "summary": "The Coefficient of Variation (CV) measures relative percentage variability to compare dispersion across different biological traits, while the Standard Error (SE) quantifies the reliability and sampling precision of a sample mean.",
@@ -654,7 +654,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t07.svg",
+    "img": "images/theory/u1-t07.png",
     "tags": [
       "coefficient-of-variation",
       "standard-error",
@@ -662,7 +662,7 @@ theoryData["unit-1"] = {
       "sample-size-precision",
       "uniformity"
     ],
-    "imgCaption": "U1-T07 Scientific Visual Reference: The Coefficient of Variation (CV) measures relative percentage variability to compare dispersion across different biological traits, while the Standard Error (SE) quantifies the reliability and sampling precision of a sample mean"
+    "imgCaption": "Standard Error of the Mean (SEM) & Coefficient of Variation: Convergence of sample mean distributions toward a normal curve as sample size (n) increases."
   },
   "u1-t08": {
     "summary": "Moments are statistical constants characterizing the shape of a distribution, while Skewness quantifies asymmetry and Kurtosis measures the peakness or heaviness of tails compared to a normal distribution curve.",
@@ -743,7 +743,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t08.svg",
+    "img": "images/theory/u1-t08.png",
     "tags": [
       "moments",
       "skewness",
@@ -752,7 +752,7 @@ theoryData["unit-1"] = {
       "sheppards-correction",
       "shape-statistics"
     ],
-    "imgCaption": "U1-T08 Scientific Visual Reference: Moments are statistical constants characterizing the shape of a distribution, while Skewness quantifies asymmetry and Kurtosis measures the peakness or heaviness of tails compared to a normal distribution curve"
+    "imgCaption": "Moments, Skewness & Kurtosis: Asymmetry (positive vs. negative skewness) and peakedness in probability distributions."
   },
   "u1-t09": {
     "summary": "Probability theory provides mathematical models for quantifying uncertainty and predicting the likelihood of random biological events, governed by the classical addition and multiplication theorems.",
@@ -808,7 +808,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t09.svg",
+    "img": "images/theory/u1-t09.png",
     "tags": [
       "probability",
       "addition-theorem",
@@ -816,7 +816,7 @@ theoryData["unit-1"] = {
       "bayes-theorem",
       "mendelian-probability"
     ],
-    "imgCaption": "U1-T09 Scientific Visual Reference: Probability theory provides mathematical models for quantifying uncertainty and predicting the likelihood of random biological events, governed by the classical addition and multiplication theorems"
+    "imgCaption": "Elementary Probability Theory: Sample space, intersection (A ∩ B), union (A ∪ B), and conditional probability relationships."
   },
   "u1-t10": {
     "summary": "Binomial and Poisson distributions are discrete probability distributions modeling countable biological events, with Binomial applying to repeated independent binary trials and Poisson governing rare biological occurrences.",
@@ -887,7 +887,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t10.svg",
+    "img": "images/theory/u1-t10.png",
     "tags": [
       "binomial-distribution",
       "poisson-distribution",
@@ -895,7 +895,7 @@ theoryData["unit-1"] = {
       "rare-events",
       "index-of-dispersion"
     ],
-    "imgCaption": "U1-T10 Scientific Visual Reference: Binomial and Poisson distributions are discrete probability distributions modeling countable biological events, with Binomial applying to repeated independent binary trials and Poisson governing rare biological occurrences"
+    "imgCaption": "Binomial & Poisson Probability Distributions: Discrete probability mass function (PMF) across varying parameters (n, p)."
   },
   "u1-t11": {
     "summary": "The Normal (Gaussian) distribution is a continuous, bell-shaped, symmetrical probability distribution central to quantitative genetics, defined by its mean and variance and standardized into the Z-distribution.",
@@ -957,7 +957,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t11.svg",
+    "img": "images/theory/u1-t11.png",
     "tags": [
       "normal-distribution",
       "gaussian-curve",
@@ -966,7 +966,7 @@ theoryData["unit-1"] = {
       "central-limit-theorem",
       "empirical-rule"
     ],
-    "imgCaption": "The Standard Normal Distribution (Gaussian Bell Curve) with Empirical 68-95-99.7 Rule and Z-score Scales"
+    "imgCaption": "Normal (Gaussian) Distribution: Bell-shaped probability density curve showing empirical ±1σ (68.27%), ±2σ (95.45%), and ±3σ (99.73%) intervals."
   },
   "u1-t12": {
     "summary": "Correlation analysis measures the direction and strength of mutual linear association between two quantitative biological variables, evaluated through Karl Pearson's coefficient (r) or Spearman's rank coefficient (ρ).",
@@ -1024,7 +1024,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t12.svg",
+    "img": "images/theory/u1-t12.png",
     "tags": [
       "correlation",
       "pearson-r",
@@ -1033,7 +1033,7 @@ theoryData["unit-1"] = {
       "coefficient-of-determination",
       "bivariate-data"
     ],
-    "imgCaption": "Scatter Plot Topologies & Pearson's Correlation Coefficients (r) from Perfect Positive to Non-Linear"
+    "imgCaption": "Correlation Analysis: Scatter diagrams illustrating strength and direction of Pearson's linear correlation coefficient (r)."
   },
   "u1-t13": {
     "summary": "Regression analysis estimates the mathematical functional relationship between a dependent outcome variable and an independent predictor, allowing accurate prediction through the principle of least squares.",
@@ -1096,7 +1096,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t13.svg",
+    "img": "images/theory/u1-t13.png",
     "tags": [
       "regression",
       "least-squares",
@@ -1105,7 +1105,7 @@ theoryData["unit-1"] = {
       "galton",
       "slope-intercept"
     ],
-    "imgCaption": "Linear Regression Line of Y on X with Least-Squares Residual Minimization and Slope Parameter (b_yx)"
+    "imgCaption": "Linear Regression Analysis: Least-squares regression line (Y = a + bX) fitted to bivariate observations."
   },
   "u1-t14": {
     "summary": "Sampling methods define rigorous statistical protocols for selecting representative subsets from animal populations, categorized into probability sampling (random, stratified, systematic, cluster) and non-probability sampling designs.",
@@ -1163,7 +1163,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t14.svg",
+    "img": "images/theory/u1-t14.png",
     "tags": [
       "sampling-methods",
       "simple-random-sampling",
@@ -1172,7 +1172,7 @@ theoryData["unit-1"] = {
       "systematic-sampling",
       "neyman-allocation"
     ],
-    "imgCaption": "U1-T14 Scientific Visual Reference: Sampling methods define rigorous statistical protocols for selecting representative subsets from animal populations, categorized into probability sampling (random, stratified, systematic, cluster) and non-probability sampling designs"
+    "imgCaption": "Sampling Methods: Stratified and random sampling partitioning a heterogeneous population into homogeneous strata."
   },
   "u1-t15": {
     "summary": "Hypothesis testing evaluates empirical biological claims against null assumptions, utilizing large-sample Z-tests (n ≥ 30) to test sample means and proportions against theoretical population values.",
@@ -1244,7 +1244,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t15.svg",
+    "img": "images/theory/u1-t15.png",
     "tags": [
       "hypothesis-testing",
       "z-test",
@@ -1253,7 +1253,7 @@ theoryData["unit-1"] = {
       "large-samples",
       "critical-values"
     ],
-    "imgCaption": "U1-T15 Scientific Visual Reference: Hypothesis testing evaluates empirical biological claims against null assumptions, utilizing large-sample Z-tests (n ≥ 30) to test sample means and proportions against theoretical population values"
+    "imgCaption": "Large Sample Z-Test & Hypothesis Testing: Standard normal critical rejection regions and p-value thresholds."
   },
   "u1-t16": {
     "summary": "Student's t-test is the small-sample parametric test (n &lt; 30) for continuous normal data with unknown population variance, applied as one-sample, independent two-sample, and paired t-tests.",
@@ -1315,7 +1315,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t16.svg",
+    "img": "images/theory/u1-t16.png",
     "tags": [
       "students-t-test",
       "gosset",
@@ -1324,7 +1324,7 @@ theoryData["unit-1"] = {
       "degrees-of-freedom",
       "pooled-variance"
     ],
-    "imgCaption": "U1-T16 Scientific Visual Reference: Student's t-test is the small-sample parametric test (n &lt; 30) for continuous normal data with unknown population variance, applied as one-sample, independent two-sample, and paired t-tests"
+    "imgCaption": "Small Sample Student's t-Test: Family of t-distribution curves across degrees of freedom (ν) approaching the standard normal curve."
   },
   "u1-t17": {
     "summary": "The Chi-Square (χ²) test is a versatile non-parametric test developed by Karl Pearson to test the goodness of fit between observed and theoretical Mendelian genetic ratios and the independence of categorical clinical attributes.",
@@ -1377,7 +1377,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t17.svg",
+    "img": "images/theory/u1-t17.png",
     "tags": [
       "chi-square",
       "goodness-of-fit",
@@ -1386,7 +1386,7 @@ theoryData["unit-1"] = {
       "pearson",
       "mendelian-ratios"
     ],
-    "imgCaption": "U1-T17 Scientific Visual Reference: The Chi-Square (χ²) test is a versatile non-parametric test developed by Karl Pearson to test the goodness of fit between observed and theoretical Mendelian genetic ratios and the independence of categorical clinical attributes"
+    "imgCaption": "Chi-Square (χ²) Test of Significance: Probability density curves across degrees of freedom for Goodness of Fit and Independence."
   },
   "u1-t18": {
     "summary": "Experimental designs provide structured layouts to control biological variation and minimize experimental error, built upon the three cardinal principles: Replication, Randomization, and Local Control.",
@@ -1454,7 +1454,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t18.svg",
+    "img": "images/theory/u1-t18.jpg",
     "tags": [
       "experimental-design",
       "crd",
@@ -1464,7 +1464,7 @@ theoryData["unit-1"] = {
       "local-control",
       "anova-models"
     ],
-    "imgCaption": "U1-T18 Scientific Visual Reference: Experimental designs provide structured layouts to control biological variation and minimize experimental error, built upon the three cardinal principles: Replication, Randomization, and Local Control"
+    "imgCaption": "Experimental Designs (CRD & RBD): Controlling nuisance environmental gradients through blocking and randomization."
   },
   "u1-t19": {
     "summary": "Analysis of Variance (ANOVA) partitions total biological phenotypic variance into distinct attributable components, employing Snedecor's F-test to establish treatment significance and Critical Difference for mean separation.",
@@ -1527,7 +1527,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t19.svg",
+    "img": "images/theory/u1-t19.png",
     "tags": [
       "anova",
       "f-test",
@@ -1536,7 +1536,7 @@ theoryData["unit-1"] = {
       "mean-square",
       "least-significant-difference"
     ],
-    "imgCaption": "One-Way Analysis of Variance (ANOVA): Partitioning Total Sum of Squares into Treatment vs Error Variance"
+    "imgCaption": "Analysis of Variance (ANOVA) & F-Test: Snedecor's F-distribution curves comparing between-group to within-group variance."
   },
   "u1-t20": {
     "summary": "Non-parametric (distribution-free) tests evaluate biological hypotheses without requiring normality or variance homogeneity, using rank-based methods for ordinal veterinary scores and skewed distributions.",
@@ -1592,7 +1592,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t20.svg",
+    "img": "images/theory/u1-t20.png",
     "tags": [
       "non-parametric",
       "distribution-free",
@@ -1601,7 +1601,7 @@ theoryData["unit-1"] = {
       "kruskal-wallis",
       "sign-test"
     ],
-    "imgCaption": "U1-T20 Scientific Visual Reference: Non-parametric (distribution-free) tests evaluate biological hypotheses without requiring normality or variance homogeneity, using rank-based methods for ordinal veterinary scores and skewed distributions"
+    "imgCaption": "Non-Parametric Statistical Tests: Distribution-free cumulative empirical comparison for rank and ordinal biological data."
   },
   "u1-t21": {
     "summary": "Computer applications, programming languages, and Database Management Systems (DBMS) form the computational backbone for processing large-scale pedigree, performance, and genomic herd data in modern animal breeding.",
@@ -1659,7 +1659,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t21.svg",
+    "img": "images/theory/u1-t21.png",
     "tags": [
       "dbms",
       "rdbms",
@@ -1669,7 +1669,7 @@ theoryData["unit-1"] = {
       "normalization",
       "inaph"
     ],
-    "imgCaption": "U1-T21 Scientific Visual Reference: Computer applications, programming languages, and Database Management Systems (DBMS) form the computational backbone for processing large-scale pedigree, performance, and genomic herd data in modern animal breeding"
+    "imgCaption": "Database Management Systems (DBMS): Relational table structure with primary keys, records (rows), and attributes (columns)."
   },
   "u1-t22": {
     "summary": "MS-Office applications, particularly MS-Excel's Data Analysis ToolPak, provide powerful computational and graphical environments for statistical data analysis, herd records management, and telecommunications in veterinary practice.",
@@ -1731,7 +1731,7 @@ theoryData["unit-1"] = {
         ]
       }
     ],
-    "img": "images/theory/u1-t22.svg",
+    "img": "images/theory/u1-t22.png",
     "tags": [
       "ms-excel",
       "ms-office",
@@ -1740,6 +1740,6 @@ theoryData["unit-1"] = {
       "cell-referencing",
       "networking"
     ],
-    "imgCaption": "U1-T22 Scientific Visual Reference: MS-Office applications, particularly MS-Excel's Data Analysis ToolPak, provide powerful computational and graphical environments for statistical data analysis, herd records management, and telecommunications in veterinary practice"
+    "imgCaption": "Veterinary Data Analysis using Spreadsheets: Automated tabular cells, statistical formulas, and graphical chart generation."
   }
 };

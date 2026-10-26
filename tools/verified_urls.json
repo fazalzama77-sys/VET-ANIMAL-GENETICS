@@ -1,0 +1,318 @@
+{
+  "u1-t03": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Simple_random_sampling.PNG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Population versus Sample: Extracting a representative random sample (statistic) from a biological population (parameter)."
+  },
+  "u1-t04": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Black_cherry_tree_histogram.svg/960px-Black_cherry_tree_histogram.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Graphical Representation of Data: Histogram and frequency distribution curve of continuous variables."
+  },
+  "u1-t06": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/960px-Standard_deviation_diagram.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Measures of Dispersion: Standard Deviation (\u03c3) bands and cumulative dispersion around the population mean."
+  },
+  "u1-t07": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/IllustrationCentralTheorem.png/960px-IllustrationCentralTheorem.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Standard Error of the Mean (SEM) & Coefficient of Variation: Convergence of sample mean distributions toward a normal curve as sample size (n) increases."
+  },
+  "u1-t09": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Venn_diagram_gr_la_ru.svg/960px-Venn_diagram_gr_la_ru.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Elementary Probability Theory: Sample space, intersection (A \u2229 B), union (A \u222a B), and conditional probability relationships."
+  },
+  "u1-t10": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Binomial_distribution_pmf.svg/960px-Binomial_distribution_pmf.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Binomial & Poisson Probability Distributions: Discrete probability mass function (PMF) across varying parameters (n, p)."
+  },
+  "u1-t11": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Normal_Distribution_PDF.svg/960px-Normal_Distribution_PDF.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Normal (Gaussian) Distribution: Bell-shaped probability density curve showing empirical \u00b11\u03c3 (68.27%), \u00b12\u03c3 (95.45%), and \u00b13\u03c3 (99.73%) intervals."
+  },
+  "u1-t12": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Correlation_examples2.svg/960px-Correlation_examples2.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Correlation Analysis: Scatter diagrams illustrating strength and direction of Pearson's linear correlation coefficient (r)."
+  },
+  "u1-t13": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Linear_least_squares_example2.svg/960px-Linear_least_squares_example2.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Linear Regression Analysis: Least-squares regression line (Y = a + bX) fitted to bivariate observations."
+  },
+  "u1-t14": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Stratified_sampling.PNG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Sampling Methods: Stratified and random sampling partitioning a heterogeneous population into homogeneous strata."
+  },
+  "u1-t15": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Null-hypothesis-region-eng.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Large Sample Z-Test & Hypothesis Testing: Standard normal critical rejection regions and p-value thresholds."
+  },
+  "u1-t16": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Student_t_pdf.svg/960px-Student_t_pdf.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Small Sample Student's t-Test: Family of t-distribution curves across degrees of freedom (\u03bd) approaching the standard normal curve."
+  },
+  "u1-t17": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Chi-square_pdf.svg/960px-Chi-square_pdf.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Chi-Square (\u03c7\u00b2) Test of Significance: Probability density curves across degrees of freedom for Goodness of Fit and Independence."
+  },
+  "u1-t19": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/F-distribution_pdf.svg/960px-F-distribution_pdf.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Analysis of Variance (ANOVA) & F-Test: Snedecor's F-distribution curves comparing between-group to within-group variance."
+  },
+  "u1-t20": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/KS_Example.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Non-Parametric Statistical Tests: Distribution-free cumulative empirical comparison for rank and ordinal biological data."
+  },
+  "u1-t22": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/LibreOffice_Calc_6.4.png/960px-LibreOffice_Calc_6.4.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Veterinary Data Analysis using Spreadsheets: Automated tabular cells, statistical formulas, and graphical chart generation."
+  },
+  "u2-t01": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Gregor_Mendel_2.jpg/960px-Gregor_Mendel_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "History of Animal Genetics: Gregor Johann Mendel and the foundational laws of particulate inheritance."
+  },
+  "u2-t02": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Meiosis_Overview_new.svg/960px-Meiosis_Overview_new.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Cell Division (Mitosis vs. Meiosis): Chromosomal replication, homologous pairing, crossing over, and reductional division."
+  },
+  "u2-t03": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Chromosome.svg/960px-Chromosome.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Chromosome Morphology & Classification: Structural organization of chromatids, centromere constriction, and telomeres."
+  },
+  "u2-t04": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/XBio_illustration_%E2%80%93_Mendelian_Inheritance.png/960px-XBio_illustration_%E2%80%93_Mendelian_Inheritance.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Mendelian Principles: Segregation of alleles and independent assortment illustrated by Mendelian cross diagrams."
+  },
+  "u2-t05": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Autosomal_dominant_and_recessive.svg/960px-Autosomal_dominant_and_recessive.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Modified Mendelian Inheritance: Autosomal dominance, incomplete dominance, and codominant allele expression."
+  },
+  "u2-t06": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Epistatic_hair.png/960px-Epistatic_hair.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Epistasis & Gene Interactions: Non-allelic interaction modifying classical dihybrid ratios (e.g., coat colour inheritance)."
+  },
+  "u2-t07": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/SimpleGenotypePhenotypeMap.jpg/960px-SimpleGenotypePhenotypeMap.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Pleiotropy, Penetrance & Expressivity: Genotype-to-phenotype mapping where single loci affect multiple biological traits."
+  },
+  "u2-t08": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/ABO_blood_type.svg/960px-ABO_blood_type.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Multiple Alleles & Blood Group Systems: Co-dominant and multi-allelic cell-surface antigen inheritance."
+  },
+  "u2-t09": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Sex_determination_in_animals_-_Arya.png/960px-Sex_determination_in_animals_-_Arya.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Chromosomal Sex Determination Mechanisms: Comparative XX/XY (mammalian) and ZZ/ZW (avian) chromosomal systems."
+  },
+  "u2-t11": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Chromosomal_Crossover.svg/960px-Chromosomal_Crossover.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Genetic Linkage & Crossing Over: Chiasma formation and reciprocal exchange of chromatid segments during pachytene."
+  },
+  "u2-t12": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Point_mutations-en.png/960px-Point_mutations-en.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Gene Mutations: Molecular mechanisms of base substitution (transition, transversion) and frameshift mutations."
+  },
+  "u2-t13": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Single_Chromosome_Mutations.svg/960px-Single_Chromosome_Mutations.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Chromosomal Aberrations: Structural chromosome mutations \u2014 Deletion, Duplication, Inversion, and Translocation."
+  },
+  "u2-t14": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/NHGRI_human_male_karyotype.png/960px-NHGRI_human_male_karyotype.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Cytogenetics & Karyotyping: G-banded metaphase chromosome idiogram arranged by size and centromere position."
+  },
+  "u2-t15": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Mitochondrial_DNA_lg.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Extra-Chromosomal (Mitochondrial) Inheritance: Circular maternal mtDNA genome encoding oxidative phosphorylation genes."
+  },
+  "u2-t16": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/DNA_Structure%2BKey%2BLabelled.pn_NoBB.png/960px-DNA_Structure%2BKey%2BLabelled.pn_NoBB.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Molecular Structure of Nucleic Acids: Watson-Crick DNA double helix showing sugar-phosphate backbone and complementary base pairs."
+  },
+  "u2-t17": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/DNA_replication_split.svg/960px-DNA_replication_split.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "DNA Replication & Central Dogma: Semiconservative replication fork with leading and lagging strands, helicase, and DNA polymerase."
+  },
+  "u2-t18": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/XBio_illustration_%E2%80%93_Polymerase_Chain_Reaction.png/960px-XBio_illustration_%E2%80%93_Polymerase_Chain_Reaction.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Molecular Techniques (PCR, RFLP, Sequencing): Exponential amplification of target DNA via thermal cycling."
+  },
+  "u2-t21": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Hardy-Weinberg.svg/960px-Hardy-Weinberg.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Hardy-Weinberg Equilibrium Law: Parabolic relationship between allele frequencies (p, q) and genotype frequencies (p\u00b2, 2pq, q\u00b2)."
+  },
+  "u2-t26": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Phenotypic_Plasticity_Genotypes_to_Phenotypes.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Genotype \u00d7 Environment (G \u00d7 E) Interaction: Reaction norms illustrating differential phenotypic expression across environments."
+  },
+  "u2-t29": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Spearman_fig1.svg/960px-Spearman_fig1.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Genetic & Phenotypic Correlations: Bivariate association and correlated response between quantitative traits."
+  },
+  "u3-t01": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Mutation_and_selection_diagram_%282%29.svg/960px-Mutation_and_selection_diagram_%282%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "History of Animal Breeding: Artificial selection and domestication transforming ancestral wild types into specialized breeds."
+  },
+  "u3-t02": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/A_well-fed_bull_in_Kuno_WS_AJTJ_P1070807.jpg/960px-A_well-fed_bull_in_Kuno_WS_AJTJ_P1070807.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Classification of Livestock Breeds: Indigenous humped Zebu cattle (Bos indicus) adapted to tropical climates."
+  },
+  "u3-t03": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Cow_female_black_white.jpg/960px-Cow_female_black_white.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Economic Traits of Dairy Livestock: Mammary conformation and 305-day lactation production characteristics."
+  },
+  "u3-t05": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/XBio_illustration_%E2%80%93_Pedigree.png/960px-XBio_illustration_%E2%80%93_Pedigree.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Bases of Selection: Standard pedigree chart tracking ancestral and collateral performance across generations."
+  },
+  "u3-t06": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Punnett_Square_%28Green_Dominant%29.svg/960px-Punnett_Square_%28Green_Dominant%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Combined & Indirect Selection: Combining individual and family genetic information to maximize selection accuracy."
+  },
+  "u3-t07": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Genetic_Distribution.svg/960px-Genetic_Distribution.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Methods of Selection: Truncation selection threshold retaining elite breeding individuals above the culling point."
+  },
+  "u3-t08": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Punnett_Square_Test_Cross.PNG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Classification of Mating Systems: Genetic pairing schemas comparing random panmixia and targeted assortative matings."
+  },
+  "u3-t13": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Juancito.jpg/960px-Juancito.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Selection for Combining Ability (RRS): Reciprocal recurrent hybridization maximizing specific combining ability."
+  },
+  "u3-t14": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Sahiwala_02_%28cropped%29.JPG/960px-Sahiwala_02_%28cropped%29.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Breeding Strategies for Dairy Cattle: Indigenous Sahiwal dairy cattle \u2014 premier milch zebu breed of India."
+  },
+  "u3-t15": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/JamunapariGoat02.jpg/960px-JamunapariGoat02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Breeding Strategies for Sheep, Goats & Swine: Indigenous Jamnapari goat breed utilized in meat and milk improvement."
+  },
+  "u3-t16": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Leghorn_cockerel_and_hen.jpg/960px-Leghorn_cockerel_and_hen.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Commercial Poultry Breeding: White Leghorn strain selected for high egg production and feed efficiency."
+  },
+  "u3-t17": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Holstein-Friesian_in_Dundee%2C_Quebec.jpg/960px-Holstein-Friesian_in_Dundee%2C_Quebec.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Sire Evaluation & Progeny Testing (BLUP): Elite dairy genetics evaluated across contemporary herd-year-season groups."
+  },
+  "u3-t19": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Gir_bull_2.jpg/960px-Gir_bull_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Development of New Breeds & Synthetic Strains: Indigenous Gir cattle genetics used in synthetic crossbred strains."
+  },
+  "u3-t20": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Murrah_buffalo.JPG/960px-Murrah_buffalo.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "National Livestock Breeding Policies in India: Elite Murrah riverine buffalo \u2014 cornerstone of Indian dairy improvement."
+  },
+  "u3-t21": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/95/Cryopreservation_USDA_Gene_Bank.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Conservation of Animal Genetic Resources (AnGR): Ex-situ cryoconservation in liquid nitrogen gene banks (-196\u00b0C)."
+  },
+  "u3-t22": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Blausen_0058_ArtificialInsemination.png/960px-Blausen_0058_ArtificialInsemination.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Reproductive Biotechnologies (AI, MOET, IVF): Artificial insemination and assisted reproductive technology in cattle."
+  },
+  "u3-t23": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/62-MajorHistocompatibilityComplex-1hsa.tif/lossy-page1-330px-62-MajorHistocompatibilityComplex-1hsa.tif.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Breeding for Disease Resistance: MHC (BoLA) molecular structure mediating genetic resistance to pathogens."
+  },
+  "u3-t24": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/German_Shepherd_-_DSC_0346_%2810096362833%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "caption": "Dog & Cat Breeds and Conformation Standards: Working dog anatomical conformation and breed standard morphology."
+  },
+  "u3-t26": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Budgerigar-male-strzelecki-qld.jpg/960px-Budgerigar-male-strzelecki-qld.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Common Pet Birds & Avian Breeding Management: Captive breeding and colour genetics in Budgerigars."
+  },
+  "u3-t28": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Red_wolf_pups_-_captive_breeding.jpg/960px-Red_wolf_pups_-_captive_breeding.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "caption": "Planned Wildlife Breeding & Conservation: Captive breeding and reintroduction programme for endangered species."
+  },
+  "u1-t01": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Examples_of_descriptive_tools.png/960px-Examples_of_descriptive_tools.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Biostatistical Analysis Framework: Visual summary of descriptive and inferential statistical distributions in biological sciences."
+  },
+  "u1-t02": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Example_histogram.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Tabulation & Frequency Distribution: Grouped class intervals and frequency distribution of continuous measurements."
+  },
+  "u1-t05": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Comparison_mean_median_mode.svg/960px-Comparison_mean_median_mode.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Measures of Central Tendency: Geometric position of Mode, Median, and Arithmetic Mean across skewed and symmetric curves."
+  },
+  "u1-t08": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Bivariate_mean_median_mode.svg/960px-Bivariate_mean_median_mode.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Moments, Skewness & Kurtosis: Asymmetry (positive vs. negative skewness) and peakedness in probability distributions."
+  },
+  "u1-t18": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fb/Nuisance_variable.jpg/960px-Nuisance_variable.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Experimental Designs (CRD & RBD): Controlling nuisance environmental gradients through blocking and randomization."
+  },
+  "u1-t21": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Relational_database_terms.svg/960px-Relational_database_terms.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Database Management Systems (DBMS): Relational table structure with primary keys, records (rows), and attributes (columns)."
+  },
+  "u2-t10": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/X-linked_recessive_%282%29.svg/960px-X-linked_recessive_%282%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Sex-Linked Inheritance: Criss-cross transmission of X-linked alleles from carrier dams to affected male progeny."
+  },
+  "u2-t19": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Unlinked_vs._Linked_Genes.svg/960px-Unlinked_vs._Linked_Genes.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Population Genetics Foundations: Distribution and transmission of alleles across segregating loci in a population."
+  },
+  "u2-t20": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e5/Allele_Substn.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Genetic Structure of a Population: Genotypic values and allele frequency distribution across a diploid locus."
+  },
+  "u2-t22": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Effects_of_Genetic_Drift_on_Large_and_Small_Populations.jpg/960px-Effects_of_Genetic_Drift_on_Large_and_Small_Populations.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Forces Changing Gene Frequency: Stochastic allele frequency fluctuations (Genetic Drift) in small vs. large populations."
+  },
+  "u2-t23": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Example_of_a_Genome-wide_QTL-Scan_from_PLoS_Biology.jpg/960px-Example_of_a_Genome-wide_QTL-Scan_from_PLoS_Biology.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Quantitative vs. Qualitative Genetics: Continuous polygenic inheritance and genome-wide QTL distribution across multiple additive loci."
+  },
+  "u2-t24": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Additive_and_Dominance_Effects.png/960px-Additive_and_Dominance_Effects.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Average Effect of Gene & Breeding Value: Partitioning genotypic values into linear additive effects (BV) and dominance deviations."
+  },
+  "u2-t25": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Example_of_QTL-Scan_on_a_single_Chromosom_from_PLoS_Biology.jpg/960px-Example_of_QTL-Scan_on_a_single_Chromosom_from_PLoS_Biology.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Components of Phenotypic Variance: Quantitative Trait Locus (QTL) mapping and partitioning of genetic variance."
+  },
+  "u2-t27": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Response_to_selection.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Heritability (h\u00b2) & Selection Response: Relationship between narrow-sense heritability (slope) and genetic gain (R = h\u00b2S)."
+  },
+  "u2-t28": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Intraclass_correlation_coefficient_graph_improved.svg/960px-Intraclass_correlation_coefficient_graph_improved.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Repeatability (r): Intraclass correlation measuring consistency of repeated longitudinal measurements on the same animal."
+  },
+  "u3-t04": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Directional%2C_Disruptive_and_Stabilizing_Selections.svg/960px-Directional%2C_Disruptive_and_Stabilizing_Selections.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Selection in Animal Breeding: Directional, Stabilizing, and Disruptive selection shifting population genetic mean."
+  },
+  "u3-t09": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Child_first_cousins_Homozy_BD.png/960px-Child_first_cousins_Homozy_BD.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Inbreeding Coefficient (FX) & Relationship (RXY): Pedigree path loop showing identity by descent (IBD) from common ancestors."
+  },
+  "u3-t10": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Inbreeding_depression_in_Delphinium_nelsonii.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Inbreeding Depression: Fitness and performance decline resulting from increased homozygosity of deleterious recessives."
+  },
+  "u3-t11": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Backcrossing_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Outbreeding & Crossbreeding Systems: Grading up and backcrossing schema progressively replacing indigenous genes."
+  },
+  "u3-t12": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Heterosis.svg/960px-Heterosis.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Heterosis (Hybrid Vigour): F1 crossbred superiority exceeding the mid-parent average due to dominance and overdominance."
+  },
+  "u3-t18": {
+    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Founder_effect_with_drift.jpg/960px-Founder_effect_with_drift.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "caption": "Open Nucleus Breeding System (ONBS): Gene flow between elite nucleus breeding herds and base populations."
+  },
+  "u3-t25": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Estrous_cycle.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Breeding Management & Estrous Detection: Hormonal fluctuations (Estrogen, LH surge, Progesterone) across the estrous cycle."
+  },
+  "u3-t27": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Bottleneck_Effect.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "caption": "Effective Population Size (Ne) & Wildlife Dynamics: Genetic bottleneck reducing allelic diversity in small captive populations."
+  }
+}

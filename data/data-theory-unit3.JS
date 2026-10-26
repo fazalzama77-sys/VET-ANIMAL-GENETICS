@@ -62,7 +62,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t01.svg",
+    "img": "images/theory/u3-t01.png",
     "tags": [
       "history-animal-breeding",
       "robert-bakewell",
@@ -71,7 +71,7 @@ theoryData["unit-3"] = {
       "genomic-selection",
       "livestock-domestication"
     ],
-    "imgCaption": "U3-T01 Scientific Visual Reference: The history of animal breeding chronicles the evolution from ancient empirical domestication to Robert Bakewell's systematic progeny testing and Jay L"
+    "imgCaption": "History of Animal Breeding: Artificial selection and domestication transforming ancestral wild types into specialized breeds."
   },
   "u3-t02": {
     "summary": "Breeds represent genetically stable, identifiable sub-populations within livestock species, classified systematically by geographical origin, utility, body size, and morphological horn/ear conformation.",
@@ -166,7 +166,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t02.svg",
+    "img": "images/theory/u3-t02.jpg",
     "tags": [
       "breed-classification",
       "sahiwal",
@@ -177,7 +177,7 @@ theoryData["unit-3"] = {
       "black-bengal",
       "nbagr"
     ],
-    "imgCaption": "U3-T02 Scientific Visual Reference: Breeds represent genetically stable, identifiable sub-populations within livestock species, classified systematically by geographical origin, utility, body size, and morphological horn/ear conformation"
+    "imgCaption": "Classification of Livestock Breeds: Indigenous humped Zebu cattle (Bos indicus) adapted to tropical climates."
   },
   "u3-t03": {
     "summary": "Economic traits represent the measurable production, growth, and reproductive characteristics that determine commercial profitability in dairy cattle, buffaloes, sheep, goats, swine, and poultry.",
@@ -253,7 +253,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t03.svg",
+    "img": "images/theory/u3-t03.jpg",
     "tags": [
       "economic-traits",
       "milk-yield",
@@ -263,7 +263,7 @@ theoryData["unit-3"] = {
       "backfat-thickness",
       "hdep"
     ],
-    "imgCaption": "U3-T03 Scientific Visual Reference: Economic traits represent the measurable production, growth, and reproductive characteristics that determine commercial profitability in dairy cattle, buffaloes, sheep, goats, swine, and poultry"
+    "imgCaption": "Economic Traits of Dairy Livestock: Mammary conformation and 305-day lactation production characteristics."
   },
   "u3-t04": {
     "summary": "Selection is the non-random process determining which animals become parents of the next generation, quantified by the Selection Differential (S), Selection Intensity (i), and predicted genetic response (ΔG).",
@@ -318,7 +318,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t04.svg",
+    "img": "images/theory/u3-t04.png",
     "tags": [
       "selection",
       "selection-differential",
@@ -327,7 +327,7 @@ theoryData["unit-3"] = {
       "annual-genetic-gain",
       "directional-selection"
     ],
-    "imgCaption": "Truncation Selection Model: Selection Differential (S), Proportion Saved (p), and Expected Genetic Response (ΔG)"
+    "imgCaption": "Selection in Animal Breeding: Directional, Stabilizing, and Disruptive selection shifting population genetic mean."
   },
   "u3-t05": {
     "summary": "Bases of selection utilize information from different biological relatives (individual mass, pedigree, family, sib, and progeny testing) to maximize the accuracy of estimating an animal's true breeding value.",
@@ -397,7 +397,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t05.svg",
+    "img": "images/theory/u3-t05.png",
     "tags": [
       "bases-of-selection",
       "mass-selection",
@@ -407,7 +407,7 @@ theoryData["unit-3"] = {
       "family-selection",
       "accuracy"
     ],
-    "imgCaption": "U3-T05 Scientific Visual Reference: Bases of selection utilize information from different biological relatives (individual mass, pedigree, family, sib, and progeny testing) to maximize the accuracy of estimating an animal's true breeding value"
+    "imgCaption": "Bases of Selection: Standard pedigree chart tracking ancestral and collateral performance across generations."
   },
   "u3-t06": {
     "summary": "Combined selection integrates individual and family performance records through multiple regression to maximize selection accuracy, while Indirect Selection improves hard-to-measure target traits via correlated indicator traits.",
@@ -463,7 +463,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t06.svg",
+    "img": "images/theory/u3-t06.png",
     "tags": [
       "combined-selection",
       "indirect-selection",
@@ -472,7 +472,7 @@ theoryData["unit-3"] = {
       "scrotal-circumference",
       "ultrasound-scanning"
     ],
-    "imgCaption": "U3-T06 Scientific Visual Reference: Combined selection integrates individual and family performance records through multiple regression to maximize selection accuracy, while Indirect Selection improves hard-to-measure target traits via correlated indicator traits"
+    "imgCaption": "Combined & Indirect Selection: Combining individual and family genetic information to maximize selection accuracy."
   },
   "u3-t07": {
     "summary": "Multi-trait selection methods include Tandem Selection (sequential), Independent Culling Levels (simultaneous truncation), and Hazel's Selection Index (optimal economic aggregate genotype weighting).",
@@ -528,7 +528,7 @@ theoryData["unit-3"] = {
         ]
       }
     ],
-    "img": "images/theory/u3-t07.svg",
+    "img": "images/theory/u3-t07.png",
     "tags": [
       "selection-methods",
       "selection-index",
@@ -538,7 +538,7 @@ theoryData["unit-3"] = {
       "aggregate-genotype",
       "economic-weights"
     ],
-    "imgCaption": "U3-T07 Scientific Visual Reference: Multi-trait selection methods include Tandem Selection (sequential), Independent Culling Levels (simultaneous truncation), and Hazel's Selection Index (optimal economic aggregate genotype weighting)"
+    "imgCaption": "Methods of Selection: Truncation selection threshold retaining elite breeding individuals above the culling point."
   },
   "u3-t08": {
     "summary": "Mating systems in animal breeding direct the union of gametes through random mating (panmixia) or non-random mating based on phenotypic resemblance (assortative/disassortative) or ancestral genetic relationship (inbreeding/outbreeding).",
@@ -622,8 +622,8 @@ theoryData["unit-3"] = {
       "Corrective Mating",
       "Pedigree Relationship"
     ],
-    "img": "images/theory/u3-t08.svg",
-    "imgCaption": "U3-T08 Scientific Visual Reference: Mating systems in animal breeding direct the union of gametes through random mating (panmixia) or non-random mating based on phenotypic resemblance (assortative/disassortative) or ancestral genetic relationship (inbreeding/outbreeding)"
+    "img": "images/theory/u3-t08.png",
+    "imgCaption": "Classification of Mating Systems: Genetic pairing schemas comparing random panmixia and targeted assortative matings."
   },
   "u3-t09": {
     "summary": "Inbreeding is the mating of individuals more closely related than the population average, quantified by Wright's Inbreeding Coefficient (Fx) and Coefficient of Relationship (Rxy) calculated through pedigree arrow paths.",
@@ -715,8 +715,8 @@ theoryData["unit-3"] = {
       "Linebreeding",
       "Kinship"
     ],
-    "img": "images/theory/u3-t09.svg",
-    "imgCaption": "U3-T09 Scientific Visual Reference: Inbreeding is the mating of individuals more closely related than the population average, quantified by Wright's Inbreeding Coefficient (Fx) and Coefficient of Relationship (Rxy) calculated through pedigree arrow paths"
+    "img": "images/theory/u3-t09.png",
+    "imgCaption": "Inbreeding Coefficient (FX) & Relationship (RXY): Pedigree path loop showing identity by descent (IBD) from common ancestors."
   },
   "u3-t10": {
     "summary": "Inbreeding uniformly increases genome-wide homozygosity and exposes deleterious recessives, leading to inbreeding depression that severely impairs fitness, reproductive fertility, and early postnatal survival.",
@@ -787,8 +787,8 @@ theoryData["unit-3"] = {
       "BLAD",
       "Fitness Traits"
     ],
-    "img": "images/theory/u3-t10.svg",
-    "imgCaption": "U3-T10 Scientific Visual Reference: Inbreeding uniformly increases genome-wide homozygosity and exposes deleterious recessives, leading to inbreeding depression that severely impairs fitness, reproductive fertility, and early postnatal survival"
+    "img": "images/theory/u3-t10.png",
+    "imgCaption": "Inbreeding Depression: Fitness and performance decline resulting from increased homozygosity of deleterious recessives."
   },
   "u3-t11": {
     "summary": "Outbreeding systems mate individuals less closely related than the population average, encompassing outcrossing, topcrossing, grading up, and crossbreeding systems to elevate heterozygosity and maximize hybrid vigour.",
@@ -873,8 +873,8 @@ theoryData["unit-3"] = {
       "Crisscrossing",
       "Terminal Cross"
     ],
-    "img": "images/theory/u3-t11.svg",
-    "imgCaption": "U3-T11 Scientific Visual Reference: Outbreeding systems mate individuals less closely related than the population average, encompassing outcrossing, topcrossing, grading up, and crossbreeding systems to elevate heterozygosity and maximize hybrid vigour"
+    "img": "images/theory/u3-t11.jpg",
+    "imgCaption": "Outbreeding & Crossbreeding Systems: Grading up and backcrossing schema progressively replacing indigenous genes."
   },
   "u3-t12": {
     "summary": "Heterosis (hybrid vigour) is the phenotypic superiority of crossbred progeny over the average of their purebred parental breeds, explained genetically by the dominance, overdominance, and epistasis hypotheses.",
@@ -952,8 +952,8 @@ theoryData["unit-3"] = {
       "Heterobeltiosis",
       "F2 Breakdown"
     ],
-    "img": "images/theory/u3-t12.svg",
-    "imgCaption": "U3-T12 Scientific Visual Reference: Heterosis (hybrid vigour) is the phenotypic superiority of crossbred progeny over the average of their purebred parental breeds, explained genetically by the dominance, overdominance, and epistasis hypotheses"
+    "img": "images/theory/u3-t12.png",
+    "imgCaption": "Heterosis (Hybrid Vigour): F1 crossbred superiority exceeding the mid-parent average due to dominance and overdominance."
   },
   "u3-t13": {
     "summary": "Selection for combining ability evaluates parental lines using General Combining Ability (GCA - additive gene action) via Recurrent Selection and Specific Combining Ability (SCA - non-additive gene action) via Reciprocal Recurrent Selection.",
@@ -1025,8 +1025,8 @@ theoryData["unit-3"] = {
       "Overdominance",
       "Poultry Breeding"
     ],
-    "img": "images/theory/u3-t13.svg",
-    "imgCaption": "U3-T13 Scientific Visual Reference: Selection for combining ability evaluates parental lines using General Combining Ability (GCA - additive gene action) via Recurrent Selection and Specific Combining Ability (SCA - non-additive gene action) via Reciprocal Recurrent Selection"
+    "img": "images/theory/u3-t13.jpg",
+    "imgCaption": "Selection for Combining Ability (RRS): Reciprocal recurrent hybridization maximizing specific combining ability."
   },
   "u3-t14": {
     "summary": "Genetic improvement of dairy cattle and buffaloes in India couples selective breeding in superior indigenous breeds with structured crossbreeding using exotic dairy sires in non-descript cattle, supported by progeny testing and AI.",
@@ -1106,8 +1106,8 @@ theoryData["unit-3"] = {
       "Frieswal",
       "Theileriosis"
     ],
-    "img": "images/theory/u3-t14.svg",
-    "imgCaption": "Profiles of Premier Indian Dairy Cattle (Sahiwal & Gir) and Riverine Buffalo Breeds (Murrah & Bhadawari)"
+    "img": "images/theory/u3-t14.jpg",
+    "imgCaption": "Breeding Strategies for Dairy Cattle: Indigenous Sahiwal dairy cattle — premier milch zebu breed of India."
   },
   "u3-t15": {
     "summary": "Breeding strategies for small ruminants and swine optimize functional economic traits: fine/carpet wool and mutton prolificacy (FecB gene) in sheep, milk/meat/pashmina in goats, and litter size with feed efficiency in commercial crossbred swine.",
@@ -1201,8 +1201,8 @@ theoryData["unit-3"] = {
       "Pashmina",
       "LWY"
     ],
-    "img": "images/theory/u3-t15.svg",
-    "imgCaption": "U3-T15 Scientific Visual Reference: Breeding strategies for small ruminants and swine optimize functional economic traits: fine/carpet wool and mutton prolificacy (FecB gene) in sheep, milk/meat/pashmina in goats, and litter size with feed efficiency in commercial crossbred swine"
+    "img": "images/theory/u3-t15.jpg",
+    "imgCaption": "Breeding Strategies for Sheep, Goats & Swine: Indigenous Jamnapari goat breed utilized in meat and milk improvement."
   },
   "u3-t16": {
     "summary": "Commercial poultry breeding utilizes specialized female and male lines evaluated via multi-trait selection indexes and Reciprocal Recurrent Selection to produce standardized four-way cross commercial broilers and layers.",
@@ -1287,8 +1287,8 @@ theoryData["unit-3"] = {
       "Auto-sexing",
       "Ascites"
     ],
-    "img": "images/theory/u3-t16.svg",
-    "imgCaption": "U3-T16 Scientific Visual Reference: Commercial poultry breeding utilizes specialized female and male lines evaluated via multi-trait selection indexes and Reciprocal Recurrent Selection to produce standardized four-way cross commercial broilers and layers"
+    "img": "images/theory/u3-t16.jpg",
+    "imgCaption": "Commercial Poultry Breeding: White Leghorn strain selected for high egg production and feed efficiency."
   },
   "u3-t17": {
     "summary": "Sire evaluation identifies bulls of superior genetic merit for sex-limited dairy traits, progressing from historical Contemporary Comparison to modern Best Linear Unbiased Prediction (BLUP) using Henderson's mixed models.",
@@ -1366,8 +1366,8 @@ theoryData["unit-3"] = {
       "Mixed Model Equations",
       "Numerator Relationship Matrix"
     ],
-    "img": "images/theory/u3-t17.svg",
-    "imgCaption": "U3-T17 Scientific Visual Reference: Sire evaluation identifies bulls of superior genetic merit for sex-limited dairy traits, progressing from historical Contemporary Comparison to modern Best Linear Unbiased Prediction (BLUP) using Henderson's mixed models"
+    "img": "images/theory/u3-t17.jpg",
+    "imgCaption": "Sire Evaluation & Progeny Testing (BLUP): Elite dairy genetics evaluated across contemporary herd-year-season groups."
   },
   "u3-t18": {
     "summary": "Nucleus breeding systems structure populations hierarchically into nucleus, multiplier, and commercial tiers, contrasting closed nucleus systems with Open Nucleus Breeding Systems (ONBS) that permit two-way elite gene flow.",
@@ -1444,8 +1444,8 @@ theoryData["unit-3"] = {
       "Genetic Lag",
       "Pyramid Structure"
     ],
-    "img": "images/theory/u3-t18.svg",
-    "imgCaption": "U3-T18 Scientific Visual Reference: Nucleus breeding systems structure populations hierarchically into nucleus, multiplier, and commercial tiers, contrasting closed nucleus systems with Open Nucleus Breeding Systems (ONBS) that permit two-way elite gene flow"
+    "img": "images/theory/u3-t18.jpg",
+    "imgCaption": "Open Nucleus Breeding System (ONBS): Gene flow between elite nucleus breeding herds and base populations."
   },
   "u3-t19": {
     "summary": "Development and synthesis of new breeds and strains in livestock and poultry combines foundation crossbreeding, fixing optimal exotic inheritance, inter-se mating, and intense selection to create stable, productive genotypes.",
@@ -1546,8 +1546,8 @@ theoryData["unit-3"] = {
       "Jharsuk",
       "Retained Heterosis"
     ],
-    "img": "images/theory/u3-t19.svg",
-    "imgCaption": "U3-T19 Scientific Visual Reference: Development and synthesis of new breeds and strains in livestock and poultry combines foundation crossbreeding, fixing optimal exotic inheritance, inter-se mating, and intense selection to create stable, productive genotypes"
+    "img": "images/theory/u3-t19.jpg",
+    "imgCaption": "Development of New Breeds & Synthetic Strains: Indigenous Gir cattle genetics used in synthetic crossbred strains."
   },
   "u3-t20": {
     "summary": "Livestock breeding policies in India are governed by national flagship missions including the Rashtriya Gokul Mission, National Dairy Plan, and ICAR-coordinated networks to conserve native germplasm while upgrading productivity.",
@@ -1634,8 +1634,8 @@ theoryData["unit-3"] = {
       "BUFCHIP",
       "National Kamdhenu Breeding Centre"
     ],
-    "img": "images/theory/u3-t20.svg",
-    "imgCaption": "U3-T20 Scientific Visual Reference: Livestock breeding policies in India are governed by national flagship missions including the Rashtriya Gokul Mission, National Dairy Plan, and ICAR-coordinated networks to conserve native germplasm while upgrading productivity"
+    "img": "images/theory/u3-t20.jpg",
+    "imgCaption": "National Livestock Breeding Policies in India: Elite Murrah riverine buffalo — cornerstone of Indian dairy improvement."
   },
   "u3-t21": {
     "summary": "Conservation of Animal Genetic Resources (AnGR) protects unique indigenous livestock diversity against extinction through in-situ habitat conservation and ex-situ in-vivo/cryogenic gene banking under FAO guidelines.",
@@ -1721,8 +1721,8 @@ theoryData["unit-3"] = {
       "Punganur",
       "50/500 Rule"
     ],
-    "img": "images/theory/u3-t21.svg",
-    "imgCaption": "U3-T21 Scientific Visual Reference: Conservation of Animal Genetic Resources (AnGR) protects unique indigenous livestock diversity against extinction through in-situ habitat conservation and ex-situ in-vivo/cryogenic gene banking under FAO guidelines"
+    "img": "images/theory/u3-t21.jpg",
+    "imgCaption": "Conservation of Animal Genetic Resources (AnGR): Ex-situ cryoconservation in liquid nitrogen gene banks (-196°C)."
   },
   "u3-t22": {
     "summary": "Reproductive and biotechnological tools—Artificial Insemination, sexed semen, MOET, in-vitro fertilization, and Genomic Selection—exponentially amplify selection intensity, expand accuracy, and slash generation intervals in livestock breeding.",
@@ -1802,8 +1802,8 @@ theoryData["unit-3"] = {
       "GBLUP",
       "French Straw"
     ],
-    "img": "images/theory/u3-t22.svg",
-    "imgCaption": "Step-by-Step Reproductive Biotechnology Pipeline: From Artificial Insemination (AI) to Superovulation and MOET in Dairy Cattle"
+    "img": "images/theory/u3-t22.png",
+    "imgCaption": "Reproductive Biotechnologies (AI, MOET, IVF): Artificial insemination and assisted reproductive technology in cattle."
   },
   "u3-t23": {
     "summary": "Breeding for disease resistance exploits host genetic variation in immune loci—notably the Major Histocompatibility Complex (MHC/BoLA/B-complex)—to select animals that resist, tolerate, or control infectious pathogens.",
@@ -1892,8 +1892,8 @@ theoryData["unit-3"] = {
       "FAMACHA",
       "Ticks"
     ],
-    "img": "images/theory/u3-t23.svg",
-    "imgCaption": "U3-T23 Scientific Visual Reference: Breeding for disease resistance exploits host genetic variation in immune loci—notably the Major Histocompatibility Complex (MHC/BoLA/B-complex)—to select animals that resist, tolerate, or control infectious pathogens"
+    "img": "images/theory/u3-t23.jpg",
+    "imgCaption": "Breeding for Disease Resistance: MHC (BoLA) molecular structure mediating genetic resistance to pathogens."
   },
   "u3-t24": {
     "summary": "Canine and feline breeds are systematized by international kennel clubs into functional utility groups, anchored by rigorous breed standards, official pedigree sheets, and conservation of indigenous Indian hound and working breeds.",
@@ -2022,8 +2022,8 @@ theoryData["unit-3"] = {
       "Brachycephalic",
       "BOAS"
     ],
-    "img": "images/theory/u3-t24.svg",
-    "imgCaption": "U3-T24 Scientific Visual Reference: Canine and feline breeds are systematized by international kennel clubs into functional utility groups, anchored by rigorous breed standards, official pedigree sheets, and conservation of indigenous Indian hound and working breeds"
+    "img": "images/theory/u3-t24.jpg",
+    "imgCaption": "Dog & Cat Breeds and Conformation Standards: Working dog anatomical conformation and breed standard morphology."
   },
   "u3-t25": {
     "summary": "Breeding management in companion dogs and cats requires precise estrous staging via vaginal cytology and serial progesterone assays, alongside diligent care during pregnancy, whelping, and the neonatal phase.",
@@ -2095,8 +2095,8 @@ theoryData["unit-3"] = {
       "Induced Ovulation",
       "Dystocia"
     ],
-    "img": "images/theory/u3-t25.svg",
-    "imgCaption": "U3-T25 Scientific Visual Reference: Breeding management in companion dogs and cats requires precise estrous staging via vaginal cytology and serial progesterone assays, alongside diligent care during pregnancy, whelping, and the neonatal phase"
+    "img": "images/theory/u3-t25.png",
+    "imgCaption": "Breeding Management & Estrous Detection: Hormonal fluctuations (Estrogen, LH surge, Progesterone) across the estrous cycle."
   },
   "u3-t26": {
     "summary": "Avian breeding management for companion birds in India covers cage/aviary design, sexual dimorphism, balanced seed-soft food nutrition, nest box management, and statutory adherence to the Wildlife Protection Amendment Act 2022.",
@@ -2183,8 +2183,8 @@ theoryData["unit-3"] = {
       "PARIVESH",
       "Splayed Legs"
     ],
-    "img": "images/theory/u3-t26.svg",
-    "imgCaption": "U3-T26 Scientific Visual Reference: Avian breeding management for companion birds in India covers cage/aviary design, sexual dimorphism, balanced seed-soft food nutrition, nest box management, and statutory adherence to the Wildlife Protection Amendment Act 2022"
+    "img": "images/theory/u3-t26.jpg",
+    "imgCaption": "Common Pet Birds & Avian Breeding Management: Captive breeding and colour genetics in Budgerigars."
   },
   "u3-t27": {
     "summary": "Small wildlife populations in fragmented habitats are threatened by the extinction vortex; calculating Effective Population Size (Ne) through demographic formulas guides conservation genetics to prevent fatal loss of heterozygosity.",
@@ -2277,8 +2277,8 @@ theoryData["unit-3"] = {
       "Bottleneck",
       "Harmonic Mean"
     ],
-    "img": "images/theory/u3-t27.svg",
-    "imgCaption": "U3-T27 Scientific Visual Reference: Small wildlife populations in fragmented habitats are threatened by the extinction vortex; calculating Effective Population Size (Ne) through demographic formulas guides conservation genetics to prevent fatal loss of heterozygosity"
+    "img": "images/theory/u3-t27.jpg",
+    "imgCaption": "Effective Population Size (Ne) & Wildlife Dynamics: Genetic bottleneck reducing allelic diversity in small captive populations."
   },
   "u3-t28": {
     "summary": "Wildlife conservation breeding combines studbook pedigree analysis, Mean Kinship pairing to minimize inbreeding, assisted reproductive technologies (semen cryopreservation, IVF, cloning), and structured reintroduction into natural habitats.",
@@ -2358,7 +2358,7 @@ theoryData["unit-3"] = {
       "Capture Myopathy",
       "Cheetah"
     ],
-    "img": "images/theory/u3-t28.svg",
-    "imgCaption": "U3-T28 Scientific Visual Reference: Wildlife conservation breeding combines studbook pedigree analysis, Mean Kinship pairing to minimize inbreeding, assisted reproductive technologies (semen cryopreservation, IVF, cloning), and structured reintroduction into natural habitats"
+    "img": "images/theory/u3-t28.jpg",
+    "imgCaption": "Planned Wildlife Breeding & Conservation: Captive breeding and reintroduction programme for endangered species."
   }
 };
