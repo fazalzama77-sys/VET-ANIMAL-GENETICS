@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#f43f5e" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+    <pattern id="gridPattern" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#334155" stroke-width="0.5" stroke-opacity="0.25" />
+    </pattern>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="800" height="480" fill="url(#bgGrad)" rx="16" />
+  <rect width="800" height="480" fill="url(#gridPattern)" rx="16" />
+  <rect width="798" height="478" x="1" y="1" fill="none" stroke="url(#borderGrad)" stroke-width="1.5" rx="15" />
+
+  <!-- Top Header Banner -->
+  <g transform="translate(24, 20)">
+    <rect width="130" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="65" y="16" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" letter-spacing="1" text-anchor="middle">UNIT 3 · ANIMAL BREEDING</text>
+
+    <rect x="138" y="0" width="65" height="24" rx="6" fill="url(#tealGrad)" />
+    <text x="170" y="16" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">U3-T22</text>
+
+    <text x="215" y="17" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">Multiple Ovulation & Embryo Transfer (MOET)</text>
+    <text x="215" y="34" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Accelerating Female Genetic Selection: Superovulation, Insemination, Non-Surgical Flushing, and Transfer</text>
+  </g>
+
+  <!-- Central Scientific Diagram Canvas -->
+  <g transform="translate(24, 68)">
+    
+        <g transform="translate(15, 15)">
+          <!-- 5-Step Pipeline Flow -->
+          <!-- Step 1: Donor Selection -->
+          <g transform="translate(10, 20)">
+            <rect width="135" height="180" rx="8" fill="#1e293b" stroke="#334155" />
+            <circle cx="67" cy="35" r="20" fill="url(#amberGrad)" />
+            <text x="67" y="40" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="800" text-anchor="middle">1</text>
+            <text x="67" y="75" fill="#f8fafc" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">DONOR COW</text>
+            <text x="12" y="100" fill="#94a3b8" font-family="sans-serif" font-size="10">• Top 5% dairy merit</text>
+            <text x="12" y="118" fill="#94a3b8" font-family="sans-serif" font-size="10">• Sound pedigree</text>
+            <text x="12" y="136" fill="#94a3b8" font-family="sans-serif" font-size="10">• High fertility history</text>
+            <text x="12" y="154" fill="#94a3b8" font-family="sans-serif" font-size="10">• Free of diseases</text>
+          </g>
+
+          <path d="M 150 110 L 165 110" stroke="#38bdf8" stroke-width="2.5" />
+
+          <!-- Step 2: Superovulation -->
+          <g transform="translate(160, 20)">
+            <rect width="135" height="180" rx="8" fill="#1e293b" stroke="#334155" />
+            <circle cx="67" cy="35" r="20" fill="url(#tealGrad)" />
+            <text x="67" y="40" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="800" text-anchor="middle">2</text>
+            <text x="67" y="75" fill="#f8fafc" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">SUPEROVULATION</text>
+            <text x="12" y="100" fill="#2dd4bf" font-family="sans-serif" font-size="10" font-weight="700">• FSH Injections:</text>
+            <text x="18" y="116" fill="#94a3b8" font-family="sans-serif" font-size="9">Twice daily for 4 d</text>
+            <text x="12" y="134" fill="#2dd4bf" font-family="sans-serif" font-size="10" font-weight="700">• PGF2α Luteolysis:</text>
+            <text x="18" y="150" fill="#94a3b8" font-family="sans-serif" font-size="9">Induces synchronized estrus</text>
+            <text x="12" y="168" fill="#38bdf8" font-family="sans-serif" font-size="10">Produces 6-12 ova</text>
+          </g>
+
+          <path d="M 300 110 L 315 110" stroke="#38bdf8" stroke-width="2.5" />
+
+          <!-- Step 3: Insemination -->
+          <g transform="translate(310, 20)">
+            <rect width="135" height="180" rx="8" fill="#1e293b" stroke="#334155" />
+            <circle cx="67" cy="35" r="20" fill="url(#indigoGrad)" />
+            <text x="67" y="40" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="800" text-anchor="middle">3</text>
+            <text x="67" y="75" fill="#f8fafc" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">INSEMINATION</text>
+            <text x="12" y="100" fill="#a78bfa" font-family="sans-serif" font-size="10" font-weight="700">• Elite Bull Semen:</text>
+            <text x="18" y="116" fill="#94a3b8" font-family="sans-serif" font-size="9">High BV proven bull</text>
+            <text x="12" y="134" fill="#a78bfa" font-family="sans-serif" font-size="10" font-weight="700">• Multiple AI Doses:</text>
+            <text x="18" y="150" fill="#94a3b8" font-family="sans-serif" font-size="9">12h &amp; 24h after estrus</text>
+            <text x="12" y="168" fill="#38bdf8" font-family="sans-serif" font-size="10">High fertilization rate</text>
+          </g>
+
+          <path d="M 450 110 L 465 110" stroke="#38bdf8" stroke-width="2.5" />
+
+          <!-- Step 4: Flushing -->
+          <g transform="translate(460, 20)">
+            <rect width="135" height="180" rx="8" fill="#1e293b" stroke="#334155" />
+            <circle cx="67" cy="35" r="20" fill="url(#amberGrad)" />
+            <text x="67" y="40" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="800" text-anchor="middle">4</text>
+            <text x="67" y="75" fill="#f8fafc" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">FLUSHING (Day 7)</text>
+            <text x="12" y="100" fill="#fbbf24" font-family="sans-serif" font-size="10" font-weight="700">• Foley Catheter:</text>
+            <text x="18" y="116" fill="#94a3b8" font-family="sans-serif" font-size="9">Non-surgical uterine flush</text>
+            <text x="12" y="134" fill="#fbbf24" font-family="sans-serif" font-size="10" font-weight="700">• Blastocyst Stage:</text>
+            <text x="18" y="150" fill="#94a3b8" font-family="sans-serif" font-size="9">Graded under microscope</text>
+            <text x="12" y="168" fill="#38bdf8" font-family="sans-serif" font-size="10">Cryopreserve or transfer</text>
+          </g>
+
+          <path d="M 600 110 L 615 110" stroke="#38bdf8" stroke-width="2.5" />
+
+          <!-- Step 5: Transfer -->
+          <g transform="translate(610, 20)">
+            <rect width="135" height="180" rx="8" fill="#1e293b" stroke="#334155" />
+            <circle cx="67" cy="35" r="20" fill="url(#roseGrad)" />
+            <text x="67" y="40" fill="#ffffff" font-family="sans-serif" font-size="14" font-weight="800" text-anchor="middle">5</text>
+            <text x="67" y="75" fill="#f8fafc" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">RECIPIENTS</text>
+            <text x="12" y="100" fill="#fb7185" font-family="sans-serif" font-size="10" font-weight="700">• Synchronized Recip:</text>
+            <text x="18" y="116" fill="#94a3b8" font-family="sans-serif" font-size="9">Exact Day 7 cycle match</text>
+            <text x="12" y="134" fill="#fb7185" font-family="sans-serif" font-size="10" font-weight="700">• Ipsilateral Horn:</text>
+            <text x="18" y="150" fill="#94a3b8" font-family="sans-serif" font-size="9">Adjacent to active CL</text>
+            <text x="12" y="168" fill="#34d399" font-family="sans-serif" font-size="10">Produces elite calves</text>
+          </g>
+
+          <!-- Bottom Summary Box -->
+          <g transform="translate(10, 215)">
+            <rect width="735" height="85" rx="8" fill="#0f172a" stroke="#334155" />
+            <text x="367" y="24" fill="#38bdf8" font-family="sans-serif" font-size="12" font-weight="700" text-anchor="middle">GENETIC ADVANTAGE OF MOET &amp; IVF PIPELINE</text>
+            <text x="25" y="48" fill="#cbd5e1" font-family="sans-serif" font-size="11">• An elite cow naturally yields 4-8 calves in her lifetime; MOET allows 20-50 calves per year through surrogacy.</text>
+            <text x="25" y="68" fill="#94a3b8" font-family="sans-serif" font-size="11">• Multiplies female selection intensity and enables juvenile in-vitro embryo transfer (JIVET) to reduce generation interval (L).</text>
+          </g>
+        </g>
+        
+  </g>
+
+  <!-- High-Yield Takeaway Footer Bar -->
+  <g transform="translate(24, 424)">
+    <rect width="752" height="38" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <circle cx="20" cy="19" r="6" fill="#14b8a6" />
+    <text x="36" y="23" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">CORE TAKEAWAY:</text>
+    <text x="145" y="23" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">MOET flushes blastocyst embryos on Day 7 non-surgically using Foley catheter; transferred into synchronized Day 7 recipients.</text>
+  </g>
+</svg>

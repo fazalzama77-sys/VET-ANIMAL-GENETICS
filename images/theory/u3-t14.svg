@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1120" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#f43f5e" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+    <pattern id="gridPattern" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#334155" stroke-width="0.5" stroke-opacity="0.25" />
+    </pattern>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="800" height="480" fill="url(#bgGrad)" rx="16" />
+  <rect width="800" height="480" fill="url(#gridPattern)" rx="16" />
+  <rect width="798" height="478" x="1" y="1" fill="none" stroke="url(#borderGrad)" stroke-width="1.5" rx="15" />
+
+  <!-- Top Header Banner -->
+  <g transform="translate(24, 20)">
+    <rect width="130" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="65" y="16" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="700" letter-spacing="1" text-anchor="middle">UNIT 3 · ANIMAL BREEDING</text>
+
+    <rect x="138" y="0" width="65" height="24" rx="6" fill="url(#tealGrad)" />
+    <text x="170" y="16" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle">U3-T14</text>
+
+    <text x="215" y="17" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">Premier Indian Dairy Cattle & Buffalo Breeds</text>
+    <text x="215" y="34" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Phenotypic Hallmarks, Breeding Tracts, and Production Norms of Elite Indigenous Germplasm</text>
+  </g>
+
+  <!-- Central Scientific Diagram Canvas -->
+  <g transform="translate(24, 68)">
+    
+        <g transform="translate(15, 15)">
+          <!-- 4 Breed Cards: 2 Cattle, 2 Buffalo -->
+          <!-- Card 1: Sahiwal -->
+          <g transform="translate(10, 10)">
+            <rect width="170" height="295" rx="8" fill="#1e293b" stroke="#d97706" stroke-width="1.5" />
+            <rect width="170" height="32" rx="8" fill="url(#amberGrad)" />
+            <text x="85" y="21" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">SAHIWAL (Cattle)</text>
+            
+            <text x="12" y="55" fill="#fbbf24" font-family="sans-serif" font-size="10" font-weight="700">Origin / Tract:</text>
+            <text x="12" y="70" fill="#f8fafc" font-family="sans-serif" font-size="10">Montgomery (Pakistan),</text>
+            <text x="12" y="84" fill="#94a3b8" font-family="sans-serif" font-size="9">Punjab &amp; Rajasthan border</text>
+
+            <text x="12" y="110" fill="#fbbf24" font-family="sans-serif" font-size="10" font-weight="700">Physical Hallmarks:</text>
+            <text x="12" y="125" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Reddish-dun coat</text>
+            <text x="12" y="140" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Loose skin ('Lola')</text>
+            <text x="12" y="155" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Voluminous dewlap</text>
+            <text x="12" y="170" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Stumpy horns</text>
+
+            <rect x="10" y="195" width="150" height="85" rx="6" fill="#0f172a" />
+            <text x="16" y="215" fill="#38bdf8" font-family="sans-serif" font-size="10" font-weight="700">Performance:</text>
+            <text x="16" y="232" fill="#34d399" font-family="sans-serif" font-size="11" font-weight="800">2,000 - 3,200 kg</text>
+            <text x="16" y="248" fill="#94a3b8" font-family="sans-serif" font-size="9">Best tropical zebu milch;</text>
+            <text x="16" y="262" fill="#94a3b8" font-family="sans-serif" font-size="9">Tick &amp; heat resistant</text>
+          </g>
+
+          <!-- Card 2: Gir -->
+          <g transform="translate(195, 10)">
+            <rect width="170" height="295" rx="8" fill="#1e293b" stroke="#0d9488" stroke-width="1.5" />
+            <rect width="170" height="32" rx="8" fill="url(#tealGrad)" />
+            <text x="85" y="21" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">GIR (Cattle)</text>
+            
+            <text x="12" y="55" fill="#2dd4bf" font-family="sans-serif" font-size="10" font-weight="700">Origin / Tract:</text>
+            <text x="12" y="70" fill="#f8fafc" font-family="sans-serif" font-size="10">Gir Hills, Saurashtra</text>
+            <text x="12" y="84" fill="#94a3b8" font-family="sans-serif" font-size="9">Gujarat (Junagadh)</text>
+
+            <text x="12" y="110" fill="#2dd4bf" font-family="sans-serif" font-size="10" font-weight="700">Physical Hallmarks:</text>
+            <text x="12" y="125" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Ultra-convex forehead</text>
+            <text x="12" y="140" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Long pendulous ears</text>
+            <text x="12" y="155" fill="#cbd5e1" font-family="sans-serif" font-size="10">  (leaf-like folded tip)</text>
+            <text x="12" y="170" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Half-moon curved horns</text>
+
+            <rect x="10" y="195" width="150" height="85" rx="6" fill="#0f172a" />
+            <text x="16" y="215" fill="#38bdf8" font-family="sans-serif" font-size="10" font-weight="700">Performance:</text>
+            <text x="16" y="232" fill="#34d399" font-family="sans-serif" font-size="11" font-weight="800">1,800 - 2,800 kg</text>
+            <text x="16" y="248" fill="#94a3b8" font-family="sans-serif" font-size="9">Exported to Brazil (Gyr);</text>
+            <text x="16" y="262" fill="#94a3b8" font-family="sans-serif" font-size="9">Docile dairy zebu</text>
+          </g>
+
+          <!-- Card 3: Murrah -->
+          <g transform="translate(380, 10)">
+            <rect width="170" height="295" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+            <rect width="170" height="32" rx="8" fill="url(#indigoGrad)" />
+            <text x="85" y="21" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">MURRAH (Buffalo)</text>
+            
+            <text x="12" y="55" fill="#818cf8" font-family="sans-serif" font-size="10" font-weight="700">Origin / Tract:</text>
+            <text x="12" y="70" fill="#f8fafc" font-family="sans-serif" font-size="10">Rohtak, Hisar, Jind</text>
+            <text x="12" y="84" fill="#94a3b8" font-family="sans-serif" font-size="9">Haryana &amp; Delhi tract</text>
+
+            <text x="12" y="110" fill="#818cf8" font-family="sans-serif" font-size="10" font-weight="700">Physical Hallmarks:</text>
+            <text x="12" y="125" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Jet-black body color</text>
+            <text x="12" y="140" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Tightly curled horns</text>
+            <text x="12" y="155" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Wedge-shaped barrel</text>
+            <text x="12" y="170" fill="#cbd5e1" font-family="sans-serif" font-size="10">• 'Black Gold of India'</text>
+
+            <rect x="10" y="195" width="150" height="85" rx="6" fill="#0f172a" />
+            <text x="16" y="215" fill="#38bdf8" font-family="sans-serif" font-size="10" font-weight="700">Performance:</text>
+            <text x="16" y="232" fill="#34d399" font-family="sans-serif" font-size="11" font-weight="800">2,200 - 3,500 kg</text>
+            <text x="16" y="248" fill="#94a3b8" font-family="sans-serif" font-size="9">Fat: 7 - 8%</text>
+            <text x="16" y="262" fill="#94a3b8" font-family="sans-serif" font-size="9">World premier dairy buffalo</text>
+          </g>
+
+          <!-- Card 4: Bhadawari -->
+          <g transform="translate(565, 10)">
+            <rect width="170" height="295" rx="8" fill="#1e293b" stroke="#e11d48" stroke-width="1.5" />
+            <rect width="170" height="32" rx="8" fill="url(#roseGrad)" />
+            <text x="85" y="21" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700" text-anchor="middle">BHADAWARI (Buffalo)</text>
+            
+            <text x="12" y="55" fill="#fb7185" font-family="sans-serif" font-size="10" font-weight="700">Origin / Tract:</text>
+            <text x="12" y="70" fill="#f8fafc" font-family="sans-serif" font-size="10">Agra &amp; Etawah (UP),</text>
+            <text x="12" y="84" fill="#94a3b8" font-family="sans-serif" font-size="9">Bhind &amp; Morena (MP)</text>
+
+            <text x="12" y="110" fill="#fb7185" font-family="sans-serif" font-size="10" font-weight="700">Physical Hallmarks:</text>
+            <text x="12" y="125" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Copper-colored coat</text>
+            <text x="12" y="140" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Two white neck lines</text>
+            <text x="12" y="155" fill="#cbd5e1" font-family="sans-serif" font-size="10">  ('Chevron' / 'Kanthi')</text>
+            <text x="12" y="170" fill="#cbd5e1" font-family="sans-serif" font-size="10">• Light yellow legs</text>
+
+            <rect x="10" y="195" width="150" height="85" rx="6" fill="#0f172a" />
+            <text x="16" y="215" fill="#38bdf8" font-family="sans-serif" font-size="10" font-weight="700">Performance:</text>
+            <text x="16" y="232" fill="#fbbf24" font-family="sans-serif" font-size="11" font-weight="800">Fat: 8 - 13% !</text>
+            <text x="16" y="248" fill="#94a3b8" font-family="sans-serif" font-size="9">Highest milk fat breed;</text>
+            <text x="16" y="262" fill="#94a3b8" font-family="sans-serif" font-size="9">Ravine grazing resilience</text>
+          </g>
+        </g>
+        
+  </g>
+
+  <!-- High-Yield Takeaway Footer Bar -->
+  <g transform="translate(24, 424)">
+    <rect width="752" height="38" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <circle cx="20" cy="19" r="6" fill="#14b8a6" />
+    <text x="36" y="23" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700">CORE TAKEAWAY:</text>
+    <text x="145" y="23" fill="#cbd5e1" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11">Sahiwal has loose skin (Lola); Gir has convex forehead and pendulous ears; Murrah has curled horns; Bhadawari has copper coat and up to 13% milk fat.</text>
+  </g>
+</svg>

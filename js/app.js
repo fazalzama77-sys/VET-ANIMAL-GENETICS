@@ -1400,7 +1400,28 @@ var app = (function () {
           return block(tb.title || "Diagnostic Comparison", renderTable(tb, true), "table", "clipboard");
         }).join("") +
         (c.img
-          ? '<figure class="lesson__fig"><img src="' + esc(c.img) + '" alt="' + esc(t.title) + '" loading="lazy"></figure>'
+          ? '<figure class="lesson__fig">' +
+              '<div class="lesson__fig-media js-open-img-modal" role="button" tabindex="0" title="Click to enlarge scientific visual" ' +
+                'data-img="' + esc(c.img) + '" data-title="' + esc(t.title) + '" data-caption="' + esc(c.imgCaption || t.title) + '">' +
+                '<img src="' + esc(c.img) + '" alt="' + esc(t.title) + '" loading="lazy">' +
+                '<div class="lesson__fig-zoom-hint">' + icon("search") + ' <span>Click to enlarge</span></div>' +
+              '</div>' +
+              '<figcaption class="lesson__figcaption">' +
+                '<div class="lesson__fig-caption-header">' +
+                  '<span class="chip chip--accent">' + icon("microscope") + ' High-Yield Visual Reference</span>' +
+                '</div>' +
+                '<p class="lesson__fig-caption-text">' + esc(c.imgCaption || t.title) + '</p>' +
+                '<div class="lesson__fig-actions">' +
+                  '<button type="button" class="btn btn--ghost btn--sm js-open-img-modal" ' +
+                    'data-img="' + esc(c.img) + '" data-title="' + esc(t.title) + '" data-caption="' + esc(c.imgCaption || t.title) + '">' +
+                    icon("eye") + ' Enlarge Fullscreen' +
+                  '</button>' +
+                  '<a class="btn btn--outline btn--sm" href="https://www.google.com/search?tbm=isch&q=' + encodeURIComponent('animal genetics ' + t.title) + '" target="_blank" rel="noopener noreferrer">' +
+                    icon("search") + ' Search Google Images &nearr;' +
+                  '</a>' +
+                '</div>' +
+              '</figcaption>' +
+            '</figure>'
           : '<div class="genetics-image-placeholder"><div class="genetics-placeholder-body">' +
               icon("search") +
               '<div class="genetics-placeholder-title">High-Quality Animal Genetics &amp; Breeding Visuals in Development</div>' +
@@ -2606,9 +2627,125 @@ var app = (function () {
     document.body.style.overflow = "";
   }
 
-  // Global escape key handler for WHY modal
+  // Global escape key handler for WHY and Image modals
   window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeWhyModal();
+    if (e.key === "Escape") {
+      closeWhyModal();
+      closeImageModal();
+    }
+  });
+
+  /* ============================================================
+     IMAGE LIGHTBOX MODAL
+     ============================================================ */
+  function ensureImageModal() {
+    var modal = document.getElementById("imgModalOverlay");
+    if (!modal) {
+      var modalHtml =
+        '<div id="imgModalOverlay" class="img-modal-overlay" role="dialog" aria-modal="true" style="display:none;">' +
+          '<div class="img-modal-dialog" id="imgModalDialog">' +
+            '<div class="img-modal-head">' +
+              '<div class="img-modal-title-wrap">' +
+                '<span class="chip chip--accent">' + icon("microscope") + ' Visual Reference</span>' +
+                '<h3 class="img-modal-title" id="imgModalTitle"></h3>' +
+              '</div>' +
+              '<button class="img-modal-close" id="imgModalClose" title="Close" aria-label="Close">&times;</button>' +
+            '</div>' +
+            '<div class="img-modal-body">' +
+              '<div class="img-modal-media-wrap">' +
+                '<img id="imgModalImg" src="" alt="Visual Reference" class="img-modal-img">' +
+              '</div>' +
+              '<p class="img-modal-caption" id="imgModalCaption"></p>' +
+            '</div>' +
+            '<div class="img-modal-foot">' +
+              '<a id="imgModalFullSize" class="btn btn--sm btn--ghost" href="" target="_blank" rel="noopener noreferrer">' +
+                icon("eye") + ' View Raw Vector/SVG' +
+              '</a>' +
+              '<a id="imgModalGoogle" class="btn btn--sm btn--primary" href="" target="_blank" rel="noopener noreferrer">' +
+                icon("search") + ' Search Live Google Images &nearr;' +
+              '</a>' +
+              '<button type="button" class="btn btn--sm btn--outline" id="imgModalCloseBtn">Close</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      document.body.insertAdjacentHTML("beforeend", modalHtml);
+    }
+
+    var closeX = document.getElementById("imgModalClose");
+    if (closeX && !closeX.dataset.bound) {
+      closeX.dataset.bound = "1";
+      closeX.onclick = closeImageModal;
+    }
+    var closeBtn = document.getElementById("imgModalCloseBtn");
+    if (closeBtn && !closeBtn.dataset.bound) {
+      closeBtn.dataset.bound = "1";
+      closeBtn.onclick = closeImageModal;
+    }
+    var overlay = document.getElementById("imgModalOverlay");
+    if (overlay && !overlay.dataset.bound) {
+      overlay.dataset.bound = "1";
+      overlay.onclick = function (e) {
+        if (e.target === overlay) closeImageModal();
+      };
+    }
+  }
+
+  function openImageModal(src, title, caption) {
+    if (!src) return;
+    ensureImageModal();
+
+    var imgEl = document.getElementById("imgModalImg");
+    var titleEl = document.getElementById("imgModalTitle");
+    var captionEl = document.getElementById("imgModalCaption");
+    var fullSizeEl = document.getElementById("imgModalFullSize");
+    var googleEl = document.getElementById("imgModalGoogle");
+
+    if (imgEl) {
+      imgEl.src = src;
+      imgEl.alt = title || "Visual Reference";
+    }
+    if (titleEl) titleEl.textContent = title || "Visual Reference";
+    if (captionEl) captionEl.textContent = caption || title || "";
+    if (fullSizeEl) fullSizeEl.href = src;
+    if (googleEl) {
+      var query = "animal genetics " + (title || "");
+      googleEl.href = "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(query);
+    }
+
+    var modal = document.getElementById("imgModalOverlay");
+    if (modal) {
+      modal.style.display = "flex";
+      void modal.offsetWidth;
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeImageModal() {
+    var modal = document.getElementById("imgModalOverlay");
+    if (modal) {
+      modal.classList.remove("open");
+      setTimeout(function () {
+        if (!modal.classList.contains("open")) {
+          modal.style.display = "none";
+        }
+      }, 220);
+    }
+    document.body.style.overflow = "";
+  }
+
+  window.openImageModal = openImageModal;
+  window.closeImageModal = closeImageModal;
+
+  // Delegated click handler for any image modal triggers
+  document.addEventListener("click", function (e) {
+    var trigger = e.target.closest(".js-open-img-modal");
+    if (trigger) {
+      var src = trigger.getAttribute("data-img");
+      var title = trigger.getAttribute("data-title");
+      var caption = trigger.getAttribute("data-caption");
+      openImageModal(src, title, caption);
+    }
   });
 
   function renderWhy() {
