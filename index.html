@@ -354,19 +354,21 @@
     }, { passive: true });
   })();
 
-  /* ---- Service worker: offline PWA support ---- */
+  /* ---- Service worker: offline PWA support with instant update ---- */
   if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("service-worker.js", { scope: "./" })
         .then(function (reg) {
+          // Immediately check for updates from GitHub Pages
+          reg.update();
+
           reg.addEventListener("updatefound", function () {
             var newWorker = reg.installing;
             if (newWorker) {
               newWorker.addEventListener("statechange", function () {
                 if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-                  if (window.app && app.toast) {
-                    app.toast("Updated offline content ready · Reload to apply");
-                  }
+                  // Instruct new service worker to activate immediately
+                  newWorker.postMessage({ type: "SKIP_WAITING" });
                 }
               });
             }
@@ -375,6 +377,22 @@
         .catch(function (err) {
           console.warn("[PWA] Service worker registration failed:", err);
         });
+
+      // Reload smoothly when new service worker takes over
+      var refreshing = false;
+      navigator.serviceWorker.addEventListener("controllerchange", function () {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
+
+      // Check for latest updates whenever user returns to the tablet tab/app
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "visible") {
+          navigator.serviceWorker.ready.then(function (reg) { reg.update(); });
+        }
+      });
     });
   }
 </script>

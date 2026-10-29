@@ -12,7 +12,7 @@
    PRECACHE, otherwise students keep seeing the old version.
    ============================================================ */
 
-var CACHE_VERSION = "vgen-v16";
+var CACHE_VERSION = "vgen-v17";
 var SHELL_CACHE = CACHE_VERSION + "-shell";
 var IMG_CACHE = CACHE_VERSION + "-img";
 
@@ -122,21 +122,26 @@ self.addEventListener("fetch", function (e) {
     return;
   }
 
-  // ---- Everything else: cache first, refresh in background ----
+  // ---- App code & data (JS, CSS, JSON, HTML): Network-first with Cache fallback ----
+  // Ensures the live GitHub web link always delivers the newest updates immediately
+  // while retaining full offline access when disconnected.
   e.respondWith(
-    caches.match(req).then(function (hit) {
-      var network = fetch(req).then(function (res) {
-        if (res && res.status === 200) {
-          var copy = res.clone();
-          caches.open(SHELL_CACHE).then(function (c) { c.put(req, copy); });
+    fetch(req).then(function (res) {
+      if (res && res.status === 200) {
+        var copy = res.clone();
+        caches.open(SHELL_CACHE).then(function (c) { c.put(req, copy); });
+      }
+      return res;
+    }).catch(function () {
+      // Offline fallback
+      return caches.match(req).then(function (hit) {
+        if (hit) return hit;
+        if (req.mode === "navigate" || (req.headers.get("accept") && req.headers.get("accept").indexOf("text/html") !== -1)) {
+          return caches.match("index.html").then(function (fallback) {
+            return fallback || caches.match("./");
+          });
         }
-        return res;
-      }).catch(function () {
-        // Offline and not cached: fall back to the app shell so
-        // hash routes still resolve.
-        return hit || caches.match("index.html") || caches.match("./");
       });
-      return hit || network;
     })
   );
 });
