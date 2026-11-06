@@ -1,19 +1,16 @@
 /* ============================================================
-   dashboard.js — Learning Analytics & Exam Readiness Engine
+   dashboard.js — Simple, Colorful & Actionable Learning Analytics
    ============================================================
-     - 0–1000 XP Animal Genetics Mastery Index with circular gauge
-     - Next-best-action prescriptions that react to real gaps
-     - Dual VCI board exam readiness (Paper I vs Paper II),
-       derived from the syllabus rather than hard-coded
-     - Performance trend across recent papers + lifetime accuracy
-       by question format and difficulty tier
-     - Weakest sub-sections, named and linked
-     - Interactive unit mastery matrix with real filter tabs
-     - 5-box Leitner spaced repetition memory pipeline
-     - 84-day activity heatmap with correct month headings
-     - Assessment ledger linking straight into each paper's
-       full analysis (#/quiz/attempt/<id>)
-     - Knowledge vault (highlights, notes, bookmarks, Q&A)
+   Designed to be so simple and intuitive that a 13-year-old can
+   instantly understand their progress at a glance:
+     - Clear Level & Grade Hero (Level 1 to Level 4)
+     - 4 Big Power Cards: Lessons Read, Quiz Score, Streak, Memory
+     - "What Should I Do Today?" 3 one-click action quests
+     - Simple Exam Readiness: Paper 1 vs Paper 2 side-by-side
+     - Unit Report Cards with 1-click Read and Quiz buttons
+     - "Your Memory Strength": simple 3-tier memory vault
+     - Activity Tracker and Recent Quiz Hall of Fame
+     - Knowledge Vault (Bookmarks, Notes, Highlights, Q&A)
    ============================================================ */
 
 var dashboardApp = (function () {
@@ -31,7 +28,7 @@ var dashboardApp = (function () {
 
     var readMap    = store.getRead() || {};
     var quiz       = store.getQuiz() || { attempts: [], byUnit: {}, bySub: {} };
-    var streak     = store.computeStreak() || { current: 0, longest: 0, totalDays: 0 };
+    var streak     = store.computeStreak ? store.computeStreak() : { current: 0, longest: 0, totalDays: 0 };
     var activity   = store.getActivity() || {};
     var srs        = store.getSrs() || {};
     var dueCards   = (store.dueSrs && store.dueSrs()) ? store.dueSrs().length : 0;
@@ -54,28 +51,28 @@ var dashboardApp = (function () {
     var totalQ = totals.total, totalCorrect = totals.correct;
     var quizAccuracy = totalQ ? Math.round((totalCorrect / totalQ) * 100) : 0;
 
-    // Spaced repetition statistics
+    // Spaced repetition statistics (Simplified into Learning, Stronger, Mastered)
     var srsKeys = Object.keys(srs);
-    var boxCounts = [0, 0, 0, 0, 0];
-    var dueByBox = [0, 0, 0, 0, 0];
+    var learningCount = 0; // Box 1 & 2
+    var strongerCount = 0; // Box 3 & 4
+    var masteredCount = 0; // Box 5
     var now = Date.now();
+
     srsKeys.forEach(function (k) {
       var b = Math.min(5, Math.max(1, srs[k].box || 1));
-      boxCounts[b - 1]++;
-      if ((srs[k].due || 0) <= now) dueByBox[b - 1]++;
+      if (b <= 2) learningCount++;
+      else if (b <= 4) strongerCount++;
+      else masteredCount++;
     });
-    var masteredCount = boxCounts[2] + boxCounts[3] + boxCounts[4]; // Box 3, 4, 5
-    var retentionRate = srsKeys.length ? Math.round((masteredCount / srsKeys.length) * 100) : 0;
+
+    var retentionRate = srsKeys.length
+      ? Math.round(((strongerCount + masteredCount) / srsKeys.length) * 100)
+      : 0;
 
     // Highlights stats
     var totalHighlights = 0;
-    var hlColorCounts = { yellow: 0, green: 0, blue: 0, pink: 0, orange: 0, purple: 0 };
     Object.keys(highlights).forEach(function (topId) {
-      var arr = highlights[topId] || [];
-      totalHighlights += arr.length;
-      arr.forEach(function (h) {
-        if (h && h.color && hlColorCounts[h.color] !== undefined) hlColorCounts[h.color]++;
-      });
+      totalHighlights += (highlights[topId] || []).length;
     });
 
     // Mastery XP Calculation (0 to 1000 XP)
@@ -83,7 +80,7 @@ var dashboardApp = (function () {
     var quizFactor = totalQ ? (totalCorrect / totalQ) : 0;
     var quizVolume = Math.min(1, attempts.length / 8);
     var quizXP = Math.round((quizFactor * 0.7 + quizVolume * 0.3) * 350);     // 35% weight
-    var srsFactor = srsKeys.length ? (masteredCount / srsKeys.length) : 0;
+    var srsFactor = srsKeys.length ? ((strongerCount + masteredCount) / srsKeys.length) : 0;
     var srsVolume = Math.min(1, srsKeys.length / 25);
     var srsXP = Math.round((srsFactor * 0.6 + srsVolume * 0.4) * 150);        // 15% weight
     var streakFactor = Math.min(1, streak.current / 7);
@@ -92,128 +89,119 @@ var dashboardApp = (function () {
 
     var totalXP = Math.min(1000, readXP + quizXP + srsXP + consistencyXP);
     var readinessPct = Math.min(100, Math.round(totalXP / 10));
-    var rank = getRank(totalXP);
+    var rank = getSimpleRank(totalXP);
 
-    // Circumference for the 175px gauge (radius = 70)
-    var radius = 70;
-    var circumference = 2 * Math.PI * radius;
-    var strokeOffset = circumference - (circumference * readinessPct) / 100;
+    // Friendly overview summary sentence
+    var summaryMessage = getFriendlySummary(readPct, quizAccuracy, attempts.length, streak.current);
 
     host.innerHTML =
-      '<div class="dash-elite">' +
+      '<div class="dash-simplified animate-fade-in">' +
 
-        /* 1. Hero cockpit */
-        '<div class="dash-hero">' +
-          '<div class="dash-cockpit">' +
-            '<div class="mastery-gauge-wrap">' +
-              '<div class="mastery-svg-gauge">' +
-                '<svg viewBox="0 0 175 175">' +
-                  '<circle class="mastery-gauge-bg" cx="87.5" cy="87.5" r="' + radius + '"></circle>' +
-                  '<circle class="mastery-gauge-fill" cx="87.5" cy="87.5" r="' + radius + '" ' +
-                    'stroke-dasharray="' + circumference + '" ' +
-                    'stroke-dashoffset="' + strokeOffset + '"></circle>' +
-                '</svg>' +
-                '<div class="mastery-gauge-center">' +
-                  '<span class="mastery-gauge-val">' + totalXP + '</span>' +
-                  '<span class="mastery-gauge-lbl">Mastery XP</span>' +
+        /* 1. Clear, Friendly Level & Report Card Hero */
+        '<div class="dash-hero-clean">' +
+          '<div class="dash-hero-grid">' +
+
+            /* Left: Level Badge & Ring */
+            '<div class="dash-hero-gauge-col">' +
+              '<div class="dash-level-ring-wrap">' +
+                app.ringHtml(readinessPct, 150) +
+                '<div class="dash-level-ring-center">' +
+                  '<span class="dash-level-ring-xp">' + totalXP + '</span>' +
+                  '<span class="dash-level-ring-label">Score XP</span>' +
                 '</div>' +
               '</div>' +
-              '<div class="mastery-rank-badge">' + app.icon(rank.icon) + ' ' + rank.title + '</div>' +
-              '<div class="xp-split" title="How your Mastery XP was earned">' +
-                xpChip("Reading", readXP, 400) +
-                xpChip("Quizzes", quizXP, 350) +
-                xpChip("Memory", srsXP, 150) +
-                xpChip("Consistency", consistencyXP, 100) +
-              '</div>' +
+              '<div class="dash-rank-badge">' + rank.icon + ' ' + rank.title + '</div>' +
+              '<div class="dash-next-rank-hint mt-2">' + rank.nextHint + '</div>' +
             '</div>' +
 
-            '<div class="dash-cockpit-info">' +
-              '<span class="dash-eyebrow">' + app.icon("sparkle") + ' Learning cockpit · ' + rank.stage + '</span>' +
-              '<h1 class="dash-title">Animal Genetics Analytics</h1>' +
-              '<p class="dash-lede">' +
-                'Exam readiness, retention health and syllabus coverage across all three VCI theory units and three practical units.' +
-              '</p>' +
+            /* Right: Clear Plain-English Status */
+            '<div class="dash-hero-info-col">' +
+              '<div class="dash-hero-pill-row">' +
+                '<span class="dash-badge-pill dash-badge-pill--blue">⭐ ' + rank.title + '</span>' +
+                '<span class="dash-badge-pill dash-badge-pill--green">' + readinessPct + '% Exam Ready</span>' +
+                (streak.current > 0 ? '<span class="dash-badge-pill dash-badge-pill--flame">🔥 ' + streak.current + ' Day Streak</span>' : '') +
+              '</div>' +
+              '<h1 class="dash-hero-title mt-2">Animal Genetics Progress</h1>' +
+              '<p class="dash-hero-summary mt-2">' + summaryMessage + '</p>' +
 
-              '<div class="dash-metrics-grid">' +
-                '<div class="dash-metric-card">' +
-                  '<div class="dash-metric-head">Streak <span class="streak-flame">' + app.icon("flame") + '</span></div>' +
-                  '<div class="dash-metric-val">' + streak.current + ' <small style="font-size:14px;font-weight:600">' + (streak.current === 1 ? 'day' : 'days') + '</small></div>' +
-                  '<div class="dash-metric-sub">Best: ' + plural(streak.longest, 'day') + '</div>' +
+              /* Simple XP Breakdown Bar */
+              '<div class="dash-xp-breakdown mt-4">' +
+                '<div class="dash-xp-bar">' +
+                  '<div class="dash-xp-segment dash-xp-segment--read" style="width:' + (readXP / 10) + '%" title="Reading: ' + readXP + ' XP"></div>' +
+                  '<div class="dash-xp-segment dash-xp-segment--quiz" style="width:' + (quizXP / 10) + '%" title="Quizzes: ' + quizXP + ' XP"></div>' +
+                  '<div class="dash-xp-segment dash-xp-segment--memory" style="width:' + (srsXP / 10) + '%" title="Memory: ' + srsXP + ' XP"></div>' +
+                  '<div class="dash-xp-segment dash-xp-segment--streak" style="width:' + (consistencyXP / 10) + '%" title="Consistency: ' + consistencyXP + ' XP"></div>' +
                 '</div>' +
-
-                '<div class="dash-metric-card">' +
-                  '<div class="dash-metric-head">Syllabus <span>' + app.icon("book") + '</span></div>' +
-                  '<div class="dash-metric-val">' + readPct + '%</div>' +
-                  '<div class="dash-metric-sub">' + readCount + ' of ' + totalTopics + ' topics read</div>' +
-                '</div>' +
-
-                '<div class="dash-metric-card">' +
-                  '<div class="dash-metric-head">Quiz accuracy <span>' + app.icon("target") + '</span></div>' +
-                  '<div class="dash-metric-val">' + (totalQ ? quizAccuracy + '%' : '—') + '</div>' +
-                  '<div class="dash-metric-sub">' + (totalQ
-                      ? totalCorrect + ' of ' + totalQ + ' over ' + attempts.length + ' paper' + (attempts.length === 1 ? '' : 's')
-                      : 'No papers taken yet') + '</div>' +
-                '</div>' +
-
-                '<div class="dash-metric-card">' +
-                  '<div class="dash-metric-head">Memory health <span>' + app.icon("shield") + '</span></div>' +
-                  '<div class="dash-metric-val">' + (srsKeys.length ? retentionRate + '%' : '—') + '</div>' +
-                  '<div class="dash-metric-sub">' + (srsKeys.length
-                      ? (dueCards ? dueCards + ' due for review' : 'Nothing due today')
-                      : 'Answer a quiz to build the queue') + '</div>' +
+                '<div class="dash-xp-legend mt-2">' +
+                  '<span><i class="dot dot--read"></i> 📖 Reading (' + readXP + ')</span>' +
+                  '<span><i class="dot dot--quiz"></i> 🎯 Quizzes (' + quizXP + ')</span>' +
+                  '<span><i class="dot dot--memory"></i> 🧠 Memory (' + srsXP + ')</span>' +
+                  '<span><i class="dot dot--streak"></i> 🔥 Daily (' + consistencyXP + ')</span>' +
                 '</div>' +
               '</div>' +
+
             '</div>' +
           '</div>' +
         '</div>' +
 
-        /* 2. Next best actions */
-        renderPrescriptions(dueCards, allUnits, readMap, quiz, totalTopics, readCount) +
+        /* 2. Four Big Colorful Power Cards (At a glance) */
+        '<div class="dash-power-grid mt-6">' +
+          powerCard("📖", "Lessons Completed", readCount + " of " + totalTopics, readPct + "% of syllabus done", readPct, "blue", "#/theory") +
+          powerCard("🎯", "Quiz Accuracy", (totalQ ? quizAccuracy + "%" : "—"), (totalQ ? "You get ~" + Math.round(quizAccuracy / 10) + " out of 10 right! 🎉" : "Take a quiz to see score!"), quizAccuracy, "amber", "#/quiz") +
+          powerCard("🔥", "Study Streak", streak.current + " " + (streak.current === 1 ? "Day" : "Days"), "Best record: " + streak.longest + " days", Math.min(100, streak.current * 15), "coral", "#/theory") +
+          powerCard("🧠", "Memory Strength", (srsKeys.length ? retentionRate + "%" : "Ready!"), (dueCards ? "⚠️ " + dueCards + " cards need a quick review!" : "All cards fresh & remembered!"), retentionRate || 100, "green", "#/quiz/review") +
+        '</div>' +
 
-        /* 3. Paper I vs Paper II readiness */
+        /* 3. "What Should I Do Today?" 3 Quick Quests */
+        '<div class="dash-section-head mt-10">' +
+          '<div class="dash-section-title"><span>🚀</span> What Should I Do Today?</div>' +
+          '<p class="dash-section-sub">Pick any of these 3 easy 1-click missions to level up your score.</p>' +
+        '</div>' +
+        renderQuickQuests(dueCards, allUnits, readMap, quiz, totalTopics, readCount) +
+
+        /* 4. Exam Readiness: Paper 1 vs Paper 2 Side-by-Side */
+        '<div class="dash-section-head mt-12">' +
+          '<div class="dash-section-title"><span>📋</span> Annual Board Exam Readiness</div>' +
+          '<p class="dash-section-sub">Official VCI exams are divided into Paper I and Paper II. Check how prepared you are for each!</p>' +
+        '</div>' +
         renderPaperReadiness(readMap, quiz) +
 
-        /* 4. Performance trend + lifetime accuracy */
-        renderTrendSection(attempts, totals) +
-
-        /* 5. Weakest sub-sections */
-        renderWeakSubsections(quiz) +
-
-        /* 6. Unit mastery matrix */
-        '<section>' +
-          '<div class="row row--between mb-3">' +
-            '<div>' +
-              '<h2>Unit mastery matrix</h2>' +
-              '<p class="muted small mt-1">Reading progress, question bank volume and best score per curriculum unit.</p>' +
-            '</div>' +
-          '</div>' +
-          renderMatrixFilters(allUnits, quiz) +
-          '<div id="unit-matrix-container">' +
-            renderUnitMatrix(activeFilter, allUnits, readMap, quiz) +
-          '</div>' +
-        '</section>' +
-
-        /* 7. Leitner pipeline */
-        renderLeitnerPipeline(boxCounts, dueByBox, srsKeys.length, dueCards) +
-
-        /* 8. Heatmap + assessment ledger */
-        '<div class="grid grid--2">' +
-          renderHeatmapCard(activity, streak) +
-          renderRecentAttemptsCard(quiz) +
+        /* 5. Unit Progress Report Card */
+        '<div class="dash-section-head mt-12">' +
+          '<div class="dash-section-title"><span>⭐</span> Unit Report Cards</div>' +
+          '<p class="dash-section-sub">Your progress across every theory and practical unit. Click to read or take a quick quiz!</p>' +
+        '</div>' +
+        renderMatrixFilters(allUnits, quiz) +
+        '<div id="unit-matrix-container" class="mt-4">' +
+          renderUnitReportCards(activeFilter, allUnits, readMap, quiz) +
         '</div>' +
 
-        /* 9. Knowledge vault */
-        renderKnowledgeVault(totalHighlights, hlColorCounts, Object.keys(notes).length, bms.length, qaDone.length) +
+        /* 6. Kid-Friendly Memory Vault (3 Simple Steps instead of confusing 5 boxes) */
+        '<div class="dash-section-head mt-12">' +
+          '<div class="dash-section-title"><span>🧠</span> Memory Vault (Spaced Repetition)</div>' +
+          '<p class="dash-section-sub">Every time you answer a question correctly, it moves up a level and stays in your memory longer.</p>' +
+        '</div>' +
+        renderSimpleMemoryVault(learningCount, strongerCount, masteredCount, srsKeys.length, dueCards) +
+
+        /* 7. Activity Calendar + Recent Quiz Attempts */
+        '<div class="grid grid--2 mt-12">' +
+          renderSimpleActivityCard(activity, streak) +
+          renderRecentQuizScoresCard(quiz) +
+        '</div>' +
+
+        /* 8. Knowledge Vault */
+        '<div class="dash-section-head mt-12">' +
+          '<div class="dash-section-title"><span>🗂️</span> Your Personal Study Vault</div>' +
+          '<p class="dash-section-sub">Saved bookmarks, personal revision notes, and highlighted key sentences.</p>' +
+        '</div>' +
+        renderKnowledgeVault(totalHighlights, Object.keys(notes).length, bms.length, qaDone.length) +
 
       '</div>';
 
     attachDashboardEvents(host, allUnits, readMap, quiz);
   }
 
-  /* ---------- helpers shared by several panels ---------- */
-
-  /* Only count read marks that still belong to a topic in the syllabus —
-     an edited syllabus used to leave orphan marks inflating coverage. */
+  /* Helpers */
   function countReadTopics(units, readMap) {
     var n = 0;
     units.forEach(function (u) {
@@ -222,130 +210,142 @@ var dashboardApp = (function () {
     return n;
   }
 
-  function xpChip(label, got, max) {
-    var p = max ? Math.round(got / max * 100) : 0;
-    return '<span class="xp-chip" title="' + label + ': ' + got + ' of ' + max + ' XP">' +
-      '<i style="width:' + p + '%"></i><b>' + label + '</b><span>' + got + '</span></span>';
-  }
-
-  /* "1 days" reads like a bug even when the number is right. */
-  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
-
-  function scoreChip(p) {
-    return p >= 85 ? "chip--ok" : p >= 70 ? "chip--accent" : p >= 50 ? "chip--warn" : "chip--danger";
-  }
-
-  function barTone(p) {
-    return p >= 75 ? "is-ok" : p >= 50 ? "is-warn" : "is-bad";
-  }
-
-  /* Which paper does a unit sit in? Theory units come from the syllabus
-     definition; a practical unit follows the theory unit of the same number. */
-  function paperOfUnit(unitId) {
-    var no = (syllabus.unitById[unitId] || {}).no;
-    var papers = (syllabus.meta && syllabus.meta.papers) || [];
-    for (var i = 0; i < papers.length; i++) {
-      if ((papers[i].units || []).indexOf(no) !== -1) return papers[i];
+  function getSimpleRank(xp) {
+    if (xp >= 750) {
+      return {
+        title: "Level 4 · Master Breeder",
+        icon: "👑",
+        nextHint: "⭐ Maximum Level Reached! You are an Animal Genetics Wizard!"
+      };
     }
-    return null;
-  }
-
-  function unitsOfPaper(paperId) {
-    return (syllabus.allUnits || []).filter(function (u) {
-      var p = paperOfUnit(u.id);
-      return p && p.id === paperId;
-    });
-  }
-
-  /* ---------- Rank calculation ---------- */
-  function getRank(xp) {
-    if (xp >= 750) return { title: "Master Animal Geneticist", stage: "Phase 4 · Elite population genomics & sire selection", icon: "trophy" };
-    if (xp >= 500) return { title: "Senior Animal Breeder", stage: "Phase 3 · Board exam ready", icon: "sparkle" };
-    if (xp >= 250) return { title: "Junior Biostatistician", stage: "Phase 2 · Experimental design & genetic metrics", icon: "search" };
-    return { title: "Genetics Apprentice", stage: "Phase 1 · Foundations", icon: "book" };
-  }
-
-  /* ---------- Smart action prescriptions ---------- */
-  function renderPrescriptions(dueCards, allUnits, readMap, quiz, totalTopics, readCount) {
-    var srsCard;
-    if (dueCards > 0) {
-      srsCard =
-        '<div class="presc-card is-urgent">' +
-          '<div>' +
-            '<span class="presc-badge presc-badge--urgent">' + app.icon("clock") + ' Priority 1 · Memory decay</span>' +
-            '<h3 class="presc-title mt-2">' + dueCards + ' question' + (dueCards > 1 ? 's' : '') + ' due today</h3>' +
-            '<p class="presc-desc mt-1">The forgetting curve is active on these. Clear the Leitner queue now to hold what you already learned.</p>' +
-          '</div>' +
-          '<a class="btn btn--primary presc-btn" href="#/quiz/review">' + app.icon("repeat") + ' Clear review queue</a>' +
-        '</div>';
-    } else {
-      srsCard =
-        '<div class="presc-card">' +
-          '<div>' +
-            '<span class="presc-badge presc-badge--success">' + app.icon("check") + ' Memory safe</span>' +
-            '<h3 class="presc-title mt-2">Nothing due for review</h3>' +
-            '<p class="presc-desc mt-1">Your spaced repetition queue is clear. Everything answered is still in consolidation.</p>' +
-          '</div>' +
-          '<a class="btn btn--outline presc-btn" href="#/quiz">' + app.icon("quiz") + ' Practise questions</a>' +
-        '</div>';
+    if (xp >= 500) {
+      return {
+        title: "Level 3 · Senior Geneticist",
+        icon: "🧬",
+        nextHint: (750 - xp) + " XP needed to reach Level 4: Master Breeder 👑"
+      };
     }
+    if (xp >= 250) {
+      return {
+        title: "Level 2 · Animal Scientist",
+        icon: "🔬",
+        nextHint: (500 - xp) + " XP needed to reach Level 3: Senior Geneticist 🧬"
+      };
+    }
+    return {
+      title: "Level 1 · Genetics Explorer",
+      icon: "⭐",
+      nextHint: (250 - xp) + " XP needed to reach Level 2: Animal Scientist 🔬"
+    };
+  }
 
+  function getFriendlySummary(readPct, quizAccuracy, attemptsCount, streakDays) {
+    if (readPct >= 80 && quizAccuracy >= 80) {
+      return "Outstanding work! You've mastered almost the entire syllabus and your quiz scores are at Distinction level! 🏆";
+    }
+    if (attemptsCount === 0) {
+      return "Welcome! Start by reading a lesson or playing a 5-minute quiz to see your progress bar light up!";
+    }
+    if (readPct > 40 && quizAccuracy >= 70) {
+      return "You're on track for a First Class! Keep reading lessons and clearing your daily quizzes to push for distinction! 🚀";
+    }
+    if (streakDays >= 3) {
+      return "Awesome daily consistency! You've studied " + streakDays + " days in a row — keep the flame burning today! 🔥";
+    }
+    return "Every lesson you read and every quiz you play moves your exam readiness higher. Pick a mission below to get started!";
+  }
+
+  function powerCard(icon, title, val, sub, barPct, color, link) {
+    return '<a class="dash-power-card dash-power-card--' + color + '" href="' + link + '">' +
+      '<div class="dash-power-card__top">' +
+        '<span class="dash-power-card__icon">' + icon + '</span>' +
+        '<span class="dash-power-card__title">' + title + '</span>' +
+      '</div>' +
+      '<div class="dash-power-card__val">' + app.esc(val) + '</div>' +
+      '<div class="dash-power-card__bar-wrap">' +
+        '<div class="dash-power-card__bar" style="width:' + Math.min(100, Math.max(0, barPct)) + '%"></div>' +
+      '</div>' +
+      '<div class="dash-power-card__sub">' + app.esc(sub) + '</div>' +
+    '</a>';
+  }
+
+  /* 3 Quick Quests (Simple & Actionable) */
+  function renderQuickQuests(dueCards, allUnits, readMap, quiz, totalTopics, readCount) {
     var nextTopic = findNextUnreadTopic(allUnits, readMap);
-    var lessonCard;
-    if (nextTopic) {
-      lessonCard =
-        '<div class="presc-card is-primary">' +
-          '<div>' +
-            '<span class="presc-badge presc-badge--primary">' + app.icon("book") + ' Next up in the syllabus</span>' +
-            '<h3 class="presc-title mt-2">' + app.esc(shorten(nextTopic.title, 34)) + '</h3>' +
-            '<p class="presc-desc mt-1">' + app.esc(nextTopic.unitTitle) + ' · topic ' + nextTopic.index +
-              ' · ' + (totalTopics - readCount) + ' topics left</p>' +
-          '</div>' +
-          '<a class="btn btn--primary presc-btn" href="#/topic/' + nextTopic.id + '">' + app.icon("book") + ' Continue lesson</a>' +
-        '</div>';
-    } else {
-      lessonCard =
-        '<div class="presc-card">' +
-          '<div>' +
-            '<span class="presc-badge presc-badge--success">' + app.icon("trophy") + ' Full coverage</span>' +
-            '<h3 class="presc-title mt-2">All ' + totalTopics + ' topics read</h3>' +
-            '<p class="presc-desc mt-1">You have opened every theory and practical topic in the syllabus.</p>' +
-          '</div>' +
-          '<a class="btn btn--outline presc-btn" href="#/theory">' + app.icon("repeat") + ' Review lessons</a>' +
-        '</div>';
-    }
-
     var weakUnit = findWeakestUnit(allUnits, quiz);
-    var quizCard =
-      '<div class="presc-card">' +
-        '<div>' +
-          '<span class="presc-badge presc-badge--primary">' + app.icon("target") + ' Target diagnostic</span>' +
-          '<h3 class="presc-title mt-2">' + app.esc(shorten(weakUnit.name, 34)) + '</h3>' +
-          '<p class="presc-desc mt-1">' + (weakUnit.hasScore
-            ? 'Your weakest tested unit — best score ' + weakUnit.score + '%. A focused test will move it.'
-            : 'Never tested. Sit a short paper to find out where you actually stand.') + '</p>' +
-        '</div>' +
-        '<a class="btn btn--primary presc-btn" href="#/quiz/unit/' + weakUnit.id + '">' + app.icon("quiz") + ' Test knowledge</a>' +
+
+    // Quest 1: Reading Quest
+    var readQuest = nextTopic
+      ? '<div class="dash-quest-card dash-quest-card--blue">' +
+          '<div class="dash-quest-card__badge">MISSION 1 · NEXT LESSON</div>' +
+          '<h3 class="dash-quest-card__title">' + app.esc(nextTopic.title) + '</h3>' +
+          '<p class="dash-quest-card__desc">' + app.esc(nextTopic.unitTitle) + ' · ' + (totalTopics - readCount) + ' lessons left to complete syllabus.</p>' +
+          '<a class="btn btn--primary btn--quest" href="#/topic/' + nextTopic.id + '">📖 Open Lesson →</a>' +
+        '</div>'
+      : '<div class="dash-quest-card dash-quest-card--blue">' +
+          '<div class="dash-quest-card__badge">MISSION 1 · SYLLABUS COMPLETE</div>' +
+          '<h3 class="dash-quest-card__title">All ' + totalTopics + ' Lessons Read!</h3>' +
+          '<p class="dash-quest-card__desc">You have unlocked and read every topic in the entire course. Fantastic!</p>' +
+          '<a class="btn btn--outline btn--quest" href="#/theory">Review Lessons →</a>' +
+        '</div>';
+
+    // Quest 2: Quiz Quest
+    var quizQuest =
+      '<div class="dash-quest-card dash-quest-card--amber">' +
+        '<div class="dash-quest-card__badge">MISSION 2 · 5-MIN QUIZ</div>' +
+        '<h3 class="dash-quest-card__title">' + app.esc(weakUnit.name) + '</h3>' +
+        '<p class="dash-quest-card__desc">' + (weakUnit.hasScore
+          ? "Target this unit to boost your best score (" + weakUnit.score + "%)."
+          : "Untested unit! Play a quick quiz to find your current score.") + '</p>' +
+        '<a class="btn btn--primary btn--quest" href="#/quiz/unit/' + weakUnit.id + '">🎯 Play 5-Min Quiz →</a>' +
       '</div>';
 
-    return '<div class="dash-prescriptions">' + srsCard + lessonCard + quizCard + '</div>';
+    // Quest 3: Memory Quest
+    var memoryQuest = dueCards > 0
+      ? '<div class="dash-quest-card dash-quest-card--green is-urgent">' +
+          '<div class="dash-quest-card__badge">MISSION 3 · MEMORY REFRESH</div>' +
+          '<h3 class="dash-quest-card__title">' + dueCards + ' Flashcards Ready</h3>' +
+          '<p class="dash-quest-card__desc">Refresh them in 2 minutes so you don\'t forget what you learned!</p>' +
+          '<a class="btn btn--primary btn--quest" href="#/quiz/review">🧠 Quick 2-Min Review →</a>' +
+        '</div>'
+      : '<div class="dash-quest-card dash-quest-card--green">' +
+          '<div class="dash-quest-card__badge">MISSION 3 · MEMORY REFRESH</div>' +
+          '<h3 class="dash-quest-card__title">Memory Vault 100% Fresh</h3>' +
+          '<p class="dash-quest-card__desc">No cards are overdue today. Everything you learned is locked in!</p>' +
+          '<a class="btn btn--outline btn--quest" href="#/quiz">Practice Questions →</a>' +
+        '</div>';
+
+    return '<div class="dash-quests-grid mt-4">' + readQuest + quizQuest + memoryQuest + '</div>';
   }
 
-  /* ---------- Paper I vs Paper II comparative readiness ---------- */
+  /* Paper I vs Paper II Dual Examination Readiness */
   function renderPaperReadiness(readMap, quiz) {
     var papers = (syllabus.meta && syllabus.meta.papers) || [];
     if (!papers.length) return "";
 
+    function paperTitle(id) {
+      return id === "paper-1"
+        ? "Biostatistics & Animal Genetics"
+        : id === "paper-2" ? "Principles of Animal Breeding" : "Examination Paper";
+    }
+
+    function unitsOfPaper(paperId) {
+      return (syllabus.allUnits || []).filter(function (u) {
+        var no = (syllabus.unitById[u.id] || {}).no;
+        var p = (syllabus.meta.papers || []).filter(function (x) { return x.id === paperId; })[0];
+        return p && (p.units || []).indexOf(no) !== -1;
+      });
+    }
+
     function computePaper(p) {
       var units = unitsOfPaper(p.id);
-      var totalT = 0, readT = 0, totalQuestions = 0;
+      var totalT = 0, readT = 0;
       var scores = [];
 
       units.forEach(function (u) {
         var uTopics = u.topics || [];
         totalT += uTopics.length;
         uTopics.forEach(function (t) { if (readMap[t.id]) readT++; });
-        totalQuestions += app.questionCount(u.id);
         var rec = quiz.byUnit && quiz.byUnit["unit:" + u.id];
         if (rec && typeof rec.best === "number") scores.push(rec.best);
       });
@@ -354,8 +354,6 @@ var dashboardApp = (function () {
       var avgScore = scores.length
         ? Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length) : 0;
 
-      // A blunt but honest readiness number: half coverage, half performance,
-      // and untested units drag it down because they genuinely are a risk.
       var perf = units.length ? Math.round(
         units.reduce(function (n, u) {
           var rec = quiz.byUnit && quiz.byUnit["unit:" + u.id];
@@ -367,254 +365,58 @@ var dashboardApp = (function () {
         id: p.id,
         label: p.name || p.id,
         name: paperTitle(p.id),
-        unitLabel: (p.units.length === 1 ? "Unit " : "Units ") + p.units.join(", ") + " (theory + practical)",
+        unitLabel: (p.units.length === 1 ? "Unit " : "Units ") + p.units.join(", "),
         totalTopics: totalT, readTopics: readT, readPct: readPercent,
-        totalQuestions: totalQuestions, avgScore: avgScore,
+        avgScore: avgScore,
         testCount: scores.length, unitCount: units.length,
-        untested: units.length - scores.length,
         readiness: readiness
       };
     }
 
-    function paperTitle(id) {
-      return id === "paper-1"
-        ? "Biostatistics & Animal/Population Genetics"
-        : id === "paper-2" ? "Principles of Animal Breeding" : "Examination Paper";
-    }
+    return '<div class="dash-papers-grid mt-4">' +
+      papers.map(function (pRaw) {
+        var p = computePaper(pRaw);
+        var statusBadge = p.readiness >= 75 ? "⭐ Distinction Ready!" : p.readiness >= 50 ? "👍 Good Progress!" : "⚡ Needs Practice";
+        var theme = p.id === "paper-1" ? "blue" : "emerald";
 
-    function renderPaperCard(p) {
-      return '<div class="paper-gauge-card">' +
-        '<div class="paper-card-head">' +
-          '<div>' +
-            '<span class="paper-badge">' + app.esc(p.label) + '</span>' +
-            '<h3 class="paper-card-title mt-1">' + app.esc(p.name) + '</h3>' +
-            '<p class="paper-card-subtitle">' + app.esc(p.unitLabel) + '</p>' +
+        return '<div class="dash-paper-card dash-paper-card--' + theme + '">' +
+          '<div class="dash-paper-card__top">' +
+            '<div>' +
+              '<span class="dash-paper-card__tag">' + app.esc(p.label) + '</span>' +
+              '<h3 class="dash-paper-card__title mt-1">' + app.esc(p.name) + '</h3>' +
+              '<p class="dash-paper-card__units">' + app.esc(p.unitLabel) + ' · ' + p.unitCount + ' Units</p>' +
+            '</div>' +
+            '<div class="dash-paper-card__gauge">' +
+              app.ringHtml(p.readiness, 84) +
+            '</div>' +
           '</div>' +
-          '<span class="chip ' + scoreChip(p.readiness) + ' font-bold">' + p.readiness + '% ready</span>' +
-        '</div>' +
 
-        '<div class="paper-progress-wrap">' +
-          '<div class="row row--between small">' +
-            '<span>Syllabus reading</span>' +
-            '<span class="mono"><b>' + p.readPct + '%</b> (' + p.readTopics + '/' + p.totalTopics + ')</span>' +
+          '<div class="dash-paper-card__stats mt-4">' +
+            '<div class="dash-paper-stat">' +
+              '<span class="dash-paper-stat__val">' + p.readPct + '%</span>' +
+              '<span class="dash-paper-stat__lbl">📖 Lessons (' + p.readTopics + '/' + p.totalTopics + ')</span>' +
+            '</div>' +
+            '<div class="dash-paper-stat">' +
+              '<span class="dash-paper-stat__val">' + (p.testCount ? p.avgScore + "%" : "—") + '</span>' +
+              '<span class="dash-paper-stat__lbl">🎯 Quiz Score</span>' +
+            '</div>' +
+            '<div class="dash-paper-stat">' +
+              '<span class="dash-paper-stat__val">' + p.readiness + '%</span>' +
+              '<span class="dash-paper-stat__lbl">' + statusBadge + '</span>' +
+            '</div>' +
           '</div>' +
-          '<div class="bar" style="height:8px">' +
-            '<div class="bar__fill" style="width:' + p.readPct + '%;background:var(--ivri-blue)"></div>' +
-          '</div>' +
-        '</div>' +
 
-        '<div class="paper-stats-row">' +
-          '<div>' +
-            '<div class="paper-stat-item-val">' + p.readTopics + '</div>' +
-            '<div class="paper-stat-item-lbl">Read</div>' +
+          '<div class="dash-paper-card__actions mt-4">' +
+            '<a class="btn btn--primary btn--play-paper" href="#/quiz/paper/' + p.id + '">' +
+              '🚀 Practice ' + app.esc(p.label) + ' Mock Exam →' +
+            '</a>' +
           '</div>' +
-          '<div>' +
-            '<div class="paper-stat-item-val">' + p.totalQuestions + '</div>' +
-            '<div class="paper-stat-item-lbl">Questions</div>' +
-          '</div>' +
-          '<div>' +
-            '<div class="paper-stat-item-val">' + (p.testCount ? p.avgScore + '%' : '—') + '</div>' +
-            '<div class="paper-stat-item-lbl">Best avg</div>' +
-          '</div>' +
-          '<div>' +
-            '<div class="paper-stat-item-val">' + p.untested + '</div>' +
-            '<div class="paper-stat-item-lbl">Untested units</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<a class="btn btn--outline mt-2" href="#/quiz/paper/' + p.id + '">' +
-          app.icon("quiz") + ' Simulate ' + app.esc(p.label) + ' exam' +
-        '</a>' +
-      '</div>';
-    }
-
-    return '<section>' +
-      '<h2>Annual examination readiness</h2>' +
-      '<p class="muted small mt-1">Split according to the official VCI veterinary board exam format.</p>' +
-      '<div class="paper-readiness-grid mt-4">' +
-        papers.map(function (p) { return renderPaperCard(computePaper(p)); }).join("") +
-      '</div>' +
-    '</section>';
+        '</div>';
+      }).join("") +
+    '</div>';
   }
 
-  /* ---------- Performance trend & lifetime accuracy ---------- */
-  function renderTrendSection(attempts, totals) {
-    if (!attempts.length) {
-      return '<section>' +
-        '<h2>Performance trend</h2>' +
-        '<div class="card p-5 text-center text-muted mt-4">' +
-          app.icon("pulse") + '<br>' +
-          'Sit your first paper and this chart will start tracking how your score moves.<br>' +
-          '<a class="btn btn--primary btn--sm mt-3" href="#/quiz">Take a diagnostic test</a>' +
-        '</div>' +
-      '</section>';
-    }
-
-    var recent = attempts.slice(-12);
-    var pts = recent.map(function (a) { return app.pct(a.correct, a.total); });
-    var first = pts[0], last = pts[pts.length - 1];
-    var movement = pts.length > 1 ? last - first : 0;
-    var best = Math.max.apply(null, pts);
-    var avg = Math.round(pts.reduce(function (n, v) { return n + v; }, 0) / pts.length);
-
-    var formatRows = ["mcq", "tf", "fib"].map(function (f) {
-      var labels = { mcq: "🔘 Multiple choice", tf: "⚖️ True / False", fib: "✍️ Fill in the blank" };
-      var r = totals.byFormat[f];
-      return { label: labels[f], right: r.right, total: r.total };
-    }).filter(function (r) { return r.total > 0; });
-
-    var diffRows = [1, 2, 3].map(function (d) {
-      var labels = { 1: "⭐ Foundational", 2: "⭐⭐ Core UG", 3: "⭐⭐⭐ Rank 1 classic" };
-      var r = totals.byDiff[d];
-      return { label: labels[d], right: r.right, total: r.total };
-    }).filter(function (r) { return r.total > 0; });
-
-    return '<section>' +
-      '<div class="row row--between mb-3">' +
-        '<div>' +
-          '<h2>Performance trend</h2>' +
-          '<p class="muted small mt-1">Your last ' + recent.length + ' paper' + (recent.length === 1 ? '' : 's') +
-            ', and lifetime accuracy by question type.</p>' +
-        '</div>' +
-        '<span class="chip ' + (movement > 0 ? 'chip--ok' : movement < 0 ? 'chip--danger' : 'chip--subtle') + '">' +
-          (movement > 0 ? '▲ +' : movement < 0 ? '▼ ' : '– ') + Math.abs(movement) + '% across this run' +
-        '</span>' +
-      '</div>' +
-
-      '<div class="grid grid--2 mt-2">' +
-        '<div class="card an-card">' +
-          '<div class="row row--between">' +
-            '<h3 class="an-card__title">Score history</h3>' +
-            '<span class="small faint">avg ' + avg + '% · best ' + best + '%</span>' +
-          '</div>' +
-          sparkline(pts) +
-          '<div class="trend-legend small faint">' +
-            '<span>oldest</span><span class="push"></span><span>latest · ' + last + '%</span>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="card an-card">' +
-          '<h3 class="an-card__title">Lifetime accuracy</h3>' +
-          '<div class="an-bars mt-3">' +
-            formatRows.concat(diffRows).map(function (r) {
-              var p = r.total ? Math.round(r.right / r.total * 100) : 0;
-              return '<div class="an-bar">' +
-                '<div class="an-bar__head"><span>' + r.label + '</span>' +
-                '<span class="font-mono">' + r.right + '/' + r.total + ' · ' + p + '%</span></div>' +
-                '<div class="bar"><div class="bar__fill ' + barTone(p) + '" style="width:' + p + '%"></div></div>' +
-              '</div>';
-            }).join("") +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-    '</section>';
-  }
-
-  /* A dependency-free SVG sparkline with a 50% reference line. */
-  function sparkline(values) {
-    var w = 520, h = 140, pad = 12;
-    var n = values.length;
-    var stepX = n > 1 ? (w - pad * 2) / (n - 1) : 0;
-    function y(v) { return h - pad - (v / 100) * (h - pad * 2); }
-    function x(i) { return pad + i * stepX; }
-
-    var line = values.map(function (v, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1); }).join(" ");
-    var area = n > 1
-      ? line + " L" + x(n - 1).toFixed(1) + " " + (h - pad) + " L" + x(0).toFixed(1) + " " + (h - pad) + " Z"
-      : "";
-
-    var dots = values.map(function (v, i) {
-      return '<circle class="spark__dot ' + barTone(v) + '" cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) +
-        '" r="' + (i === n - 1 ? 5 : 3.5) + '"><title>Paper ' + (i + 1) + ': ' + v + '%</title></circle>';
-    }).join("");
-
-    return '<div class="spark mt-3"><svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" role="img" ' +
-      'aria-label="Score across recent papers">' +
-      '<line class="spark__ref" x1="' + pad + '" x2="' + (w - pad) + '" y1="' + y(50).toFixed(1) + '" y2="' + y(50).toFixed(1) + '"/>' +
-      '<line class="spark__ref spark__ref--pass" x1="' + pad + '" x2="' + (w - pad) + '" y1="' + y(75).toFixed(1) + '" y2="' + y(75).toFixed(1) + '"/>' +
-      (area ? '<path class="spark__area" d="' + area + '"/>' : '') +
-      (n > 1 ? '<path class="spark__line" d="' + line + '"/>' : '') +
-      dots +
-    '</svg></div>';
-  }
-
-  /* ---------- Weakest sub-sections, named ---------- */
-  function renderWeakSubsections(quiz) {
-    var bySub = quiz.bySub || {};
-    var keys = Object.keys(bySub);
-    if (!keys.length) return "";
-
-    var rows = keys.map(function (sid) {
-      var r = bySub[sid];
-      var meta = lookupSub(sid);
-      return {
-        id: sid,
-        unitId: meta.unitId,
-        icon: meta.icon,
-        title: meta.title,
-        right: r.right, total: r.total,
-        pct: r.total ? Math.round(r.right / r.total * 100) : 0
-      };
-    }).filter(function (r) { return r.total >= 2; })
-      .sort(function (a, b) { return a.pct - b.pct || b.total - a.total; });
-
-    if (!rows.length) return "";
-
-    var weak = rows.filter(function (r) { return r.pct < 75; }).slice(0, 5);
-    var strong = rows.slice(0).reverse().filter(function (r) { return r.pct >= 75; }).slice(0, 3);
-
-    return '<section>' +
-      '<div class="row row--between mb-3">' +
-        '<div>' +
-          '<h2>Module-level diagnosis</h2>' +
-          '<p class="muted small mt-1">Lifetime accuracy per syllabus sub-section, across every paper you have sat.</p>' +
-        '</div>' +
-      '</div>' +
-      (weak.length
-        ? '<div class="an-sub-list">' + weak.map(function (r) {
-            return '<div class="an-sub">' +
-              '<span class="an-sub__icon">' + r.icon + '</span>' +
-              '<div class="an-sub__body">' +
-                '<div class="an-sub__head">' +
-                  '<b>' + app.esc(r.title) + '</b>' +
-                  '<span class="chip ' + scoreChip(r.pct) + '">' + r.right + '/' + r.total + ' · ' + r.pct + '%</span>' +
-                '</div>' +
-                '<div class="bar mt-2"><div class="bar__fill ' + barTone(r.pct) + '" style="width:' + r.pct + '%"></div></div>' +
-              '</div>' +
-              '<div class="an-sub__actions">' +
-                (r.unitId ? '<a class="btn btn--sm btn--outline" href="#/unit/' + r.unitId + '">Read</a>' : '') +
-                (r.unitId ? '<a class="btn btn--sm" href="#/quiz/unit/' + r.unitId + '">Retest</a>' : '') +
-              '</div>' +
-            '</div>';
-          }).join("") + '</div>'
-        : '<div class="callout"><div class="callout__title">🏆 No weak module</div>' +
-          'Every sub-section you have been tested on is at 75% or better. Widen the net — sit a paper-wise or grand mock.</div>') +
-
-      (strong.length
-        ? '<p class="small muted mt-4">Strongest so far: ' +
-          strong.map(function (r) { return '<b>' + app.esc(r.title) + '</b> (' + r.pct + '%)'; }).join(" · ") + '</p>'
-        : '') +
-    '</section>';
-  }
-
-  /* Sub-section metadata lives in quiz.js; fall back gracefully if the
-     quiz engine has not been loaded (it always is, but never assume). */
-  function lookupSub(sid) {
-    var fallback = { unitId: null, icon: "📘", title: sid };
-    try {
-      var unitId = "unit-" + String(sid).charAt(1);
-      var unit = syllabus.unitById[unitId];
-      fallback.unitId = unit ? unitId : null;
-      var q = window.quizApp;
-      if (q && q.subSectionMeta) {
-        var m = q.subSectionMeta(sid);
-        if (m) return { unitId: unitId, icon: m.icon, title: m.title };
-      }
-    } catch (e) {}
-    return fallback;
-  }
-
-  /* ---------- Unit mastery matrix filters ---------- */
+  /* Unit Report Cards Filters */
   function renderMatrixFilters(allUnits, quiz) {
     function count(fn) { return allUnits.filter(fn).length; }
     var best = function (u) {
@@ -622,17 +424,14 @@ var dashboardApp = (function () {
       return rec && typeof rec.best === "number" ? rec.best : null;
     };
 
-    // These labels were hard-coded as 8/4/4 against a six-unit syllabus.
     var tabs = [
-      { id: "all", label: "All units", n: allUnits.length },
-      { id: "theory", label: "Theory", n: count(function (u) { return u.stream === "theory"; }) },
-      { id: "practical", label: "Practical", n: count(function (u) { return u.stream === "practical"; }) },
-      { id: "untested", label: "Untested", n: count(function (u) { return best(u) === null; }) },
-      { id: "weak", label: "Needs practice (<60%)", n: count(function (u) { var b = best(u); return b !== null && b < 60; }) },
-      { id: "mastered", label: "Mastered (≥75%)", n: count(function (u) { var b = best(u); return b !== null && b >= 75; }) }
+      { id: "all", label: "🌟 All Units", n: allUnits.length },
+      { id: "theory", label: "📘 Theory Units", n: count(function (u) { return u.stream === "theory"; }) },
+      { id: "practical", label: "🔬 Practical Units", n: count(function (u) { return u.stream === "practical"; }) },
+      { id: "mastered", label: "🏆 Mastered (≥75%)", n: count(function (u) { var b = best(u); return b !== null && b >= 75; }) }
     ];
 
-    return '<div class="matrix-filter-bar">' +
+    return '<div class="matrix-filter-bar mt-4">' +
       tabs.map(function (tab) {
         return '<button class="matrix-tab-btn' + (activeFilter === tab.id ? ' is-active' : '') + '" data-filter="' + tab.id + '">' +
           tab.label + ' <span class="an-filter__n">' + tab.n + '</span>' +
@@ -641,16 +440,13 @@ var dashboardApp = (function () {
     '</div>';
   }
 
-  /* ---------- Unit mastery matrix grid ---------- */
-  function renderUnitMatrix(filter, allUnits, readMap, quiz) {
+  /* Unit Report Cards Grid (Simple, kid-friendly cards) */
+  function renderUnitReportCards(filter, allUnits, readMap, quiz) {
     var filtered = allUnits.filter(function (u) {
       var rec = quiz.byUnit && quiz.byUnit["unit:" + u.id];
       var best = rec && typeof rec.best === "number" ? rec.best : null;
-
       if (filter === "theory") return u.stream === "theory";
       if (filter === "practical") return u.stream === "practical";
-      if (filter === "untested") return best === null;
-      if (filter === "weak") return best !== null && best < 60;
       if (filter === "mastered") return best !== null && best >= 75;
       return true;
     });
@@ -659,13 +455,10 @@ var dashboardApp = (function () {
       return '<div class="card p-5 text-center text-muted">No units match this filter.</div>';
     }
 
-    return '<div class="unit-mastery-grid">' +
+    return '<div class="dash-unit-cards-grid">' +
       filtered.map(function (u) {
         var isTheory = u.stream === "theory";
-        var tag = (isTheory ? "U" : "P") + u.no;
-        var paper = paperOfUnit(u.id);
-        var paperTag = paper ? (paper.name || paper.id) : "—";
-
+        var tag = (isTheory ? "Theory Unit " : "Practical Unit ") + u.no;
         var uTopics = u.topics || [];
         var done = 0;
         uTopics.forEach(function (t) { if (readMap[t.id]) done++; });
@@ -674,240 +467,187 @@ var dashboardApp = (function () {
         var qn = app.questionCount(u.id);
         var rec = quiz.byUnit && quiz.byUnit["unit:" + u.id];
         var bestScore = (rec && typeof rec.best === "number") ? rec.best : null;
-        var avgScore = (rec && rec.totalQ) ? Math.round(rec.totalCorrect / rec.totalQ * 100) : null;
 
-        return '<div class="unit-card-elite">' +
-          '<div class="unit-card-top">' +
-            '<span class="unit-card-badge">' + tag + ' · ' + app.esc(paperTag) + '</span>' +
-            (bestScore !== null
-              ? '<span class="chip ' + scoreChip(bestScore) + '">' + bestScore + '% best</span>'
-              : '<span class="chip chip--subtle">Untested</span>') +
+        var stars = bestScore >= 85 ? "⭐⭐⭐" : bestScore >= 70 ? "⭐⭐" : bestScore !== null ? "⭐" : "○";
+
+        return '<div class="dash-unit-card">' +
+          '<div class="dash-unit-card__head">' +
+            '<span class="dash-unit-card__tag">' + tag + '</span>' +
+            '<span class="dash-unit-card__stars">' + stars + '</span>' +
           '</div>' +
 
-          '<a class="unit-card-title" href="#/unit/' + u.id + '">' + app.esc(u.short || u.title) + '</a>' +
+          '<h3 class="dash-unit-card__title">' + app.esc(u.short || u.title) + '</h3>' +
 
-          '<div class="unit-card-bars">' +
-            '<div class="unit-bar-item">' +
-              '<div class="unit-bar-label">' +
-                '<span>Reading progress</span>' +
-                '<span class="mono">' + done + '/' + uTopics.length + ' (' + readP + '%)</span>' +
-              '</div>' +
-              '<div class="bar" style="height:6px">' +
-                '<div class="bar__fill" style="width:' + readP + '%;background:var(--ivri-blue)"></div>' +
-              '</div>' +
+          '<div class="dash-unit-card__progress mt-3">' +
+            '<div class="row row--between small">' +
+              '<span>Reading Progress</span>' +
+              '<b>' + done + '/' + uTopics.length + ' (' + readP + '%)</b>' +
             '</div>' +
-            (avgScore !== null
-              ? '<div class="unit-bar-item">' +
-                  '<div class="unit-bar-label">' +
-                    '<span>Quiz accuracy</span>' +
-                    '<span class="mono">' + rec.totalCorrect + '/' + rec.totalQ + ' (' + avgScore + '%) · ' + rec.runs + ' run' + (rec.runs === 1 ? '' : 's') + '</span>' +
-                  '</div>' +
-                  '<div class="bar" style="height:6px">' +
-                    '<div class="bar__fill ' + barTone(avgScore) + '" style="width:' + avgScore + '%"></div>' +
-                  '</div>' +
-                '</div>'
-              : '') +
+            '<div class="bar mt-1" style="height:7px"><div class="bar__fill" style="width:' + readP + '%;background:var(--ivri-blue)"></div></div>' +
           '</div>' +
 
-          '<div class="unit-card-actions">' +
-            '<a class="btn btn--sm btn--outline" style="flex:1" href="#/unit/' + u.id + '">' + app.icon("book") + ' Read</a>' +
+          '<div class="dash-unit-card__quiz-stat mt-3">' +
+            (bestScore !== null
+              ? '<span class="chip ' + (bestScore >= 75 ? 'chip--ok' : 'chip--warn') + '">Best Quiz: ' + bestScore + '%</span>'
+              : '<span class="chip chip--subtle">Quiz: Not Tested Yet</span>') +
+            '<span class="small faint">' + qn + ' Questions</span>' +
+          '</div>' +
+
+          '<div class="dash-unit-card__buttons mt-4">' +
+            '<a class="btn btn--sm btn--outline" href="#/unit/' + u.id + '">📖 Read Lessons</a>' +
             (qn
-              ? '<a class="btn btn--sm btn--primary" style="flex:1" href="#/quiz/unit/' + u.id + '">' + app.icon("quiz") + ' Quiz (' + qn + ')</a>'
-              : '<span class="btn btn--sm is-disabled" style="flex:1">No questions yet</span>') +
+              ? '<a class="btn btn--sm btn--primary" href="#/quiz/unit/' + u.id + '">🎯 Play Quiz</a>'
+              : '') +
           '</div>' +
         '</div>';
       }).join("") +
     '</div>';
   }
 
-  /* ---------- 5-box Leitner memory pipeline ---------- */
-  function renderLeitnerPipeline(boxCounts, dueByBox, totalCards, dueCount) {
-    var intervals = ["Daily (24 h)", "Every 2 days", "Every 4 days", "Every 8 days", "Mastered (16 d)"];
-    var maxBox = Math.max.apply(null, boxCounts.concat([1]));
+  /* Kid-Friendly Memory Vault (3 Simple Steps) */
+  function renderSimpleMemoryVault(learning, stronger, mastered, total, dueCount) {
+    var maxVal = Math.max(learning, stronger, mastered, 1);
 
-    return '<section class="srs-pipeline-wrap">' +
-      '<div class="row row--between">' +
-        '<div>' +
-          '<h2>Spaced repetition memory matrix</h2>' +
-          '<p class="muted small mt-1">Questions climb from Box 1 to Box 5 as you keep getting them right; one slip sends a card back to Box 1.</p>' +
+    return '<div class="dash-memory-vault mt-4">' +
+      '<div class="dash-memory-vault__hero">' +
+        '<div class="dash-memory-vault__status">' +
+          '<h3 class="dash-memory-vault__title">' + (mastered + stronger) + ' of ' + (total || 0) + ' Cards Memorized</h3>' +
+          '<p class="dash-memory-vault__sub">As you practice quizzes, questions climb to Mastered status and stay remembered for exams!</p>' +
         '</div>' +
         (dueCount > 0
-          ? '<a class="btn btn--primary btn--sm" href="#/quiz/review">' + app.icon("repeat") + ' Review ' + dueCount + ' due</a>'
-          : '<span class="chip chip--ok">' + app.icon("check") + ' Queue clear</span>') +
+          ? '<a class="btn btn--primary btn--play" href="#/quiz/review">🧠 Review ' + dueCount + ' Cards Due Today →</a>'
+          : '<span class="chip chip--ok">✓ Memory Vault Up-To-Date</span>') +
       '</div>' +
 
-      (totalCards
-        ? '<div class="srs-pipeline-grid">' +
-            boxCounts.map(function (count, idx) {
-              var pctOfTotal = totalCards ? Math.round((count / totalCards) * 100) : 0;
-              return '<div class="srs-box-col" data-box="' + (idx + 1) + '">' +
-                '<span class="srs-box-num">Box ' + (idx + 1) + '</span>' +
-                '<div class="srs-box-count">' + count + '</div>' +
-                '<div class="srs-box-interval">' + intervals[idx] + '</div>' +
-                '<div class="bar mt-2" style="width:100%;height:5px">' +
-                  '<div class="bar__fill" style="width:' + (count / maxBox * 100) + '%"></div>' +
-                '</div>' +
-                '<span class="srs-box-pct mt-1">' + pctOfTotal + '% of cards' +
-                  (dueByBox[idx] ? ' · <b>' + dueByBox[idx] + ' due</b>' : '') + '</span>' +
-              '</div>';
-            }).join("") +
-          '</div>'
-        : '<div class="card p-5 text-center text-muted mt-4">' +
-            'The queue fills itself as you answer quiz questions — every answer files that question into a box.' +
-            '<br><a class="btn btn--primary btn--sm mt-3" href="#/quiz">Answer some questions</a></div>') +
-    '</section>';
+      '<div class="dash-memory-vault__steps mt-4">' +
+        memoryStepCard("🥉 Step 1", "Just Learning", learning, "Cards you've seen once", "amber", maxVal) +
+        memoryStepCard("🥈 Step 2", "Getting Stronger", stronger, "Remembered after 2-3 reviews", "blue", maxVal) +
+        memoryStepCard("🥇 Step 3", "Locked In Memory!", mastered, "Permanent long-term memory", "green", maxVal) +
+      '</div>' +
+    '</div>';
   }
 
-  /* ---------- Activity heatmap ---------- */
-  function renderHeatmapCard(activity, streak) {
-    var DAYS = 84;
-    var cells = [];
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function memoryStepCard(badge, title, count, sub, color, maxVal) {
+    var pct = Math.round((count / maxVal) * 100);
+    return '<div class="dash-mem-step dash-mem-step--' + color + '">' +
+      '<span class="dash-mem-step__badge">' + badge + '</span>' +
+      '<div class="dash-mem-step__val">' + count + '</div>' +
+      '<div class="dash-mem-step__title">' + title + '</div>' +
+      '<div class="dash-mem-step__bar-wrap mt-2">' +
+        '<div class="dash-mem-step__bar" style="width:' + pct + '%"></div>' +
+      '</div>' +
+      '<div class="dash-mem-step__sub mt-1">' + sub + '</div>' +
+    '</div>';
+  }
 
+  /* Activity Heatmap */
+  function renderSimpleActivityCard(activity, streak) {
+    var DAYS = 28; // Simple 4-week calendar
+    var cells = [];
     var d = new Date();
     d.setHours(0, 0, 0, 0);
     d.setDate(d.getDate() - (DAYS - 1));
 
-    var activeDaysCount = 0;
-    var totalInteractions = 0;
-    var monthSpans = [];   // month labels are derived, not guessed at thirds
-
+    var activeDays = 0;
     for (var i = 0; i < DAYS; i++) {
       var key = d.getFullYear() + "-" +
         String(d.getMonth() + 1).padStart(2, "0") + "-" +
         String(d.getDate()).padStart(2, "0");
       var n = activity[key] || 0;
-      if (n > 0) { activeDaysCount++; totalInteractions += n; }
-
-      var label = monthNames[d.getMonth()];
-      if (!monthSpans.length || monthSpans[monthSpans.length - 1].label !== label) {
-        monthSpans.push({ label: label, n: 1 });
-      } else {
-        monthSpans[monthSpans.length - 1].n++;
-      }
-
-      var lvl = n === 0 ? 0 : n < 3 ? 1 : n < 6 ? 2 : n < 12 ? 3 : 4;
-      cells.push('<div class="hm__cell" data-lvl="' + lvl + '" title="' +
-        new Date(d).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }) +
-        ' — ' + (n ? n + ' study actions' : 'no activity') + '"></div>');
+      if (n > 0) activeDays++;
+      var lvl = n === 0 ? 0 : n < 3 ? 1 : n < 6 ? 2 : 3;
+      var dateLabel = d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+      cells.push('<div class="dash-cal-cell" data-lvl="' + lvl + '" title="' + dateLabel + ' — ' + (n ? n + ' study actions' : 'no activity') + '"></div>');
       d.setDate(d.getDate() + 1);
     }
 
-    return '<div class="heatmap-card-elite">' +
-      '<div class="row row--between">' +
+    return '<div class="dash-card-box">' +
+      '<div class="row row--between items-center">' +
         '<div>' +
-          '<h3>Study activity heatmap</h3>' +
-          '<p class="muted small mt-1">The past 12 weeks of study actions.</p>' +
+          '<h3>📅 Past 4 Weeks Study Calendar</h3>' +
+          '<p class="muted small mt-1">Study every day to build your streak!</p>' +
         '</div>' +
-        '<span class="chip font-mono">' + plural(totalInteractions, 'action') + '</span>' +
+        '<span class="chip chip--accent font-bold">' + activeDays + ' of 28 Days Active</span>' +
       '</div>' +
 
-      '<div class="heatmap-grid-scroll mt-4">' +
-        '<div class="heatmap-months-row">' +
-          monthSpans.map(function (m) {
-            return '<span style="flex:' + m.n + ' 0 0">' + m.label + '</span>';
-          }).join("") +
-        '</div>' +
-        '<div class="hm-elite">' + cells.join("") + '</div>' +
+      '<div class="dash-cal-grid mt-4">' +
+        cells.join("") +
       '</div>' +
 
-      '<div class="heatmap-summary-strip">' +
-        '<div>Active days: <b>' + activeDaysCount + ' / ' + DAYS + '</b></div>' +
-        '<div>Longest streak: <b>' + plural(streak.longest, 'day') + '</b></div>' +
-        '<div class="row small faint" style="gap:4px">' +
+      '<div class="row row--between items-center mt-4 small muted">' +
+        '<span>🔥 Current streak: <b>' + streak.current + ' days</b></span>' +
+        '<div class="row items-center gap-1">' +
           '<span>Less</span>' +
-          [0, 1, 2, 3, 4].map(function (l) { return '<div class="hm__cell" style="width:11px;height:11px" data-lvl="' + l + '"></div>'; }).join("") +
+          '<div class="dash-cal-cell" data-lvl="0"></div>' +
+          '<div class="dash-cal-cell" data-lvl="1"></div>' +
+          '<div class="dash-cal-cell" data-lvl="2"></div>' +
+          '<div class="dash-cal-cell" data-lvl="3"></div>' +
           '<span>More</span>' +
         '</div>' +
       '</div>' +
     '</div>';
   }
 
-  /* ---------- Assessment ledger ---------- */
-  function renderRecentAttemptsCard(quiz) {
-    var list = (quiz.attempts || []).slice(-7).reverse();
+  /* Recent Quiz Scores Card */
+  function renderRecentQuizScoresCard(quiz) {
+    var list = (quiz.attempts || []).slice(-5).reverse();
 
     if (!list.length) {
-      return '<div class="heatmap-card-elite">' +
-        '<h3>Assessment ledger</h3>' +
-        '<p class="muted small mt-1">A record of your quizzes and simulation exams.</p>' +
-        '<div class="card p-5 text-center mt-4 text-muted">' +
-          app.icon("target") + '<br>No quiz attempts recorded yet.<br>' +
-          '<a class="btn btn--primary btn--sm mt-3" href="#/quiz">Take a diagnostic test</a>' +
+      return '<div class="dash-card-box">' +
+        '<h3>🏆 Recent Quiz Scores</h3>' +
+        '<p class="muted small mt-1">Your recent quiz report cards will appear here.</p>' +
+        '<div class="p-5 text-center text-muted">' +
+          'No quiz scores recorded yet.<br>' +
+          '<a class="btn btn--primary btn--sm mt-3" href="#/quiz">Play Your First Quiz Challenge</a>' +
         '</div>' +
       '</div>';
     }
 
-    return '<div class="heatmap-card-elite">' +
-      '<div class="row row--between">' +
+    return '<div class="dash-card-box">' +
+      '<div class="row row--between items-center">' +
         '<div>' +
-          '<h3>Assessment ledger</h3>' +
-          '<p class="muted small mt-1">Open any paper for its full analysis.</p>' +
+          '<h3>🏆 Recent Quiz Scores</h3>' +
+          '<p class="muted small mt-1">Click any score to see the full question review.</p>' +
         '</div>' +
-        '<a class="small" href="#/quiz">Quiz hub &rarr;</a>' +
+        '<a class="small" href="#/quiz">Quiz Arena →</a>' +
       '</div>' +
 
-      '<div class="tlist mt-4" style="border:none">' +
+      '<div class="dash-recent-list mt-3">' +
         list.map(function (a) {
           var p = app.pct(a.correct, a.total);
           var dt = new Date(a.at);
           var dateStr = dt.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-          var fmtLine = a.byFormat
-            ? ["mcq", "tf", "fib"].filter(function (f) { return a.byFormat[f] && a.byFormat[f].total; })
-                .map(function (f) {
-                  var labels = { mcq: "MCQ", tf: "T/F", fib: "FIB" };
-                  return labels[f] + ' ' + a.byFormat[f].right + '/' + a.byFormat[f].total;
-                }).join(' · ')
-            : '';
-          return '<a class="tlist__row" href="#/quiz/attempt/' + encodeURIComponent(a.id) + '">' +
-            '<span class="tlist__body">' +
-              '<span class="tlist__title">' + app.esc(a.label || "Animal Genetics Quiz") + '</span>' +
-              '<span class="tlist__sub">' + dateStr +
-                (a.exam ? ' · ⏱️ timed' : '') +
-                (a.orderMode ? ' · ' + (a.orderMode === "shuffle" ? "🔀 shuffle" : "📋 sequence") : '') +
-                (a.seconds ? ' · ' + Math.max(1, Math.round(a.seconds / 60)) + ' min' : '') +
-                (a.skipped ? ' · ' + a.skipped + ' skipped' : '') +
-                (a.timedOut ? ' · ⌛ auto-submitted' : '') +
-                (fmtLine ? '<br>' + fmtLine : '') +
-              '</span>' +
-            '</span>' +
-            '<span class="tlist__right">' +
-              '<span class="chip ' + scoreChip(p) + '">' + a.correct + '/' + a.total + ' (' + p + '%)</span>' +
-              app.icon("chevron", "faint") +
-            '</span>' +
+          var chip = p >= 85 ? "chip--ok" : p >= 70 ? "chip--accent" : p >= 50 ? "chip--warn" : "chip--danger";
+
+          return '<a class="dash-recent-row" href="#/quiz/attempt/' + encodeURIComponent(a.id) + '">' +
+            '<div>' +
+              '<b class="dash-recent-title">' + app.esc(a.label || "Animal Genetics Quiz") + '</b>' +
+              '<div class="dash-recent-sub">' + dateStr + ' · ' + a.correct + '/' + a.total + ' correct (' + p + '%)' + (a.exam ? ' · ⏱️ Timed' : '') + '</div>' +
+            '</div>' +
+            '<span class="chip ' + chip + '">' + p + '%</span>' +
           '</a>';
         }).join("") +
       '</div>' +
     '</div>';
   }
 
-  /* ---------- Student knowledge vault ---------- */
-  function renderKnowledgeVault(totalHl, hlColors, notesCount, bmsCount, qaCount) {
-    return '<section>' +
-      '<h2>Knowledge vault</h2>' +
-      '<p class="muted small mt-1">Your personal repository of notes, high-yield highlights and bookmarks.</p>' +
-      '<div class="vault-grid mt-4">' +
-        vaultCard("#/library", "star", bmsCount, "Bookmarked topics", "Quick revision access") +
-        vaultCard("#/library", "note", notesCount, "Personal notes", "Your own observations") +
-        vaultCard("#/library", "pen", totalHl, "Passages highlighted", "Colour-coded key points") +
-        vaultCard("#/qa", "qa", qaCount, "Exam questions revised", "Model answers reviewed") +
-      '</div>' +
-    '</section>';
+  /* Knowledge Vault */
+  function renderKnowledgeVault(totalHl, notesCount, bmsCount, qaCount) {
+    return '<div class="vault-grid mt-4">' +
+      vaultCard("#/library", "⭐", bmsCount, "Bookmarked Topics", "Quick access to favorite lessons", "gold") +
+      vaultCard("#/library", "📝", notesCount, "Personal Notes", "Your own study summaries", "blue") +
+      vaultCard("#/library", "🖍️", totalHl, "Highlighted Passages", "Important textbook sentences", "pink") +
+      vaultCard("#/qa", "💬", qaCount, "Exam Q&As Reviewed", "Practiced past exam answers", "green") +
+    '</div>';
   }
 
-  function vaultCard(href, ico, val, title, sub) {
-    return '<a class="vault-card" href="' + href + '">' +
-      '<div class="vault-card-icon">' + app.icon(ico) + '</div>' +
-      '<div class="vault-card-val">' + val + '</div>' +
-      '<div class="vault-card-title">' + title + '</div>' +
-      '<div class="vault-card-sub">' + sub + '</div>' +
+  function vaultCard(href, emoji, val, title, sub, color) {
+    return '<a class="dash-vault-card dash-vault-card--' + color + '" href="' + href + '">' +
+      '<div class="dash-vault-card__icon">' + emoji + '</div>' +
+      '<div class="dash-vault-card__val">' + val + '</div>' +
+      '<div class="dash-vault-card__title">' + title + '</div>' +
+      '<div class="dash-vault-card__sub">' + sub + '</div>' +
     '</a>';
-  }
-
-  /* ---------- Helpers ---------- */
-  function shorten(s, n) {
-    if (!s) return "";
-    return s.length > n ? s.slice(0, n - 1) + "…" : s;
   }
 
   function findNextUnreadTopic(allUnits, readMap) {
@@ -924,9 +664,6 @@ var dashboardApp = (function () {
     return null;
   }
 
-  /* An untested unit is the bigger risk, so it outranks any tested one —
-     the old version stopped at the first unit it saw and could recommend a
-     90% unit while a whole untested unit sat beside it. */
   function findWeakestUnit(allUnits, quiz) {
     var theory = allUnits.filter(function (u) {
       return u.stream === "theory" && app.questionCount(u.id) > 0;
@@ -953,7 +690,6 @@ var dashboardApp = (function () {
     return { id: worst.id, name: worst.short || worst.title, score: worstScore, hasScore: true };
   }
 
-  /* ---------- Attach UI events ---------- */
   function attachDashboardEvents(host, allUnits, readMap, quiz) {
     var filterBtns = host.querySelectorAll(".matrix-tab-btn");
     var container = host.querySelector("#unit-matrix-container");
@@ -963,7 +699,7 @@ var dashboardApp = (function () {
         filterBtns.forEach(function (b) { b.classList.remove("is-active"); });
         btn.classList.add("is-active");
         activeFilter = btn.getAttribute("data-filter") || "all";
-        if (container) container.innerHTML = renderUnitMatrix(activeFilter, allUnits, readMap, quiz);
+        if (container) container.innerHTML = renderUnitReportCards(activeFilter, allUnits, readMap, quiz);
       });
     });
   }

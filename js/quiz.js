@@ -2,18 +2,19 @@
    quiz.js  —  The Animal Genetics and Breeding Quiz Engine
    ------------------------------------------------------------
    Features:
+     - Interactive, playful, colorful and gamified Ed-Tech UI/UX
+     - 100% Silent: zero irritating sound effects
+     - Question Map Drawer: clean, non-cluttered slide-down navigator
+     - Instant visual feedback: vibrant option highlights, micro-animations,
+       confetti bursts, celebratory milestone badges
      - Curriculum-standard questions across Units 1 to 3
      - Strict 2 : 1 : 1 weighting (MCQ : TF : FIB)
      - Modular thematic sub-sections with dedicated module testing
      - Sequence Mode (curriculum order) vs Shuffle Mode (randomised)
-     - Live feedback, keyboard shortcuts, flagging and streak awards
      - Timed exam simulation with auto-submission
-     - Crash/refresh-safe: an unfinished paper can always be resumed
+     - Crash/refresh-safe: unfinished papers can always be resumed
      - Spaced repetition (Leitner) grading on every question
-     - A full post-paper analysis: pace, difficulty, format and
-       sub-section mastery, a focus plan, and a filterable
-       question-by-question review that is also replayable later
-       from the dashboard (#/quiz/attempt/<id>).
+     - Comprehensive post-paper analysis with 1-click retry of missed questions
    ============================================================ */
 
 var quizApp = (function () {
@@ -21,6 +22,7 @@ var quizApp = (function () {
   var host;                 // container element
   var run = null;           // active run state
   var reviewState = null;   // filter state for the analysis screen
+  var mapDrawerOpen = false;// question map drawer toggle
 
   /* Sub-section metadata for Units 1 to 3 */
   var subSectionsByUnit = {
@@ -49,14 +51,12 @@ var quizApp = (function () {
 
   var FORMAT_LABEL = { mcq: "Multiple Choice", tf: "True / False", fib: "Fill in the Blank" };
   var FORMAT_SHORT = { mcq: "MCQ", tf: "T/F", fib: "FIB" };
-  var FORMAT_ICON = { mcq: "🔘", tf: "⚖️", fib: "✍️" };
-  var DIFF_LABEL = { 1: "Foundational", 2: "Core UG", 3: "Rank 1 Classic" };
-  var DIFF_STARS = { 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐" };
+  var FORMAT_ICON  = { mcq: "🔘", tf: "⚖️", fib: "✍️" };
+  var DIFF_LABEL   = { 1: "Foundational", 2: "Core UG", 3: "Rank 1 Classic" };
+  var DIFF_STARS   = { 1: "⭐", 2: "⭐⭐", 3: "⭐⭐⭐" };
 
-  /* "exam" is not a syllabus sub-section: it is the hand-picked set of the
-     50 most examinable questions per unit (flagged "exam": true in the bank). */
   var EXAM_META = {
-    id: "exam", icon: "🔥", title: "Exam Top — most important questions",
+    id: "exam", icon: "🔥", title: "Exam Top 50 — High-Yield Questions",
     desc: "The hand-picked questions most likely to be asked in the annual exam, spread across the whole unit syllabus."
   };
 
@@ -67,7 +67,6 @@ var quizApp = (function () {
     for (var i = 0; i < list.length; i++) {
       if (list[i].id === subId) return list[i];
     }
-    // A paper spans several units, so fall back to a search across all of them.
     for (var u in subSectionsByUnit) {
       var arr = subSectionsByUnit[u];
       for (var j = 0; j < arr.length; j++) if (arr[j].id === subId) return arr[j];
@@ -81,9 +80,7 @@ var quizApp = (function () {
     return n;
   }
 
-  /* ============================================================
-     TEARDOWN — timers and key handlers must never outlive the run
-     ============================================================ */
+  /* Teardown */
   function teardown() {
     if (run) {
       if (run.timer) { clearInterval(run.timer); run.timer = null; }
@@ -92,6 +89,7 @@ var quizApp = (function () {
         run._keyHandler = null;
       }
     }
+    mapDrawerOpen = false;
   }
 
   function resetRun() {
@@ -99,8 +97,6 @@ var quizApp = (function () {
     run = null;
   }
 
-  /* Leaving the quiz section entirely: stop the clock, drop the key
-     bindings, but keep the paper on disk so it can be resumed. */
   function leave() {
     if (run && run.active) snapshot();
     teardown();
@@ -108,22 +104,10 @@ var quizApp = (function () {
     reviewState = null;
   }
 
-  /* ============================================================
-     BUILDING A QUESTION SET
-     ============================================================ */
-
-  /* The written bank leans heavily on one option position, which lets a
-     student guess by position instead of by knowledge. Every attempt
-     re-orders the choices and moves the answer index with them.
-     Purely numeric choices are sorted ascending instead — a jumbled list
-     of numbers reads as a mistake. */
+  /* Option ordering */
   function orderOptions(options, answerIndex) {
-    if (!Array.isArray(options) || options.length < 2) {
-      return { o: options, a: answerIndex };
-    }
-    if (typeof answerIndex !== "number" || !options[answerIndex]) {
-      return { o: options, a: answerIndex };
-    }
+    if (!Array.isArray(options) || options.length < 2) return { o: options, a: answerIndex };
+    if (typeof answerIndex !== "number" || !options[answerIndex]) return { o: options, a: answerIndex };
 
     var correct = options[answerIndex];
     var allNumeric = options.every(function (opt) {
@@ -140,7 +124,6 @@ var quizApp = (function () {
     }
 
     var newIndex = ordered.indexOf(correct);
-    // Duplicate option texts would resolve to the wrong slot; leave those untouched.
     if (newIndex === -1 || ordered.filter(function (t) { return t === correct; }).length > 1) {
       return { o: options, a: answerIndex };
     }
@@ -154,7 +137,7 @@ var quizApp = (function () {
       if (!b) return;
       formats.forEach(function (f) {
         (b[f] || []).forEach(function (q, i) {
-          if (!q.q || !String(q.q).trim()) return;   // skip empty template rows
+          if (!q.q || !String(q.q).trim()) return;
           if (subSectionId === "exam") {
             if (!q.exam) return;
           } else if (subSectionId && subSectionId !== "all" && q.subSection !== subSectionId) return;
@@ -179,8 +162,6 @@ var quizApp = (function () {
     return out;
   }
 
-  /* Resolve the written question behind a stored answer key, so a paper
-     taken weeks ago can still show its wording and explanation. */
   function bankQuestionByKey(key) {
     var parts = String(key || "").split(":");
     if (parts.length < 3) return null;
@@ -193,7 +174,7 @@ var quizApp = (function () {
   function scopeUnits(kind, id) {
     if (kind === "unit") return [id];
     if (kind === "paper") {
-      var p = syllabus.meta.papers.filter(function (x) { return x.id === id; })[0];
+      var p = (syllabus.meta.papers || []).filter(function (x) { return x.id === id; })[0];
       return p ? p.units.map(function (n) { return "unit-" + n; }) : [];
     }
     if (kind === "grand") return syllabus.theory.map(function (u) { return u.id; });
@@ -201,8 +182,6 @@ var quizApp = (function () {
     return [];
   }
 
-  /* Paper labels are derived from the syllabus, never written by hand —
-     the hard-coded one claimed Paper I held "Units 1, 2, 3". */
   function paperUnitLabel(paperId) {
     var p = (syllabus.meta.papers || []).filter(function (x) { return x.id === paperId; })[0];
     if (!p || !p.units || !p.units.length) return "";
@@ -218,10 +197,6 @@ var quizApp = (function () {
     return copy;
   }
 
-  /* The bank is stored format by format (all MCQs, then all T/F, then all
-     FIB), so simply taking the first N gave a paper of nothing but MCQs.
-     Take a share of each selected format instead, keeping the syllabus
-     2 : 1 : 1 weighting, then restore curriculum order for Sequence Mode. */
   function pickBalanced(pool, count, orderMode, formats) {
     var wanted = (formats && formats.length ? formats : ["mcq", "tf", "fib"]);
     var weights = { mcq: 2, tf: 1, fib: 1 };
@@ -236,15 +211,12 @@ var quizApp = (function () {
     if (!present.length) return [];
 
     var totalWeight = present.reduce(function (n, f) { return n + weights[f]; }, 0);
-
     var picked = [];
     present.forEach(function (f) {
       var share = Math.round(count * (weights[f] / totalWeight));
       picked = picked.concat(buckets[f].slice(0, Math.min(share, buckets[f].length)));
     });
 
-    // Rounding, or a format running dry, can leave the paper short — top it
-    // up from whatever questions are still unused.
     if (picked.length < count) {
       var used = {};
       picked.forEach(function (q) { used[q.key] = true; });
@@ -257,10 +229,8 @@ var quizApp = (function () {
     }
 
     picked = picked.slice(0, count);
-
     if (orderMode === "shuffle") return shuffle(picked);
 
-    // Sequence mode: hand them back in the order the bank lists them.
     var rank = {};
     pool.forEach(function (q, idx) { rank[q.key] = idx; });
     return picked.sort(function (x, y) { return rank[x.key] - rank[y.key]; });
@@ -279,16 +249,11 @@ var quizApp = (function () {
     return counts;
   }
 
-  /* ============================================================
-     ROUTER ENTRY POINT
-     ============================================================ */
+  /* Router entry point */
   function render(container, params) {
     host = container;
     var kind = params.a;
 
-    // Returning to #/quiz while a paper is open puts you back in the paper.
-    // Asking for a different screen abandons it — but it is snapshotted, so
-    // the hub always offers it back.
     if (run && run.active) {
       if (!kind) { paintRun(); return; }
       leave();
@@ -306,7 +271,7 @@ var quizApp = (function () {
   }
 
   /* ============================================================
-     HUB
+     QUIZ HUB — Playful, Colorful, Engaging Game Arena (Silent)
      ============================================================ */
   function renderHub() {
     resetRun();
@@ -318,96 +283,111 @@ var quizApp = (function () {
     var due = store.dueSrs().length;
     var q = store.getQuiz();
     var saved = store.getQuizResume();
-
-    var unitRows = syllabus.theory.map(function (u) {
-      var n = countAvailable([u.id]);
-      var rec = q.byUnit["unit:" + u.id];
-      var subList = subSectionsByUnit[u.id] || [];
-      return '<a class="tlist__row' + (n ? '' : ' is-empty') + '" href="' +
-        (n ? '#/quiz/unit/' + u.id : '#/quiz') + '">' +
-        '<span class="tlist__no">U' + u.no + '</span>' +
-        '<span class="tlist__body"><span class="tlist__title">' + app.esc(u.short) + '</span>' +
-        '<span class="tlist__sub">' +
-          (n ? '<b>' + n + ' questions</b> · ' + subList.length + ' modular sub-sections' +
-            (countAvailable([u.id], "exam") ? ' · 🔥 ' + countAvailable([u.id], "exam") + ' Exam Top' : '')
-            : 'No questions added yet') +
-        '</span></span>' +
-        '<span class="tlist__right">' +
-          (rec ? '<span class="chip ' + scoreChip(rec.best) + '">Best ' + rec.best + '%</span>' : '') +
-          (n ? app.icon("chevron", "faint") : '') +
-        '</span></a>';
-    }).join("");
-
-    var pracRows = syllabus.practical.map(function (u) {
-      var n = countAvailable([u.id]);
-      return '<a class="tlist__row' + (n ? '' : ' is-empty') + '" href="' +
-        (n ? '#/quiz/unit/' + u.id : '#/quiz') + '">' +
-        '<span class="tlist__no">P' + u.no + '</span>' +
-        '<span class="tlist__body"><span class="tlist__title">' + app.esc(u.short) + '</span>' +
-        '<span class="tlist__sub">' + (n ? n + ' questions' : 'No questions added yet') + '</span></span>' +
-        '<span class="tlist__right">' + (n ? app.icon("chevron", "faint") : '') + '</span></a>';
-    }).join("");
+    var streak = store.computeStreak ? store.computeStreak() : { current: 0 };
 
     var resumeCard = "";
     if (saved) {
       var answeredN = (saved.answers || []).filter(hasAnswer).length;
       resumeCard =
-        '<div class="qz-resume">' +
-          '<div class="qz-resume__body">' +
-            '<span class="chip chip--warn">' + app.icon("clock") + ' Unfinished paper</span>' +
-            '<h3 class="mt-2">' + app.esc(saved.label || "Animal Genetics Quiz") + '</h3>' +
-            '<p class="small muted mt-1">' + answeredN + ' of ' + saved.qs.length +
-            ' answered · saved ' + relTime(saved.savedAt) + '. Pick up exactly where you stopped.</p>' +
+        '<div class="qz-resume-card animate-scale-up">' +
+          '<div class="qz-resume-card__icon">⏳</div>' +
+          '<div class="qz-resume-card__body">' +
+            '<div class="qz-resume-card__tag">UNFINISHED GAME IN PROGRESS</div>' +
+            '<h3 class="qz-resume-card__title">' + app.esc(saved.label || "Animal Genetics Quiz") + '</h3>' +
+            '<p class="qz-resume-card__meta">' + answeredN + ' of ' + saved.qs.length +
+            ' answered · saved ' + relTime(saved.savedAt) + '. Jump right back in!</p>' +
           '</div>' +
-          '<div class="qz-resume__actions">' +
-            '<a class="btn btn--primary" href="#/quiz/resume">Resume paper</a>' +
+          '<div class="qz-resume-card__actions">' +
+            '<a class="btn btn--primary btn--play" href="#/quiz/resume">🚀 Resume Playing</a>' +
             '<button class="btn btn--ghost btn--sm" id="discardresume" type="button">Discard</button>' +
           '</div>' +
         '</div>';
     }
 
-    var ratioNote = counts.total
-      ? counts.mcq + ' MCQ · ' + counts.tf + ' True/False · ' + counts.fib + ' Fill-in-the-blank'
-      : '';
+    var unitCardsHtml = syllabus.theory.map(function (u) {
+      var n = countAvailable([u.id]);
+      var rec = q.byUnit["unit:" + u.id];
+      var bestScore = rec ? rec.best : null;
+      var examN = countAvailable([u.id], "exam");
+      var subList = subSectionsByUnit[u.id] || [];
+
+      var unitThemes = {
+        "unit-1": { gradient: "linear-gradient(135deg, #1565c0, #0288d1)", icon: "📊", name: "Biostatistics & Excel" },
+        "unit-2": { gradient: "linear-gradient(135deg, #6a48b5, #8e24aa)", icon: "🧬", name: "Principles of Genetics" },
+        "unit-3": { gradient: "linear-gradient(135deg, #00897b, #2e7d32)", icon: "🐄", name: "Animal Breeding" }
+      };
+      var theme = unitThemes[u.id] || { gradient: "linear-gradient(135deg, #1565c0, #00897b)", icon: "📘", name: u.short };
+
+      return '<div class="qz-unit-card">' +
+        '<div class="qz-unit-card__head" style="background:' + theme.gradient + '">' +
+          '<span class="qz-unit-card__badge">Unit ' + u.no + '</span>' +
+          '<span class="qz-unit-card__emoji">' + theme.icon + '</span>' +
+        '</div>' +
+        '<div class="qz-unit-card__body">' +
+          '<h3 class="qz-unit-card__title">' + app.esc(u.short) + '</h3>' +
+          '<p class="qz-unit-card__desc">' + subList.length + ' topic modules · ' + n + ' practice questions</p>' +
+          '<div class="qz-unit-card__tags mt-3">' +
+            '<span class="chip chip--sm chip--accent">' + n + ' Qs</span>' +
+            (examN ? '<span class="chip chip--sm chip--warn">🔥 ' + examN + ' Exam Top</span>' : '') +
+            (bestScore !== null ? '<span class="chip chip--sm ' + scoreChip(bestScore) + '">Best ' + bestScore + '%</span>' : '<span class="chip chip--sm chip--subtle">Untested</span>') +
+          '</div>' +
+        '</div>' +
+        '<div class="qz-unit-card__foot">' +
+          '<a class="btn btn--primary btn--play-unit" href="#/quiz/unit/' + u.id + '">Play Unit ' + u.no + ' →</a>' +
+        '</div>' +
+      '</div>';
+    }).join("");
 
     host.innerHTML =
-      '<div class="pagehead quiz-hub-head">' +
-        '<div class="row row--wrap items-center gap-2 mb-2">' +
-          '<span class="chip chip--accent font-mono">🌟 ' + totalAll + ' question bank</span>' +
-          (ratioNote ? '<span class="chip chip--ok">' + ratioNote + '</span>' : '') +
-          '<span class="chip">' + subSectionCount() + ' sub-sections</span>' +
+      '<div class="quiz-hub animate-fade-in">' +
+
+        /* 1. Playful Gamified Hero Banner */
+        '<div class="qz-hero-banner">' +
+          '<div class="qz-hero-decor qz-hero-decor--1">🧬</div>' +
+          '<div class="qz-hero-decor qz-hero-decor--2">⭐</div>' +
+          '<div class="qz-hero-decor qz-hero-decor--3">🎯</div>' +
+          '<div class="qz-hero-content">' +
+            '<div class="qz-hero-pills">' +
+              '<span class="qz-pill qz-pill--gold">🏆 Game Arena</span>' +
+              '<span class="qz-pill qz-pill--cyan">⚡ ' + totalAll + ' Questions</span>' +
+              '<span class="qz-pill qz-pill--flame">🔥 ' + streak.current + ' Day Streak</span>' +
+            '</div>' +
+            '<h1 class="qz-hero-title">Animal Genetics Quiz Arena</h1>' +
+            '<p class="qz-hero-subtitle">Level up your veterinary knowledge with colorful challenges, instant feedback, and real exam simulations!</p>' +
+          '</div>' +
         '</div>' +
-        '<h1>' + app.icon("quiz") + ' Animal Genetics Examination Suite</h1>' +
-        '<p class="lede">Test individual sub-sections, full units, paper-wise or grand exams. ' +
-        'Choose <b>Sequence Mode</b> (curriculum order) or <b>Shuffle Mode</b> (randomised), with instant feedback, ' +
-        'a timed exam simulator and a full post-paper analysis.</p>' +
-      '</div>' +
 
-      resumeCard +
+        resumeCard +
 
-      (totalAll === 0
-        ? '<div class="empty"><div class="empty__icon">' + app.icon("quiz") + '</div><h3>The question bank is empty</h3>' +
-          '<p>Add questions in <b>data/data-quiz.JS</b>.</p></div>'
-        : '') +
+        /* 2. Challenge Modes Grid */
+        '<div class="qz-section-head mt-8">' +
+          '<div class="qz-section-title"><span>🎮</span> Choose Your Challenge Mode</div>' +
+          '<p class="qz-section-sub">Pick from full mock exams, rapid-fire exam questions, or smart spaced memory review.</p>' +
+        '</div>' +
 
-      '<h2 class="mt-8 flex items-center gap-2"><span>🎯</span> Comprehensive mock tests</h2>' +
-      '<div class="grid grid--3 mt-4">' +
-        modeCard("Paper I", "Biostatistics & Animal Genetics (" + paperUnitLabel("paper-1") + ")", countAvailable(scopeUnits("paper", "paper-1")), "#/quiz/paper/paper-1", false, "theory") +
-        modeCard("Paper II", "Principles of Animal Breeding (" + paperUnitLabel("paper-2") + ")", countAvailable(scopeUnits("paper", "paper-2")), "#/quiz/paper/paper-2", false, "theory") +
-        modeCard("Grand test", "All three theory units", countAvailable(theoryIds), "#/quiz/grand", false, "trophy") +
-        modeCard("🔥 Exam Top " + countAvailable(theoryIds, "exam"), "The most important questions of all three units — last-minute revision", countAvailable(theoryIds, "exam"), "#/quiz/grand/exam", false, "target") +
-        modeCard("Practical", "All three practical units", countAvailable(pracIds), "#/quiz/practical", false, "practical") +
-        modeCard("Smart Review", due + " question" + (due === 1 ? "" : "s") + " due today", due, "#/quiz/review", true, "repeat") +
-      '</div>' +
+        '<div class="qz-modes-grid mt-4">' +
+          modeGameCard("Grand Championship Mock", "All 3 theory units combined in full 2:1:1 official exam weighting.", countAvailable(theoryIds), "#/quiz/grand", "trophy", "gold", "⭐ Full Simulation") +
+          modeGameCard("🔥 Exam Top 150 Rapid-Fire", "The highest-yield, most frequently tested questions for annual exams.", countAvailable(theoryIds, "exam"), "#/quiz/grand/exam", "flame", "coral", "🔥 High-Yield") +
+          modeGameCard("Paper I Arena", "Biostatistics & Animal Genetics (" + paperUnitLabel("paper-1") + ").", countAvailable(scopeUnits("paper", "paper-1")), "#/quiz/paper/paper-1", "atom", "blue", "Paper I") +
+          modeGameCard("Paper II Arena", "Principles of Animal Breeding (" + paperUnitLabel("paper-2") + ").", countAvailable(scopeUnits("paper", "paper-2")), "#/quiz/paper/paper-2", "flask", "emerald", "Paper II") +
+          modeGameCard("Practical Diagnostics", "Numericals, karyotyping, selection index and Mendelian crosses.", countAvailable(pracIds), "#/quiz/practical", "lab", "purple", "Practical") +
+          modeGameCard("Smart Memory Workout", due ? due + " cards due for spaced review right now!" : "Queue clear! All cards fresh.", due, "#/quiz/review", "repeat", "mint", "🧠 Memory Flash", !due) +
+        '</div>' +
 
-      '<h2 class="mt-12 flex items-center gap-2"><span>📚</span> Theory units with modular sub-sections</h2>' +
-      '<p class="small muted">Open any unit to practise a specific sub-section or the whole unit, in Sequence or Shuffle mode.</p>' +
-      '<div class="tlist mt-4">' + unitRows + '</div>' +
+        /* 3. Unit-by-Unit Quest Arena */
+        '<div class="qz-section-head mt-12">' +
+          '<div class="qz-section-title"><span>📚</span> Unit Mastery Quests</div>' +
+          '<p class="qz-section-sub">Target individual curriculum units or zoom into specific module sub-sections.</p>' +
+        '</div>' +
 
-      '<h2 class="mt-12 flex items-center gap-2"><span>🔬</span> Practical diagnostic units</h2>' +
-      '<div class="tlist mt-4">' + pracRows + '</div>' +
+        '<div class="qz-units-grid mt-4">' +
+          unitCardsHtml +
+        '</div>' +
 
-      renderRecentResults(q);
+        /* 4. Recent Results Hall of Fame */
+        renderRecentResults(q) +
+
+      '</div>';
 
     var discard = document.getElementById("discardresume");
     if (discard) {
@@ -419,52 +399,50 @@ var quizApp = (function () {
     }
   }
 
+  function modeGameCard(title, desc, n, href, ico, themeColor, badgeText, disabled) {
+    return '<a class="qz-game-card qz-game-card--' + themeColor + (disabled ? ' is-disabled' : '') + '" href="' + (disabled ? '#/quiz' : href) + '">' +
+      '<div class="qz-game-card__top">' +
+        '<span class="qz-game-card__tag">' + badgeText + '</span>' +
+        '<span class="qz-game-card__count">' + n + ' Qs</span>' +
+      '</div>' +
+      '<div class="qz-game-card__icon-wrap">' + app.icon(ico) + '</div>' +
+      '<h3 class="qz-game-card__title">' + title + '</h3>' +
+      '<p class="qz-game-card__desc">' + desc + '</p>' +
+      '<div class="qz-game-card__btn">Play Now →</div>' +
+    '</a>';
+  }
+
   function scoreChip(p) {
     return p >= 85 ? "chip--ok" : p >= 70 ? "chip--accent" : p >= 50 ? "chip--warn" : "chip--danger";
   }
 
-  /* A short ledger on the hub so the last few papers — and their full
-     analysis — are one click away instead of buried in the dashboard. */
   function renderRecentResults(q) {
     var list = (q.attempts || []).slice(-6).reverse();
     if (!list.length) return "";
 
-    return '<h2 class="mt-12 flex items-center gap-2"><span>📊</span> Recent results</h2>' +
-      '<p class="small muted">Open any paper to re-read its full analysis and question-by-question review.</p>' +
-      '<div class="tlist mt-4">' +
-        list.map(function (a) {
-          var p = app.pct(a.correct, a.total);
-          return '<a class="tlist__row" href="#/quiz/attempt/' + encodeURIComponent(a.id) + '">' +
-            '<span class="tlist__no">' + p + '%</span>' +
-            '<span class="tlist__body">' +
-              '<span class="tlist__title">' + app.esc(a.label || "Animal Genetics Quiz") + '</span>' +
-              '<span class="tlist__sub">' + fullDate(a.at) + ' · ' + a.correct + '/' + a.total + ' correct' +
-                (a.exam ? ' · ⏱️ timed' : '') +
-                (a.skipped ? ' · ' + a.skipped + ' skipped' : '') +
-              '</span>' +
-            '</span>' +
-            '<span class="tlist__right"><span class="chip ' + scoreChip(p) + '">' + a.correct + '/' + a.total + '</span>' +
-            app.icon("chevron", "faint") + '</span>' +
-          '</a>';
-        }).join("") +
-      '</div>';
-  }
-
-  function modeCard(title, sub, n, href, isReview, ico) {
-    var disabled = !n;
-    var iconHtml = ico ? app.icon(ico) : (isReview ? app.icon("repeat") : app.icon("quiz"));
-    return '<a class="card card--link modecard' + (disabled ? ' is-disabled' : '') + '" href="' +
-      (disabled ? '#/quiz' : href) + '">' +
-      '<div class="row"><span class="card__title" style="display:flex;align-items:center;gap:6px;">' + iconHtml + ' ' + title + '</span>' +
-      '<span class="chip push' + (n ? ' chip--accent' : '') + '">' + n + '</span></div>' +
-      '<p class="card__desc">' + sub + '</p>' +
-      (disabled ? '<p class="small faint mt-2">' +
-        (isReview ? 'Nothing due — answer some questions first.' : 'No questions added yet.') + '</p>' : '') +
-      '</a>';
+    return '<div class="qz-section-head mt-12">' +
+      '<div class="qz-section-title"><span>🏆</span> Recent Game Hall of Fame</div>' +
+      '<p class="qz-section-sub">Click any past game to open the full question-by-question walkthrough.</p>' +
+    '</div>' +
+    '<div class="qz-results-grid mt-4">' +
+      list.map(function (a) {
+        var p = app.pct(a.correct, a.total);
+        var chip = scoreChip(p);
+        var medal = p >= 85 ? "🥇" : p >= 70 ? "🥈" : p >= 50 ? "🥉" : "📝";
+        return '<a class="qz-result-pill" href="#/quiz/attempt/' + encodeURIComponent(a.id) + '">' +
+          '<span class="qz-result-pill__medal">' + medal + '</span>' +
+          '<div class="qz-result-pill__body">' +
+            '<div class="qz-result-pill__title">' + app.esc(a.label || "Animal Genetics Quiz") + '</div>' +
+            '<div class="qz-result-pill__sub">' + fullDate(a.at) + ' · ' + (a.exam ? '⏱️ timed · ' : '') + a.correct + ' of ' + a.total + ' correct</div>' +
+          '</div>' +
+          '<div class="qz-result-pill__score ' + chip + '">' + p + '%</div>' +
+        '</a>';
+      }).join("") +
+    '</div>';
   }
 
   /* ============================================================
-     SETUP SCREEN WITH SUB-SECTION PICKER & SEQUENCE/SHUFFLE TOGGLE
+     SETUP SCREEN — 4-Step Interactive Mission Configuration
      ============================================================ */
   function renderSetup(kind, id, preselectExam) {
     resetRun();
@@ -476,16 +454,15 @@ var quizApp = (function () {
       ? (unitMeta.stream === "practical" ? "Practical Unit " : "Unit ") + unitMeta.no + " — " + (unitMeta.short || "")
       : kind === "paper"
         ? (id === "paper-1" ? "Paper I" : "Paper II") + " — " + paperUnitLabel(id)
-        : kind === "grand" ? "Grand Test — All Theory Units" : "Practical Units";
+        : kind === "grand" ? "Grand Mock Test — All Theory Units" : "Practical Units Diagnostic";
 
     if (!unitIds.length || !countAvailable(unitIds)) {
       host.innerHTML =
-        '<div class="pagehead"><a class="btn btn--sm btn--ghost" href="#/quiz">← Quiz Hub</a>' +
+        '<div class="pagehead"><a class="btn btn--sm btn--ghost" href="#/quiz">← Back to Quiz Arena</a>' +
         '<h1 class="mt-3">' + app.esc(label) + '</h1></div>' +
         '<div class="empty"><div class="empty__icon">' + app.icon("quiz") + '</div>' +
-        '<h3>No questions written for this scope yet</h3>' +
-        '<p>Add them in <b>data/data-quiz.JS</b> and they will appear here automatically.</p>' +
-        '<a class="btn btn--primary mt-4" href="#/quiz">Back to the quiz hub</a></div>';
+        '<h3>No questions written for this selection yet</h3>' +
+        '<a class="btn btn--primary mt-4" href="#/quiz">Return to Quiz Arena</a></div>';
       return;
     }
 
@@ -527,19 +504,22 @@ var quizApp = (function () {
         var allCount = bankFor(unitIds, ["mcq", "tf", "fib"], "all").length;
         var examCount = bankFor(unitIds, ["mcq", "tf", "fib"], "exam").length;
         subSecHtml =
-          '<div class="setup__row subsec-selector-row">' +
-            '<div>' +
-              '<b class="flex items-center gap-2"><span>📂</span> Choose sub-section / module</b>' +
-              '<p class="small muted">Target a specific topic or practise all sub-sections in the unit.</p>' +
+          '<div class="qz-setup-step">' +
+            '<div class="qz-setup-step__head">' +
+              '<span class="qz-setup-step__num">1</span>' +
+              '<div>' +
+                '<h3 class="qz-setup-step__title">Choose Your Target Topic Module</h3>' +
+                '<p class="qz-setup-step__sub">Focus on a specific chapter or test the full unit in official exam ratios.</p>' +
+              '</div>' +
             '</div>' +
             '<div class="subsec-grid mt-3">' +
               '<button type="button" class="subsec-card' + (state.subSectionId === 'all' ? ' is-active' : '') + '" data-sub="all">' +
                 '<div class="subsec-card__head">' +
                   '<span class="subsec-card__icon">🌟</span>' +
-                  '<span class="subsec-card__title">All sub-sections (full unit)</span>' +
+                  '<span class="subsec-card__title">All Sub-Sections (Full Unit)</span>' +
                   '<span class="chip chip--accent subsec-card__badge">' + allCount + ' Qs</span>' +
                 '</div>' +
-                '<p class="subsec-card__desc">Complete unit test covering all topics in the 2 : 1 : 1 exam ratio.</p>' +
+                '<p class="subsec-card__desc">Complete comprehensive test covering all chapters in 2 : 1 : 1 exam ratio.</p>' +
               '</button>' +
               (examCount
                 ? '<button type="button" class="subsec-card subsec-card--exam' + (state.subSectionId === 'exam' ? ' is-active' : '') + '" data-sub="exam">' +
@@ -567,124 +547,118 @@ var quizApp = (function () {
           '</div>';
       }
 
-      var currentSubMeta = getSubSectionMeta(id, state.subSectionId);
-      var subHeadingBadge = currentSubMeta
-        ? '<span class="chip chip--accent">' + currentSubMeta.icon + ' ' + app.esc(currentSubMeta.title) + '</span>'
-        : (subSections.length
-            ? '<span class="chip chip--accent">🌟 All ' + subSections.length + ' sub-sections</span>'
-            : '');
-
       host.innerHTML =
-        '<div class="pagehead">' +
-          '<div class="row row--wrap items-center gap-2 mb-2">' +
-            '<a class="btn btn--sm btn--ghost" href="#/quiz">← Quiz Hub</a>' +
-            subHeadingBadge +
-            '<span class="chip font-mono">' + maxN + ' available questions</span>' +
+        '<div class="qz-setup-container animate-fade-in">' +
+          '<div class="qz-setup-header">' +
+            '<a class="btn btn--sm btn--ghost" href="#/quiz">← Back to Arena</a>' +
+            '<div class="qz-setup-title-wrap">' +
+              '<h1 class="qz-setup-title">' + app.esc(label) + '</h1>' +
+              '<p class="qz-setup-lede">Configure your game settings below — question count, format mix, and timed challenge.</p>' +
+            '</div>' +
+            '<span class="chip chip--accent font-mono">' + maxN + ' available questions</span>' +
           '</div>' +
-          '<h1>' + app.esc(label) + '</h1>' +
-          '<p class="lede">Configure your test below — question count, format filters, order and exam timing.</p>' +
-        '</div>' +
 
-        '<div class="card setup quiz-setup-card">' +
-          subSecHtml +
+          '<div class="qz-setup-card mt-6">' +
+            subSecHtml +
 
-          (!subSections.length && bankFor(unitIds, ["mcq", "tf", "fib"], "exam").length
-            ? '<div class="setup__row">' +
+            /* Step: Game Style & Order */
+            '<div class="qz-setup-step">' +
+              '<div class="qz-setup-step__head">' +
+                '<span class="qz-setup-step__num">' + (subSections.length ? '2' : '1') + '</span>' +
                 '<div>' +
-                  '<b>🔥 Exam Top questions only</b>' +
-                  '<p class="small muted">Restrict this mock to the hand-picked most important questions of each unit (' +
-                    bankFor(unitIds, ["mcq", "tf", "fib"], "exam").length + ' available).</p>' +
+                  '<h3 class="qz-setup-step__title">Question Order &amp; Style</h3>' +
+                  '<p class="qz-setup-step__sub">Choose whether to follow the syllabus order or test your recall with random shuffle.</p>' +
                 '</div>' +
-                '<label class="switch"><input type="checkbox" id="examonly"' + (state.subSectionId === "exam" ? ' checked' : '') + '><span></span></label>' +
-              '</div>'
-            : '') +
+              '</div>' +
+              '<div class="quiz-mode-toggle mt-3" id="ordermodetoggle">' +
+                '<button type="button" class="toggle-pill' + (state.orderMode === 'sequence' ? ' is-selected' : '') + '" data-mode="sequence">' +
+                  '<span class="pill-icon">📋</span>' +
+                  '<span class="pill-label">Sequence Mode</span>' +
+                  '<span class="pill-sub">Follows curriculum order step-by-step</span>' +
+                '</button>' +
+                '<button type="button" class="toggle-pill' + (state.orderMode === 'shuffle' ? ' is-selected' : '') + '" data-mode="shuffle">' +
+                  '<span class="pill-icon">🔀</span>' +
+                  '<span class="pill-label">Shuffle Mode</span>' +
+                  '<span class="pill-sub">Randomises questions for active recall</span>' +
+                '</button>' +
+              '</div>' +
+            '</div>' +
 
-          /* Order Mode Toggle (Sequence vs Shuffle) */
-          '<div class="setup__row">' +
-            '<div>' +
-              '<b class="flex items-center gap-2"><span>🔄</span> Question order mode</b>' +
-              '<p class="small muted">Attempt questions in syllabus order, or shuffle them randomly.</p>' +
+            /* Step: Formats */
+            '<div class="qz-setup-step">' +
+              '<div class="qz-setup-step__head">' +
+                '<span class="qz-setup-step__num">' + (subSections.length ? '3' : '2') + '</span>' +
+                '<div>' +
+                  '<h3 class="qz-setup-step__title">Question Formats (2 : 1 : 1 Exam Ratio)</h3>' +
+                  '<p class="qz-setup-step__sub">Toggle the formats you want to include in this challenge.</p>' +
+                '</div>' +
+              '</div>' +
+              '<div class="row row--wrap gap-3 mt-3" id="fmtbox">' +
+                ['mcq', 'tf', 'fib'].map(function (f) {
+                  var count = counts[f];
+                  var checked = state.formats.indexOf(f) !== -1 && count > 0;
+                  return '<label class="check-pill' + (checked ? ' is-checked' : '') + (count === 0 ? ' is-disabled' : '') + '">' +
+                    '<input type="checkbox" data-fmt="' + f + '"' + (checked ? ' checked' : '') + (count === 0 ? ' disabled' : '') + '> ' +
+                    '<span class="check-pill__icon">' + FORMAT_ICON[f] + '</span>' +
+                    '<span class="check-pill__label">' + FORMAT_LABEL[f] + '</span>' +
+                    '<span class="chip chip--sm ml-1">' + count + '</span>' +
+                  '</label>';
+                }).join("") +
+              '</div>' +
             '</div>' +
-            '<div class="quiz-mode-toggle" id="ordermodetoggle">' +
-              '<button type="button" class="toggle-pill' + (state.orderMode === 'sequence' ? ' is-selected' : '') + '" data-mode="sequence">' +
-                '<span class="pill-icon">📋</span>' +
-                '<span class="pill-label">Sequence Mode</span>' +
-                '<span class="pill-sub">Curriculum order</span>' +
-              '</button>' +
-              '<button type="button" class="toggle-pill' + (state.orderMode === 'shuffle' ? ' is-selected' : '') + '" data-mode="shuffle">' +
-                '<span class="pill-icon">🔀</span>' +
-                '<span class="pill-label">Shuffle Mode</span>' +
-                '<span class="pill-sub">Randomised order</span>' +
-              '</button>' +
+
+            /* Step: Question Count */
+            '<div class="qz-setup-step">' +
+              '<div class="qz-setup-step__head">' +
+                '<span class="qz-setup-step__num">' + (subSections.length ? '4' : '3') + '</span>' +
+                '<div>' +
+                  '<h3 class="qz-setup-step__title">Number of Questions</h3>' +
+                  '<p class="qz-setup-step__sub">Pick your workout size from a quick 10-question sprint to a full marathon.</p>' +
+                '</div>' +
+              '</div>' +
+              '<div class="seg mt-3" id="segcount">' +
+                presets.map(function (n) {
+                  var isSelected = state.count === n;
+                  var label = n === 10 ? '⚡ 10 (Sprint)' : n === 20 ? '🎯 20 (Standard)' : n === 30 ? '🚀 30 (Deep Dive)' : (n === maxN ? '🏆 All (' + n + ')' : n);
+                  return '<button type="button" class="seg__btn' + (isSelected ? ' is-on' : '') + '" data-count="' + n + '">' + label + '</button>';
+                }).join("") +
+              '</div>' +
             '</div>' +
+
+            /* Step: Exam Mode */
+            '<div class="qz-setup-step">' +
+              '<div class="row row--between items-center">' +
+                '<div>' +
+                  '<h3 class="qz-setup-step__title">⏱️ Exam Simulation Mode</h3>' +
+                  '<p class="qz-setup-step__sub">Timed challenge with no answers revealed until submission — exactly like the real board exam!</p>' +
+                '</div>' +
+                '<label class="switch"><input type="checkbox" id="exammode"' + (state.exam ? ' checked' : '') + '><span></span></label>' +
+              '</div>' +
+              '<div class="mt-4" id="timerow"' + (state.exam ? '' : ' hidden') + '>' +
+                '<div class="small muted mb-2 font-bold">Select Countdown Limit:</div>' +
+                '<div class="seg" id="segtime">' +
+                  [10, 20, 30, 45, 60].map(function (m) {
+                    return '<button type="button" class="seg__btn' + (state.minutes === m ? ' is-on' : '') + '" data-min="' + m + '">' + m + ' min</button>';
+                  }).join("") +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+
           '</div>' +
 
-          /* Format selection */
-          '<div class="setup__row">' +
-            '<div>' +
-              '<b>Question formats (2 : 1 : 1 ratio)</b>' +
-              '<p class="small muted">Select any combination of question types.</p>' +
-            '</div>' +
-            '<div class="row row--wrap gap-3" id="fmtbox">' +
-              ['mcq', 'tf', 'fib'].map(function (f) {
-                var count = counts[f];
-                var checked = state.formats.indexOf(f) !== -1 && count > 0;
-                return '<label class="check-pill' + (checked ? ' is-checked' : '') + (count === 0 ? ' is-disabled' : '') + '">' +
-                  '<input type="checkbox" data-fmt="' + f + '"' + (checked ? ' checked' : '') + (count === 0 ? ' disabled' : '') + '> ' +
-                  '<span class="check-pill__icon">' + FORMAT_ICON[f] + '</span>' +
-                  '<span class="check-pill__label">' + FORMAT_LABEL[f] + '</span>' +
-                  '<span class="chip chip--sm ml-1">' + count + '</span>' +
-                '</label>';
-              }).join("") +
-            '</div>' +
-          '</div>' +
-
-          /* Question count */
-          '<div class="setup__row">' +
-            '<div>' +
-              '<b>Number of questions</b>' +
-              '<p class="small muted">Choose your practice length.</p>' +
-            '</div>' +
-            '<div class="seg" id="segcount">' +
-              presets.map(function (n) {
-                var isSelected = state.count === n;
-                return '<button type="button" class="seg__btn' + (isSelected ? ' is-on' : '') + '" data-count="' + n + '">' +
-                  (n === maxN ? 'All (' + n + ')' : n) +
-                '</button>';
-              }).join("") +
-            '</div>' +
-          '</div>' +
-
-          /* Exam Mode Toggle */
-          '<div class="setup__row">' +
-            '<div>' +
-              '<b>⏱️ Exam mode (timed)</b>' +
-              '<p class="small muted">Timed paper with no answer reveals until final submission — mirrors the annual university exam.</p>' +
-            '</div>' +
-            '<label class="switch"><input type="checkbox" id="exammode"' + (state.exam ? ' checked' : '') + '><span></span></label>' +
-          '</div>' +
-
-          /* Time Limit selector */
-          '<div class="setup__row" id="timerow"' + (state.exam ? '' : ' hidden') + '>' +
-            '<div>' +
-              '<b>Time limit</b>' +
-              '<p class="small muted">Automatic submission when the clock reaches zero.</p>' +
-            '</div>' +
-            '<div class="seg" id="segtime">' +
-              [10, 20, 30, 45, 60].map(function (m) {
-                return '<button type="button" class="seg__btn' + (state.minutes === m ? ' is-on' : '') + '" data-min="' + m + '">' + m + ' min</button>';
-              }).join("") +
-            '</div>' +
-          '</div>' +
-
-          /* Action Bar */
-          '<div class="row mt-8 items-center row--wrap">' +
+          /* Bottom Launch Dock */
+          '<div class="qz-launch-dock mt-6">' +
             '<a class="btn btn--ghost" href="#/quiz">Cancel</a>' +
-            '<div class="push"></div>' +
-            '<button class="btn btn--primary btn--lg" id="startbtn">' +
-              '🚀 Start quiz (' + Math.min(state.count, maxN) + ' questions)' +
+            '<div class="qz-launch-dock__info">' +
+              '<span>Configured: <b>' + Math.min(state.count, maxN) + ' Questions</b></span>' +
+              '<span> · ' + (state.orderMode === "shuffle" ? "🔀 Shuffled" : "📋 Sequence") + '</span>' +
+              (state.exam ? '<span> · ⏱️ ' + state.minutes + ' min</span>' : '<span> · 💡 Instant Feedback</span>') +
+            '</div>' +
+            '<button class="btn btn--primary btn--lg btn--launch" id="startbtn">' +
+              '🚀 Launch Challenge (' + Math.min(state.count, maxN) + ' Questions)' +
             '</button>' +
           '</div>' +
+
         '</div>';
 
       attachEvents();
@@ -726,20 +700,9 @@ var quizApp = (function () {
         btn.addEventListener("click", function () {
           state.count = parseInt(btn.getAttribute("data-count"), 10);
           savePrefs();
-          document.querySelectorAll("#segcount .seg__btn").forEach(function (b) { b.classList.remove("is-on"); });
-          btn.classList.add("is-on");
-          var startBtn = document.getElementById("startbtn");
-          if (startBtn) startBtn.textContent = '🚀 Start quiz (' + state.count + ' questions)';
-        });
-      });
-
-      var examOnly = document.getElementById("examonly");
-      if (examOnly) {
-        examOnly.addEventListener("change", function () {
-          state.subSectionId = examOnly.checked ? "exam" : "all";
           updateView();
         });
-      }
+      });
 
       var examChk = document.getElementById("exammode");
       if (examChk) {
@@ -794,9 +757,7 @@ var quizApp = (function () {
     updateView();
   }
 
-  /* ============================================================
-     SMART REVIEW (spaced repetition queue)
-     ============================================================ */
+  /* Smart review (spaced repetition) */
   function renderReview() {
     resetRun();
     var dueKeys = store.dueSrs();
@@ -805,18 +766,17 @@ var quizApp = (function () {
 
     if (!pool.length) {
       host.innerHTML =
-        '<div class="pagehead"><span class="eyebrow">Spaced repetition</span><h1>Smart Review</h1></div>' +
-        '<div class="empty"><div class="empty__icon">✅</div><h3>Nothing due right now</h3>' +
-        '<p>Questions you answer wrongly come back tomorrow, then after 2, 4, 8 and 16 days ' +
-        'as you keep getting them right. Take a quiz first and this queue will fill itself.</p>' +
-        '<a class="btn btn--primary mt-4" href="#/quiz">Go to the quiz hub</a></div>';
+        '<div class="pagehead"><span class="eyebrow">Spaced Memory Workout</span><h1>Smart Memory Queue</h1></div>' +
+        '<div class="empty"><div class="empty__icon">🎉</div><h3>Your memory queue is 100% clear!</h3>' +
+        '<p>All your reviewed cards are safely consolidated. Questions you miss in quizzes will automatically reappear here when it is time to refresh your memory.</p>' +
+        '<a class="btn btn--primary mt-4" href="#/quiz">Play a Quiz Challenge</a></div>';
       return;
     }
 
     start({
       questions: shuffle(pool),
       scope: "review",
-      label: "Smart Review",
+      label: "Smart Memory Review",
       exam: false,
       minutes: 0,
       orderMode: "shuffle",
@@ -825,9 +785,7 @@ var quizApp = (function () {
     });
   }
 
-  /* ============================================================
-     RUNNING A QUIZ
-     ============================================================ */
+  /* Running a quiz */
   function start(cfg) {
     teardown();
     var questions = cfg.questions || [];
@@ -836,9 +794,6 @@ var quizApp = (function () {
       qs: questions,
       i: 0,
       answers: new Array(questions.length).fill(null),
-      // Feedback and SRS grading are per question, never one flag for the
-      // whole run — that was what made answered questions look unattempted
-      // after stepping back through them.
       checked: new Array(questions.length).fill(false),
       graded: new Array(questions.length).fill(false),
       flags: new Array(questions.length).fill(false),
@@ -870,13 +825,13 @@ var quizApp = (function () {
       if (Date.now() >= run.endsAt) { finish(true); return; }
       var t = document.getElementById("qtimer");
       if (t) {
-        t.textContent = fmtTime(run.endsAt - Date.now());
-        if (run.endsAt - Date.now() < 60000) t.classList.add("is-critical");
+        var remain = run.endsAt - Date.now();
+        t.textContent = fmtTime(remain);
+        if (remain < 60000) t.classList.add("is-critical");
       }
     }, 1000);
   }
 
-  /* ---------- resume support ---------- */
   function snapshot() {
     if (!run || !run.active) return;
     accrueTime();
@@ -890,7 +845,7 @@ var quizApp = (function () {
         startedAt: run.startedAt, retryOf: run.retryOf,
         bestStreak: run.bestStreak, savedAt: Date.now()
       });
-    } catch (e) { /* storage full — the paper simply will not be resumable */ }
+    } catch (e) {}
   }
 
   function resumeSaved() {
@@ -913,15 +868,12 @@ var quizApp = (function () {
       timer: null, streak: 0, bestStreak: s.bestStreak || 0,
       tickAt: Date.now()
     };
-    // A timed paper whose clock ran out while the app was closed is over.
     if (run.exam && run.endsAt && Date.now() >= run.endsAt) { finish(true); return; }
     startTimer();
-    app.toast("Paper resumed at question " + (run.i + 1));
+    app.toast("Paper resumed at Question " + (run.i + 1));
     paintRun();
   }
 
-  /* An answer counts as given for 0 (option A) and for False, so test the
-     empty cases explicitly instead of relying on truthiness. */
   function hasAnswer(v) {
     if (v === null || v === undefined) return false;
     if (typeof v === "string") return v.trim() !== "";
@@ -932,17 +884,14 @@ var quizApp = (function () {
     return run.answers.filter(hasAnswer).length;
   }
 
-  /* Time is charged to whichever question was on screen. */
   function accrueTime() {
     if (!run) return;
     var now = Date.now();
     var delta = now - (run.tickAt || now);
-    // Ignore an absurd gap — the tab was in the background, not being read.
     if (delta > 0 && delta < 10 * 60000) run.times[run.i] = (run.times[run.i] || 0) + delta;
     run.tickAt = now;
   }
 
-  /* Grade into spaced repetition once per question per run. */
   function gradeOnce(idx) {
     if (run.graded[idx]) return;
     run.graded[idx] = true;
@@ -986,175 +935,200 @@ var quizApp = (function () {
       dt.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
   }
 
-  /* Option letters must not run out past D. */
   function optKey(i) {
     return String.fromCharCode(65 + i);
   }
 
+  /* ============================================================
+     IN-RUN QUIZ UI — Non-Cluttered, Colorful, Tactile & Playful (Silent)
+     ============================================================ */
   function paintRun() {
     if (!run || !run.active) return;
     var q = run.qs[run.i];
     var given = run.answers[run.i];
-    // Practice mode reveals as soon as this question is answered, and keeps
-    // showing that result whenever you come back to it. Exam mode reveals
-    // nothing until the paper is submitted.
     var showFeedback = !run.exam && run.checked[run.i];
+    var isAnswerCorrect = showFeedback && isCorrect(q, given);
 
     var body;
     if (q.format === "mcq") {
-      body = '<div class="opts">' + (q.o || []).map(function (opt, i) {
-        var cls = "opt";
-        if (given === i) cls += " is-picked";
+      body = '<div class="opts opts--gamified">' + (q.o || []).map(function (opt, i) {
+        var cls = "opt opt--gamified";
+        var isPicked = given === i;
+        if (isPicked) cls += " is-picked";
         if (showFeedback) {
           if (i === q.a) cls += " is-right";
-          else if (given === i) cls += " is-wrong";
+          else if (isPicked) cls += " is-wrong";
         }
         return '<button type="button" class="' + cls + '" data-pick="' + i + '"' + (showFeedback ? ' disabled' : '') + '>' +
           '<span class="opt__key">' + optKey(i) + '</span>' +
           '<span class="opt__text">' + app.esc(opt) + '</span>' +
-          (showFeedback && i === q.a ? '<span class="opt__state">✓</span>' : '') +
-          (showFeedback && given === i && i !== q.a ? '<span class="opt__state">✗</span>' : '') +
+          (showFeedback && i === q.a ? '<span class="opt__state opt__state--ok">✓ Correct</span>' : '') +
+          (showFeedback && isPicked && i !== q.a ? '<span class="opt__state opt__state--bad">✗ Incorrect</span>' : '') +
         '</button>';
       }).join("") + '</div>';
 
     } else if (q.format === "tf") {
-      body = '<div class="opts opts--2">' + [true, false].map(function (v) {
-        var cls = "opt opt--tf";
-        if (given === v) cls += " is-picked";
+      body = '<div class="opts opts--2 opts--gamified">' + [true, false].map(function (v) {
+        var cls = "opt opt--tf opt--gamified";
+        var isPicked = given === v;
+        if (isPicked) cls += " is-picked";
         if (showFeedback) {
           if (v === q.a) cls += " is-right";
-          else if (given === v) cls += " is-wrong";
+          else if (isPicked) cls += " is-wrong";
         }
+        var icon = v ? "🟢" : "🔴";
         return '<button type="button" class="' + cls + '" data-pick="' + v + '"' + (showFeedback ? ' disabled' : '') + '>' +
-          '<span class="opt__key">' + (v ? "T" : "F") + '</span>' +
-          '<span class="opt__text">' + (v ? "True" : "False") + '</span>' +
-          (showFeedback && v === q.a ? '<span class="opt__state">✓</span>' : '') +
-          (showFeedback && given === v && v !== q.a ? '<span class="opt__state">✗</span>' : '') +
+          '<span class="opt__key opt__key--tf">' + (v ? "T" : "F") + '</span>' +
+          '<span class="opt__text">' + icon + ' ' + (v ? "True" : "False") + '</span>' +
+          (showFeedback && v === q.a ? '<span class="opt__state opt__state--ok">✓ Correct</span>' : '') +
+          (showFeedback && isPicked && v !== q.a ? '<span class="opt__state opt__state--bad">✗ Incorrect</span>' : '') +
         '</button>';
       }).join("") + '</div>';
 
     } else {
       var fibOk = showFeedback && isCorrect(q, given);
-      body = '<div class="fib-card">' +
+      body = '<div class="fib-card fib-card--gamified">' +
         '<div class="fib-input-wrap">' +
-          '<input type="text" id="fibinput" class="fib-input" placeholder="Type your answer here…" autocomplete="off" autocorrect="off" spellcheck="false" ' +
+          '<input type="text" id="fibinput" class="fib-input" placeholder="Type your answer here and press Enter…" autocomplete="off" autocorrect="off" spellcheck="false" ' +
           'value="' + app.esc(given !== null && given !== undefined ? String(given) : "") + '"' + (showFeedback ? ' disabled' : '') + '>' +
           (!showFeedback
-            ? '<button type="button" class="btn btn--primary" id="fibsubmit">Submit</button>'
+            ? '<button type="button" class="btn btn--primary btn--submit-fib" id="fibsubmit">Submit ↵</button>'
             : '') +
         '</div>' +
         (showFeedback
           ? '<div class="fib-accepted-callout ' + (fibOk ? 'is-ok' : 'is-error') + '">' +
-              '<span class="badge">' + (fibOk ? '✓ Correct' : '✗ Incorrect') + '</span>' +
+              '<span class="badge">' + (fibOk ? '✓ Correct Answer' : '✗ Incorrect') + '</span>' +
               '<span class="label"><b>Standard answer:</b> ' + app.esc(displayAnswer(q)) + '</span>' +
-              (fibOk && run.near[run.i] ? '<span class="label small faint">Accepted with a spelling slip — write it exactly in the exam.</span>' : '') +
+              (fibOk && run.near[run.i] ? '<span class="label small faint">Accepted with a slight spelling slip — remember the exact term for exams!</span>' : '') +
             '</div>'
-          : '<p class="small faint mt-2">Spelling slips are forgiven, but write the exact term in the exam.</p>') +
+          : '<p class="small faint mt-2">💡 Tip: Type the key term. Minor typos/casing are forgiven.</p>') +
         '</div>';
     }
 
     var answered = answeredCount();
     var flaggedN = run.flags.filter(Boolean).length;
+    var progressPct = Math.round(((run.i + 1) / run.qs.length) * 100);
 
-    // Exam-hall style question palette: see at a glance what is answered,
-    // flagged or still blank, and jump straight to anything you want.
-    var palette = '<div class="qpalette mt-3">' + run.qs.map(function (item, idx) {
-      var cls = "qpalette__dot";
-      if (idx === run.i) cls += " is-current";
-      if (hasAnswer(run.answers[idx])) {
-        cls += " is-done";
-        if (!run.exam && run.checked[idx]) {
-          cls += isCorrect(item, run.answers[idx]) ? " is-right" : " is-wrong";
-        }
-      }
-      if (run.flags[idx]) cls += " is-flagged";
-      return '<button type="button" class="' + cls + '" data-goto="' + idx + '" ' +
-        'aria-label="Question ' + (idx + 1) + (run.flags[idx] ? ', flagged' : '') + '">' + (idx + 1) + '</button>';
-    }).join("") + '</div>';
+    /* Question Drawer / Navigator Map (Keeps the screen clean, opens on demand!) */
+    var paletteHtml = '<div class="quiz-map-drawer' + (mapDrawerOpen ? ' is-open' : '') + '" id="mapdrawer">' +
+      '<div class="quiz-map-drawer__head">' +
+        '<div class="quiz-map-drawer__title">🗺️ Question Navigator Map</div>' +
+        '<div class="quiz-map-drawer__legend">' +
+          '<span class="qz-leg qz-leg--done">● Answered</span>' +
+          '<span class="qz-leg qz-leg--flag">🚩 Flagged (' + flaggedN + ')</span>' +
+          '<span class="qz-leg qz-leg--blank">○ Blank (' + (run.qs.length - answered) + ')</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="quiz-map-drawer__grid">' +
+        run.qs.map(function (item, idx) {
+          var cls = "qpalette__dot";
+          if (idx === run.i) cls += " is-current";
+          if (hasAnswer(run.answers[idx])) {
+            cls += " is-done";
+            if (!run.exam && run.checked[idx]) {
+              cls += isCorrect(item, run.answers[idx]) ? " is-right" : " is-wrong";
+            }
+          }
+          if (run.flags[idx]) cls += " is-flagged";
+          return '<button type="button" class="' + cls + '" data-goto="' + idx + '" ' +
+            'title="Question ' + (idx + 1) + (run.flags[idx] ? ' (Flagged)' : '') + '">' +
+            (run.flags[idx] ? '🚩' : (idx + 1)) +
+          '</button>';
+        }).join("") +
+      '</div>' +
+    '</div>';
 
     var subMeta = getSubSectionMeta(q.unitId, q.subSection);
     var subBadge = subMeta
       ? '<span class="chip chip--accent"><span class="qicon">' + subMeta.icon + '</span> ' + app.esc(subMeta.title) + '</span>'
       : '';
-
-    var diffBadge = '<span class="chip ' + (q.diff === 3 ? 'chip--warn' : 'chip--subtle') + '">' +
-      (DIFF_STARS[q.diff] || "⭐") + ' ' + (DIFF_LABEL[q.diff] || "Foundational") + '</span>';
-
-    var orderBadge = run.orderMode === "sequence"
-      ? '<span class="chip chip--subtle">📋 Sequence</span>'
-      : '<span class="chip chip--subtle">🔀 Shuffle</span>';
+    var unitMeta = syllabus.unitById[q.unitId] || {};
 
     host.innerHTML =
-      '<div class="quizrun animate-fade-in">' +
-        '<div class="quizrun__bar">' +
-          '<button class="btn btn--sm btn--ghost" id="quitbtn">Quit</button>' +
-          '<span class="chip font-medium">' + app.esc(run.label) + '</span>' +
-          orderBadge +
-          '<div class="push"></div>' +
-          (run.streak >= 2 ? '<span class="chip chip--accent streak-badge">🔥 Streak ' + run.streak + '</span>' : '') +
-          (run.exam ? '<span class="chip chip--warn font-mono" id="qtimer">' + fmtTime(run.endsAt - Date.now()) + '</span>' : '') +
-          '<span class="chip font-mono">' + (run.i + 1) + ' / ' + run.qs.length + '</span>' +
+      '<div class="quizrun-arena animate-fade-in">' +
+
+        /* Top Bar: Clean, focused, Question map button */
+        '<div class="quizrun__topbar">' +
+          '<button class="btn btn--sm btn--ghost" id="quitbtn" title="Exit challenge safely">✕ Quit</button>' +
+          '<span class="chip chip--subtle font-mono qz-badge-progress">Q ' + (run.i + 1) + ' of ' + run.qs.length + '</span>' +
+
+          '<div class="quizrun__topbar-center">' +
+            '<div class="qz-progress-track">' +
+              '<div class="qz-progress-fill" style="width:' + progressPct + '%"></div>' +
+              '<span class="qz-progress-label">' + progressPct + '%</span>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="quizrun__topbar-right">' +
+            (run.streak >= 2
+              ? '<span class="chip chip--accent streak-badge" title="Consecutive correct answers">🔥 ' + run.streak + ' Streak!</span>'
+              : '') +
+            (run.exam
+              ? '<span class="chip chip--warn font-mono" id="qtimer">⏱️ ' + fmtTime(run.endsAt - Date.now()) + '</span>'
+              : '') +
+            '<button type="button" class="btn btn--sm btn--outline qz-map-btn" id="mapdrawerbtn">' +
+              '🗺️ Map (' + answered + '/' + run.qs.length + ') ' + (mapDrawerOpen ? '▲' : '▼') +
+            '</button>' +
+          '</div>' +
         '</div>' +
 
-        '<div class="bar bar--lg mt-3"><div class="bar__fill" style="width:' +
-          (((run.i + 1) / run.qs.length) * 100) + '%"></div></div>' +
+        paletteHtml +
 
-        palette +
+        /* The Question Stage Card */
+        '<div class="card quizcard-stage mt-4">' +
 
-        '<div class="qpalette-legend small faint mt-2">' +
-          '<span><i class="lg lg--done"></i> answered</span>' +
-          '<span><i class="lg lg--flag"></i> flagged' + (flaggedN ? ' (' + flaggedN + ')' : '') + '</span>' +
-          '<span><i class="lg lg--blank"></i> not attempted</span>' +
-        '</div>' +
-
-        '<div class="card quizcard mt-5">' +
-          '<div class="quizcard__meta">' +
-            '<span class="chip chip--accent font-bold">' + FORMAT_LABEL[q.format] + '</span>' +
-            '<span class="chip">' + app.esc((syllabus.unitById[q.unitId] || {}).short || q.unitId) + '</span>' +
+          '<div class="quizcard-stage__meta">' +
+            '<span class="chip chip--accent font-bold">' + FORMAT_ICON[q.format] + ' ' + FORMAT_LABEL[q.format] + '</span>' +
+            '<span class="chip">' + app.esc(unitMeta.short || q.unitId) + '</span>' +
             subBadge +
-            diffBadge +
+            '<span class="chip chip--subtle">' + (DIFF_STARS[q.diff] || "⭐") + ' ' + (DIFF_LABEL[q.diff] || "Foundational") + '</span>' +
             (q.exam ? '<span class="chip chip--warn">🔥 Exam Top</span>' : '') +
-            '<button type="button" class="flagbtn' + (run.flags[run.i] ? ' is-on' : '') + '" id="flagbtn" ' +
-              'title="Flag this question to come back to it">' +
-              '🚩 <span>' + (run.flags[run.i] ? 'Flagged' : 'Flag for review') + '</span>' +
+            '<button type="button" class="flagbtn-stage' + (run.flags[run.i] ? ' is-on' : '') + '" id="flagbtn" title="Bookmark to review before finishing">' +
+              '🚩 <span>' + (run.flags[run.i] ? 'Flagged for Review' : 'Flag Question') + '</span>' +
             '</button>' +
           '</div>' +
 
-          '<h2 class="quizcard__q mt-4">' + app.esc(q.q) + '</h2>' +
+          '<h2 class="quizcard-stage__q mt-4">' + app.esc(q.q) + '</h2>' +
 
           body +
 
+          /* High-yield key takeaway note */
           (showFeedback && q.e
-            ? '<div class="quiz-explanation-box mt-6 animate-scale-up ' + (isCorrect(q, given) ? 'is-correct' : 'is-wrong') + '">' +
+            ? '<div class="quiz-explanation-box mt-6 animate-scale-up ' + (isAnswerCorrect ? 'is-correct' : 'is-wrong') + '">' +
                 '<div class="quiz-explanation-box__head">' +
-                  '<span>' + (isCorrect(q, given) ? '🎉 Correct' : '💡 Explanation & high-yield key note') + '</span>' +
+                  '<span>' + (isAnswerCorrect ? '🎉 Great Job! Correct Answer' : '💡 Explanation & High-Yield Key Note') + '</span>' +
                 '</div>' +
                 '<p class="quiz-explanation-box__body">' + q.e + '</p>' +
                 (q.topicId && syllabus.topicById[q.topicId]
-                  ? '<p class="small faint mt-2">Full lesson: <b>' + app.esc(syllabus.topicById[q.topicId].title) + '</b> — it is linked from your result analysis so you do not lose this paper.</p>'
+                  ? '<div class="mt-3"><a class="btn btn--sm btn--outline" href="#/topic/' + q.topicId + '" target="_blank">' +
+                      '📖 Open Full Lesson: ' + app.esc(syllabus.topicById[q.topicId].title) + ' ↗</a></div>'
                   : '') +
               '</div>'
             : '') +
+
         '</div>' +
 
-        /* MCQ and True/False grade on the tap itself, so the only button
-           needed here is the one that moves you on. Fill-in-the-blank still
-           needs an explicit submit because typing has no natural end. */
-        '<div class="row mt-6 items-center row--wrap">' +
-          '<button class="btn" id="prevbtn"' + (run.i === 0 ? ' disabled' : '') + '>← Previous</button>' +
-          '<div class="push"></div>' +
-          '<span class="small faint mr-3">' + answered + ' of ' + run.qs.length + ' answered' +
-            (flaggedN ? ' · ' + flaggedN + ' flagged' : '') + '</span>' +
+        /* Unified Bottom Action Dock — No scattered buttons! */
+        '<div class="quiz-action-dock mt-6">' +
+          '<button class="btn btn--dock" id="prevbtn"' + (run.i === 0 ? ' disabled' : '') + '>← Previous</button>' +
+          '<div class="quiz-action-dock__center">' +
+            '<button type="button" class="btn btn--sm btn--ghost flag-toggle-dock' + (run.flags[run.i] ? ' is-on' : '') + '" id="flagdockbtn">' +
+              '🚩 ' + (run.flags[run.i] ? 'Flagged' : 'Flag') +
+            '</button>' +
+            '<span class="quiz-dock-status">' + answered + ' of ' + run.qs.length + ' answered' +
+              (flaggedN ? ' · 🚩 ' + flaggedN + ' flagged' : '') + '</span>' +
+          '</div>' +
           (run.i === run.qs.length - 1
-            ? '<button class="btn btn--primary btn--lg" id="finishbtn">Finish &amp; see analysis 🏆</button>'
-            : '<button class="btn btn--primary btn--lg" id="nextbtn">' +
-                (hasAnswer(given) ? 'Next question →' : 'Skip for now →') + '</button>') +
+            ? '<button class="btn btn--primary btn--lg btn--finish-quiz" id="finishbtn">Finish &amp; See Results 🏆</button>'
+            : '<button class="btn btn--primary btn--lg btn--next-quiz' + (hasAnswer(given) ? ' is-ready' : '') + '" id="nextbtn">' +
+                (hasAnswer(given) ? 'Next Question →' : 'Skip for Now →') + '</button>') +
         '</div>' +
 
-        '<p class="small faint center mt-4">' +
-          'Shortcuts: <kbd>1–9</kbd>/<kbd>A–D</kbd> answer · <kbd>T</kbd>/<kbd>F</kbd> true-false · ' +
-          '<kbd>←</kbd> <kbd>→</kbd> move · <kbd>M</kbd> flag · <kbd>Enter</kbd> next' +
-        '</p>' +
+        '<div class="quiz-shortcuts-hint mt-3 center small faint">' +
+          '🎮 Keyboard shortcuts: <kbd>1–4</kbd> / <kbd>A–D</kbd> choose · <kbd>T</kbd>/<kbd>F</kbd> true-false · ' +
+          '<kbd>←</kbd> <kbd>→</kbd> navigate · <kbd>M</kbd> flag · <kbd>Enter</kbd> next' +
+        '</div>' +
+
       '</div>';
 
     run.tickAt = Date.now();
@@ -1174,15 +1148,9 @@ var quizApp = (function () {
     return String(given);
   }
 
-  /* ---------- answer checking ---------- */
-
-  /* Fill-in-the-blank is marked by meaning, not by keystrokes: case,
-     spacing, accents, surrounding punctuation and a leading article are
-     all ignored, and a single-character typo in a long term is accepted
-     (and flagged as a spelling slip). */
+  /* Answer checking & text normalisation */
   function normText(s) {
     var t = String(s == null ? "" : s).toLowerCase();
-    // Strip accents where the browser supports it; older engines just skip it.
     if (t.normalize) t = t.normalize("NFD").replace(/[̀-ͯ]/g, "");
     return t;
   }
@@ -1221,9 +1189,7 @@ var quizApp = (function () {
       var want = normFib(accepted[i]);
       if (!want) continue;
       if (mine === want) return { ok: true, near: false };
-      // Same term, written solid vs hyphenated/spaced.
       if (mine.replace(/[\s-]/g, "") === want.replace(/[\s-]/g, "")) return { ok: true, near: false };
-      // One-character typo in a term long enough for that to be unambiguous.
       if (want.length >= 5 && levenshtein(mine, want) <= 1) near = true;
     }
     return near ? { ok: true, near: true } : { ok: false, near: false };
@@ -1236,8 +1202,6 @@ var quizApp = (function () {
     return checkFib(q, given).ok;
   }
 
-  /* Reveal the answer for the current question, award streaks and file the
-     result into spaced repetition. Practice mode only. */
   function revealCurrent(anchorEl) {
     if (run.exam || run.checked[run.i]) return;
     accrueTime();
@@ -1252,10 +1216,10 @@ var quizApp = (function () {
       run.streak = (run.streak || 0) + 1;
       if (run.streak > run.bestStreak) run.bestStreak = run.streak;
       if (app.burstConfetti && anchorEl) app.burstConfetti(anchorEl);
-      if (run.streak === 3 && app.popMilestone) app.popMilestone("🔥 3 in a row!");
-      else if (run.streak === 5 && app.popMilestone) app.popMilestone("🚀 5 streak — unstoppable!");
-      else if (run.streak === 7 && app.popMilestone) app.popMilestone("⚡ 7 straight — pure genius!");
-      else if (run.streak === 10 && app.popMilestone) app.popMilestone("👑 10 streak — Master Animal Geneticist!");
+      if (run.streak === 3 && app.popMilestone) app.popMilestone("🔥 3 Streak! You're on fire!");
+      else if (run.streak === 5 && app.popMilestone) app.popMilestone("🚀 5 in a row! Unstoppable!");
+      else if (run.streak === 7 && app.popMilestone) app.popMilestone("⚡ 7 Streak! Genetic Genius!");
+      else if (run.streak === 10 && app.popMilestone) app.popMilestone("👑 10 Streak! Master Geneticist!");
     } else {
       run.streak = 0;
     }
@@ -1263,11 +1227,9 @@ var quizApp = (function () {
   }
 
   function wireRun(q) {
-    // One tap answers the question: it records the choice and, in practice
-    // mode, grades it immediately. No second "check" tap.
     document.querySelectorAll("[data-pick]").forEach(function (b) {
       b.addEventListener("click", function () {
-        if (!run.exam && run.checked[run.i]) return;   // already locked in
+        if (!run.exam && run.checked[run.i]) return;
         var raw = b.getAttribute("data-pick");
         run.answers[run.i] = (q.format === "tf") ? (raw === "true") : parseInt(raw, 10);
         if (run.exam) { accrueTime(); snapshot(); }
@@ -1276,8 +1238,20 @@ var quizApp = (function () {
       });
     });
 
+    // Map drawer toggle
+    var mapBtn = document.getElementById("mapdrawerbtn");
+    if (mapBtn) {
+      mapBtn.addEventListener("click", function () {
+        mapDrawerOpen = !mapDrawerOpen;
+        var drawer = document.getElementById("mapdrawer");
+        if (drawer) drawer.classList.toggle("is-open", mapDrawerOpen);
+        mapBtn.innerHTML = '🗺️ Map (' + answeredCount() + '/' + run.qs.length + ') ' + (mapDrawerOpen ? '▲' : '▼');
+      });
+    }
+
     document.querySelectorAll("[data-goto]").forEach(function (b) {
       b.addEventListener("click", function () {
+        mapDrawerOpen = false;
         goTo(parseInt(b.getAttribute("data-goto"), 10));
       });
     });
@@ -1285,6 +1259,15 @@ var quizApp = (function () {
     var flagBtn = document.getElementById("flagbtn");
     if (flagBtn) {
       flagBtn.addEventListener("click", function () {
+        run.flags[run.i] = !run.flags[run.i];
+        snapshot();
+        paintRun();
+      });
+    }
+
+    var flagDockBtn = document.getElementById("flagdockbtn");
+    if (flagDockBtn) {
+      flagDockBtn.addEventListener("click", function () {
         run.flags[run.i] = !run.flags[run.i];
         snapshot();
         paintRun();
@@ -1310,7 +1293,7 @@ var quizApp = (function () {
 
     function submitFib() {
       if (!hasAnswer(run.answers[run.i])) {
-        app.toast("Type your answer first");
+        app.toast("Type your answer first!");
         return;
       }
       if (run.exam || run.checked[run.i]) {
@@ -1359,14 +1342,13 @@ var quizApp = (function () {
 
     var quit = document.getElementById("quitbtn");
     if (quit) quit.addEventListener("click", function () {
-      if (confirm("Quit this paper?\n\nIt is saved, so you can resume it from the quiz hub. Nothing is scored until you finish.")) {
+      if (confirm("Pause and exit this paper?\n\nIt is saved safely, so you can resume right where you left off from the quiz hub.")) {
         snapshot();
         resetRun();
         location.hash = "#/quiz";
       }
     });
 
-    // Global keyboard shortcuts
     function handleKey(e) {
       if (!run || !run.active) return;
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
@@ -1423,15 +1405,14 @@ var quizApp = (function () {
     window.addEventListener("keydown", run._keyHandler);
   }
 
-  /* Never let a paper be handed in by accident with blanks on it. */
   function confirmFinish() {
     var blanks = run.qs.length - answeredCount();
     var flagged = run.flags.filter(Boolean).length;
     if (blanks || flagged) {
-      var msg = "Submit this paper now?\n\n";
+      var msg = "Ready to finish and submit?\n\n";
       if (blanks) msg += "• " + blanks + " question" + (blanks > 1 ? "s are" : " is") + " still unanswered\n";
       if (flagged) msg += "• " + flagged + " question" + (flagged > 1 ? "s are" : " is") + " flagged for review\n";
-      msg += "\nUnanswered questions are marked wrong.";
+      msg += "\nUnanswered questions will be marked incorrect.";
       if (!confirm(msg)) {
         var firstBlank = -1;
         for (var i = 0; i < run.qs.length; i++) {
@@ -1445,9 +1426,6 @@ var quizApp = (function () {
     finish(false);
   }
 
-  /* ============================================================
-     FINISHING — build the record, then hand it to the analysis view
-     ============================================================ */
   function finish(timedOut) {
     if (!run) return;
     accrueTime();
@@ -1496,8 +1474,6 @@ var quizApp = (function () {
         nr: !!run.near[i]
       });
 
-      // Anything not graded during the run (exam answers, skipped questions)
-      // is filed into spaced repetition now — exactly once each.
       gradeOnce(i);
     });
 
@@ -1537,7 +1513,6 @@ var quizApp = (function () {
       detail: detail
     };
 
-    // Previous score for the same scope, captured before this one is filed.
     var prev = null;
     var history = store.getQuiz().attempts.filter(function (a) { return a.scope === attempt.scope; });
     if (history.length) prev = history[history.length - 1];
@@ -1545,9 +1520,6 @@ var quizApp = (function () {
     var attemptId = store.saveAttempt(attempt);
     attempt.id = attemptId;
 
-    // A timed paper can run out while the student is reading another tab.
-    // The score is saved above either way; only skip drawing the result over
-    // a screen that no longer belongs to the quiz.
     if (!host || !document.body.contains(host)) {
       if (timedOut && app.toast) app.toast("Time expired — your paper was submitted and saved");
       run = null;
@@ -1559,20 +1531,16 @@ var quizApp = (function () {
     paintAnalysis(attempt, { questions: qsForReview, prev: prev, live: true });
   }
 
-  /* ============================================================
-     OPENING A STORED PAPER (#/quiz/attempt/<id>)
-     ============================================================ */
   function renderStoredAttempt(id) {
     resetRun();
     var attempt = id ? store.getAttempt(decodeURIComponent(id)) : null;
     if (!attempt) {
       host.innerHTML =
-        '<div class="pagehead"><a class="btn btn--sm btn--ghost" href="#/quiz">← Quiz Hub</a>' +
+        '<div class="pagehead"><a class="btn btn--sm btn--ghost" href="#/quiz">← Back to Arena</a>' +
         '<h1 class="mt-3">Paper not found</h1></div>' +
         '<div class="empty"><div class="empty__icon">' + app.icon("search") + '</div>' +
-        '<h3>That result is no longer stored</h3>' +
-        '<p>Only your most recent papers keep their full question-by-question detail.</p>' +
-        '<a class="btn btn--primary mt-4" href="#/quiz">Back to the quiz hub</a></div>';
+        '<h3>That result is no longer stored in your history</h3>' +
+        '<a class="btn btn--primary mt-4" href="#/quiz">Return to Quiz Arena</a></div>';
       return;
     }
     var all = store.getQuiz().attempts.filter(function (a) { return a.scope === attempt.scope; });
@@ -1583,13 +1551,8 @@ var quizApp = (function () {
   }
 
   /* ============================================================
-     THE ANALYSIS SCREEN
-     ------------------------------------------------------------
-     One renderer for a paper just finished and for a paper opened
-     from history, so the review never degrades over time.
+     ANALYSIS SCREEN — Triumphant, Colorful, Crystal Clear
      ============================================================ */
-
-  /* Normalise both sources into one shape the whole screen reads from. */
   function buildItems(attempt, liveQuestions) {
     if (liveQuestions && liveQuestions.length === (attempt.detail || []).length) {
       return liveQuestions.map(function (q, i) {
@@ -1620,7 +1583,6 @@ var quizApp = (function () {
     opts = opts || {};
     var items = buildItems(attempt, opts.questions);
     reviewState = { filter: "wrong", q: "", attempt: attempt, items: items, live: !!opts.live };
-    // Nothing wrong? Open on the full paper instead of an empty list.
     if (!items.some(function (it) { return !it.ok; })) reviewState.filter = "all";
 
     var percent = app.pct(attempt.correct, attempt.total);
@@ -1631,7 +1593,6 @@ var quizApp = (function () {
 
     var attempted = typeof attempt.attempted === "number" ? attempt.attempted : attempt.total;
     var skipped = attempt.skipped || 0;
-    var attemptedAccuracy = attempted ? Math.round(attempt.correct / attempted * 100) : 0;
     var totalMs = (attempt.seconds || 0) * 1000;
     var avgMs = attempt.total ? totalMs / attempt.total : 0;
 
@@ -1644,92 +1605,66 @@ var quizApp = (function () {
       '<div class="analysis animate-fade-in">' +
 
         (attempt.timedOut
-          ? '<div class="callout mb-6"><div class="callout__title">Time expired</div>' +
-            'Your paper was submitted automatically when the countdown reached zero.</div>' : '') +
+          ? '<div class="callout callout--warn mb-6"><div class="callout__title">⏱️ Time Expired</div>' +
+            'Your challenge was submitted automatically when the countdown reached zero.</div>' : '') +
 
-        /* ---- 1. Verdict header ---- */
-        '<div class="an-head">' +
-          '<div class="an-head__ring">' + app.ringHtml(percent, 150) + '</div>' +
-          '<div class="an-head__body">' +
-            '<span class="dash-eyebrow">' + app.icon("target") + ' Paper analysis · ' + fullDate(attempt.at) + '</span>' +
-            '<h1 class="mt-1">' + attempt.correct + ' out of ' + attempt.total + ' correct</h1>' +
-            '<div class="row row--wrap gap-2 mt-3">' +
-              '<span class="chip ' + chipCls + ' font-bold">' + verdict + '</span>' +
+        /* Triumphant Hero Header */
+        '<div class="an-head-gamified">' +
+          '<div class="an-head-gamified__ring">' + app.ringHtml(percent, 140) + '</div>' +
+          '<div class="an-head-gamified__body">' +
+            '<div class="an-head-gamified__badge ' + chipCls + '">🏆 ' + verdict + '</div>' +
+            '<h1 class="an-head-gamified__title">' + attempt.correct + ' of ' + attempt.total + ' Correct (' + percent + '%)</h1>' +
+            '<div class="row row--wrap gap-2 mt-2">' +
               '<span class="chip">' + app.esc(attempt.label || "Animal Genetics Quiz") + '</span>' +
-              '<span class="chip chip--subtle">' + (attempt.orderMode === "shuffle" ? "🔀 Shuffle" : "📋 Sequence") + '</span>' +
-              (attempt.exam ? '<span class="chip chip--subtle">⏱️ Exam mode' +
-                (attempt.limitMinutes ? ' · ' + attempt.limitMinutes + ' min limit' : '') + '</span>' : '') +
+              '<span class="chip chip--subtle">' + (attempt.orderMode === "shuffle" ? "🔀 Shuffled" : "📋 Sequence") + '</span>' +
+              (attempt.exam ? '<span class="chip chip--subtle">⏱️ Exam Simulation</span>' : '') +
               (delta !== null
                 ? '<span class="chip ' + (delta > 0 ? 'chip--ok' : delta < 0 ? 'chip--danger' : 'chip--subtle') + '">' +
-                  (delta > 0 ? '▲ +' : delta < 0 ? '▼ ' : '– ') + Math.abs(delta) + '% vs last attempt of this paper</span>'
-                : '<span class="chip chip--subtle">First attempt of this paper</span>') +
+                  (delta > 0 ? '▲ +' : delta < 0 ? '▼ ' : '– ') + Math.abs(delta) + '% vs previous attempt</span>'
+                : '') +
             '</div>' +
             '<p class="muted small mt-3">' + verdictAdvice(percent, skipped, attempt) + '</p>' +
           '</div>' +
         '</div>' +
 
-        /* ---- 2. Key metrics ---- */
-        '<div class="an-metrics">' +
-          metric("Accuracy", percent + "%", attempt.correct + " right · " + (attempt.total - attempt.correct) + " wrong") +
-          metric("On attempted", attempted ? attemptedAccuracy + "%" : "—", attempted + " of " + attempt.total + " attempted") +
-          metric("Left blank", String(skipped), skipped ? "Counted as wrong" : "Nothing skipped") +
-          metric("Total time", fmtDuration(totalMs), attempt.exam && attempt.limitMinutes ? "of a " + attempt.limitMinutes + " min limit" : "actively on questions") +
-          metric("Avg / question", fmtDuration(avgMs), paceVerdict(avgMs)) +
-          metric("Best run", (attempt.bestStreak || 0) + " in a row", "Longest correct streak") +
+        /* 4 Big Power Cards */
+        '<div class="an-metrics-grid mt-6">' +
+          metricCard("🎯", "Overall Accuracy", percent + "%", attempt.correct + " correct · " + (attempt.total - attempt.correct) + " missed", "blue") +
+          metricCard("⚡", "Pace & Timing", fmtDuration(avgMs) + " / Q", paceVerdict(avgMs), "amber") +
+          metricCard("🔥", "Best Streak", (attempt.bestStreak || 0) + " In A Row", "Longest correct run", "coral") +
+          metricCard("⏳", "Total Duration", fmtDuration(totalMs), skipped ? skipped + " questions left blank" : "All questions answered", "green") +
         '</div>' +
 
-        /* ---- 3. Format & difficulty ---- */
-        '<section class="mt-10">' +
-          '<h2>Where the marks went</h2>' +
-          '<p class="muted small mt-1">The same paper cut three ways — by question format, by difficulty tier and by syllabus module.</p>' +
-          '<div class="grid grid--2 mt-4">' +
-            breakdownCard("By question format", ["mcq", "tf", "fib"].map(function (f) {
-              var r = (attempt.byFormat || {})[f] || { total: 0, right: 0 };
-              return { label: FORMAT_ICON[f] + " " + FORMAT_LABEL[f], right: r.right, total: r.total };
-            })) +
-            breakdownCard("By difficulty tier", [1, 2, 3].map(function (d) {
-              var r = (attempt.byDiff || {})[d] || { total: 0, right: 0 };
-              return { label: DIFF_STARS[d] + " " + DIFF_LABEL[d], right: r.right, total: r.total };
-            })) +
-          '</div>' +
-        '</section>' +
+        /* Quick Action Dock */
+        '<div class="an-actions-hero mt-8">' +
+          (items.some(function (it) { return !it.ok; })
+            ? '<button class="btn btn--primary btn--lg btn--retry-action" id="an-retry-wrong">' +
+                '🔁 Retry Missed (' + items.filter(function (it) { return !it.ok; }).length + ' Questions)</button>'
+            : '') +
+          '<button class="btn btn--lg" id="an-retake">🔄 Retake Full Quiz</button>' +
+          '<a class="btn btn--lg" href="#/quiz">🎮 Back to Arena</a>' +
+          '<a class="btn btn--lg" href="#/dashboard">📊 Open Dashboard</a>' +
+        '</div>' +
 
-        /* ---- 4. Sub-section mastery ---- */
+        /* Sub-Section Mastery Breakdown */
         renderSubMastery(attempt) +
 
-        /* ---- 5. Focus plan ---- */
-        renderFocusPlan(attempt, items) +
-
-        /* ---- 6. Pace analysis ---- */
-        renderPaceCard(items) +
-
-        /* ---- 7. Question-by-question review ---- */
+        /* Question-by-Question Review with Filter Tabs */
         '<section class="mt-12" id="an-review">' +
-          '<div class="row row--between">' +
+          '<div class="row row--between items-center">' +
             '<div>' +
-              '<h2>Question-by-question review</h2>' +
-              '<p class="muted small mt-1">Every question with your answer, the standard answer, the examiner\'s note and the time you spent.</p>' +
+              '<h2>Question-by-Question Review</h2>' +
+              '<p class="muted small mt-1">Review your answers, verify the standard textbook terms, and read the biological mechanisms.</p>' +
             '</div>' +
           '</div>' +
           '<div class="an-filterbar mt-4" id="an-filters"></div>' +
           '<div class="an-search mt-3">' +
             app.icon("search", "faint") +
-            '<input type="text" id="an-search-input" placeholder="Search these questions…" autocomplete="off">' +
+            '<input type="text" id="an-search-input" placeholder="Search these questions, terms or explanations…" autocomplete="off">' +
           '</div>' +
           '<div id="an-review-list" class="mt-4"></div>' +
         '</section>' +
 
-        /* ---- 8. Actions ---- */
-        '<div class="an-actions mt-12">' +
-          (items.some(function (it) { return !it.ok; })
-            ? '<button class="btn btn--primary btn--lg" id="an-retry-wrong">' + app.icon("repeat") +
-              ' Retry the ' + items.filter(function (it) { return !it.ok; }).length + ' I missed</button>'
-            : '') +
-          '<button class="btn btn--lg" id="an-retake">' + app.icon("quiz") + ' Retake this paper</button>' +
-          '<button class="btn btn--lg" id="an-copy">' + app.icon("copy") + ' Copy summary</button>' +
-          '<a class="btn btn--lg" href="#/dashboard">' + app.icon("dashboard") + ' Dashboard</a>' +
-          '<a class="btn btn--lg" href="#/quiz">' + app.icon("chevron") + ' Quiz hub</a>' +
-        '</div>' +
       '</div>';
 
     paintReviewList();
@@ -1737,61 +1672,37 @@ var quizApp = (function () {
 
     if (opts.live && percent >= 75 && app.burstConfetti) {
       setTimeout(function () {
-        var ring = document.querySelector('.an-head__ring');
+        var ring = document.querySelector('.an-head-gamified__ring');
         if (ring) app.burstConfetti(ring);
-        if (app.popMilestone) app.popMilestone("🏆 " + verdict + ": " + percent + "%!");
+        if (app.popMilestone) app.popMilestone("🏆 " + verdict + " (" + percent + "%)!");
       }, 250);
     }
   }
 
-  function metric(label, value, sub) {
-    return '<div class="an-metric">' +
-      '<div class="an-metric__lbl">' + label + '</div>' +
-      '<div class="an-metric__val">' + app.esc(value) + '</div>' +
-      '<div class="an-metric__sub">' + app.esc(sub) + '</div>' +
+  function metricCard(icon, title, val, sub, tone) {
+    return '<div class="an-metric-card an-metric-card--' + tone + '">' +
+      '<div class="an-metric-card__icon">' + icon + '</div>' +
+      '<div class="an-metric-card__val">' + app.esc(val) + '</div>' +
+      '<div class="an-metric-card__title">' + title + '</div>' +
+      '<div class="an-metric-card__sub">' + app.esc(sub) + '</div>' +
     '</div>';
   }
 
   function paceVerdict(avgMs) {
     if (!avgMs) return "—";
     var s = avgMs / 1000;
-    if (s < 15) return "Very fast — check for guessing";
-    if (s < 40) return "Good exam pace";
-    if (s < 75) return "Thorough, a little slow";
-    return "Too slow for a timed paper";
+    if (s < 15) return "Very swift recall!";
+    if (s < 40) return "Excellent exam pace!";
+    if (s < 75) return "Thorough, careful deliberation";
+    return "A bit slow for a timed paper";
   }
 
   function verdictAdvice(percent, skipped, attempt) {
-    if (percent >= 85) {
-      return "Distinction-level command of this scope. Keep it warm through the spaced-repetition queue rather than re-reading whole units.";
-    }
-    if (percent >= 70) {
-      return "A solid first class. The breakdown below names the two or three modules standing between you and a distinction.";
-    }
-    if (percent >= 50) {
-      return "A pass, but the marks are uneven. Work through the weakest modules below before you attempt this paper again.";
-    }
-    return "This scope is not exam-ready yet. Read the lessons linked in the review below, then retry only the questions you missed." +
-      (skipped ? " " + skipped + " question" + (skipped > 1 ? "s were" : " was") + " left blank — blanks score zero in the annual exam." : "");
-  }
-
-  function breakdownCard(title, rows) {
-    var live = rows.filter(function (r) { return r.total > 0; });
-    return '<div class="card an-card">' +
-      '<h3 class="an-card__title">' + title + '</h3>' +
-      (live.length
-        ? '<div class="an-bars mt-3">' + live.map(function (r) {
-            var p = r.total ? Math.round(r.right / r.total * 100) : 0;
-            return '<div class="an-bar">' +
-              '<div class="an-bar__head">' +
-                '<span>' + r.label + '</span>' +
-                '<span class="font-mono ' + (p >= 75 ? 'ok' : p >= 50 ? 'warn' : 'bad') + '">' + r.right + '/' + r.total + ' · ' + p + '%</span>' +
-              '</div>' +
-              '<div class="bar"><div class="bar__fill ' + barTone(p) + '" style="width:' + p + '%"></div></div>' +
-            '</div>';
-          }).join("") + '</div>'
-        : '<p class="small faint mt-3">Not covered in this paper.</p>') +
-    '</div>';
+    if (percent >= 85) return "Distinction grade mastery! Keep this knowledge warm through the spaced repetition queue.";
+    if (percent >= 70) return "A solid first class! Review the missed questions below to push this into the 90%+ bracket.";
+    if (percent >= 50) return "A passing score, but there is room for improvement. Retry the questions you missed to lock in the concepts.";
+    return "This section needs another revision pass. Read the linked lessons below and retry your missed questions." +
+      (skipped ? " (" + skipped + " question" + (skipped > 1 ? "s were" : " was") + " left blank)." : "");
   }
 
   function barTone(p) {
@@ -1816,168 +1727,28 @@ var quizApp = (function () {
 
     if (!rows.length) return "";
 
-    var unitRows = Object.keys(attempt.byUnit || {});
-    var unitHtml = "";
-    if (unitRows.length > 1) {
-      unitHtml = '<div class="card an-card mt-4">' +
-        '<h3 class="an-card__title">By unit</h3>' +
-        '<div class="an-bars mt-3">' + unitRows.map(function (uid) {
-          var r = attempt.byUnit[uid];
-          var p = r.total ? Math.round(r.right / r.total * 100) : 0;
-          var u = syllabus.unitById[uid] || {};
-          return '<div class="an-bar">' +
-            '<div class="an-bar__head">' +
-              '<span>' + app.esc(u.short || uid) + '</span>' +
-              '<span class="font-mono">' + r.right + '/' + r.total + ' · ' + p + '%</span>' +
-            '</div>' +
-            '<div class="bar"><div class="bar__fill ' + barTone(p) + '" style="width:' + p + '%"></div></div>' +
-          '</div>';
-        }).join("") + '</div>' +
-      '</div>';
-    }
-
     return '<section class="mt-10">' +
-      '<h2>Sub-section mastery</h2>' +
-      '<p class="muted small mt-1">Weakest module first. Each row links straight to the lesson and to a fresh test of that module alone.</p>' +
-      '<div class="an-sub-list mt-4">' +
+      '<h2>Sub-Section Module Breakdown</h2>' +
+      '<p class="muted small mt-1">See exactly where your marks came from. Weakest modules appear first.</p>' +
+      '<div class="an-sub-grid mt-4">' +
         rows.map(function (r) {
-          return '<div class="an-sub">' +
-            '<span class="an-sub__icon">' + r.icon + '</span>' +
-            '<div class="an-sub__body">' +
-              '<div class="an-sub__head">' +
-                '<b>' + app.esc(r.title) + '</b>' +
-                '<span class="chip ' + scoreChip(r.pct) + '">' + r.right + '/' + r.total + ' · ' + r.pct + '%</span>' +
-              '</div>' +
-              '<div class="bar mt-2"><div class="bar__fill ' + barTone(r.pct) + '" style="width:' + r.pct + '%"></div></div>' +
+          return '<div class="an-sub-card">' +
+            '<div class="an-sub-card__head">' +
+              '<span class="an-sub-card__icon">' + r.icon + '</span>' +
+              '<b class="an-sub-card__title">' + app.esc(r.title) + '</b>' +
+              '<span class="chip ' + scoreChip(r.pct) + '">' + r.right + '/' + r.total + ' (' + r.pct + '%)</span>' +
             '</div>' +
-            '<div class="an-sub__actions">' +
-              (r.unitId ? '<a class="btn btn--sm btn--outline" href="#/unit/' + r.unitId + '">Read</a>' : '') +
-              (r.unitId ? '<a class="btn btn--sm" href="#/quiz/unit/' + r.unitId + '">Retest</a>' : '') +
+            '<div class="bar mt-2"><div class="bar__fill ' + barTone(r.pct) + '" style="width:' + r.pct + '%"></div></div>' +
+            '<div class="an-sub-card__actions mt-3">' +
+              (r.unitId ? '<a class="btn btn--sm btn--outline" href="#/unit/' + r.unitId + '">📖 Read Lesson</a>' : '') +
+              (r.unitId ? '<a class="btn btn--sm btn--primary" href="#/quiz/unit/' + r.unitId + '">🎯 Retest Module</a>' : '') +
             '</div>' +
           '</div>';
         }).join("") +
       '</div>' +
-      unitHtml +
     '</section>';
   }
 
-  /* The single most useful panel: what to do next, named explicitly. */
-  function renderFocusPlan(attempt, items) {
-    var subs = attempt.bySub || {};
-    var weak = Object.keys(subs).map(function (sid) {
-      var r = subs[sid];
-      var meta = getSubSectionMeta(r.unitId, sid);
-      return {
-        id: sid, unitId: r.unitId,
-        icon: meta ? meta.icon : "📘",
-        title: meta ? meta.title : "Unsorted questions",
-        right: r.right, total: r.total,
-        pct: r.total ? Math.round(r.right / r.total * 100) : 0
-      };
-    }).filter(function (r) { return r.total >= 2 && r.pct < 75; })
-      .sort(function (a, b) { return a.pct - b.pct; })
-      .slice(0, 3);
-
-    // Topics behind the wrong answers, so the plan can name lessons too.
-    var topicTally = {};
-    items.forEach(function (it) {
-      if (it.ok || !it.topicId) return;
-      topicTally[it.topicId] = (topicTally[it.topicId] || 0) + 1;
-    });
-    var topics = Object.keys(topicTally)
-      .filter(function (tid) { return syllabus.topicById[tid]; })
-      .sort(function (a, b) { return topicTally[b] - topicTally[a]; })
-      .slice(0, 4);
-
-    if (!weak.length && !topics.length) {
-      return '<div class="callout mt-10"><div class="callout__title">🏆 No weak module in this paper</div>' +
-        'Every sub-section came in at 75% or better. Keep this scope alive through the spaced-repetition queue and move on to the next unit.</div>';
-    }
-
-    return '<section class="mt-10">' +
-      '<h2>Your focus plan</h2>' +
-      '<p class="muted small mt-1">Built from this paper only — the shortest route from this score to the next grade band.</p>' +
-      '<div class="an-plan mt-4">' +
-        weak.map(function (r, i) {
-          return '<div class="an-plan__step">' +
-            '<span class="an-plan__num">' + (i + 1) + '</span>' +
-            '<div class="an-plan__body">' +
-              '<b>' + r.icon + ' ' + app.esc(r.title) + '</b>' +
-              '<p class="small muted mt-1">Only ' + r.right + ' of ' + r.total + ' correct (' + r.pct + '%). ' +
-              'Re-read this module, then retest it on its own before mixing it back into a full paper.</p>' +
-            '</div>' +
-            (r.unitId
-              ? '<a class="btn btn--sm btn--primary" href="#/quiz/unit/' + r.unitId + '">Open module</a>'
-              : '') +
-          '</div>';
-        }).join("") +
-        (topics.length
-          ? '<div class="an-plan__topics">' +
-              '<b class="small">Lessons behind your wrong answers</b>' +
-              '<div class="row row--wrap gap-2 mt-2">' +
-                topics.map(function (tid) {
-                  var t = syllabus.topicById[tid];
-                  return '<a class="chip chip--accent" href="#/topic/' + tid + '">' + app.icon("book") + ' ' +
-                    app.esc(t.title) + ' <b>(' + topicTally[tid] + ')</b></a>';
-                }).join("") +
-              '</div>' +
-            '</div>'
-          : '') +
-      '</div>' +
-    '</section>';
-  }
-
-  function renderPaceCard(items) {
-    var timed = items.filter(function (it) { return it.ms > 0; });
-    if (!timed.length) return "";
-
-    var slowest = timed.slice(0).sort(function (a, b) { return b.ms - a.ms; }).slice(0, 3);
-    var rushed = timed.filter(function (it) { return !it.ok && !it.skipped && it.ms < 12000; });
-    var agonised = timed.filter(function (it) { return !it.ok && it.ms > 90000; });
-    var avg = timed.reduce(function (n, it) { return n + it.ms; }, 0) / timed.length;
-
-    var notes = [];
-    if (rushed.length) {
-      notes.push('<li><b>' + rushed.length + ' wrong in under 12 seconds.</b> Those are reflex answers, not recall — ' +
-        'slow down and re-read the stem before choosing.</li>');
-    }
-    if (agonised.length) {
-      notes.push('<li><b>' + agonised.length + ' wrong after more than 90 seconds.</b> Long deliberation that still ' +
-        'misses means the underlying concept is missing, not the calculation. Go back to the lesson.</li>');
-    }
-    if (!notes.length) {
-      notes.push('<li>Your timing is even across the paper — no rushed guesses and nothing you got stuck on.</li>');
-    }
-
-    return '<section class="mt-10">' +
-      '<h2>Pace &amp; exam technique</h2>' +
-      '<p class="muted small mt-1">How your time was spent, and what that says about how you are answering.</p>' +
-      '<div class="grid grid--2 mt-4">' +
-        '<div class="card an-card">' +
-          '<h3 class="an-card__title">Time diagnosis</h3>' +
-          '<p class="small muted mt-2">Average ' + fmtDuration(avg) + ' per question — ' + paceVerdict(avg).toLowerCase() + '.</p>' +
-          '<ul class="an-notes mt-3">' + notes.join("") + '</ul>' +
-        '</div>' +
-        '<div class="card an-card">' +
-          '<h3 class="an-card__title">Longest questions</h3>' +
-          '<div class="an-bars mt-3">' +
-            slowest.map(function (it) {
-              var p = Math.min(100, Math.round(it.ms / slowest[0].ms * 100));
-              return '<div class="an-bar">' +
-                '<div class="an-bar__head">' +
-                  '<span>Q' + it.n + ' · ' + (it.ok ? '<span class="ok">correct</span>' : '<span class="bad">missed</span>') + '</span>' +
-                  '<span class="font-mono">' + fmtDuration(it.ms) + '</span>' +
-                '</div>' +
-                '<div class="bar"><div class="bar__fill ' + (it.ok ? 'is-ok' : 'is-bad') + '" style="width:' + p + '%"></div></div>' +
-              '</div>';
-            }).join("") +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-    '</section>';
-  }
-
-  /* ---------- filterable question list ---------- */
   function filteredItems() {
     var s = reviewState;
     var q = (s.q || "").trim().toLowerCase();
@@ -2007,11 +1778,11 @@ var quizApp = (function () {
     };
 
     var tabs = [
-      { id: "wrong", label: "Incorrect", n: counts.wrong },
-      { id: "skipped", label: "Skipped", n: counts.skipped },
-      { id: "flagged", label: "Flagged", n: counts.flagged },
-      { id: "right", label: "Correct", n: counts.right },
-      { id: "all", label: "All questions", n: counts.all }
+      { id: "wrong", label: "❌ Missed", n: counts.wrong },
+      { id: "flagged", label: "🚩 Flagged", n: counts.flagged },
+      { id: "skipped", label: "○ Skipped", n: counts.skipped },
+      { id: "right", label: "✅ Correct", n: counts.right },
+      { id: "all", label: "All Questions", n: counts.all }
     ];
 
     var bar = document.getElementById("an-filters");
@@ -2035,8 +1806,8 @@ var quizApp = (function () {
     var rows = filteredItems();
     if (!rows.length) {
       list.innerHTML = '<div class="card p-5 text-center text-muted">' +
-        (s.q ? 'No question in this paper matches “' + app.esc(s.q) + '”.'
-             : 'Nothing in this category — which is good news.') + '</div>';
+        (s.q ? 'No questions match “' + app.esc(s.q) + '”.'
+             : 'No questions in this filter — that is great news!') + '</div>';
       return;
     }
 
@@ -2044,14 +1815,13 @@ var quizApp = (function () {
       var unit = syllabus.unitById[it.unitId] || {};
       var subMeta = getSubSectionMeta(it.unitId, it.subSection);
       var stateCls = it.skipped ? "is-skipped" : it.ok ? "is-right" : "is-wrong";
-      var stateLbl = it.skipped ? "Left blank" : it.ok ? "Correct" : "Incorrect";
+      var stateLbl = it.skipped ? "○ Left Blank" : it.ok ? "✓ Correct" : "✗ Missed";
 
-      return '<article class="an-q ' + stateCls + '">' +
-        '<div class="an-q__top">' +
-          '<span class="an-q__n">Q' + it.n + '</span>' +
+      return '<article class="an-q-card ' + stateCls + '">' +
+        '<div class="an-q-card__top">' +
+          '<span class="an-q-card__n">Q' + it.n + '</span>' +
           '<span class="chip ' + (it.skipped ? 'chip--warn' : it.ok ? 'chip--ok' : 'chip--danger') + '">' + stateLbl + '</span>' +
           '<span class="chip chip--subtle font-mono">' + FORMAT_SHORT[it.format] + '</span>' +
-          '<span class="chip chip--subtle">' + (DIFF_STARS[it.diff] || "⭐") + '</span>' +
           '<span class="chip chip--subtle">' + app.esc(unit.short || it.unitId) + '</span>' +
           (subMeta ? '<span class="chip chip--subtle">' + subMeta.icon + ' ' + app.esc(subMeta.title) + '</span>' : '') +
           (it.flagged ? '<span class="chip chip--warn">🚩 Flagged</span>' : '') +
@@ -2059,28 +1829,28 @@ var quizApp = (function () {
           (it.ms ? '<span class="chip chip--subtle font-mono">' + app.icon("clock", "faint") + ' ' + fmtDuration(it.ms) + '</span>' : '') +
         '</div>' +
 
-        '<p class="an-q__text">' + app.esc(it.q) + '</p>' +
+        '<p class="an-q-card__text">' + app.esc(it.q) + '</p>' +
 
-        '<div class="an-q__answers">' +
+        '<div class="an-q-card__answers">' +
           '<div class="an-ans ' + (it.ok ? 'is-ok' : 'is-bad') + '">' +
-            '<span class="an-ans__lbl">Your answer</span>' +
+            '<span class="an-ans__lbl">Your answer:</span>' +
             '<span class="an-ans__val">' + (it.skipped ? '<i class="faint">not answered</i>' : app.esc(String(it.given))) + '</span>' +
           '</div>' +
           '<div class="an-ans is-ok">' +
-            '<span class="an-ans__lbl">Standard answer</span>' +
+            '<span class="an-ans__lbl">Standard textbook answer:</span>' +
             '<span class="an-ans__val">' + app.esc(String(it.right)) + '</span>' +
           '</div>' +
         '</div>' +
 
-        (it.near ? '<p class="small faint mt-2">Accepted despite a spelling slip — write it exactly in the written exam.</p>' : '') +
+        (it.near ? '<p class="small faint mt-2">Accepted with a slight spelling typo — remember to write it exactly in written exams!</p>' : '') +
 
         (it.e
-          ? '<div class="an-q__why"><b>Why:</b> ' + it.e + '</div>'
+          ? '<div class="an-q-card__why"><b>💡 Biological Mechanism &amp; Note:</b> ' + it.e + '</div>'
           : '') +
 
         (it.topicId && syllabus.topicById[it.topicId]
           ? '<a class="btn btn--sm btn--outline mt-3" href="#/topic/' + it.topicId + '">' + app.icon("book") +
-            ' Read the lesson: ' + app.esc(syllabus.topicById[it.topicId].title) + '</a>'
+            ' Read textbook lesson: ' + app.esc(syllabus.topicById[it.topicId].title) + '</a>'
           : '') +
       '</article>';
     }).join("");
@@ -2099,7 +1869,7 @@ var quizApp = (function () {
     if (retryWrong) {
       retryWrong.addEventListener("click", function () {
         var keys = items.filter(function (it) { return !it.ok; }).map(function (it) { return it.key; });
-        startFromKeys(keys, "Retry — " + (attempt.label || "missed questions"), attempt);
+        startFromKeys(keys, "Retry Missed Questions (" + keys.length + ")", attempt);
       });
     }
 
@@ -2110,17 +1880,8 @@ var quizApp = (function () {
         startFromKeys(keys, attempt.label, attempt, true);
       });
     }
-
-    var copy = document.getElementById("an-copy");
-    if (copy) {
-      copy.addEventListener("click", function () {
-        app.copyTextToClipboard(summaryText(attempt, items), "Result summary copied to clipboard");
-      });
-    }
   }
 
-  /* Rebuild a paper from stored keys — used by "retry what I missed" and
-     "retake this paper", including for a result opened from history. */
   function startFromKeys(keys, label, attempt, reshuffle) {
     var all = bankFor(syllabus.allUnits.map(function (u) { return u.id; }), ["mcq", "tf", "fib"]);
     var byKey = {};
@@ -2148,46 +1909,8 @@ var quizApp = (function () {
     paintRun();
   }
 
-  function summaryText(attempt, items) {
-    var percent = app.pct(attempt.correct, attempt.total);
-    var lines = [];
-    lines.push("Animal Genetics and Breeding — " + (attempt.label || "Quiz"));
-    lines.push(fullDate(attempt.at));
-    lines.push("Score: " + attempt.correct + "/" + attempt.total + " (" + percent + "%)");
-    lines.push("Attempted " + (attempt.attempted || 0) + " · skipped " + (attempt.skipped || 0) +
-      " · time " + fmtDuration((attempt.seconds || 0) * 1000));
-    lines.push("");
-    lines.push("By format:");
-    ["mcq", "tf", "fib"].forEach(function (f) {
-      var r = (attempt.byFormat || {})[f];
-      if (r && r.total) lines.push("  " + FORMAT_SHORT[f] + ": " + r.right + "/" + r.total);
-    });
-    var subs = attempt.bySub || {};
-    var subKeys = Object.keys(subs);
-    if (subKeys.length) {
-      lines.push("");
-      lines.push("By sub-section:");
-      subKeys.forEach(function (sid) {
-        var r = subs[sid];
-        var meta = getSubSectionMeta(r.unitId, sid);
-        lines.push("  " + (meta ? meta.title : sid) + ": " + r.right + "/" + r.total);
-      });
-    }
-    var wrong = items.filter(function (it) { return !it.ok; });
-    if (wrong.length) {
-      lines.push("");
-      lines.push("Missed (" + wrong.length + "):");
-      wrong.forEach(function (it) {
-        lines.push("  Q" + it.n + ". " + it.q);
-        lines.push("     mine: " + (it.skipped ? "(blank)" : it.given) + " | answer: " + it.right);
-      });
-    }
-    return lines.join("\n");
-  }
-
   return {
     render: render,
-    /* The dashboard names weak modules, so it needs this table too. */
     subSectionMeta: function (subId) { return getSubSectionMeta(null, subId); },
     subSectionsByUnit: subSectionsByUnit,
     reset: resetRun,

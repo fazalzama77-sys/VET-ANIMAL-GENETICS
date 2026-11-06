@@ -12,7 +12,7 @@
    PRECACHE, otherwise students keep seeing the old version.
    ============================================================ */
 
-var CACHE_VERSION = "vgen-v17";
+var CACHE_VERSION = "vgen-v18";
 var SHELL_CACHE = CACHE_VERSION + "-shell";
 var IMG_CACHE = CACHE_VERSION + "-img";
 
@@ -134,7 +134,7 @@ self.addEventListener("fetch", function (e) {
       return res;
     }).catch(function () {
       // Offline fallback
-      return caches.match(req).then(function (hit) {
+      return caches.match(req, { ignoreSearch: true }).then(function (hit) {
         if (hit) return hit;
         if (req.mode === "navigate" || (req.headers.get("accept") && req.headers.get("accept").indexOf("text/html") !== -1)) {
           return caches.match("index.html").then(function (fallback) {
