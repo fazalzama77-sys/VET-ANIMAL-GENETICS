@@ -6944,28 +6944,60 @@
 
 .sync-input {
   width: 100%;
-  padding: 8px 12px;
-  font-size: var(--fs-sm);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--bg);
-  color: var(--text);
-  font-family: inherit;
+  padding: 10px 14px !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  border: 1.5px solid rgba(59, 130, 246, 0.4) !important;
+  border-radius: var(--r-md) !important;
+  background: var(--surface, #ffffff) !important;
+  color: var(--text, #0f172a) !important;
+  font-family: inherit !important;
+  cursor: text !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 5 !important;
+  touch-action: manipulation;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+[data-theme="dark"] .sync-input {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
 .sync-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  outline: none !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
+}
+
+[data-theme="dark"] .sync-input:focus {
+  background: #1e293b !important;
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25) !important;
+}
+
+.sync-input::placeholder {
+  color: #94a3b8 !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  opacity: 0.8 !important;
 }
 
 .sync-input--pin {
-  font-family: var(--font-mono, monospace);
-  font-weight: 750;
-  letter-spacing: 1.5px;
-  text-align: center;
-  font-size: 1rem;
+  font-family: var(--font-mono, monospace) !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-align: center !important;
+  font-size: 1.15rem !important;
+  color: #2563eb !important;
+}
+
+[data-theme="dark"] .sync-input--pin {
+  color: #60a5fa !important;
 }
 
 .sync-pin-group, .sync-db-input-group {

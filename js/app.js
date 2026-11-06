@@ -4088,6 +4088,8 @@ var app = (function () {
             '<input id="me-reminder-time-input" class="me-reminder-time" type="time" value="' + esc(srsTime) + '">' +
           '</div>' +
         '</div>' +
+      '</div>' +
+
       '<div class="card mb-4">' +
         '<h3>' + icon("phone") + ' App Installation & Offline Status</h3>' +
         '<p class="muted mt-2">Animal Genetics Studio runs as an offline-first Progressive Web App. All 104 syllabus topics, laboratory practicals, biostatistics numericals, question banks and quizzes live directly on your phone.</p>' +
@@ -4369,6 +4371,14 @@ var app = (function () {
         openSyncModal();
       });
     }
+
+    ["sync-pin-input", "sync-device-name", "sync-db-url"].forEach(function (id) {
+      var inp = el("#" + id);
+      if (inp) {
+        inp.addEventListener("click", function () { this.focus(); });
+        inp.addEventListener("touchstart", function () { this.focus(); }, { passive: true });
+      }
+    });
 
     var rs = el('[data-act="reset"]');
     if (rs) rs.addEventListener("click", function () {
