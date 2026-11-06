@@ -4144,7 +4144,7 @@ var app = (function () {
                 '<label class="sync-label" for="sync-pin-input">🔑 6-Digit Sync PIN / Secret Key:</label>' +
                 '<div class="sync-pin-group">' +
                   '<input type="text" id="sync-pin-input" class="sync-input sync-input--pin" placeholder="Enter 6-digit PIN" value="' + esc(cfg.pin || "") + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' +
-                  '<button type="button" class="btn btn--sm btn--soft" id="sync-paste-pin-btn" title="Paste or enter PIN">📋 Paste</button>' +
+                  '<button type="button" class="btn btn--sm btn--primary" id="sync-paste-pin-btn" title="Type, Edit, or Paste PIN">✏️ Edit / Type PIN</button>' +
                   '<button type="button" class="btn btn--sm btn--soft" id="sync-copy-pin-btn" title="Copy PIN">📄 Copy</button>' +
                   '<button type="button" class="btn btn--sm btn--soft" id="sync-gen-pin-btn" title="Generate random 6-digit PIN">🎲 New PIN</button>' +
                 '</div>' +
@@ -4492,7 +4492,7 @@ var app = (function () {
     var syncPastePinBtn = el("#sync-paste-pin-btn");
     if (syncPastePinBtn) {
       syncPastePinBtn.addEventListener("click", function () {
-        handlePasteButton(el("#sync-pin-input"), "Sync PIN", "pin");
+        openUniversalPaste(el("#sync-pin-input"), "Sync PIN", "pin");
       });
     }
 
@@ -5070,12 +5070,38 @@ var app = (function () {
     var pinEl = el("#sync-qr-pin");
     var imgEl = el("#sync-qr-image");
 
-    if (pinEl) pinEl.textContent = cfg.pin || "No PIN Set";
+    if (pinEl) {
+      if (pinEl.tagName === "INPUT") pinEl.value = cfg.pin || "";
+      else pinEl.textContent = cfg.pin || "No PIN Set";
+    }
     if (imgEl && window.syncApp) {
       var pairUrl = syncApp.getPairingUrl();
       imgEl.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(pairUrl);
     }
     modal.style.display = "flex";
+  }
+
+  function saveModalPinAndClose() {
+    var pinEl = el("#sync-qr-pin");
+    var val = pinEl && pinEl.value ? pinEl.value.trim() : "";
+    if (val) {
+      var mainPin = el("#sync-pin-input");
+      if (mainPin) mainPin.value = val;
+      var cfg = store.getSyncConfig();
+      cfg.pin = val;
+      cfg.enabled = true;
+      store.setSyncConfig(cfg);
+      if (window.syncApp) {
+        syncApp.pull(function () {
+          syncApp.push(function () {
+            syncApp.connectLive();
+            if (state.section === "me") renderMe();
+          });
+        });
+      }
+      toast("PIN saved & Cloud Sync connected! ✨");
+    }
+    closeSyncModal();
   }
 
   function closeSyncModal() {
@@ -5123,6 +5149,7 @@ var app = (function () {
     openWhy: openWhyModal,
     closeWhy: closeWhyModal,
     openSyncModal: openSyncModal,
+    saveModalPinAndClose: saveModalPinAndClose,
     closeSyncModal: closeSyncModal,
     closePasteModal: closePasteModal,
     copySyncLink: copySyncLink

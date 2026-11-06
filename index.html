@@ -307,12 +307,15 @@
       <img id="sync-qr-image" class="sync-qr-img" alt="Device Pairing QR Code" src="">
     </div>
     <div class="sync-pin-display mt-3">
-      <span class="small muted">Or enter this 6-Digit PIN on your phone:</span>
-      <div class="sync-pin-big" id="sync-qr-pin">---</div>
+      <span class="small muted">Or type / edit your 6-Digit PIN here on both devices:</span>
+      <div class="row mt-2" style="gap:6px; justify-content:center;">
+        <input type="text" class="sync-input sync-input--pin" id="sync-qr-pin" style="max-width:180px;" placeholder="e.g. 749-218" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button class="btn btn--sm btn--soft" type="button" onclick="app.closeSyncModal(); document.getElementById('sync-paste-pin-btn') && document.getElementById('sync-paste-pin-btn').click();">🔢 Keypad</button>
+      </div>
     </div>
     <div class="mt-4 row" style="justify-content:center; gap:10px;">
       <button class="btn btn--sm btn--soft" type="button" onclick="app.copySyncLink()">📋 Copy Link</button>
-      <button class="btn btn--sm btn--primary" type="button" onclick="app.closeSyncModal()">Done</button>
+      <button class="btn btn--sm btn--primary" type="button" onclick="app.saveModalPinAndClose()">💾 Save PIN &amp; Connect</button>
     </div>
   </div>
 </div>
@@ -388,15 +391,15 @@
 <script src="data/data-quiz.JS"></script>
 <script src="data/events-data.js"></script>
 
-<script src="js/store.js?v=23"></script>
-<script src="js/quiz.js?v=23"></script>
-<script src="js/dashboard.js?v=23"></script>
+<script src="js/store.js?v=24"></script>
+<script src="js/quiz.js?v=24"></script>
+<script src="js/dashboard.js?v=24"></script>
 <script src="js/glossary.js"></script>
 <script src="js/search.js"></script>
 <script src="js/deep-guide.js"></script>
 <script src="js/events.js"></script>
-<script src="js/sync.js?v=23"></script>
-<script src="js/app.js?v=23"></script>
+<script src="js/sync.js?v=24"></script>
+<script src="js/app.js?v=24"></script>
 
 <script>
   /* ---- Offline indicator ---- */
