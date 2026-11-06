@@ -37,7 +37,8 @@ var store = (function () {
     installDismissed: PREFIX + "install-dismissed",
     sidebarCollapsed: PREFIX + "sidebar-collapsed",
     quizResume:  PREFIX + "quiz-resume",   // { ... } a paper left unfinished
-    quizPrefs:   PREFIX + "quiz-prefs"     // remembered setup choices
+    quizPrefs:   PREFIX + "quiz-prefs",    // remembered setup choices
+    syncConfig:  PREFIX + "sync-config"
   };
 
   /* ---------- low level ---------- */
@@ -54,6 +55,9 @@ var store = (function () {
   function write(key, value) {
     try {
       localStorage.setItem(key, JSON.stringify(value));
+      if (store && typeof store._onChange === "function") {
+        try { store._onChange(key, value); } catch (err) {}
+      }
       return true;
     } catch (e) {
       // Quota exceeded or private mode — fail quietly, never break the page.
@@ -481,6 +485,275 @@ var store = (function () {
     backupKeys().forEach(function (k) { localStorage.removeItem(k); });
   }
 
+  /* ---------- Cloud Sync Config & Remote Merge ---------- */
+  function getSyncConfig() {
+    return read(KEYS.syncConfig, {
+      enabled: false,
+      dbUrl: "",
+      pin: "",
+      deviceName: (/Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile Phone 📱" : "Tablet / PC 📟"),
+      lastSyncedAt: 0,
+      autoSync: true
+    });
+  }
+
+  function setSyncConfig(cfg) {
+    write(KEYS.syncConfig, cfg);
+  }
+
+  function getAllData() {
+    return {
+      version: 1,
+      timestamp: Date.now(),
+      read: getRead(),
+      bookmarks: getBookmarks(),
+      notes: getNotes(),
+      highlights: getHighlights(),
+      hlColor: getHighlightColor(),
+      quiz: getQuiz(),
+      srs: getSrs(),
+      activity: getActivity(),
+      qaDone: getQaDone(),
+      lastTopic: getLastTopic()
+    };
+  }
+
+  function mergeRemoteData(remote) {
+    if (!remote || typeof remote !== "object") return false;
+    var changed = false;
+
+    // 1. Read status (union of read topics)
+    if (remote.read && typeof remote.read === "object") {
+      var localRead = getRead();
+      var mergedRead = Object.assign({}, localRead);
+      var readDirty = false;
+      Object.keys(remote.read).forEach(function (tid) {
+        var rVal = remote.read[tid];
+        if (!mergedRead[tid] || (typeof rVal === "number" && rVal > (mergedRead[tid] || 0))) {
+          mergedRead[tid] = rVal;
+          readDirty = true;
+        }
+      });
+      if (readDirty) {
+        write(KEYS.read, mergedRead);
+        changed = true;
+      }
+    }
+
+    // 2. Bookmarks (union of array)
+    if (Array.isArray(remote.bookmarks)) {
+      var localBm = getBookmarks();
+      var bmSet = {};
+      localBm.forEach(function (id) { bmSet[id] = true; });
+      var bmDirty = false;
+      remote.bookmarks.forEach(function (id) {
+        if (!bmSet[id]) {
+          bmSet[id] = true;
+          bmDirty = true;
+        }
+      });
+      if (bmDirty) {
+        write(KEYS.bookmarks, Object.keys(bmSet));
+        changed = true;
+      }
+    }
+
+    // 3. Notes (merge by topicId, keep longer/richer note)
+    if (remote.notes && typeof remote.notes === "object") {
+      var localNotes = getNotes();
+      var mergedNotes = Object.assign({}, localNotes);
+      var notesDirty = false;
+      Object.keys(remote.notes).forEach(function (tid) {
+        var rText = remote.notes[tid];
+        if (rText && typeof rText === "string" && rText.trim()) {
+          var lText = mergedNotes[tid] || "";
+          if (!lText || (rText !== lText && rText.length > lText.length)) {
+            mergedNotes[tid] = rText;
+            notesDirty = true;
+          }
+        }
+      });
+      if (notesDirty) {
+        write(KEYS.notes, mergedNotes);
+        changed = true;
+      }
+    }
+
+    // 4. Highlights (union by topicId, deduplicating text)
+    if (remote.highlights && typeof remote.highlights === "object") {
+      var localHl = getHighlights();
+      var mergedHl = Object.assign({}, localHl);
+      var hlDirty = false;
+      Object.keys(remote.highlights).forEach(function (tid) {
+        var listLocal = mergedHl[tid] || [];
+        var listRemote = remote.highlights[tid] || [];
+        var seen = {};
+        var combined = [];
+        listLocal.forEach(function (item) {
+          var t = typeof item === "string" ? item : (item ? item.text : "");
+          var c = typeof item === "object" && item ? item.color : "yellow";
+          var occ = typeof item === "object" && item ? item.occ : undefined;
+          var prefix = typeof item === "object" && item ? item.prefix : "";
+          var suffix = typeof item === "object" && item ? item.suffix : "";
+          if (t && !seen[t]) {
+            seen[t] = true;
+            combined.push({ text: t, color: c, occ: occ, prefix: prefix, suffix: suffix });
+          }
+        });
+        listRemote.forEach(function (item) {
+          var t = typeof item === "string" ? item : (item ? item.text : "");
+          var c = typeof item === "object" && item ? item.color : "yellow";
+          var occ = typeof item === "object" && item ? item.occ : undefined;
+          var prefix = typeof item === "object" && item ? item.prefix : "";
+          var suffix = typeof item === "object" && item ? item.suffix : "";
+          if (t && !seen[t]) {
+            seen[t] = true;
+            combined.push({ text: t, color: c, occ: occ, prefix: prefix, suffix: suffix });
+            hlDirty = true;
+          }
+        });
+        mergedHl[tid] = combined;
+      });
+      if (hlDirty) {
+        write(KEYS.highlights, mergedHl);
+        changed = true;
+      }
+    }
+
+    // 5. Quiz attempts (smart union & stat recomputation)
+    if (remote.quiz && Array.isArray(remote.quiz.attempts)) {
+      var localQuiz = getQuiz();
+      var attemptMap = {};
+      (localQuiz.attempts || []).forEach(function (a) {
+        if (a && a.id) attemptMap[String(a.id)] = a;
+      });
+      var newAttemptFound = false;
+      remote.quiz.attempts.forEach(function (a) {
+        if (a && a.id && !attemptMap[String(a.id)]) {
+          attemptMap[String(a.id)] = a;
+          newAttemptFound = true;
+        }
+      });
+
+      if (newAttemptFound) {
+        var mergedAttempts = Object.values(attemptMap);
+        mergedAttempts.sort(function (a, b) { return (a.at || 0) - (b.at || 0); });
+        if (mergedAttempts.length > MAX_ATTEMPTS) {
+          mergedAttempts = mergedAttempts.slice(-MAX_ATTEMPTS);
+        }
+        for (var i = 0; i < mergedAttempts.length - DETAIL_KEEP; i++) {
+          if (mergedAttempts[i].detail) delete mergedAttempts[i].detail;
+        }
+
+        var recomputedQuiz = {
+          attempts: mergedAttempts,
+          byUnit: {},
+          bySub: {}
+        };
+
+        mergedAttempts.forEach(function (att) {
+          var pct = att.total ? Math.round(att.correct / att.total * 100) : 0;
+          function tally(key) {
+            var u = recomputedQuiz.byUnit[key] || { runs: 0, best: 0, totalQ: 0, totalCorrect: 0 };
+            u.runs += 1;
+            u.totalQ += att.total || 0;
+            u.totalCorrect += att.correct || 0;
+            if (pct > u.best) u.best = pct;
+            u.last = pct;
+            u.lastAt = att.at;
+            recomputedQuiz.byUnit[key] = u;
+          }
+          tally(att.scope);
+          (att.unitIds || []).forEach(function (uid) {
+            var key = "unit:" + uid;
+            if (key !== att.scope) tally(key);
+          });
+          var bySub = att.bySub || {};
+          Object.keys(bySub).forEach(function (sid) {
+            var rec = recomputedQuiz.bySub[sid] || { total: 0, right: 0, runs: 0 };
+            rec.total += bySub[sid].total || 0;
+            rec.right += bySub[sid].right || 0;
+            rec.runs += 1;
+            rec.lastAt = att.at;
+            recomputedQuiz.bySub[sid] = rec;
+          });
+        });
+
+        write(KEYS.quiz, recomputedQuiz);
+        changed = true;
+      }
+    }
+
+    // 6. Spaced Repetition (SRS)
+    if (remote.srs && typeof remote.srs === "object") {
+      var localSrs = getSrs();
+      var mergedSrs = Object.assign({}, localSrs);
+      var srsDirty = false;
+      Object.keys(remote.srs).forEach(function (qk) {
+        var rItem = remote.srs[qk];
+        var lItem = mergedSrs[qk];
+        if (!lItem || (rItem && rItem.box > lItem.box)) {
+          mergedSrs[qk] = rItem;
+          srsDirty = true;
+        }
+      });
+      if (srsDirty) {
+        write(KEYS.srs, mergedSrs);
+        changed = true;
+      }
+    }
+
+    // 7. Activity & Streak
+    if (remote.activity && typeof remote.activity === "object") {
+      var localAct = getActivity();
+      var mergedAct = Object.assign({}, localAct);
+      var actDirty = false;
+      Object.keys(remote.activity).forEach(function (dt) {
+        var rCnt = remote.activity[dt] || 0;
+        var lCnt = mergedAct[dt] || 0;
+        if (rCnt > lCnt) {
+          mergedAct[dt] = rCnt;
+          actDirty = true;
+        }
+      });
+      if (actDirty) {
+        write(KEYS.activity, mergedAct);
+        changed = true;
+      }
+    }
+
+    // 8. Practiced Q&A
+    if (Array.isArray(remote.qaDone)) {
+      var localQa = getQaDone();
+      var qaSet = {};
+      localQa.forEach(function (id) { qaSet[id] = true; });
+      var qaDirty = false;
+      remote.qaDone.forEach(function (id) {
+        if (!qaSet[id]) {
+          qaSet[id] = true;
+          qaDirty = true;
+        }
+      });
+      if (qaDirty) {
+        write(KEYS.qaDone, Object.keys(qaSet));
+        changed = true;
+      }
+    }
+
+    // 9. Last topic studied
+    if (remote.lastTopic && !getLastTopic()) {
+      write(KEYS.lastTopic, remote.lastTopic);
+    }
+
+    if (changed) {
+      try {
+        window.dispatchEvent(new CustomEvent("vgen-store-updated", { detail: { remote: true } }));
+      } catch (e) {}
+    }
+
+    return changed;
+  }
+
   /* ---------- public API ---------- */
   return {
     KEYS: KEYS,
@@ -506,6 +779,8 @@ var store = (function () {
     toggleSidebarCollapsed: toggleSidebarCollapsed, applySidebarState: applySidebarState,
     getSrsNotify: getSrsNotify, setSrsNotify: setSrsNotify,
     getSrsNotifyTime: getSrsNotifyTime, setSrsNotifyTime: setSrsNotifyTime,
+    getSyncConfig: getSyncConfig, setSyncConfig: setSyncConfig,
+    getAllData: getAllData, mergeRemoteData: mergeRemoteData,
     backupKeys: backupKeys, exportBackup: exportBackup, importBackup: importBackup,
     resetAll: resetAll,
     today: today

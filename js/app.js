@@ -215,9 +215,44 @@ var app = (function () {
     return parts;
   }
 
+  function handlePairingRoute() {
+    var raw = location.hash || "";
+    var qIndex = raw.indexOf("?");
+    var searchStr = qIndex !== -1 ? raw.slice(qIndex + 1) : (location.search ? location.search.slice(1) : "");
+    var params = new URLSearchParams(searchStr);
+    var db = params.get("db");
+    var pin = params.get("pin");
+
+    if (db && pin) {
+      var cfg = store.getSyncConfig();
+      cfg.enabled = true;
+      cfg.dbUrl = decodeURIComponent(db);
+      cfg.pin = decodeURIComponent(pin);
+      cfg.deviceName = (/Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile Phone 📱" : "Tablet / PC 📟");
+      store.setSyncConfig(cfg);
+      toast("Connecting to your Cloud Sync room...");
+      if (window.syncApp) {
+        syncApp.pull(function (ok, msg) {
+          if (ok) {
+            toast("Devices linked successfully! ✨");
+            syncApp.connectLive();
+          } else {
+            toast("Linked! Note: " + msg);
+          }
+        });
+      }
+    }
+    setTimeout(function () { go("#/me"); }, 450);
+  }
+
   function route() {
     var p = parseHash();
     var name = p[0] || "home";
+
+    if (name.indexOf("sync") === 0) {
+      handlePairingRoute();
+      return;
+    }
 
     state.route = location.hash || "#/";
     state.params = { a: p[1] || null, b: p[2] || null };
@@ -4064,6 +4099,97 @@ var app = (function () {
         '</div>' +
       '</div>' +
 
+      /* Cross-Device Cloud Sync Card */
+      (function () {
+        var cfg = store.getSyncConfig();
+        var statusBadgeClass = "sync-badge--off";
+        var statusBadgeText = "Sync Inactive";
+        if (cfg.enabled && cfg.dbUrl && cfg.pin) {
+          if (!navigator.onLine) {
+            statusBadgeClass = "sync-badge--warn";
+            statusBadgeText = "Offline";
+          } else {
+            statusBadgeClass = "sync-badge--live";
+            statusBadgeText = "Auto-Sync Active";
+          }
+        }
+        var lastTime = (cfg.lastSyncedAt ? new Date(cfg.lastSyncedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Never");
+
+        return '<div class="card card--sync mb-4" id="cloud-sync-card">' +
+          '<div class="sync-card-head">' +
+            '<div class="sync-card-head__left">' +
+              '<div class="sync-card-icon">☁️</div>' +
+              '<div>' +
+                '<div class="sync-card-title-row">' +
+                  '<h3 style="margin:0;">' + icon("repeat") + ' Cross-Device Cloud Sync</h3>' +
+                  '<span class="sync-badge ' + statusBadgeClass + '" id="sync-status-badge">' +
+                    '<span class="sync-dot"></span> ' + statusBadgeText +
+                  '</span>' +
+                '</div>' +
+                '<p class="muted small mt-1">Keep your Mobile Phone and Tablet in sync automatically. Highlights, quizzes, notes &amp; bookmarks stay identical in real time.</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="sync-card-body mt-4">' +
+            '<div class="sync-inputs-grid">' +
+              '<div class="sync-input-col">' +
+                '<label class="sync-label" for="sync-pin-input">🔑 6-Digit Sync PIN / Secret Key:</label>' +
+                '<div class="sync-pin-group">' +
+                  '<input type="text" id="sync-pin-input" class="sync-input sync-input--pin" placeholder="e.g. 749-218" value="' + esc(cfg.pin || "") + '" autocomplete="off">' +
+                  '<button type="button" class="btn btn--sm btn--soft" id="sync-gen-pin-btn" title="Generate random 6-digit PIN">🎲 New PIN</button>' +
+                '</div>' +
+                '<span class="small faint">Enter this same PIN on both devices to pair them.</span>' +
+              '</div>' +
+
+              '<div class="sync-input-col">' +
+                '<label class="sync-label" for="sync-device-name">📱 This Device Name:</label>' +
+                '<input type="text" id="sync-device-name" class="sync-input" placeholder="e.g. Tablet or Mobile" value="' + esc(cfg.deviceName || "") + '">' +
+                '<span class="small faint">Label shown on the other device when live updates sync.</span>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="sync-db-row mt-3">' +
+              '<label class="sync-label" for="sync-db-url">🌐 Firebase Realtime Database URL:</label>' +
+              '<div class="sync-db-input-group">' +
+                '<input type="text" id="sync-db-url" class="sync-input" placeholder="https://your-project-default-rtdb.firebaseio.com" value="' + esc(cfg.dbUrl || "") + '">' +
+                '<button type="button" class="btn btn--sm btn--soft" id="sync-test-btn">⚡ Test Link</button>' +
+              '</div>' +
+              '<div class="sync-guide-toggle-row mt-1">' +
+                '<a href="javascript:void(0)" class="small sync-guide-toggle" id="sync-guide-toggle">📖 Don\'t have a Firebase Database URL? 60-Second Setup Guide ▾</a>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="sync-guide-drawer" id="sync-guide-drawer" style="display:none;">' +
+              '<div class="sync-guide-box">' +
+                '<div class="sync-guide-title">🚀 Free 60-Second Setup with your Google Account:</div>' +
+                '<ol class="sync-guide-list">' +
+                  '<li>Open <a href="https://console.firebase.google.com" target="_blank" rel="noopener"><b>console.firebase.google.com</b></a> on your tablet or PC.</li>' +
+                  '<li>Click <b>Add project</b> &rarr; Name it <code>vet-genetics</code> &rarr; Continue (100% Free Spark plan).</li>' +
+                  '<li>In the left sidebar, click <b>Build</b> &rarr; <b>Realtime Database</b> &rarr; <b>Create Database</b>.</li>' +
+                  '<li>Under the <b>Rules</b> tab, set <code>".read": true, ".write": true</code> &rarr; Click <b>Publish</b>.</li>' +
+                  '<li>Copy your database URL (e.g. <code>https://vet-genetics-default-rtdb.firebaseio.com</code>) and paste it above!</li>' +
+                '</ol>' +
+                '<div class="small muted mt-2">💡 <i>Once entered on your tablet, simply click <b>Pair via QR Code</b> below to link your phone instantly without typing!</i></div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="sync-actions-row mt-4 pt-3">' +
+              '<div class="sync-actions-left">' +
+                '<button type="button" class="btn btn--primary" id="sync-save-btn">💾 Save &amp; Connect Sync</button>' +
+                '<button type="button" class="btn btn--soft" id="sync-now-btn">🔄 Sync Now</button>' +
+                '<button type="button" class="btn btn--soft" id="sync-qr-btn">📱 Pair via QR Code</button>' +
+              '</div>' +
+              '<div class="sync-actions-right">' +
+                '<span class="small faint">Last synced: <b id="sync-last-time">' + lastTime + '</b></span>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="sync-feedback-msg mt-2 small" id="sync-feedback-msg" style="display:none;"></div>' +
+          '</div>' +
+        '</div>';
+      })() +
+
       '<div class="card mb-4">' +
         '<h3>' + icon("download") + ' Backup and restore</h3>' +
         '<p class="muted mt-2">Your progress, notes, bookmarks and quiz history are stored in this browser only. ' +
@@ -4133,6 +4259,116 @@ var app = (function () {
         if (ok) setTimeout(function () { location.reload(); }, 900);
       });
     });
+
+    /* Cloud Sync wiring */
+    var syncGuideToggle = el("#sync-guide-toggle");
+    if (syncGuideToggle) {
+      syncGuideToggle.addEventListener("click", function () {
+        var d = el("#sync-guide-drawer");
+        if (d) d.style.display = (d.style.display === "none" ? "block" : "none");
+      });
+    }
+
+    var syncGenPin = el("#sync-gen-pin-btn");
+    if (syncGenPin) {
+      syncGenPin.addEventListener("click", function () {
+        var pinInput = el("#sync-pin-input");
+        if (pinInput && window.syncApp) {
+          pinInput.value = syncApp.generatePin();
+          toast("Generated new PIN: " + pinInput.value);
+        }
+      });
+    }
+
+    var syncTestBtn = el("#sync-test-btn");
+    if (syncTestBtn) {
+      syncTestBtn.addEventListener("click", function () {
+        var dbUrl = (el("#sync-db-url") || {}).value;
+        var pin = (el("#sync-pin-input") || {}).value;
+        var msgEl = el("#sync-feedback-msg");
+        if (msgEl) {
+          msgEl.style.display = "block";
+          msgEl.className = "sync-feedback-msg";
+          msgEl.textContent = "Testing connection to cloud database...";
+        }
+        if (window.syncApp) {
+          syncApp.testConnection(dbUrl, pin, function (ok, msg) {
+            if (msgEl) {
+              msgEl.className = "sync-feedback-msg " + (ok ? "is-ok" : "is-err");
+              msgEl.textContent = msg;
+            }
+          });
+        }
+      });
+    }
+
+    var syncSaveBtn = el("#sync-save-btn");
+    if (syncSaveBtn) {
+      syncSaveBtn.addEventListener("click", function () {
+        var dbUrl = (el("#sync-db-url") || {}).value;
+        var pin = (el("#sync-pin-input") || {}).value;
+        var dName = (el("#sync-device-name") || {}).value;
+        var msgEl = el("#sync-feedback-msg");
+
+        if (!dbUrl || !dbUrl.trim()) {
+          toast("Please enter your Firebase Database URL");
+          return;
+        }
+        if (!pin || !pin.trim()) {
+          toast("Please enter or generate a Sync PIN");
+          return;
+        }
+
+        var cfg = store.getSyncConfig();
+        cfg.enabled = true;
+        cfg.dbUrl = dbUrl.trim();
+        cfg.pin = pin.trim();
+        if (dName && dName.trim()) cfg.deviceName = dName.trim();
+        store.setSyncConfig(cfg);
+
+        toast("Settings saved! Connecting to cloud sync...");
+        if (msgEl) {
+          msgEl.style.display = "block";
+          msgEl.className = "sync-feedback-msg";
+          msgEl.textContent = "Uploading local progress and establishing live link...";
+        }
+
+        if (window.syncApp) {
+          syncApp.push(function (ok, msg) {
+            if (msgEl) {
+              msgEl.className = "sync-feedback-msg " + (ok ? "is-ok" : "is-err");
+              msgEl.textContent = msg;
+            }
+            if (ok) {
+              syncApp.connectLive();
+              renderMe();
+            }
+          });
+        }
+      });
+    }
+
+    var syncNowBtn = el("#sync-now-btn");
+    if (syncNowBtn) {
+      syncNowBtn.addEventListener("click", function () {
+        toast("Synchronizing with cloud...");
+        if (window.syncApp) {
+          syncApp.pull(function () {
+            syncApp.push(function (okPush, msg) {
+              toast(okPush ? "Sync complete! Devices are up to date ✔" : msg);
+              renderMe();
+            });
+          });
+        }
+      });
+    }
+
+    var syncQrBtn = el("#sync-qr-btn");
+    if (syncQrBtn) {
+      syncQrBtn.addEventListener("click", function () {
+        openSyncModal();
+      });
+    }
 
     var rs = el('[data-act="reset"]');
     if (rs) rs.addEventListener("click", function () {
@@ -4496,6 +4732,50 @@ var app = (function () {
         _scheduleNextSrsNotification();
       }
     });
+
+    window.addEventListener("vgen-store-updated", function (e) {
+      var lessonMain = el(".lesson__main");
+      if (lessonMain && state.section === "topic" && state.params.a) {
+        var tid = state.params.a;
+        var hlList = store.getHighlights()[tid] || [];
+        applyDomHighlights(lessonMain, hlList);
+        wireInlineMarks(tid);
+      }
+      if (state.section === "dashboard" && window.dashboardApp) {
+        dashboardApp.render(el("#view"));
+      }
+      if (state.section === "me") {
+        renderMe();
+      }
+    });
+  }
+
+  function openSyncModal() {
+    var modal = el("#sync-qr-modal");
+    if (!modal) return;
+    var cfg = store.getSyncConfig();
+    var pinEl = el("#sync-qr-pin");
+    var imgEl = el("#sync-qr-image");
+
+    if (pinEl) pinEl.textContent = cfg.pin || "No PIN Set";
+    if (imgEl && window.syncApp) {
+      var pairUrl = syncApp.getPairingUrl();
+      imgEl.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(pairUrl);
+    }
+    modal.style.display = "flex";
+  }
+
+  function closeSyncModal() {
+    var modal = el("#sync-qr-modal");
+    if (modal) modal.style.display = "none";
+  }
+
+  function copySyncLink() {
+    if (window.syncApp) {
+      var pairUrl = syncApp.getPairingUrl();
+      copyTextToClipboard(pairUrl);
+      toast("Pairing link copied! Send it to your phone via WhatsApp/chat ✨");
+    }
   }
 
   /* ---------- public ---------- */
@@ -4523,7 +4803,10 @@ var app = (function () {
     shuffleWhyMechanism: shuffleWhyMechanism,
     shuffleGlossaryTerm: shuffleGlossaryTerm,
     openWhy: openWhyModal,
-    closeWhy: closeWhyModal
+    closeWhy: closeWhyModal,
+    openSyncModal: openSyncModal,
+    closeSyncModal: closeSyncModal,
+    copySyncLink: copySyncLink
   };
 })();
 

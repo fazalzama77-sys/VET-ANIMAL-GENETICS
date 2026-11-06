@@ -6803,3 +6803,325 @@
   color: #ffffff !important;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35) !important;
 }
+
+
+/* ============================================================
+   CROSS-DEVICE CLOUD SYNC & DEVICE LINK
+   ============================================================ */
+.card--sync {
+  border: 1.5px solid rgba(59, 130, 246, 0.25) !important;
+  background: linear-gradient(180deg, var(--surface) 0%, rgba(59, 130, 246, 0.03) 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.sync-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sync-card-head__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.sync-card-icon {
+  font-size: 2rem;
+  line-height: 1;
+  background: rgba(59, 130, 246, 0.12);
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sync-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sync-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  font-weight: 750;
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+}
+
+.sync-badge--live {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.sync-badge--live .sync-dot {
+  background: #10b981;
+}
+
+.sync-badge--off {
+  background: rgba(156, 163, 175, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(156, 163, 175, 0.25);
+}
+
+.sync-badge--off .sync-dot {
+  background: #9ca3af;
+}
+
+.sync-badge--syncing {
+  background: rgba(59, 130, 246, 0.15);
+  color: #2563eb;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.sync-badge--syncing .sync-dot {
+  background: #3b82f6;
+}
+
+.sync-badge--warn {
+  background: rgba(245, 158, 11, 0.15);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.sync-badge--warn .sync-dot {
+  background: #f59e0b;
+}
+
+.sync-badge--error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.sync-badge--error .sync-dot {
+  background: #ef4444;
+}
+
+.sync-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sync-pulse {
+  animation: syncPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes syncPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.sync-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.sync-input-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sync-label {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sync-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: var(--fs-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.sync-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.sync-input--pin {
+  font-family: var(--font-mono, monospace);
+  font-weight: 750;
+  letter-spacing: 1.5px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.sync-pin-group, .sync-db-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.sync-guide-toggle-row {
+  margin-top: 4px;
+}
+
+.sync-guide-toggle {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sync-guide-toggle:hover {
+  text-decoration: underline;
+}
+
+.sync-guide-drawer {
+  margin-top: 10px;
+  animation: fadeIn 0.18s ease;
+}
+
+.sync-guide-box {
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px dashed rgba(59, 130, 246, 0.35);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+}
+
+.sync-guide-title {
+  font-weight: 750;
+  font-size: var(--fs-sm);
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.sync-guide-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.sync-guide-list code {
+  background: var(--surface);
+  padding: 1px 5px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono, monospace);
+  color: var(--text);
+}
+
+.sync-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+}
+
+.sync-actions-left {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sync-feedback-msg {
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  font-weight: 600;
+}
+
+.sync-feedback-msg.is-ok {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.sync-feedback-msg.is-err {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* QR Code Pairing Modal */
+.sync-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.sync-modal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-2xl);
+  max-width: 420px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  text-align: center;
+  animation: scaleUp 0.15s ease;
+}
+
+.sync-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.sync-modal-close:hover {
+  color: var(--text);
+}
+
+.sync-qr-img {
+  width: 220px;
+  height: 220px;
+  border-radius: var(--r-lg);
+  border: 2px solid var(--border);
+  background: #fff;
+  padding: 8px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.sync-pin-display {
+  background: var(--bg);
+  border-radius: var(--r-lg);
+  padding: 10px;
+  border: 1px dashed var(--border);
+}
+
+.sync-pin-big {
+  font-family: var(--font-mono, monospace);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #2563eb;
+  margin-top: 4px;
+}
