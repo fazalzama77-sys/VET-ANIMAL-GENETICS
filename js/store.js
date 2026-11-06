@@ -487,16 +487,20 @@ var store = (function () {
 
   /* ---------- Cloud Sync Config & Remote Merge ---------- */
   var DEFAULT_SYNC_DB_URL = "https://vet-pathology-default-rtdb.firebaseio.com";
-  var DEFAULT_SYNC_PIN = "350-202";
+  function generateRandomPin() {
+    var a = Math.floor(100 + Math.random() * 900);
+    var b = Math.floor(100 + Math.random() * 900);
+    return a + "-" + b;
+  }
 
   function getSyncConfig() {
     var cfg = read(KEYS.syncConfig, null);
     var defaultDevName = (/Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile Phone 📱" : "Tablet / PC 📟");
     if (!cfg || typeof cfg !== "object") {
       cfg = {
-        enabled: true,
+        enabled: false,
         dbUrl: DEFAULT_SYNC_DB_URL,
-        pin: DEFAULT_SYNC_PIN,
+        pin: generateRandomPin(),
         deviceName: defaultDevName,
         lastSyncedAt: 0,
         autoSync: true
@@ -505,16 +509,13 @@ var store = (function () {
       return cfg;
     }
     var dirty = false;
-    if (!cfg.dbUrl || !String(cfg.dbUrl).trim()) {
+    if (!cfg.dbUrl || !String(cfg.dbUrl).trim() || cfg.dbUrl.indexOf("your-project") !== -1) {
       cfg.dbUrl = DEFAULT_SYNC_DB_URL;
-      if (!cfg.lastSyncedAt) {
-        cfg.pin = DEFAULT_SYNC_PIN;
-      }
-      cfg.enabled = true;
       dirty = true;
     }
-    if (!cfg.pin || !String(cfg.pin).trim()) {
-      cfg.pin = DEFAULT_SYNC_PIN;
+    if (!cfg.pin || !String(cfg.pin).trim() || cfg.pin === "350-202" || cfg.pin === "749-218" || cfg.pin === "772026") {
+      cfg.pin = generateRandomPin();
+      cfg.enabled = false;
       dirty = true;
     }
     if (!cfg.deviceName) {
