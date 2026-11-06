@@ -6750,3 +6750,56 @@
 [data-theme="dark"] .dash-cal-cell[data-lvl="1"] { background: #1b5e20; border-color: #2e7d32; }
 [data-theme="dark"] .dash-cal-cell[data-lvl="2"] { background: #2e7d32; border-color: #4caf50; }
 [data-theme="dark"] .dash-cal-cell[data-lvl="3"] { background: #4caf50; border-color: #81c784; }
+
+
+/* ============================================================
+   SUBMIT TEST BUTTONS — Topbar, Drawer & Bottom Action Dock
+   ============================================================ */
+.btn--submit-test {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border: none !important;
+  border-radius: var(--r-md, 10px) !important;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35) !important;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  letter-spacing: 0.02em;
+}
+.btn--submit-test:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.45) !important;
+  filter: brightness(1.1);
+}
+.btn--submit-test:active {
+  transform: translateY(1px) scale(0.98);
+}
+.qz-top-submit-btn {
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+.qz-dock-submit-btn {
+  padding: 7px 16px !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+.quiz-map-drawer__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  margin-top: 14px;
+  border-top: 1.5px dashed var(--border);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+[data-theme="dark"] .btn--submit-test {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35) !important;
+}

@@ -1036,6 +1036,11 @@ var quizApp = (function () {
           '</button>';
         }).join("") +
       '</div>' +
+      '<div class="quiz-map-drawer__footer">' +
+        '<span class="quiz-dock-status">' + answered + ' of ' + run.qs.length + ' answered' +
+          (flaggedN ? ' · 🚩 ' + flaggedN + ' flagged' : '') + '</span>' +
+        '<button type="button" class="btn btn--sm btn--submit-test" id="drawersubmitbtn" title="Submit test and view results">🏁 Submit Test</button>' +
+      '</div>' +
     '</div>';
 
     var subMeta = getSubSectionMeta(q.unitId, q.subSection);
@@ -1069,6 +1074,7 @@ var quizApp = (function () {
             '<button type="button" class="btn btn--sm btn--outline qz-map-btn" id="mapdrawerbtn">' +
               '🗺️ Map (' + answered + '/' + run.qs.length + ') ' + (mapDrawerOpen ? '▲' : '▼') +
             '</button>' +
+            '<button type="button" class="btn btn--sm btn--submit-test qz-top-submit-btn" id="topsubmitbtn" title="Submit test and view results">🏁 Submit Test</button>' +
           '</div>' +
         '</div>' +
 
@@ -1117,9 +1123,10 @@ var quizApp = (function () {
             '</button>' +
             '<span class="quiz-dock-status">' + answered + ' of ' + run.qs.length + ' answered' +
               (flaggedN ? ' · 🚩 ' + flaggedN + ' flagged' : '') + '</span>' +
+            '<button type="button" class="btn btn--sm btn--submit-test qz-dock-submit-btn" id="docksubmitbtn" title="Submit test at any time">🏁 Submit Test</button>' +
           '</div>' +
           (run.i === run.qs.length - 1
-            ? '<button class="btn btn--primary btn--lg btn--finish-quiz" id="finishbtn">Finish &amp; See Results 🏆</button>'
+            ? '<button class="btn btn--primary btn--lg btn--finish-quiz" id="finishbtn">🏁 Submit Test &amp; Results 🏆</button>'
             : '<button class="btn btn--primary btn--lg btn--next-quiz' + (hasAnswer(given) ? ' is-ready' : '') + '" id="nextbtn">' +
                 (hasAnswer(given) ? 'Next Question →' : 'Skip for Now →') + '</button>') +
         '</div>' +
@@ -1331,14 +1338,22 @@ var quizApp = (function () {
       goTo(run.i - 1);
     });
 
-    var fin = document.getElementById("finishbtn");
-    if (fin) fin.addEventListener("click", function () {
+    function handleTestSubmit() {
       if (q.format === "fib") {
         var el3 = document.getElementById("fibinput");
-        if (el3) run.answers[run.i] = el3.value;
+        if (el3 && el3.value) run.answers[run.i] = el3.value;
       }
       confirmFinish();
-    });
+    }
+
+    var fin = document.getElementById("finishbtn");
+    if (fin) fin.addEventListener("click", handleTestSubmit);
+    var topSub = document.getElementById("topsubmitbtn");
+    if (topSub) topSub.addEventListener("click", handleTestSubmit);
+    var dockSub = document.getElementById("docksubmitbtn");
+    if (dockSub) dockSub.addEventListener("click", handleTestSubmit);
+    var drawerSub = document.getElementById("drawersubmitbtn");
+    if (drawerSub) drawerSub.addEventListener("click", handleTestSubmit);
 
     var quit = document.getElementById("quitbtn");
     if (quit) quit.addEventListener("click", function () {
@@ -1406,13 +1421,15 @@ var quizApp = (function () {
   }
 
   function confirmFinish() {
-    var blanks = run.qs.length - answeredCount();
+    var answered = answeredCount();
+    var blanks = run.qs.length - answered;
     var flagged = run.flags.filter(Boolean).length;
     if (blanks || flagged) {
-      var msg = "Ready to finish and submit?\n\n";
+      var msg = "Submit Test Now?\n\n";
+      msg += "• " + answered + " of " + run.qs.length + " questions answered\n";
       if (blanks) msg += "• " + blanks + " question" + (blanks > 1 ? "s are" : " is") + " still unanswered\n";
       if (flagged) msg += "• " + flagged + " question" + (flagged > 1 ? "s are" : " is") + " flagged for review\n";
-      msg += "\nUnanswered questions will be marked incorrect.";
+      msg += "\nUnanswered questions will be marked incorrect.\nClick OK to submit your test, or Cancel to continue answering.";
       if (!confirm(msg)) {
         var firstBlank = -1;
         for (var i = 0; i < run.qs.length; i++) {
@@ -1420,6 +1437,10 @@ var quizApp = (function () {
         }
         if (firstBlank === -1) firstBlank = run.flags.indexOf(true);
         if (firstBlank >= 0) goTo(firstBlank);
+        return;
+      }
+    } else {
+      if (!confirm("Submit Test Now?\n\n🎉 You answered all " + run.qs.length + " questions!\n\nClick OK to submit and view your detailed report card.")) {
         return;
       }
     }
