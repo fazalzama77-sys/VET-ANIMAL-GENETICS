@@ -513,7 +513,7 @@ var store = (function () {
       cfg.dbUrl = DEFAULT_SYNC_DB_URL;
       dirty = true;
     }
-    if (!cfg.pin || !String(cfg.pin).trim() || cfg.pin === "350-202" || cfg.pin === "749-218" || cfg.pin === "772026") {
+    if (!cfg.pin || !String(cfg.pin).trim()) {
       cfg.pin = generateRandomPin();
       cfg.enabled = false;
       dirty = true;

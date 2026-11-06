@@ -4323,7 +4323,24 @@ var app = (function () {
         targetInput.dispatchEvent(new Event("input", { bubbles: true }));
         targetInput.dispatchEvent(new Event("change", { bubbles: true }));
         saveDraftSyncInputs();
-        toast((title || "Details") + " pasted! 📋");
+        if (targetInput.id === "sync-pin-input" || targetInput.id === "sync-qr-pin") {
+          var qrPin = el("#sync-qr-pin");
+          if (qrPin && qrPin !== targetInput) qrPin.value = text;
+          var mainPin = el("#sync-pin-input");
+          if (mainPin && mainPin !== targetInput) mainPin.value = text;
+          var pCfg = store.getSyncConfig();
+          pCfg.pin = text;
+          pCfg.enabled = true;
+          store.setSyncConfig(pCfg);
+          if (window.syncApp) {
+            syncApp.pull(function () {
+              syncApp.push(function () {
+                syncApp.connectLive();
+              });
+            });
+          }
+        }
+        toast((title || "Details") + " updated & saved! ✨");
         return true;
       }
       return false;
@@ -5071,8 +5088,23 @@ var app = (function () {
     var imgEl = el("#sync-qr-image");
 
     if (pinEl) {
-      if (pinEl.tagName === "INPUT") pinEl.value = cfg.pin || "";
-      else pinEl.textContent = cfg.pin || "No PIN Set";
+      if (pinEl.tagName === "INPUT") {
+        pinEl.value = cfg.pin || "";
+        pinEl.oninput = function () {
+          var livePin = pinEl.value.trim();
+          var mainPin = el("#sync-pin-input");
+          if (mainPin) mainPin.value = livePin;
+          var curCfg = store.getSyncConfig();
+          curCfg.pin = livePin;
+          store.setSyncConfig(curCfg);
+          if (imgEl && window.syncApp) {
+            var livePairUrl = window.location.origin + window.location.pathname + "#/sync?db=" + encodeURIComponent(curCfg.dbUrl || "") + "&pin=" + encodeURIComponent(livePin);
+            imgEl.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(livePairUrl);
+          }
+        };
+      } else {
+        pinEl.textContent = cfg.pin || "No PIN Set";
+      }
     }
     if (imgEl && window.syncApp) {
       var pairUrl = syncApp.getPairingUrl();
