@@ -1366,6 +1366,7 @@ var quizApp = (function () {
 
     function handleKey(e) {
       if (!run || !run.active) return;
+      if (location.hash && location.hash.indexOf("#/quiz") !== 0) return;
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 

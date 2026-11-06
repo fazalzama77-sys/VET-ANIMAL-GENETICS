@@ -486,15 +486,49 @@ var store = (function () {
   }
 
   /* ---------- Cloud Sync Config & Remote Merge ---------- */
+  var DEFAULT_SYNC_DB_URL = "https://vet-pathology-default-rtdb.firebaseio.com";
+  var DEFAULT_SYNC_PIN = "350-202";
+
   function getSyncConfig() {
-    return read(KEYS.syncConfig, {
-      enabled: false,
-      dbUrl: "",
-      pin: "",
-      deviceName: (/Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile Phone 📱" : "Tablet / PC 📟"),
-      lastSyncedAt: 0,
-      autoSync: true
-    });
+    var cfg = read(KEYS.syncConfig, null);
+    var defaultDevName = (/Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile Phone 📱" : "Tablet / PC 📟");
+    if (!cfg || typeof cfg !== "object") {
+      cfg = {
+        enabled: true,
+        dbUrl: DEFAULT_SYNC_DB_URL,
+        pin: DEFAULT_SYNC_PIN,
+        deviceName: defaultDevName,
+        lastSyncedAt: 0,
+        autoSync: true
+      };
+      try { localStorage.setItem(KEYS.syncConfig, JSON.stringify(cfg)); } catch (e) {}
+      return cfg;
+    }
+    var dirty = false;
+    if (!cfg.dbUrl || !String(cfg.dbUrl).trim()) {
+      cfg.dbUrl = DEFAULT_SYNC_DB_URL;
+      if (!cfg.lastSyncedAt) {
+        cfg.pin = DEFAULT_SYNC_PIN;
+      }
+      cfg.enabled = true;
+      dirty = true;
+    }
+    if (!cfg.pin || !String(cfg.pin).trim()) {
+      cfg.pin = DEFAULT_SYNC_PIN;
+      dirty = true;
+    }
+    if (!cfg.deviceName) {
+      cfg.deviceName = defaultDevName;
+      dirty = true;
+    }
+    if (cfg.autoSync === undefined) {
+      cfg.autoSync = true;
+      dirty = true;
+    }
+    if (dirty) {
+      try { localStorage.setItem(KEYS.syncConfig, JSON.stringify(cfg)); } catch (e) {}
+    }
+    return cfg;
   }
 
   function setSyncConfig(cfg) {

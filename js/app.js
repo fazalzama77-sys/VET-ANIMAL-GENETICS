@@ -4104,6 +4104,11 @@ var app = (function () {
       /* Cross-Device Cloud Sync Card */
       (function () {
         var cfg = store.getSyncConfig();
+        if (!cfg.pin && window.syncApp) {
+          cfg.pin = syncApp.generatePin();
+          store.setSyncConfig(cfg);
+        }
+
         var statusBadgeClass = "sync-badge--off";
         var statusBadgeText = "Sync Inactive";
         if (cfg.enabled && cfg.dbUrl && cfg.pin) {
@@ -4138,15 +4143,17 @@ var app = (function () {
               '<div class="sync-input-col">' +
                 '<label class="sync-label" for="sync-pin-input">🔑 6-Digit Sync PIN / Secret Key:</label>' +
                 '<div class="sync-pin-group">' +
-                  '<input type="text" id="sync-pin-input" class="sync-input sync-input--pin" placeholder="e.g. 749-218" value="' + esc(cfg.pin || "") + '" autocomplete="off">' +
+                  '<input type="text" id="sync-pin-input" class="sync-input sync-input--pin" placeholder="Enter 6-digit PIN" value="' + esc(cfg.pin || "") + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' +
+                  '<button type="button" class="btn btn--sm btn--soft" id="sync-paste-pin-btn" title="Paste or enter PIN">📋 Paste</button>' +
+                  '<button type="button" class="btn btn--sm btn--soft" id="sync-copy-pin-btn" title="Copy PIN">📄 Copy</button>' +
                   '<button type="button" class="btn btn--sm btn--soft" id="sync-gen-pin-btn" title="Generate random 6-digit PIN">🎲 New PIN</button>' +
                 '</div>' +
-                '<span class="small faint">Enter this same PIN on both devices to pair them.</span>' +
+                '<span class="small faint">Your unique pairing key (already created for you above!). Enter this same PIN on both devices.</span>' +
               '</div>' +
 
               '<div class="sync-input-col">' +
                 '<label class="sync-label" for="sync-device-name">📱 This Device Name:</label>' +
-                '<input type="text" id="sync-device-name" class="sync-input" placeholder="e.g. Tablet or Mobile" value="' + esc(cfg.deviceName || "") + '">' +
+                '<input type="text" id="sync-device-name" class="sync-input" placeholder="e.g. My Tablet or Phone" value="' + esc(cfg.deviceName || "") + '" autocomplete="off" spellcheck="false">' +
                 '<span class="small faint">Label shown on the other device when live updates sync.</span>' +
               '</div>' +
             '</div>' +
@@ -4154,7 +4161,8 @@ var app = (function () {
             '<div class="sync-db-row mt-3">' +
               '<label class="sync-label" for="sync-db-url">🌐 Firebase Realtime Database URL:</label>' +
               '<div class="sync-db-input-group">' +
-                '<input type="text" id="sync-db-url" class="sync-input" placeholder="https://your-project-default-rtdb.firebaseio.com" value="' + esc(cfg.dbUrl || "") + '">' +
+                '<input type="text" id="sync-db-url" class="sync-input" placeholder="Paste your Firebase URL here (e.g. https://...firebaseio.com)" value="' + esc(cfg.dbUrl || "") + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">' +
+                '<button type="button" class="btn btn--sm btn--soft" id="sync-paste-btn" title="Paste URL from clipboard">📋 Paste URL</button>' +
                 '<button type="button" class="btn btn--sm btn--soft" id="sync-test-btn">⚡ Test Link</button>' +
               '</div>' +
               '<div class="sync-guide-toggle-row mt-1">' +
@@ -4271,14 +4279,250 @@ var app = (function () {
       });
     }
 
+    function saveDraftSyncInputs() {
+      var cfg = store.getSyncConfig();
+      var pEl = el("#sync-pin-input");
+      var uEl = el("#sync-db-url");
+      var dEl = el("#sync-device-name");
+      if (pEl && pEl.value.trim()) cfg.pin = pEl.value.trim();
+      if (uEl) cfg.dbUrl = uEl.value.trim();
+      if (dEl && dEl.value.trim()) cfg.deviceName = dEl.value.trim();
+      store.setSyncConfig(cfg);
+    }
+
+    function applySmartPastedText(rawText, targetInput, title) {
+      if (!rawText || !String(rawText).trim()) return false;
+      var text = String(rawText).trim();
+
+      // 1. Check if the user pasted a full Pairing Link (#/sync?db=...&pin=...)
+      if (text.indexOf("db=") !== -1 && text.indexOf("pin=") !== -1) {
+        var qPart = text.split("?")[1] || text;
+        var params = new URLSearchParams(qPart);
+        var dbParam = params.get("db");
+        var pinParam = params.get("pin");
+        if (dbParam || pinParam) {
+          var uEl = el("#sync-db-url");
+          var pEl = el("#sync-pin-input");
+          if (dbParam && uEl) uEl.value = decodeURIComponent(dbParam).trim();
+          if (pinParam && pEl) pEl.value = decodeURIComponent(pinParam).trim();
+          saveDraftSyncInputs();
+          toast("Firebase URL & Sync PIN filled from Pairing Link! ✨");
+          return true;
+        }
+      }
+
+      // 2. If pasting into Firebase URL field and user entered just a short project slug (e.g. "vet-genetics")
+      if (targetInput && targetInput.id === "sync-db-url") {
+        if (text.indexOf("http") !== 0 && text.indexOf(".") === -1 && /^[a-zA-Z0-9_-]{3,40}$/.test(text)) {
+          text = "https://" + text.toLowerCase() + "-default-rtdb.firebaseio.com";
+        }
+      }
+
+      if (targetInput) {
+        targetInput.value = text;
+        targetInput.dispatchEvent(new Event("input", { bubbles: true }));
+        targetInput.dispatchEvent(new Event("change", { bubbles: true }));
+        saveDraftSyncInputs();
+        toast((title || "Details") + " pasted! 📋");
+        return true;
+      }
+      return false;
+    }
+
+    function openUniversalPaste(targetInput, title, mode) {
+      var modal = el("#sync-paste-modal");
+      var titleEl = el("#sync-paste-modal-title");
+      var descEl = el("#sync-paste-modal-desc");
+      var textEl = el("#sync-paste-modal-input");
+      var keypadEl = el("#sync-paste-keypad");
+      var urlHelpEl = el("#sync-paste-url-helper");
+      var confirmBtn = el("#sync-paste-modal-confirm");
+      if (!modal || !textEl) return;
+
+      if (titleEl) titleEl.textContent = (mode === "pin" ? "Enter or Paste 6-Digit Sync PIN" : "Paste or Build Firebase Database URL");
+      if (descEl) {
+        descEl.innerHTML = mode === "pin"
+          ? "Press <b>Ctrl+V</b>, long-press inside the box to <b>Paste</b>, or tap digits on the keypad below:"
+          : "Press <b>Ctrl+V</b>, long-press inside the box to <b>Paste</b> your Firebase URL, or use the Quick URL Builder below:";
+      }
+      textEl.placeholder = mode === "pin" ? "e.g. 749-218" : "https://your-project-default-rtdb.firebaseio.com";
+      textEl.value = (targetInput && targetInput.value) ? targetInput.value : "";
+      if (keypadEl) keypadEl.style.display = (mode === "pin" ? "block" : "none");
+      if (urlHelpEl) urlHelpEl.style.display = (mode === "url" ? "block" : "none");
+
+      modal.style.display = "flex";
+      setTimeout(function () {
+        textEl.focus();
+        textEl.select();
+      }, 60);
+
+      // Auto-apply immediately when user pastes into the modal textarea
+      textEl.onpaste = function (e) {
+        var clip = (e.clipboardData || window.clipboardData);
+        if (clip) {
+          var pasted = clip.getData("text/plain") || clip.getData("text");
+          if (pasted && pasted.trim()) {
+            e.preventDefault();
+            textEl.value = pasted.trim();
+            applySmartPastedText(pasted.trim(), targetInput, title);
+            modal.style.display = "none";
+          }
+        }
+      };
+
+      // Wire Keypad buttons for PIN mode
+      els("#sync-paste-keypad .sync-kp-btn").forEach(function (btn) {
+        btn.onclick = function () {
+          var k = btn.getAttribute("data-kp");
+          var cur = textEl.value || "";
+          if (k === "BACK") {
+            textEl.value = cur.slice(0, -1);
+          } else {
+            var digitsOnly = cur.replace(/[^0-9]/g, "");
+            if (k !== "-" && digitsOnly.length === 3 && cur.indexOf("-") === -1) {
+              cur += "-";
+            }
+            if (cur.length < 12) textEl.value = cur + k;
+          }
+          textEl.focus();
+        };
+      });
+
+      var kpClear = el("#sync-kp-clear");
+      if (kpClear) {
+        kpClear.onclick = function () {
+          textEl.value = "";
+          textEl.focus();
+        };
+      }
+
+      var kpRandom = el("#sync-kp-random");
+      if (kpRandom) {
+        kpRandom.onclick = function () {
+          if (window.syncApp) {
+            textEl.value = syncApp.generatePin();
+          }
+        };
+      }
+
+      // Wire Quick Project ID Builder for URL mode
+      var projInput = el("#sync-quick-proj-id");
+      var projBtn = el("#sync-quick-proj-btn");
+      if (projBtn && projInput) {
+        projBtn.onclick = function () {
+          var slug = (projInput.value || "").trim().replace(/^https?:\/\//i, "").replace(/\.firebaseio\.com.*$/i, "").replace(/-default-rtdb$/i, "");
+          if (!slug) {
+            toast("Type your Firebase project name first (e.g. vet-genetics)");
+            projInput.focus();
+            return;
+          }
+          var builtUrl = "https://" + slug.toLowerCase() + "-default-rtdb.firebaseio.com";
+          textEl.value = builtUrl;
+          applySmartPastedText(builtUrl, targetInput, title);
+          modal.style.display = "none";
+        };
+      }
+
+      confirmBtn.onclick = function () {
+        var val = textEl.value.trim();
+        if (val && targetInput) {
+          applySmartPastedText(val, targetInput, title);
+        }
+        modal.style.display = "none";
+      };
+    }
+
+    function handlePasteButton(targetInput, title, mode) {
+      if (!targetInput) return;
+
+      // 1. Native Android APK Bridge (instant, zero permission prompts)
+      if (window.VMApp && typeof window.VMApp.paste === "function") {
+        try {
+          var apkClip = String(window.VMApp.paste() || "").trim();
+          if (apkClip) {
+            if (mode === "url" && apkClip.indexOf("http") !== 0 && apkClip.indexOf("firebase") === -1 && apkClip.indexOf("db=") === -1) {
+              openUniversalPaste(targetInput, title, mode);
+              return;
+            }
+            applySmartPastedText(apkClip, targetInput, title);
+            return;
+          }
+        } catch (err) {}
+      }
+
+      // 2. Browser Clipboard API with 600ms timeout so it never hangs
+      if (navigator.clipboard && typeof navigator.clipboard.readText === "function") {
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (!settled) {
+            settled = true;
+            openUniversalPaste(targetInput, title, mode);
+          }
+        }, 600);
+
+        navigator.clipboard.readText().then(function (clipText) {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          var clean = (clipText || "").trim();
+          if (clean) {
+            if (mode === "url" && clean.indexOf("http") !== 0 && clean.indexOf("firebase") === -1 && clean.indexOf("db=") === -1) {
+              openUniversalPaste(targetInput, title, mode);
+              return;
+            }
+            if (mode === "pin" && clean.length > 25 && clean.indexOf("pin=") === -1) {
+              openUniversalPaste(targetInput, title, mode);
+              return;
+            }
+            applySmartPastedText(clean, targetInput, title);
+          } else {
+            openUniversalPaste(targetInput, title, mode);
+          }
+        }).catch(function () {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          openUniversalPaste(targetInput, title, mode);
+        });
+      } else {
+        openUniversalPaste(targetInput, title, mode);
+      }
+    }
+
+    var syncPastePinBtn = el("#sync-paste-pin-btn");
+    if (syncPastePinBtn) {
+      syncPastePinBtn.addEventListener("click", function () {
+        handlePasteButton(el("#sync-pin-input"), "Sync PIN", "pin");
+      });
+    }
+
+    var syncCopyPinBtn = el("#sync-copy-pin-btn");
+    if (syncCopyPinBtn) {
+      syncCopyPinBtn.addEventListener("click", function () {
+        var pinInput = el("#sync-pin-input");
+        if (pinInput && pinInput.value.trim()) {
+          copyTextToClipboard(pinInput.value.trim());
+          toast("Sync PIN copied: " + pinInput.value.trim() + " 📋");
+        }
+      });
+    }
+
     var syncGenPin = el("#sync-gen-pin-btn");
     if (syncGenPin) {
       syncGenPin.addEventListener("click", function () {
         var pinInput = el("#sync-pin-input");
         if (pinInput && window.syncApp) {
           pinInput.value = syncApp.generatePin();
+          saveDraftSyncInputs();
           toast("Generated new PIN: " + pinInput.value);
         }
+      });
+    }
+
+    var syncPasteBtn = el("#sync-paste-btn");
+    if (syncPasteBtn) {
+      syncPasteBtn.addEventListener("click", function () {
+        handlePasteButton(el("#sync-db-url"), "Firebase URL", "url");
       });
     }
 
@@ -4375,8 +4619,18 @@ var app = (function () {
     ["sync-pin-input", "sync-device-name", "sync-db-url"].forEach(function (id) {
       var inp = el("#" + id);
       if (inp) {
-        inp.addEventListener("click", function () { this.focus(); });
-        inp.addEventListener("touchstart", function () { this.focus(); }, { passive: true });
+        inp.addEventListener("input", saveDraftSyncInputs);
+        inp.addEventListener("change", saveDraftSyncInputs);
+        inp.addEventListener("paste", function (e) {
+          var clip = (e.clipboardData || window.clipboardData);
+          if (clip) {
+            var pasted = clip.getData("text/plain") || clip.getData("text");
+            if (pasted && pasted.indexOf("db=") !== -1 && pasted.indexOf("pin=") !== -1) {
+              e.preventDefault();
+              applySmartPastedText(pasted, inp, "Pairing Link");
+            }
+          }
+        });
       }
     });
 
@@ -4727,9 +4981,52 @@ var app = (function () {
         if (!el("#searchmodal").hidden) closeSearch();
         closeAbout();
         closeOnboarding(true);
+        closeSyncModal();
+        closePasteModal();
       }
       else if (e.key === "/" && document.activeElement.tagName !== "INPUT" &&
                document.activeElement.tagName !== "TEXTAREA") { e.preventDefault(); openSearch(); }
+    });
+
+    // Global paste fallback on Settings page (#/me) so pressing Ctrl+V anywhere automatically fills URL/PIN
+    document.addEventListener("paste", function (e) {
+      if (state.section !== "me") return;
+      var active = document.activeElement;
+      if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA")) return;
+      var clip = (e.clipboardData || window.clipboardData);
+      if (!clip) return;
+      var text = (clip.getData("text/plain") || clip.getData("text") || "").trim();
+      if (!text) return;
+
+      var cfg = store.getSyncConfig();
+      if (text.indexOf("db=") !== -1 && text.indexOf("pin=") !== -1) {
+        var qPart = text.split("?")[1] || text;
+        var params = new URLSearchParams(qPart);
+        var dbP = params.get("db");
+        var pinP = params.get("pin");
+        var uEl = el("#sync-db-url");
+        var pEl = el("#sync-pin-input");
+        if (dbP && uEl) { uEl.value = decodeURIComponent(dbP).trim(); cfg.dbUrl = uEl.value; }
+        if (pinP && pEl) { pEl.value = decodeURIComponent(pinP).trim(); cfg.pin = pEl.value; }
+        store.setSyncConfig(cfg);
+        toast("Firebase URL & Sync PIN filled from Pairing Link! ✨");
+      } else if (text.indexOf("http") === 0 || text.indexOf("firebase") !== -1) {
+        var urlInput = el("#sync-db-url");
+        if (urlInput) {
+          urlInput.value = text;
+          cfg.dbUrl = text;
+          store.setSyncConfig(cfg);
+          toast("Firebase URL pasted! 📋");
+        }
+      } else if (text.length <= 20) {
+        var pinInput = el("#sync-pin-input");
+        if (pinInput) {
+          pinInput.value = text;
+          cfg.pin = text;
+          store.setSyncConfig(cfg);
+          toast("Sync PIN pasted! 📋");
+        }
+      }
     });
 
     route();
@@ -4755,7 +5052,13 @@ var app = (function () {
         dashboardApp.render(el("#view"));
       }
       if (state.section === "me") {
-        renderMe();
+        var active = document.activeElement;
+        var isEditingSync = active && (active.classList.contains("sync-input") || (active.closest && (active.closest("#cloud-sync-card") || active.closest("#sync-paste-modal"))));
+        var pasteModal = el("#sync-paste-modal");
+        var pasteModalOpen = pasteModal && pasteModal.style.display !== "none";
+        if (!isEditingSync && !pasteModalOpen) {
+          renderMe();
+        }
       }
     });
   }
@@ -4777,6 +5080,11 @@ var app = (function () {
 
   function closeSyncModal() {
     var modal = el("#sync-qr-modal");
+    if (modal) modal.style.display = "none";
+  }
+
+  function closePasteModal() {
+    var modal = el("#sync-paste-modal");
     if (modal) modal.style.display = "none";
   }
 
@@ -4816,6 +5124,7 @@ var app = (function () {
     closeWhy: closeWhyModal,
     openSyncModal: openSyncModal,
     closeSyncModal: closeSyncModal,
+    closePasteModal: closePasteModal,
     copySyncLink: copySyncLink
   };
 })();
