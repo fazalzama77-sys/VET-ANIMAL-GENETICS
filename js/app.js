@@ -779,7 +779,7 @@ var app = (function () {
       '<h3 class="home-term-title">' + esc(term) + '</h3>' +
       '<p class="home-term-def mt-2">' + esc(def) + '</p>' +
       '<div class="row mt-4">' +
-        '<a class="btn btn--sm btn--soft" href="#/library">' + icon("book") + ' Browse 630-Term Glossary →</a>' +
+        '<a class="btn btn--sm btn--soft" href="#/library">' + icon("book") + ' Browse 660-Term Glossary →</a>' +
         '<button class="btn btn--sm btn--subtle push" onclick="app.shuffleGlossaryTerm()">' + icon("sparkle") + ' Next Term</button>' +
       '</div>' +
     '</div>';
@@ -3602,7 +3602,7 @@ var app = (function () {
         '<h1>' + icon("library") + ' Library</h1>' +
       '</div>' +
       '<div class="tabs">' +
-        [['bookmarks', 'Bookmarks', 'star'], ['notes', 'Notes', 'note'], ['highlights', 'Highlights', 'pen'], ['glossary', 'Glossary (630)', 'book']].map(function (item) {
+        [['bookmarks', 'Bookmarks', 'star'], ['notes', 'Notes', 'note'], ['highlights', 'Highlights', 'pen'], ['glossary', 'Glossary (660)', 'book']].map(function (item) {
           return '<a class="tab' + (item[0] === tab ? " is-active" : "") + '" href="#/library/' + item[0] + '">' +
             icon(item[2]) + ' ' + item[1] + '</a>';
         }).join("") +
