@@ -159,18 +159,13 @@
 }
 
 .sim-lab__hint {
-  position: absolute;
-  top: var(--s3);
-  right: var(--s3);
-  padding: 4px var(--s3);
-  border-radius: var(--r-full);
+  padding: 6px var(--s5);
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: var(--fs-xs);
   font-weight: 600;
-  pointer-events: none;
-  box-shadow: var(--shadow-sm);
+  text-align: right;
 }
 
 /* ---- Live Quantitative Readouts ---- */

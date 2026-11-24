@@ -4,7 +4,7 @@ Read this whole file before doing anything else. It tells you who I am, what we 
 building, the codebase layout, my conventions, and how I prefer to work. After reading,
 say "Got it — what do you want to work on?" and wait for my actual task.
 
-**Last updated:** 2026-09-09 (Full VCI MSVE 2016 104-topic skeleton, dual paper readiness, 100+ term glossary, offline PWA)
+**Last updated:** 2026-11-24 (100% Offline Interactive Visual Lab & 3D Simulation Engine across all 104 topics, `vgen-v29`, dual paper readiness, 100+ term glossary, offline PWA)
 
 ---
 
@@ -107,7 +107,7 @@ D:\ANIMAL GENETICS APPLICATION\
 ├── SYNC-TO-REPO.bat           Local offline robocopy mirror into repo/
 ├── index.html                 Single-page app shell. All sections live here.
 ├── manifest.json              PWA manifest (theme-color #1565c0)
-├── service-worker.js          Offline cache (CACHE_VERSION = "vgen-v1")
+├── service-worker.js          Offline cache (CACHE_VERSION = "vgen-v29")
 ├── README.md                  Content writing guide
 ├── REPO.md                    GitHub repository guide
 ├── CLAUDE-CONTEXT.md          THIS FILE (AI reads this first)
@@ -126,17 +126,23 @@ D:\ANIMAL GENETICS APPLICATION\
 │   ├── data-why.JS            Mechanism-first WHY entries
 │   ├── data-qa.JS             Written-exam Q&A bank
 │   ├── data-quiz.JS           Quiz question bank
-│   └── events-data.js         Department announcements & academic updates
+│   ├── events-data.js         Department announcements & academic updates
+│   ├── data-sims-unit1.js     Interactive Visual Lab configs — Unit 1 (22 topics)
+│   ├── data-sims-unit2.js     Interactive Visual Lab configs — Unit 2 (29 topics)
+│   ├── data-sims-unit3.js     Interactive Visual Lab configs — Unit 3 (28 topics)
+│   └── data-sims-practical.js Interactive Visual Lab configs — Practicals 1–3 (25 labs)
 │
 ├── js/
 │   ├── store.js               localStorage layer with "vgen-" prefix
-│   ├── app.js                 Router + shell + section renderers + highlighter
+│   ├── app.js                 Router + shell + section renderers + highlighter + inline sim mount/unmount
 │   ├── quiz.js                Quiz engine (window.quizApp)
 │   ├── dashboard.js           Analytics & dual paper readiness (window.dashboardApp)
 │   ├── glossary.js            100+ term UG dictionary + tooltip decorator + SpeechSynthesis
 │   ├── search.js              Global search engine (Ctrl+K)
 │   ├── deep-guide.js          Deep diagnostic guide overlay
-│   └── events.js              Department announcements renderer
+│   ├── events.js              Department announcements renderer
+│   ├── simulations.js         Core 100% offline Visual Lab & Simulation Engine (16 interactive 2D visualizers + modal)
+│   └── simulations-3d.js      True 3D rotatable Canvas visualizers (Mitosis/Meiosis, Karyotype, DNA/PCR, Aberrations)
 │
 ├── assets/css/
 │   ├── tokens.css             ★ SHARED IVRI THEME — copy verbatim, never edit
@@ -144,7 +150,8 @@ D:\ANIMAL GENETICS APPLICATION\
 │   ├── sections.css           Lesson, quiz, dashboard, Q&A, and library views
 │   ├── animations.css         GPU-accelerated micro-interactions
 │   ├── deep-guide.css         Deep guide presentation styles
-│   └── events.css             Interactive challenge card styles
+│   ├── events.css             Interactive challenge card styles
+│   └── simulations.css        Interactive Visual Lab & full-screen modal styles (100% tokens.css variables)
 │
 ├── images/                    theory/ practical/ why/ qa/
 └── tools/

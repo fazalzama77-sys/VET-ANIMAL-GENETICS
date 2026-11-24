@@ -14,7 +14,6 @@
   "use strict";
   if (!window.simEngine) return;
 
-  /* ---- 3D Math & Perspective Projection Helpers ---- */
   function project3D(x, y, z, rotX, rotY, zoom, cx, cy) {
     var cosY = Math.cos(rotY), sinY = Math.sin(rotY);
     var x1 = x * cosY - z * sinY;
@@ -60,7 +59,7 @@
   window.simEngine.registerRenderer("mitosis_meiosis_3d", function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state;
     var mode = st.params.division || "meiosis";
-    var stage = Math.round(st.params.stage != null ? st.params.stage : st.step || 1);
+    var stage = Math.round(st.params.stage != null ? st.params.stage : st.step || 0);
     var nondisp = st.params.nondisj === "on";
     var cx = w * 0.5, cy = h * 0.52;
 
@@ -89,8 +88,17 @@
     draw3DSphere(ctx, poleL, 7, P.amberFill, P.text);
     draw3DSphere(ctx, poleR, 7, P.amberFill, P.text);
 
-    // Build 3D chromatid segments for 2 homologous pairs (Pair 1: Blue/Coral, Pair 2: Teal/Purple)
     var items = [];
+    function addSpindle(pole, x0, y0, z0) {
+      var pC = project3D(x0, y0, z0, st.rotX, st.rotY, st.zoom, cx, cy);
+      items.push({ z: pC.z + 50, draw: function () {
+        ctx.save();
+        ctx.strokeStyle = P.amberFill; ctx.lineWidth = 1.4; ctx.setLineDash([4, 4]); ctx.globalAlpha = 0.7;
+        ctx.beginPath(); ctx.moveTo(pole.x, pole.y); ctx.lineTo(pC.x, pC.y); ctx.stroke();
+        ctx.restore();
+      }});
+    }
+
     function addChromatid(x0, y0, z0, dx, dy, dz, col, colTip, crossed) {
       var pA = project3D(x0 - dx, y0 - dy, z0 - dz, st.rotX, st.rotY, st.zoom, cx, cy);
       var pC = project3D(x0, y0, z0, st.rotX, st.rotY, st.zoom, cx, cy);
@@ -104,7 +112,6 @@
 
     if (mode === "meiosis") {
       if (stage === 0) {
-        // Interphase / Replication
         addChromatid(-26, -34, 15, 0, 32, 0, P.blue, P.blue, false);
         addChromatid(-16, -34, 15, 0, 32, 0, P.blue, P.blue, false);
         addChromatid(26, -34, -15, 0, 32, 0, P.coral, P.coral, false);
@@ -112,31 +119,32 @@
         addChromatid(-24, 38, -12, 0, 22, 0, P.teal, P.teal, false);
         addChromatid(24, 38, 12, 0, 22, 0, P.purple, P.purple, false);
       } else if (stage === 1) {
-        // Prophase I: Synapsis & Chiasma Crossing-Over!
         addChromatid(-18, -32, 6, 0, 34, 0, P.blue, P.blue, false);
         addChromatid(-6, -32, 4, 8, 34, 0, P.blue, P.coral, true);
         addChromatid(6, -32, -4, -8, 34, 0, P.coral, P.blue, true);
         addChromatid(18, -32, -6, 0, 34, 0, P.coral, P.coral, false);
-        // Second bivalent
         addChromatid(-10, 40, 8, 4, 24, 0, P.teal, P.purple, true);
         addChromatid(10, 40, -8, -4, 24, 0, P.purple, P.teal, true);
       } else if (stage === 2) {
-        // Metaphase I: Bivalents at equator + spindle fibers
         var xOff = 18 + pulse * 0.4;
+        addSpindle(poleL, -xOff, -34, 8); addSpindle(poleR, xOff, -34, -8);
+        addSpindle(poleL, -xOff, 36, -8); addSpindle(poleR, xOff, 36, 8);
         addChromatid(-xOff, -34, 8, 0, 32, 0, P.blue, P.coral, true);
         addChromatid(xOff, -34, -8, 0, 32, 0, P.coral, P.blue, true);
         addChromatid(-xOff, 36, -8, 0, 24, 0, P.teal, P.purple, true);
         addChromatid(xOff, 36, 8, 0, 24, 0, P.purple, P.teal, true);
       } else if (stage === 3) {
-        // Anaphase I: Homologs separate (or Nondisjunction!)
         var sep = 72 + pulse;
         var p1Right = nondisp ? sep : -sep;
+        addSpindle(nondisp ? poleR : poleL, p1Right, -34, 10);
+        addSpindle(poleR, sep, -18, -10);
+        addSpindle(poleL, -sep, 36, -8);
+        addSpindle(poleR, sep, 36, 8);
         addChromatid(p1Right, -34, 10, 0, 30, 0, P.blue, P.coral, true);
         addChromatid(sep, -18, -10, 0, 30, 0, P.coral, P.blue, true);
         addChromatid(-sep, 36, -8, 0, 22, 0, P.teal, P.purple, true);
         addChromatid(sep, 36, 8, 0, 22, 0, P.purple, P.teal, true);
       } else {
-        // Telophase II / 4 Haploid Gametes
         var gPos = [[-78, -48], [78, -48], [-78, 48], [78, 48]];
         var gCols = [[P.blue, P.teal], [P.blue, P.purple], [P.coral, P.teal], [P.coral, P.purple]];
         gPos.forEach(function (gp, idx) {
@@ -155,8 +163,12 @@
         });
       }
     } else {
-      // Mitosis: Sister chromatids align singly at equator and separate identically -> 2 diploid (2n) daughter cells
       var mSep = stage >= 3 ? 72 + pulse : (stage === 2 ? 4 : 18);
+      if (stage === 2 || stage === 3) {
+        [-42, -10, 26, 54].forEach(function (yy) {
+          addSpindle(poleL, -mSep, yy, 0); addSpindle(poleR, mSep, yy, 0);
+        });
+      }
       addChromatid(-mSep, -42, 8, 0, 26, 0, P.blue, P.blue, false);
       addChromatid(mSep, -42, 8, 0, 26, 0, P.blue, P.blue, false);
       addChromatid(-mSep, -10, -8, 0, 26, 0, P.coral, P.coral, false);
@@ -167,7 +179,6 @@
       addChromatid(mSep, 54, -6, 0, 20, 0, P.purple, P.purple, false);
     }
 
-    // Painter's algorithm Z-sort (back-to-front)
     items.sort(function (a, b) { return b.z - a.z; });
     items.forEach(function (it) { it.draw(); });
 
@@ -201,22 +212,20 @@
     var spKey = st.params.species || "cattle";
     var morph = st.params.morph || "metacentric";
 
-    // 100% VCI-verified Livestock & Poultry Diploid Chromosome Numbers
     var speciesDB = {
-      cattle:   { name: "Cattle (Bos taurus / B. indicus)", n2: 60, auto: "29 pairs (all acrocentric)", sex: "XX / XY (X submetacentric; Y submetacentric in B. taurus, acrocentric in B. indicus)" },
-      rbuffalo: { name: "River Buffalo (Bubalus bubalis)", n2: 50, auto: "24 pairs (5 bi-armed + 19 acrocentric)", sex: "XX / XY (both acrocentric)" },
-      sbuffalo: { name: "Swamp Buffalo", n2: 48, auto: "23 pairs (fusion of chr 4 & 9)", sex: "XX / XY" },
-      sheep:    { name: "Sheep (Ovis aries)", n2: 54, auto: "26 pairs (3 large metacentric + 23 acrocentric)", sex: "XX / XY" },
-      goat:     { name: "Goat (Capra hircus)", n2: 60, auto: "29 pairs (all acrocentric)", sex: "XX / XY (Y tiny metacentric)" },
-      pig:      { name: "Pig (Sus scrofa)", n2: 38, auto: "18 pairs (12 bi-armed + 6 acrocentric)", sex: "XX / XY" },
-      horse:    { name: "Horse (Equus caballus)", n2: 64, auto: "31 pairs (13 bi-armed + 18 acrocentric)", sex: "XX / XY (Donkey 2n=62, Mule 2n=63 sterile)" },
-      dog:      { name: "Dog (Canis familiaris)", n2: 78, auto: "38 pairs (all acrocentric)", sex: "XX / XY (X large submetacentric)" },
-      cat:      { name: "Cat (Felis catus)", n2: 38, auto: "18 pairs (mostly bi-armed)", sex: "XX / XY" },
-      chicken:  { name: "Chicken (Gallus gallus)", n2: 78, auto: "38 pairs (macro + microchromosomes)", sex: "ZZ Male / ZW Female (Heterogametic Female!)" }
+      cattle:   { name: "Cattle (Bos taurus / B. indicus)", short: "Cattle", n2: 60, auto: "29 pairs (all acrocentric)", sex: "XX / XY (X submetacentric; Y submetacentric in B. taurus, acrocentric in B. indicus)" },
+      rbuffalo: { name: "River Buffalo (Bubalus bubalis)", short: "River Buff.", n2: 50, auto: "24 pairs (5 bi-armed + 19 acrocentric)", sex: "XX / XY (both acrocentric)" },
+      sbuffalo: { name: "Swamp Buffalo", short: "Swamp Buff.", n2: 48, auto: "23 pairs (tandem fusion of River Buffalo chr 4 & 9)", sex: "XX / XY" },
+      sheep:    { name: "Sheep (Ovis aries)", short: "Sheep", n2: 54, auto: "26 pairs (3 large metacentric + 23 acrocentric)", sex: "XX / XY" },
+      goat:     { name: "Goat (Capra hircus)", short: "Goat", n2: 60, auto: "29 pairs (all acrocentric)", sex: "XX / XY (Y tiny metacentric)" },
+      pig:      { name: "Pig (Sus scrofa)", short: "Pig", n2: 38, auto: "18 pairs (12 bi-armed + 6 acrocentric)", sex: "XX / XY" },
+      horse:    { name: "Horse (Equus caballus)", short: "Horse", n2: 64, auto: "31 pairs (13 bi-armed + 18 acrocentric)", sex: "XX / XY (Donkey 2n=62, Mule 2n=63 sterile)" },
+      dog:      { name: "Dog (Canis familiaris)", short: "Dog", n2: 78, auto: "38 pairs (all acrocentric)", sex: "XX / XY (X large submetacentric)" },
+      cat:      { name: "Cat (Felis catus)", short: "Cat", n2: 38, auto: "18 pairs (16 bi-armed + 2 acrocentric)", sex: "XX / XY" },
+      chicken:  { name: "Chicken (Gallus gallus)", short: "Chicken", n2: 78, auto: "38 pairs (macro + microchromosomes)", sex: "ZZ Male / ZW Female (Heterogametic Female!)" }
     };
     var sp = speciesDB[spKey] || speciesDB.cattle;
 
-    // Centromere position ratio p/(p+q) for 3D chromosome
     var morphDB = {
       metacentric:    { p: 0.48, shape: "V-shaped at Anaphase", desc: "Centromere in middle (p ≈ q, arm ratio 1.0–1.7)" },
       submetacentric: { p: 0.30, shape: "L-shaped at Anaphase", desc: "Centromere sub-median (p < q, arm ratio 1.7–3.0)" },
@@ -225,8 +234,8 @@
     };
     var mf = morphDB[morph] || morphDB.metacentric;
 
-    // Left side: 3D Rotatable Sister-Chromatid Chromosome with G-Bands!
-    var cx = w * 0.30, cy = h * 0.52;
+    // Left panel: 3D Rotatable Sister-Chromatid Chromosome (zero collision with right panel!)
+    var cx = w * 0.20, cy = h * 0.52;
     var totalLen = 190;
     var centY = -totalLen / 2 + totalLen * mf.p;
     var segs = [];
@@ -235,15 +244,15 @@
       for (var i = 0; i < 16; i++) {
         var y1 = -totalLen / 2 + (totalLen * i) / 16;
         var y2 = -totalLen / 2 + (totalLen * (i + 1)) / 16;
-        // Pinch inward near centromere
         var d1 = Math.abs(y1 - centY), d2 = Math.abs(y2 - centY);
         var x1 = xOff * Math.min(1, 0.25 + d1 / 28);
         var x2 = xOff * Math.min(1, 0.25 + d2 / 28);
         var p1 = project3D(x1, y1, 0, st.rotX, st.rotY, st.zoom, cx, cy);
         var p2 = project3D(x2, y2, 0, st.rotX, st.rotY, st.zoom, cx, cy);
-        var isDarkBand = (i % 3 === 1);
-        var col = isDarkBand ? P.blueDark : P.blue;
-        segs.push({ z: (p1.z + p2.z) / 2, draw: function () { draw3DTube(ctx, p1, p2, 8, col, null); } });
+        var col = (i % 3 === 1) ? P.blueDark : P.blue;
+        (function (pa, pb, segCol) {
+          segs.push({ z: (pa.z + pb.z) / 2, draw: function () { draw3DTube(ctx, pa, pb, 8, segCol, null); } });
+        })(p1, p2, col);
       }
     });
     var pCent = project3D(0, centY, 0, st.rotX, st.rotY, st.zoom, cx, cy);
@@ -251,33 +260,37 @@
     segs.sort(function (a, b) { return b.z - a.z; });
     segs.forEach(function (s) { s.draw(); });
 
-    // Labels for p-arm, Centromere, q-arm
+    // Compact labels strictly inside left half with guaranteed vertical separation
+    var lblX = cx + 38;
+    var pArmY = Math.max(24, Math.min(pCent.y - 24, cy - totalLen * 0.42));
+    var qArmY = Math.min(h - 20, Math.max(pCent.y + 34, cy + totalLen * 0.34));
     ctx.fillStyle = P.text; ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "left";
-    ctx.fillText("p-arm (short)", cx + 44, Math.max(28, cy - totalLen * 0.35));
+    ctx.fillText("p-arm (short)", lblX, pArmY);
     ctx.fillStyle = P.coral;
-    ctx.fillText("Centromere", cx + 44, pCent.y + 4);
+    ctx.fillText("Centromere", lblX, pCent.y + 4);
     ctx.fillStyle = P.text;
-    ctx.fillText("q-arm (long) + G-bands", cx + 44, Math.min(h - 24, cy + totalLen * 0.35));
+    ctx.fillText("q-arm (G-bands)", lblX, qArmY);
 
-    // Right side: Species Karyotype Comparison Bar Chart
-    var rx0 = w * 0.54, rw = w * 0.42;
+    // Right panel: Species Karyotype Bar Chart
+    var rx0 = w * 0.50, rw = w * 0.46;
     ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "left";
-    ctx.fillText("Livestock & Poultry Diploid Numbers (2n)", rx0, 32);
+    ctx.fillText("Livestock & Poultry Diploid Numbers (2n)", rx0, 28);
     var keys = Object.keys(speciesDB);
-    var rowH = (h - 56) / keys.length;
+    var rowH = (h - 48) / keys.length;
+    var nameColW = 84;
     keys.forEach(function (k, idx) {
       var item = speciesDB[k];
-      var y = 44 + idx * rowH;
+      var y = 40 + idx * rowH;
       var isSel = k === spKey;
-      var barW = (item.n2 / 84) * (rw - 115);
+      var barW = Math.max(12, (item.n2 / 84) * Math.max(40, rw - nameColW - 58));
       ctx.fillStyle = isSel ? P.coral : P.blueLight;
-      env.roundRect(ctx, rx0 + 88, y + 3, barW, rowH - 8, 4); ctx.fill();
+      env.roundRect(ctx, rx0 + nameColW, y + 3, barW, rowH - 7, 4); ctx.fill();
       ctx.fillStyle = isSel ? P.coral : P.textMuted;
       ctx.font = (isSel ? "700" : "600") + " 12px " + P.fontSans; ctx.textAlign = "right";
-      ctx.fillText(item.name.split(" (")[0], rx0 + 82, y + rowH * 0.65);
+      ctx.fillText(item.short, rx0 + nameColW - 6, y + rowH * 0.65);
       ctx.fillStyle = isSel ? P.coral : P.text;
       ctx.font = "700 12px " + P.fontMono; ctx.textAlign = "left";
-      ctx.fillText("2n=" + item.n2, rx0 + 94 + barW, y + rowH * 0.65);
+      ctx.fillText("2n=" + item.n2, rx0 + nameColW + barW + 6, y + rowH * 0.65);
     });
 
     return {
@@ -302,28 +315,24 @@
     if (mode === "pcr") {
       var cycles = Math.round(st.params.cycles != null ? st.params.cycles : 20);
       var copies = Math.pow(2, cycles);
-      var pad = { l: 56, r: 28, t: 44, b: 54 };
-      // Draw PCR Exponential Curve (left) + RFLP Agarose Gel Electrophoresis (right)
       var splitX = w * 0.56;
       ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "left";
-      ctx.fillText("PCR Amplification: 2ⁿ = 2^" + cycles + " Copies", 28, 28);
-      ctx.fillText("RFLP Agarose Gel (Genotyping)", splitX + 18, 28);
+      ctx.fillText("PCR Amplification: 2ⁿ = 2^" + cycles + " Copies", 24, 28);
+      ctx.fillText("RFLP Agarose Gel (Genotyping)", splitX + 16, 28);
 
-      // Exponential bar chart
       var maxC = Math.min(30, Math.max(10, cycles));
       for (var c = 1; c <= maxC; c++) {
         var frac = Math.pow(2, c) / Math.pow(2, maxC);
-        var bx = 28 + ((c - 1) / maxC) * (splitX - 54);
-        var bw = Math.max(4, ((splitX - 54) / maxC) - 3);
+        var bx = 24 + ((c - 1) / maxC) * (splitX - 46);
+        var bw = Math.max(4, ((splitX - 46) / maxC) - 3);
         var bh = Math.max(4, frac * (h - 104));
         ctx.fillStyle = c === cycles ? P.coral : P.blue;
         ctx.fillRect(bx, h - 54 - bh, bw, bh);
       }
-      ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono; ctx.textAlign = "center";
-      ctx.fillText("Denaturation 94°C → Annealing 55–65°C → Extension 72°C (Taq Pol)", splitX / 2, h - 22);
+      ctx.fillStyle = P.textMuted; ctx.font = "600 11px " + P.fontMono; ctx.textAlign = "center";
+      ctx.fillText("94°C Denat. → 60°C Anneal → 72°C Ext. (Taq)", splitX / 2, h - 22);
 
-      // RFLP Gel Box (AA = 1 uncut band, AB = 3 bands, BB = 2 cut bands)
-      var gx = splitX + 18, gy = 44, gw = w - splitX - 42, gh = h - 98;
+      var gx = splitX + 16, gy = 44, gw = w - splitX - 36, gh = h - 98;
       ctx.fillStyle = P.surface2;
       env.roundRect(ctx, gx, gy, gw, gh, 8); ctx.fill();
       ctx.strokeStyle = P.borderStrong; ctx.lineWidth = 1.5; ctx.stroke();
@@ -340,7 +349,7 @@
         ctx.fillText(ln.lbl, lx, gy + gh + 18);
         ln.bands.forEach(function (pos) {
           ctx.fillStyle = ln.col;
-          env.roundRect(ctx, lx - 18, gy + pos * gh, 36, 7, 3); ctx.fill();
+          env.roundRect(ctx, lx - 16, gy + pos * gh, 32, 7, 3); ctx.fill();
         });
       });
 
@@ -355,7 +364,6 @@
       };
     }
 
-    // True 3D Rotatable DNA Double Helix (also animates Replication fork or Point Mutation!)
     var cx = w * 0.5, cy = h * 0.5;
     var mutType = st.params.mutation || "none";
     var pairs = [
@@ -363,22 +371,19 @@
       ["A", "T", 2], ["G", "C", 3], ["G", "C", 3], ["T", "A", 2],
       ["C", "G", 3], ["A", "T", 2], ["T", "A", 2], ["G", "C", 3]
     ];
-    var drawList = [];
-    var prevL = null, prevR = null;
+    var drawList = [], prevL = null, prevR = null;
     for (var i = 0; i < pairs.length; i++) {
       var y = -126 + i * 23;
       var ang = i * 0.56 + (st.playing ? st.t * 0.6 : 0);
       var rad = (mode === "replication" && i > 6) ? 62 + (i - 6) * 14 : 62;
-      var xL = Math.cos(ang) * rad, zL = Math.sin(ang) * rad;
-      var xR = -Math.cos(ang) * rad, zR = -Math.sin(ang) * rad;
-      var pL = project3D(xL, y, zL, st.rotX, st.rotY, st.zoom, cx, cy);
-      var pR = project3D(xR, y, zR, st.rotX, st.rotY, st.zoom, cx, cy);
+      var pL = project3D(Math.cos(ang) * rad, y, Math.sin(ang) * rad, st.rotX, st.rotY, st.zoom, cx, cy);
+      var pR = project3D(-Math.cos(ang) * rad, y, -Math.sin(ang) * rad, st.rotX, st.rotY, st.zoom, cx, cy);
       var isMut = (mode === "mutation" && mutType !== "none" && i === 5);
 
       (function (pA, pB, pLA, pRA, pair, mutFlag) {
         if (pLA) drawList.push({ z: (pA.z + pLA.z) / 2, draw: function () { draw3DTube(ctx, pLA, pA, 4.5, P.blue, null); } });
         if (pRA) drawList.push({ z: (pB.z + pRA.z) / 2, draw: function () { draw3DTube(ctx, pRA, pB, 4.5, P.teal, null); } });
-        if (!(mode === "replication" && pair === null)) {
+        if (pair) {
           drawList.push({ z: (pA.z + pB.z) / 2, draw: function () {
             ctx.strokeStyle = mutFlag ? P.danger : (pair[2] === 3 ? P.purple : P.amberFill);
             ctx.lineWidth = mutFlag ? 4 : 2.5;
@@ -393,7 +398,6 @@
     drawList.sort(function (a, b) { return b.z - a.z; });
     drawList.forEach(function (d) { d.draw(); });
 
-    // Codon readout overlay
     var mutDesc = {
       none: "Normal B-DNA Double Helix (Watson-Crick): Antiparallel 5'→3' & 3'→5' strands, 10 bp/turn, 3.4 nm pitch, A=T (2 H-bonds), G≡C (3 H-bonds).",
       silent: "<b>Silent Mutation (GAA → GAG):</b> Base substitution produces the SAME amino acid (Glutamic acid) due to genetic code degeneracy.",
@@ -417,12 +421,12 @@
   });
 
   /* ============================================================
-     4. 3D CHROMOSOMAL ABERRATIONS (Structural & Numerical)
+     4. 3D CHROMOSOMAL ABERRATIONS (Independent Left/Right 3D Spin)
      ============================================================ */
   window.simEngine.registerRenderer("aberrations_3d", function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state;
     var ab = st.params.aberration || "robertsonian";
-    var cx = w * 0.5, cy = h * 0.52;
+    var cy = h * 0.54;
 
     var info = {
       deletion:      { segs: ["A", "B", "D", "E"], cols: [P.blue, P.teal, P.amberFill, P.coral], desc: "<b>Deletion (Deficiency):</b> Loss of chromosomal segment <b>C</b>. Causes pseudodominance and severe developmental defects." },
@@ -434,33 +438,38 @@
     };
     var cur = info[ab] || info.robertsonian;
 
-    // Draw Normal Reference (left) and Aberrant 3D Chromosome (right)
-    function drawSegmented3D(xBase, labels, cols, title) {
+    function drawSegmented3D(centerX, labels, cols, title) {
       var n = labels.length;
-      var step = 170 / Math.max(3, n);
+      var step = 175 / Math.max(3, n);
       var drawables = [];
       for (var i = 0; i < n; i++) {
-        var y1 = -85 + i * step, y2 = y1 + step - 4;
-        var p1 = project3D(xBase, y1, 0, st.rotX, st.rotY, st.zoom, cx, cy);
-        var p2 = project3D(xBase, y2, 0, st.rotX, st.rotY, st.zoom, cx, cy);
+        var y1 = -88 + i * step, y2 = y1 + step - 4;
+        var p1 = project3D(0, y1, 0, st.rotX, st.rotY, st.zoom, centerX, cy);
+        var p2 = project3D(0, y2, 0, st.rotX, st.rotY, st.zoom, centerX, cy);
         (function (pa, pb, col, lbl) {
           drawables.push({ z: (pa.z + pb.z) / 2, draw: function () {
-            draw3DTube(ctx, pa, pb, 12, col, P.surface);
-            ctx.fillStyle = P.textInvert; ctx.font = "700 12px " + P.fontMono;
-            ctx.textAlign = "center"; ctx.textBaseline = "middle";
-            ctx.fillText(lbl, (pa.x + pb.x) / 2, (pa.y + pb.y) / 2);
+            draw3DTube(ctx, pa, pb, 16, col, P.surface);
+            var mx = (pa.x + pb.x) / 2, my = (pa.y + pb.y) / 2;
+            if (lbl.length <= 2) {
+              ctx.fillStyle = P.textInvert; ctx.font = "700 13px " + P.fontMono;
+              ctx.textAlign = "center"; ctx.textBaseline = "middle";
+              ctx.fillText(lbl, mx, my);
+            } else {
+              ctx.fillStyle = col; ctx.font = "700 12px " + P.fontMono;
+              ctx.textAlign = "left"; ctx.textBaseline = "middle";
+              ctx.fillText(lbl, mx + 26, my);
+            }
           }});
         })(p1, p2, cols[i], labels[i]);
       }
       drawables.sort(function (a, b) { return b.z - a.z; });
       drawables.forEach(function (d) { d.draw(); });
-      var pTitle = project3D(xBase, -112, 0, st.rotX, st.rotY, st.zoom, cx, cy);
       ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
-      ctx.fillText(title, pTitle.x, Math.max(24, pTitle.y));
+      ctx.fillText(title, centerX, 28);
     }
 
-    drawSegmented3D(-95, ["A", "B", "C", "D", "E"], [P.blue, P.teal, P.purple, P.amberFill, P.coral], "Normal Reference");
-    drawSegmented3D(95, cur.segs, cur.cols, "Aberration: " + ab.toUpperCase());
+    drawSegmented3D(w * 0.28, ["A", "B", "C", "D", "E"], [P.blue, P.teal, P.purple, P.amberFill, P.coral], "Normal Reference");
+    drawSegmented3D(w * 0.72, cur.segs, cur.cols, "Aberration: " + ab.toUpperCase());
 
     return {
       readouts: [

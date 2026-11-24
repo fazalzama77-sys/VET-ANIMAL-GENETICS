@@ -210,13 +210,14 @@
     "p2-t06": {
       type: "hypothesis_test",
       tag: "PRACTICAL 2 · HWE CHI-SQUARE TEST",
-      title: "Virtual Bench: Testing Hardy-Weinberg Equilibrium with Chi-Square (df=1)",
+      title: "Virtual Bench: Testing Hardy-Weinberg Equilibrium (AA, Aa, aa; df = 1)",
       animated: false,
       defaultTest: "chisq",
+      defaultRatio: "hwe",
       controls: [
-        { id: "ratio", type: "toggle", label: "Test Model", value: "3:1", options: [{ value: "3:1", label: "1-Locus HWE / 3:1 (df=1)" }, { value: "9:3:3:1", label: "2-Locus (df=3)" }] },
-        { id: "stat", type: "slider", label: "Departure from HWE", min: 0, max: 4.5, step: 0.25, value: 1.25, format: function (v) { return "Dev ×" + Number(v).toFixed(2); } },
-        { id: "alpha", type: "toggle", label: "α Level", value: "0.05", options: [{ value: "0.05", label: "α = 0.05" }, { value: "0.01", label: "α = 0.01" }] }
+        { id: "ratio", type: "toggle", label: "Test Model", value: "hwe", options: [{ value: "hwe", label: "HWE (AA/Aa/aa, df=1)" }, { value: "3:1", label: "Mendelian 3:1 (df=1)" }] },
+        { id: "stat", type: "slider", label: "Heterozygote Deficit / HWE Departure", min: 0, max: 4.5, step: 0.25, value: 1.5, format: function (v) { return "Dev ×" + Number(v).toFixed(2); } },
+        { id: "alpha", type: "toggle", label: "α Level", value: "0.05", options: [{ value: "0.05", label: "α = 0.05 (3.841)" }, { value: "0.01", label: "α = 0.01 (6.635)" }] }
       ]
     },
     "p2-t07": {
@@ -226,8 +227,12 @@
       animated: false,
       controls: [
         { id: "p0", type: "slider", label: "Initial p", min: 0.1, max: 0.9, step: 0.05, value: 0.55, format: function (v) { return Number(v).toFixed(2); } },
+        { id: "selMode", type: "toggle", label: "Selection Type", value: "rec", options: [
+          { value: "rec", label: "Against aa" }, { value: "dom", label: "Against A_" }, { value: "het", label: "Het. Advantage" }
+        ]},
         { id: "s", type: "slider", label: "Selection (s)", min: 0, max: 0.8, step: 0.05, value: 0.25, format: function (v) { return "s = " + Number(v).toFixed(2); } },
         { id: "m", type: "slider", label: "Migration (m)", min: 0, max: 0.25, step: 0.01, value: 0.05, format: function (v) { return "m = " + Number(v).toFixed(2); } },
+        { id: "mu", type: "slider", label: "Mutation (μ)", min: 0, max: 0.05, step: 0.005, value: 0.0, format: function (v) { return "μ = " + Number(v).toFixed(3); } },
         { id: "ne", type: "slider", label: "Effective Size (Nₑ)", min: 20, max: 500, step: 20, value: 60, format: function (v) { return "Nₑ = " + v; } }
       ]
     },
@@ -268,15 +273,14 @@
       ]
     },
     "p3-t03": {
-      type: "quant_variance",
-      defaultMode: "variance",
+      type: "epa_mppa",
       tag: "PRACTICAL 3 · EPA & MPPA BENCH",
-      title: "Virtual Bench: Repeatability (r) Foundation for EPA & MPPA Computation",
+      title: "Virtual Calculator: Estimated (EPA) & Most Probable Producing Ability (MPPA)",
       animated: false,
       controls: [
-        { id: "va", type: "slider", label: "Additive Variance (V_A)", min: 5, max: 50, step: 5, value: 25, format: function (v) { return String(v); } },
-        { id: "vep", type: "slider", label: "Permanent Env (V_Ep)", min: 5, max: 40, step: 5, value: 20, format: function (v) { return String(v); } },
-        { id: "vet", type: "slider", label: "Temporary Env (V_Et)", min: 10, max: 60, step: 5, value: 35, format: function (v) { return String(v); } }
+        { id: "r", type: "slider", label: "Repeatability (r)", min: 0.15, max: 0.75, step: 0.05, value: 0.45, format: function (v) { return "r = " + Number(v).toFixed(2); } },
+        { id: "nA", type: "slider", label: "Cow A Lactations (n_A)", min: 1, max: 6, step: 1, value: 1, format: function (v) { return v + " rec"; } },
+        { id: "nB", type: "slider", label: "Cow B Lactations (n_B)", min: 1, max: 8, step: 1, value: 4, format: function (v) { return v + " rec"; } }
       ]
     },
     "p3-t04": {

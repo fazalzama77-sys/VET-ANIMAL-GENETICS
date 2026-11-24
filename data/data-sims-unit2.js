@@ -42,7 +42,7 @@
       title: "3D Mitosis vs Meiosis, Chiasma Crossing-Over & Nondisjunction",
       controls: [
         { id: "division", type: "toggle", label: "Division Mode", value: "meiosis", options: [
-          { value: "meiosis", label: "Meiosis (2n → 4n)" }, { value: "mitosis", label: "Mitosis (2n → 2×2n)" }
+          { value: "meiosis", label: "Meiosis (2n → 4 × n)" }, { value: "mitosis", label: "Mitosis (2n → 2 × 2n)" }
         ]},
         { id: "nondisj", type: "toggle", label: "Nondisjunction", value: "off", options: [
           { value: "off", label: "Normal Disjunction" }, { value: "on", label: "Nondisjunction (2n±1)" }
@@ -306,8 +306,12 @@
       animated: false,
       controls: [
         { id: "p0", type: "slider", label: "Initial p", min: 0.1, max: 0.9, step: 0.05, value: 0.6, format: function (v) { return Number(v).toFixed(2); } },
-        { id: "s", type: "slider", label: "Selection (s against aa)", min: 0, max: 0.8, step: 0.05, value: 0.3, format: function (v) { return "s = " + Number(v).toFixed(2); } },
+        { id: "selMode", type: "toggle", label: "Selection Type", value: "rec", options: [
+          { value: "rec", label: "Against aa" }, { value: "dom", label: "Against A_" }, { value: "het", label: "Heterozygote Adv." }
+        ]},
+        { id: "s", type: "slider", label: "Selection Intensity (s)", min: 0, max: 0.8, step: 0.05, value: 0.3, format: function (v) { return "s = " + Number(v).toFixed(2); } },
         { id: "m", type: "slider", label: "Migration Rate (m)", min: 0, max: 0.25, step: 0.01, value: 0.0, format: function (v) { return "m = " + Number(v).toFixed(2); } },
+        { id: "mu", type: "slider", label: "Mutation Rate (μ)", min: 0, max: 0.05, step: 0.005, value: 0.0, format: function (v) { return "μ = " + Number(v).toFixed(3); } },
         { id: "ne", type: "slider", label: "Effective Herd Size (Nₑ)", min: 15, max: 500, step: 15, value: 50, format: function (v) { return "Nₑ = " + v; } }
       ]
     },

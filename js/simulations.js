@@ -183,7 +183,6 @@ window.simEngine = (function () {
       return Math.exp((k - 1) * Math.log(x) - x / 2 - k * Math.log(2) - math.logGamma(k));
     },
     tCrit: function (df, alpha) {
-      // Exact two-tailed Student's t critical values
       var t05 = [12.706, 4.303, 3.182, 2.776, 2.571, 2.447, 2.365, 2.306, 2.262, 2.228,
         2.201, 2.179, 2.160, 2.145, 2.131, 2.120, 2.110, 2.101, 2.093, 2.086,
         2.080, 2.074, 2.069, 2.064, 2.060, 2.056, 2.052, 2.048, 2.045, 2.042];
@@ -204,13 +203,11 @@ window.simEngine = (function () {
       return tbl[d - 1];
     },
     fCrit: function (df1, df2, alpha) {
-      // Accurate F critical values for df1=1..5, df2=4..30
       var z = alpha <= 0.01 ? 2.326 : 1.645;
       if (df1 === 3 && df2 === 12) return alpha <= 0.01 ? 5.95 : 3.49;
       if (df1 === 3 && df2 === 9) return alpha <= 0.01 ? 6.99 : 3.86;
       if (df1 === 2 && df2 === 12) return alpha <= 0.01 ? 6.93 : 3.89;
       if (df1 === 2 && df2 === 15) return alpha <= 0.01 ? 6.36 : 3.68;
-      // Wilson-Hilferty approximation for general df1, df2
       var a = 2 / (9 * df1), b = 2 / (9 * df2);
       var num = (1 - a) * (1 - b) + z * Math.sqrt(a * Math.pow(1 - b, 2) + b * Math.pow(1 - a, 2) - a * b * z * z);
       var den = Math.pow(1 - b, 2) - b * z * z;
@@ -231,7 +228,6 @@ window.simEngine = (function () {
       var b = dx > 1e-9 ? num / dx : 0;
       var a = my - b * mx;
       var r = (dx > 1e-9 && dy > 1e-9) ? Math.max(-1, Math.min(1, num / Math.sqrt(dx * dy))) : 0;
-      // Spearman rank correlation
       function ranks(vals) {
         var idx = vals.map(function (v, i) { return { v: v, i: i }; }).sort(function (u, w) { return u.v - w.v; });
         var rk = new Array(vals.length);
@@ -317,19 +313,11 @@ window.simEngine = (function () {
   /* ============================================================
      4. CORE ENGINE LIFECYCLE (Mount / Unmount / Expand Modal)
      ============================================================ */
-  function registerRenderer(name, fn) {
-    renderers[name] = fn;
-  }
-
-  function registerTopic(topicId, config) {
-    window.simRegistry[topicId] = config;
-  }
-
+  function registerRenderer(name, fn) { renderers[name] = fn; }
+  function registerTopic(topicId, config) { window.simRegistry[topicId] = config; }
   function registerTopics(map) {
     for (var k in map) {
-      if (Object.prototype.hasOwnProperty.call(map, k)) {
-        window.simRegistry[k] = map[k];
-      }
+      if (Object.prototype.hasOwnProperty.call(map, k)) window.simRegistry[k] = map[k];
     }
   }
 
@@ -337,22 +325,24 @@ window.simEngine = (function () {
     var hasSteps = cfg.steps && cfg.steps.length > 0;
     var hasControls = cfg.controls && cfg.controls.length > 0;
     var is3D = !!cfg.is3D;
+    var idSuffix = isModal ? "-modal" : "";
 
     var controlsHtml = "";
     if (hasControls) {
       controlsHtml = '<div class="sim-controls">' + cfg.controls.map(function (c) {
+        var domId = "sim-ctrl-" + escHtml(c.id) + idSuffix;
         if (c.type === "slider") {
           return '<div class="sim-control">' +
             '<div class="sim-control__top">' +
-              '<label class="sim-control__label" for="sim-ctrl-' + escHtml(c.id) + '">' + escHtml(c.label) + '</label>' +
+              '<label class="sim-control__label" for="' + domId + '">' + escHtml(c.label) + '</label>' +
               '<span class="sim-control__val" data-val-for="' + escHtml(c.id) + '">' + escHtml(c.format ? c.format(c.value) : c.value) + '</span>' +
             '</div>' +
-            '<input class="sim-slider" id="sim-ctrl-' + escHtml(c.id) + '" type="range" data-ctrl="' + escHtml(c.id) + '" min="' + c.min + '" max="' + c.max + '" step="' + (c.step || 1) + '" value="' + c.value + '">' +
+            '<input class="sim-slider" id="' + domId + '" type="range" data-ctrl="' + escHtml(c.id) + '" min="' + c.min + '" max="' + c.max + '" step="' + (c.step || 1) + '" value="' + c.value + '">' +
           '</div>';
         } else if (c.type === "select") {
           return '<div class="sim-control">' +
-            '<div class="sim-control__top"><label class="sim-control__label" for="sim-ctrl-' + escHtml(c.id) + '">' + escHtml(c.label) + '</label></div>' +
-            '<select class="sim-select" id="sim-ctrl-' + escHtml(c.id) + '" data-ctrl="' + escHtml(c.id) + '">' +
+            '<div class="sim-control__top"><label class="sim-control__label" for="' + domId + '">' + escHtml(c.label) + '</label></div>' +
+            '<select class="sim-select" id="' + domId + '" data-ctrl="' + escHtml(c.id) + '">' +
               c.options.map(function (o) {
                 var val = typeof o === "object" ? o.value : o;
                 var lbl = typeof o === "object" ? o.label : o;
@@ -436,7 +426,7 @@ window.simEngine = (function () {
     var playBtn = root.querySelector('[data-sim-act="play"]');
 
     var st = sharedState || {
-      playing: !!cfg.autoPlay,
+      playing: !!(cfg.autoPlay && cfg.animated !== false),
       t: 0,
       step: 0,
       rotX: cfg.rotX != null ? cfg.rotX : 0.35,
@@ -446,11 +436,14 @@ window.simEngine = (function () {
       custom: {}
     };
 
-    if (!sharedState) {
-      (cfg.controls || []).forEach(function (c) {
-        st.params[c.id] = c.value;
-      });
+    function initParams() {
+      st.params = {};
+      (cfg.controls || []).forEach(function (c) { st.params[c.id] = c.value; });
+      if (cfg.steps && cfg.steps[0] && cfg.steps[0].apply) {
+        cfg.steps[0].apply(st);
+      }
     }
+    if (!sharedState) initParams();
 
     var rafId = null;
     var lastTime = 0;
@@ -501,13 +494,8 @@ window.simEngine = (function () {
 
     function setBench(html) {
       if (!benchEl) return;
-      if (html) {
-        benchEl.hidden = false;
-        benchEl.innerHTML = html;
-      } else {
-        benchEl.hidden = true;
-        benchEl.innerHTML = "";
-      }
+      if (html) { benchEl.hidden = false; benchEl.innerHTML = html; }
+      else { benchEl.hidden = true; benchEl.innerHTML = ""; }
     }
 
     function setInsight(text, formula) {
@@ -566,7 +554,6 @@ window.simEngine = (function () {
       }
     }
 
-    // Wire sliders & selects
     Array.prototype.forEach.call(root.querySelectorAll("[data-ctrl]"), function (inp) {
       var id = inp.getAttribute("data-ctrl");
       var ctrlDef = (cfg.controls || []).filter(function (c) { return c.id === id; })[0];
@@ -579,7 +566,6 @@ window.simEngine = (function () {
       });
     });
 
-    // Wire toggle groups
     Array.prototype.forEach.call(root.querySelectorAll("[data-toggle-ctrl]"), function (grp) {
       var id = grp.getAttribute("data-toggle-ctrl");
       grp.addEventListener("click", function (e) {
@@ -591,7 +577,6 @@ window.simEngine = (function () {
       });
     });
 
-    // Wire guided step pills
     Array.prototype.forEach.call(root.querySelectorAll("[data-step-idx]"), function (btn) {
       btn.addEventListener("click", function () {
         st.step = Number(btn.getAttribute("data-step-idx"));
@@ -603,7 +588,6 @@ window.simEngine = (function () {
       });
     });
 
-    // Wire Play / Pause / Reset / Expand / Close
     root.addEventListener("click", function (e) {
       var btn = e.target.closest("[data-sim-act]");
       if (!btn) return;
@@ -619,7 +603,7 @@ window.simEngine = (function () {
         st.rotY = cfg.rotY != null ? cfg.rotY : 0.55;
         st.zoom = 1;
         st.custom = {};
-        (cfg.controls || []).forEach(function (c) { st.params[c.id] = c.value; });
+        initParams();
         syncControlsFromState();
         renderFrame();
       } else if (act === "expand") {
@@ -629,7 +613,6 @@ window.simEngine = (function () {
       }
     });
 
-    // Canvas pointer interactions (3D rotation OR interactive 2D click/drag)
     function getCanvasPos(ev) {
       var rect = canvas.getBoundingClientRect();
       var cx = ev.touches ? ev.touches[0].clientX : ev.clientX;
@@ -689,6 +672,7 @@ window.simEngine = (function () {
 
     syncControlsFromState();
     renderFrame();
+    if (isModal) requestAnimationFrame(renderFrame);
     if (st.playing) startLoop();
 
     return {
@@ -724,9 +708,7 @@ window.simEngine = (function () {
     document.addEventListener("keydown", onModalKey);
   }
 
-  function onModalKey(e) {
-    if (e.key === "Escape") closeModal();
-  }
+  function onModalKey(e) { if (e.key === "Escape") closeModal(); }
 
   function closeModal() {
     document.removeEventListener("keydown", onModalKey);
@@ -754,10 +736,7 @@ window.simEngine = (function () {
 
   function unmount() {
     closeModal();
-    if (activeInstance) {
-      activeInstance.destroy();
-      activeInstance = null;
-    }
+    if (activeInstance) { activeInstance.destroy(); activeInstance = null; }
   }
 
   /* ============================================================
@@ -768,7 +747,7 @@ window.simEngine = (function () {
   var centralDisp = function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state, m = env.math;
     var baseData = env.cfg.dataset || [10, 12, 13, 14, 14, 15, 15, 16, 17, 18];
-    var outlierVal = st.params.outlier != null ? st.params.outlier : 18;
+    var outlierVal = st.params.outlier != null ? st.params.outlier : baseData[baseData.length - 1];
     var nMult = st.params.sampleSize != null ? Math.round(st.params.sampleSize) : baseData.length;
     var data = baseData.slice(0, baseData.length - 1).concat([outlierVal]);
 
@@ -777,8 +756,8 @@ window.simEngine = (function () {
     var sem = sd / Math.sqrt(Math.max(2, nMult));
     var cv = mn ? (sd / mn) * 100 : 0;
 
-    var pad = { l: 56, r: 28, t: 44, b: 54 };
-    var minX = 0, maxX = Math.max(40, Math.ceil(outlierVal / 5) * 5 + 5);
+    var pad = { l: 56, r: 28, t: 62, b: 54 };
+    var minX = 0, maxX = 45;
     function sx(v) { return pad.l + ((v - minX) / (maxX - minX)) * (w - pad.l - pad.r); }
 
     env.drawAxes(ctx, pad, w, h, P, env.cfg.xLabel || "Milk Yield (litres / day)", "Observations");
@@ -789,12 +768,29 @@ window.simEngine = (function () {
     ctx.fillRect(sdL, pad.t, Math.max(2, sdR - sdL), h - pad.b - pad.t);
     ctx.fillStyle = P.blue;
     ctx.font = "700 12px " + P.fontSans;
-    ctx.textAlign = "center";
-    ctx.fillText("Mean ± 1 SD", (sdL + sdR) / 2, pad.t + 16);
+    ctx.textAlign = "left";
+    ctx.fillText("±1 SD Band", Math.min(w - 86, sdR + 6), pad.t + 16);
+
+    // Top summary legend bar (prevents Mean/Median/Mode label collisions!)
+    var legItems = [
+      { lbl: "Mean: " + mn.toFixed(1), col: P.coral },
+      { lbl: "Median: " + med.toFixed(1), col: P.teal },
+      { lbl: "Mode: " + mod.toFixed(1), col: P.purple }
+    ];
+    legItems.forEach(function (it, idx) {
+      var lx = pad.l + idx * 145;
+      ctx.fillStyle = it.col;
+      ctx.fillRect(lx, 14, 12, 12);
+      ctx.fillStyle = P.text;
+      ctx.font = "700 13px " + P.fontSans;
+      ctx.textAlign = "left";
+      ctx.fillText(it.lbl, lx + 18, 25);
+    });
 
     // X ticks
     ctx.fillStyle = P.textMuted;
     ctx.font = "600 12px " + P.fontMono;
+    ctx.textAlign = "center";
     for (var tk = 0; tk <= maxX; tk += 5) {
       var tx = sx(tk);
       ctx.beginPath(); ctx.moveTo(tx, h - pad.b); ctx.lineTo(tx, h - pad.b + 6);
@@ -809,7 +805,7 @@ window.simEngine = (function () {
       var key = Math.round(val);
       counts[key] = (counts[key] || 0) + 1;
       var cx = sx(val);
-      var cy = h - pad.b - 22 - (counts[key] - 1) * 24;
+      var cy = h - pad.b - 32 - (counts[key] - 1) * 24;
       var isOutlier = (i === data.length - 1);
       ctx.beginPath();
       ctx.arc(cx, cy, isOutlier ? 11 : 8, 0, Math.PI * 2);
@@ -822,12 +818,12 @@ window.simEngine = (function () {
         ctx.fillStyle = P.coral;
         ctx.font = "700 12px " + P.fontSans;
         ctx.textAlign = "center";
-        ctx.fillText("Drag / Outlier (" + val.toFixed(1) + ")", Math.min(w - 90, Math.max(pad.l + 70, cx)), cy - 18);
+        ctx.fillText("Outlier (" + val.toFixed(1) + ")", Math.min(w - 75, Math.max(pad.l + 55, cx)), cy - 18);
       }
     }
 
-    // Mean, Median, Mode vertical markers
-    function drawMarker(val, color, label, yOff) {
+    // Vertical markers with clean non-overlapping pill tags
+    function drawMarker(val, color, shortLbl, yOff) {
       var x = sx(val);
       ctx.save();
       ctx.strokeStyle = color;
@@ -836,13 +832,13 @@ window.simEngine = (function () {
       ctx.beginPath(); ctx.moveTo(x, pad.t + yOff); ctx.lineTo(x, h - pad.b); ctx.stroke();
       ctx.restore();
       ctx.fillStyle = color;
-      ctx.font = "700 13px " + P.fontSans;
+      ctx.font = "700 12px " + P.fontSans;
       ctx.textAlign = "center";
-      ctx.fillText(label + " " + val.toFixed(1), Math.min(w - 55, Math.max(pad.l + 55, x)), pad.t + yOff - 6);
+      ctx.fillText(shortLbl, Math.min(w - 40, Math.max(pad.l + 40, x)), pad.t + yOff - 4);
     }
-    drawMarker(med, P.teal, "Median", 34);
-    drawMarker(mn, P.coral, "Mean", 14);
-    drawMarker(mod, P.purple, "Mode", 54);
+    drawMarker(mod, P.purple, "Mo", 38);
+    drawMarker(med, P.teal, "Med", 22);
+    drawMarker(mn, P.coral, "Mean", 6);
 
     var shifted = Math.abs(mn - med) > 1.2;
     return {
@@ -859,33 +855,34 @@ window.simEngine = (function () {
       formula: "SD = √[Σ(x − x̄)²/(n−1)]   |   CV% = (SD / x̄) × 100   |   SEM = SD / √n"
     };
   };
-  centralDisp.onPointerDown = centralDisp.onPointerMove = function (pos, st) {
+  centralDisp.onPointerDown = centralDisp.onPointerMove = function (pos, st, cfg) {
     var padL = 56, padR = 28;
-    var maxX = Math.max(40, Math.ceil((st.params.outlier || 18) / 5) * 5 + 5);
     var frac = Math.max(0, Math.min(1, (pos.x - padL) / Math.max(100, pos.w - padL - padR)));
-    st.params.outlier = Math.round(frac * 45);
+    var ctrl = (cfg.controls || []).filter(function (c) { return c.id === "outlier"; })[0];
+    var lo = ctrl ? ctrl.min : 6, hi = ctrl ? ctrl.max : 42;
+    var val = Math.round(frac * 45 * 2) / 2;
+    st.params.outlier = Math.max(lo, Math.min(hi, val));
   };
   registerRenderer("central_dispersion", centralDisp);
 
   /* ---- 5.2 Skewness & Kurtosis Morphing Visualizer ---- */
   registerRenderer("skew_kurtosis", function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state;
-    var skew = st.params.skew != null ? st.params.skew : 0; // -2 to +2
-    var kurt = st.params.kurt != null ? st.params.kurt : 3; // 1.8 to 5.5
-    var pad = { l: 52, r: 28, t: 36, b: 52 };
+    var skew = st.params.skew != null ? st.params.skew : 0;
+    var kurt = st.params.kurt != null ? st.params.kurt : 3;
+    var pad = { l: 52, r: 28, t: 54, b: 52 };
     env.drawAxes(ctx, pad, w, h, P, "Trait Value (e.g., Lactation Yield / Somatic Cell Count)", "Frequency Density");
 
-    // Skew-normal + kurtosis power transform for crisp visual
     var pts = [], maxY = 0;
     var power = kurt > 3 ? 2 - (kurt - 3) * 0.28 : 2 + (3 - kurt) * 0.9;
-    var meanSum = 0, wSum = 0, modeX = 0, modeY = 0;
+    var meanSum = 0, wSum = 0, modeX = 0;
     for (var i = 0; i <= 160; i++) {
       var x = -4 + (8 * i) / 160;
       var base = Math.exp(-0.5 * Math.pow(Math.abs(x), Math.max(0.8, power)));
       var cdf = env.math.normalCDF(skew * x * 1.35);
       var y = 2 * base * cdf;
       pts.push({ x: x, y: y });
-      if (y > maxY) { maxY = y; modeX = x; modeY = y; }
+      if (y > maxY) { maxY = y; modeX = x; }
       meanSum += x * y;
       wSum += y;
     }
@@ -898,6 +895,14 @@ window.simEngine = (function () {
 
     function sx(x) { return pad.l + ((x + 4) / 8) * (w - pad.l - pad.r); }
     function sy(y) { return h - pad.b - (y / (maxY * 1.18 || 1)) * (h - pad.t - pad.b); }
+
+    // Top legend
+    [["Mode", P.purple], ["Median", P.teal], ["Mean", P.coral], ["Normal Ref", P.textFaint]].forEach(function (it, idx) {
+      var lx = pad.l + idx * 115;
+      ctx.fillStyle = it[1]; ctx.fillRect(lx, 12, 12, 12);
+      ctx.fillStyle = P.text; ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "left";
+      ctx.fillText(it[0], lx + 16, 22);
+    });
 
     // Reference Mesokurtic Symmetric dashed curve
     ctx.save();
@@ -925,16 +930,15 @@ window.simEngine = (function () {
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Mean, Median, Mode lines
     function mark(xv, col, lbl, row) {
       var px = sx(xv);
       ctx.strokeStyle = col; ctx.lineWidth = 2.5;
-      ctx.beginPath(); ctx.moveTo(px, pad.t + row * 18); ctx.lineTo(px, h - pad.b); ctx.stroke();
-      ctx.fillStyle = col; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "center";
-      ctx.fillText(lbl, Math.min(w - 45, Math.max(pad.l + 45, px)), pad.t + row * 18 - 4);
+      ctx.beginPath(); ctx.moveTo(px, pad.t + row * 16); ctx.lineTo(px, h - pad.b); ctx.stroke();
+      ctx.fillStyle = col; ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "center";
+      ctx.fillText(lbl, Math.min(w - 45, Math.max(pad.l + 45, px)), pad.t + row * 16 - 3);
     }
     mark(modeX, P.purple, "Mode", 0);
-    mark(medX, P.teal, "Median", 1);
+    mark(medX, P.teal, "Med", 1);
     mark(meanX, P.coral, "Mean", 2);
 
     var skewLabel = skew > 0.2 ? "Positive (Right-Skewed)" : (skew < -0.2 ? "Negative (Left-Skewed)" : "Symmetric (Normal)");
@@ -969,13 +973,11 @@ window.simEngine = (function () {
 
       env.drawAxes(ctx, pad, w, h, P, "Trait Value X (Mean μ = " + mu + ", SD σ = " + sigma + ")", "Probability Density");
 
-      // Shade ±3σ, ±2σ, ±1σ bands
-      var bands = [
-        { k: 3, col: P.purpleLight, lbl: "99.73% (±3σ)" },
-        { k: 2, col: P.tealLight, lbl: "95.45% (±2σ)" },
-        { k: 1, col: P.blueLight, lbl: "68.27% (±1σ)" }
-      ];
-      bands.forEach(function (b) {
+      [
+        { k: 3, col: P.purpleLight },
+        { k: 2, col: P.tealLight },
+        { k: 1, col: P.blueLight }
+      ].forEach(function (b) {
         ctx.beginPath();
         var xA = mu - b.k * sigma, xB = mu + b.k * sigma;
         ctx.moveTo(sx(xA), h - pad.b);
@@ -989,7 +991,6 @@ window.simEngine = (function () {
         ctx.fill();
       });
 
-      // Highlight Z-score area from -∞ to Z
       var xZ = mu + zCut * sigma;
       ctx.beginPath();
       ctx.moveTo(sx(minX), h - pad.b);
@@ -1004,24 +1005,19 @@ window.simEngine = (function () {
       ctx.fill();
       ctx.globalAlpha = 1;
 
-      // Curve stroke
       ctx.beginPath();
       for (var k = 0; k <= 160; k++) {
         var xv3 = minX + ((maxX - minX) * k) / 160;
         if (k === 0) ctx.moveTo(sx(xv3), sy(m.normalPDF(xv3, mu, sigma)));
         else ctx.lineTo(sx(xv3), sy(m.normalPDF(xv3, mu, sigma)));
       }
-      ctx.strokeStyle = P.blue;
-      ctx.lineWidth = 3;
-      ctx.stroke();
+      ctx.strokeStyle = P.blue; ctx.lineWidth = 3; ctx.stroke();
 
-      // Z marker
       ctx.strokeStyle = P.coral; ctx.lineWidth = 2.5;
       ctx.beginPath(); ctx.moveTo(sx(xZ), pad.t); ctx.lineTo(sx(xZ), h - pad.b); ctx.stroke();
       ctx.fillStyle = P.coral; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "center";
       ctx.fillText("Z = " + zCut.toFixed(2) + " (X=" + xZ.toFixed(1) + ")", Math.min(w - 85, Math.max(pad.l + 85, sx(xZ))), pad.t + 12);
 
-      // Sigma ticks
       ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono; ctx.textAlign = "center";
       for (var s = -3; s <= 3; s++) {
         var tx = sx(mu + s * sigma);
@@ -1042,7 +1038,6 @@ window.simEngine = (function () {
       };
     }
 
-    // Discrete distributions: Binomial or Poisson
     var n = Math.round(st.params.n != null ? st.params.n : 12);
     var p = st.params.p != null ? st.params.p : 0.5;
     var lam = st.params.lambda != null ? st.params.lambda : 3.5;
@@ -1094,7 +1089,6 @@ window.simEngine = (function () {
   var corrReg = function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state, m = env.math;
     var targetR = st.params.r != null ? st.params.r : 0.85;
-    // Generate deterministic correlated points + any user-clicked points
     var basePts = [];
     var seeds = [-1.6, -1.3, -1.0, -0.7, -0.4, -0.1, 0.2, 0.5, 0.8, 1.1, 1.4, 1.7];
     var errs = [0.6, -0.8, 0.4, -0.5, 0.9, -0.3, 0.7, -0.9, 0.3, -0.6, 0.5, -0.4];
@@ -1125,11 +1119,9 @@ window.simEngine = (function () {
 
     // Least-squares regression line
     var y0 = reg.a + reg.b * 5, y1 = reg.a + reg.b * 95;
-    ctx.strokeStyle = P.blue;
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = P.blue; ctx.lineWidth = 3;
     ctx.beginPath(); ctx.moveTo(sx(5), sy(Math.max(0, Math.min(100, y0)))); ctx.lineTo(sx(95), sy(Math.max(0, Math.min(100, y1)))); ctx.stroke();
 
-    // Points
     pts.forEach(function (pt, idx) {
       ctx.beginPath();
       ctx.arc(sx(pt.x), sy(pt.y), idx >= basePts.length ? 8 : 6.5, 0, Math.PI * 2);
@@ -1162,34 +1154,43 @@ window.simEngine = (function () {
   };
   registerRenderer("corr_regression", corrReg);
 
-  /* ---- 5.5 Hypothesis Testing (Z, t, Chi-Square + Mendelian 3:1/9:3:3:1, F-test) ---- */
+  /* ---- 5.5 Hypothesis Testing (Z, t, Chi-Square + Mendelian 3:1/9:3:3:1) ---- */
   registerRenderer("hypothesis_test", function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state, m = env.math;
     var test = st.params.test || env.cfg.defaultTest || "t";
     var alpha = parseFloat(st.params.alpha || "0.05");
     var df = Math.round(st.params.df != null ? st.params.df : 12);
     var stat = st.params.stat != null ? st.params.stat : 2.35;
-    var pad = { l: 52, r: 28, t: 38, b: 52 };
+    var pad = { l: 52, r: 28, t: 46, b: 56 };
 
     var crit, reject, benchHtml = "", insightMsg = "", formulaStr = "";
 
     if (test === "chisq") {
-      // Interactive Mendelian 3:1 or 9:3:3:1 Goodness-of-Fit + Chi-square curve!
-      var ratioMode = st.params.ratio || "3:1";
-      var dev = st.params.stat != null ? st.params.stat : 1.5; // deviation knob
-      var totalN = 160;
-      var obs, exp, labels;
-      if (ratioMode === "3:1") {
+      var ratioMode = st.params.ratio || env.cfg.defaultRatio || "3:1";
+      var dev = st.params.stat != null ? st.params.stat : 1.5;
+      var totalN = 160, obs, exp, labels, isHWE = (ratioMode === "hwe");
+      if (isHWE) {
+        // Real Hardy-Weinberg Equilibrium Chi-Square Test: N=200, df = k - 1 - 1 = 3 - 2 = 1!
+        totalN = 200;
         df = 1;
-        exp = [120, 40];
+        var shift = Math.round(dev * 6); // Excess homozygotes (e.g., inbreeding/Wahlund)
+        // Base HWE at p = 0.6, q = 0.4 -> AA=72, Aa=96, aa=32 (sum=200)
+        obs = [72 + shift, Math.max(4, 96 - 2 * shift), 32 + shift];
+        // Note: shifting +s, -2s, +s preserves allele frequency p = (2*obs[0]+obs[1])/(2*N) = 0.60 exactly!
+        var pEst = (2 * obs[0] + obs[1]) / (2 * totalN);
+        var qEst = 1 - pEst;
+        exp = [totalN * pEst * pEst, totalN * 2 * pEst * qEst, totalN * qEst * qEst];
+        labels = ["AA (p² = " + (pEst * pEst).toFixed(2) + ")", "Aa (2pq = " + (2 * pEst * qEst).toFixed(2) + ")", "aa (q² = " + (qEst * qEst).toFixed(2) + ")"];
+      } else if (ratioMode === "3:1") {
+        df = 1; exp = [120, 40];
         var d = Math.round(dev * 4);
         obs = [120 - d, 40 + d];
         labels = ["Dominant (3/4)", "Recessive (1/4)"];
       } else {
-        df = 3;
-        exp = [90, 30, 30, 10];
+        df = 3; exp = [90, 30, 30, 10];
         var d2 = Math.round(dev * 3);
-        obs = [90 - d2, 30 + Math.round(d2 * 0.5), 30 + Math.round(d2 * 0.5), 10];
+        var half1 = Math.floor(d2 / 2), half2 = d2 - half1;
+        obs = [90 - d2, 30 + half1, 30 + half2, 10];
         labels = ["A_B_ (9/16)", "A_bb (3/16)", "aaB_ (3/16)", "aabb (1/16)"];
       }
       var chiVal = 0;
@@ -1198,7 +1199,6 @@ window.simEngine = (function () {
       crit = m.chiCrit(df, alpha);
       reject = stat > crit;
 
-      // Draw Chi-Square distribution curve
       var maxX = Math.max(16, crit * 1.8, stat * 1.25);
       var maxY = 0;
       for (var k = 1; k <= 120; k++) {
@@ -1209,7 +1209,13 @@ window.simEngine = (function () {
       function sy(y) { return h - pad.b - (y / (maxY * 1.18 || 1)) * (h - pad.t - pad.b); }
       env.drawAxes(ctx, pad, w, h, P, "Chi-Square Statistic χ² (df = " + df + ")", "Density");
 
-      // Critical rejection region (right tail)
+      // Numeric X-axis ticks
+      ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono; ctx.textAlign = "center";
+      var stepX = maxX > 20 ? 4 : 2;
+      for (var txv = 0; txv <= maxX; txv += stepX) {
+        ctx.fillText(String(txv), sx(txv), h - pad.b + 18);
+      }
+
       ctx.beginPath();
       ctx.moveTo(sx(crit), h - pad.b);
       for (var j = 0; j <= 60; j++) {
@@ -1218,10 +1224,8 @@ window.simEngine = (function () {
       }
       ctx.lineTo(sx(maxX), h - pad.b);
       ctx.closePath();
-      ctx.fillStyle = P.dangerSoft;
-      ctx.fill();
+      ctx.fillStyle = P.dangerSoft; ctx.fill();
 
-      // Main curve
       ctx.beginPath();
       for (var c = 1; c <= 140; c++) {
         var cx = (maxX * c) / 140;
@@ -1230,31 +1234,35 @@ window.simEngine = (function () {
       }
       ctx.strokeStyle = P.blue; ctx.lineWidth = 3; ctx.stroke();
 
-      // Crit & Calculated lines
       ctx.strokeStyle = P.danger; ctx.lineWidth = 2; ctx.setLineDash([5, 4]);
       ctx.beginPath(); ctx.moveTo(sx(crit), pad.t); ctx.lineTo(sx(crit), h - pad.b); ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = P.danger; ctx.font = "700 12px " + P.fontMono; ctx.textAlign = "center";
-      ctx.fillText("Crit χ²=" + crit.toFixed(2), sx(crit), pad.t + 12);
+      ctx.fillText("Crit χ²=" + crit.toFixed(2), Math.min(w - 60, Math.max(pad.l + 60, sx(crit))), pad.t - 10);
 
       var calcX = sx(Math.min(maxX * 0.96, stat));
       ctx.strokeStyle = reject ? P.coral : P.ok; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(calcX, pad.t + 22); ctx.lineTo(calcX, h - pad.b); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(calcX, pad.t + 14); ctx.lineTo(calcX, h - pad.b); ctx.stroke();
       ctx.fillStyle = reject ? P.coral : P.ok;
-      ctx.fillText("Calc χ²=" + stat.toFixed(2), Math.min(w - 60, Math.max(pad.l + 60, calcX)), pad.t + 34);
+      ctx.fillText("Calc χ²=" + stat.toFixed(2), Math.min(w - 65, Math.max(pad.l + 65, calcX)), pad.t + 10);
 
-      benchHtml = '<table class="sim-table"><thead><tr><th>Mendelian Class (' + ratioMode + ')</th><th>Observed (O)</th><th>Expected (E)</th><th>(O − E)² / E</th></tr></thead><tbody>' +
+      benchHtml = '<table class="sim-table"><thead><tr><th>' + (isHWE ? 'Genotype Class (HWE, df = 3 − 2 = 1)' : 'Mendelian Class (' + ratioMode + ')') + '</th><th>Observed (O)</th><th>Expected (E)</th><th>(O − E)² / E</th></tr></thead><tbody>' +
         labels.map(function (lb, idx) {
           var term = Math.pow(obs[idx] - exp[idx], 2) / exp[idx];
-          return '<tr><td>' + lb + '</td><td class="sim-num">' + obs[idx] + '</td><td class="sim-num">' + exp[idx] + '</td><td class="sim-num">' + term.toFixed(3) + '</td></tr>';
+          return '<tr><td>' + lb + '</td><td class="sim-num">' + obs[idx] + '</td><td class="sim-num">' + exp[idx].toFixed(1) + '</td><td class="sim-num">' + term.toFixed(3) + '</td></tr>';
         }).join("") +
         '<tr><th>Total (N = ' + totalN + ')</th><th class="sim-num">' + totalN + '</th><th class="sim-num">' + totalN + '</th><th class="sim-num sim-highlight">χ² = ' + stat.toFixed(3) + '</th></tr></tbody></table>';
-      insightMsg = reject
-        ? "<b>REJECT H₀:</b> Calculated χ² (" + stat.toFixed(2) + ") exceeds critical χ² (" + crit.toFixed(2) + " at df=" + df + ", α=" + alpha + "). The observed offspring deviate significantly from the Mendelian " + ratioMode + " ratio (check for linkage, lethal genes, or epistasis!)."
-        : "<b>FAIL TO REJECT H₀:</b> Calculated χ² (" + stat.toFixed(2) + ") ≤ critical χ² (" + crit.toFixed(2) + "). Observed counts fit the expected Mendelian " + ratioMode + " segregation ratio!";
-      formulaStr = "χ² = Σ [ (O − E)² / E ]   |   df = k − 1 (Goodness-of-Fit)  or  (r − 1)(c − 1) (Contingency)";
+      insightMsg = isHWE
+        ? (reject
+            ? "<b>POPULATION NOT IN HWE (REJECT H₀):</b> χ² (" + stat.toFixed(2) + ") > critical χ² (" + crit.toFixed(2) + " at <b>df = 3 − 2 = 1</b>, α=" + alpha + "). Excess homozygotes / heterozygote deficit indicates inbreeding, selection, or population subdivision! <b>Exam Key:</b> For a 2-allele locus, df = k − 1 − m = 3 − 1 − 1 = <b>1</b> (1 df lost for estimating p from the sample)."
+            : "<b>POPULATION IS IN HARDY-WEINBERG EQUILIBRIUM:</b> χ² (" + stat.toFixed(2) + ") ≤ critical χ² (" + crit.toFixed(2) + " at <b>df = 1</b>). Observed AA, Aa, aa counts closely match Np², 2Npq, Nq²! Remember: <b>df = k − 2 = 1</b> (not 2!).")
+        : (reject
+            ? "<b>REJECT H₀:</b> Calculated χ² (" + stat.toFixed(2) + ") exceeds critical χ² (" + crit.toFixed(2) + " at df=" + df + ", α=" + alpha + "). The observed offspring deviate significantly from the Mendelian " + ratioMode + " ratio (check for linkage, lethal genes, or epistasis!)."
+            : "<b>FAIL TO REJECT H₀:</b> Calculated χ² (" + stat.toFixed(2) + ") ≤ critical χ² (" + crit.toFixed(2) + "). Observed counts fit the expected Mendelian " + ratioMode + " segregation ratio!");
+      formulaStr = isHWE
+        ? "χ² = Σ[(O − E)² / E]   |   p = (2n_AA + n_Aa) / 2N   |   HWE df = k − 1 − 1 = 1 (for 2 alleles)"
+        : "χ² = Σ [ (O − E)² / E ]   |   df = k − 1 (Goodness-of-Fit)  or  (r − 1)(c − 1) (Contingency)";
     } else {
-      // Z-test or Student's t-test (two-tailed symmetric)
       crit = test === "z" ? (alpha <= 0.01 ? 2.576 : 1.960) : m.tCrit(df, alpha);
       reject = Math.abs(stat) > crit;
       var maxZ = 4.2;
@@ -1264,7 +1272,12 @@ window.simEngine = (function () {
       function sy2(y) { return h - pad.b - (y / (peak2 * 1.18)) * (h - pad.t - pad.b); }
       env.drawAxes(ctx, pad, w, h, P, (test === "z" ? "Standard Normal Z" : "Student's t (df = " + df + ")"), "Density");
 
-      // Shade both critical tails
+      // Numeric X-axis ticks (-4 to +4)
+      ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono; ctx.textAlign = "center";
+      for (var tz = -4; tz <= 4; tz++) {
+        ctx.fillText(tz > 0 ? "+" + tz : String(tz), sx2(tz), h - pad.b + 18);
+      }
+
       [[-maxZ, -crit], [crit, maxZ]].forEach(function (rng) {
         ctx.beginPath();
         ctx.moveTo(sx2(rng[0]), h - pad.b);
@@ -1274,11 +1287,9 @@ window.simEngine = (function () {
         }
         ctx.lineTo(sx2(rng[1]), h - pad.b);
         ctx.closePath();
-        ctx.fillStyle = P.dangerSoft;
-        ctx.fill();
+        ctx.fillStyle = P.dangerSoft; ctx.fill();
       });
 
-      // Curve
       ctx.beginPath();
       for (var c2 = 0; c2 <= 160; c2++) {
         var xv2 = -maxZ + (2 * maxZ * c2) / 160;
@@ -1286,24 +1297,22 @@ window.simEngine = (function () {
       }
       ctx.strokeStyle = P.blue; ctx.lineWidth = 3; ctx.stroke();
 
-      // Crit lines
       [-crit, crit].forEach(function (cv) {
         ctx.strokeStyle = P.danger; ctx.lineWidth = 1.8; ctx.setLineDash([5, 4]);
-        ctx.beginPath(); ctx.moveTo(sx2(cv), pad.t + 12); ctx.lineTo(sx2(cv), h - pad.b); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(sx2(cv), pad.t); ctx.lineTo(sx2(cv), h - pad.b); ctx.stroke();
         ctx.setLineDash([]);
         ctx.fillStyle = P.danger; ctx.font = "700 12px " + P.fontMono; ctx.textAlign = "center";
-        ctx.fillText((cv > 0 ? "+" : "") + cv.toFixed(2), sx2(cv), pad.t + 10);
+        ctx.fillText((cv > 0 ? "+" : "") + cv.toFixed(2), sx2(cv), pad.t - 8);
       });
 
-      // Calculated stat
       var clX = sx2(Math.max(-maxZ + 0.15, Math.min(maxZ - 0.15, stat)));
       ctx.strokeStyle = reject ? P.coral : P.ok; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(clX, pad.t + 26); ctx.lineTo(clX, h - pad.b); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(clX, pad.t + 16); ctx.lineTo(clX, h - pad.b); ctx.stroke();
       ctx.fillStyle = reject ? P.coral : P.ok; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "center";
-      ctx.fillText((test === "z" ? "Z=" : "t=") + stat.toFixed(2), clX, pad.t + 24);
+      ctx.fillText((test === "z" ? "Z=" : "t=") + stat.toFixed(2), Math.min(w - 50, Math.max(pad.l + 50, clX)), pad.t + 12);
 
       insightMsg = reject
-        ? "<b>REJECT H₀ (Statistically Significant, p < " + alpha + "):</b> |" + stat.toFixed(2) + "| falls inside the shaded rejection region beyond ±" + crit.toFixed(3) + ". There is strong evidence of a real biological/treatment difference."
+        ? "<b>REJECT H₀ (Statistically Significant, p < " + alpha + "):</b> |" + stat.toFixed(2) + "| falls inside the shaded rejection region beyond ±" + crit.toFixed(3) + ". Strong evidence of a real biological/treatment difference."
         : "<b>FAIL TO REJECT H₀ (Non-Significant, p ≥ " + alpha + "):</b> |" + stat.toFixed(2) + "| lies within the acceptance zone (±" + crit.toFixed(3) + "). Observed difference could be due to sampling chance alone.";
       formulaStr = test === "z"
         ? "Z = (x̄ − μ) / (σ/√n)   |   Large sample (n ≥ 30)   |   Crit: ±1.96 (α=0.05), ±2.58 (α=0.01)"
@@ -1313,7 +1322,7 @@ window.simEngine = (function () {
     return {
       readouts: [
         { label: "Test Statistic", value: stat.toFixed(3), tone: reject ? "danger" : "ok" },
-        { label: "Critical Value (α=" + alpha + ")", value: "±" + crit.toFixed(3), tone: "accent" },
+        { label: "Critical Value (α=" + alpha + ")", value: test === "chisq" ? crit.toFixed(3) : "±" + crit.toFixed(3), tone: "accent" },
         { label: "Degrees of Freedom", value: test === "z" ? "∞ (Large n)" : String(df), tone: "purple" },
         { label: "Decision on H₀", value: reject ? "REJECT H₀" : "FAIL TO REJECT", tone: reject ? "danger" : "ok" }
       ],
@@ -1330,7 +1339,6 @@ window.simEngine = (function () {
     var trtEff = st.params.trtEffect != null ? st.params.trtEffect : 3.5;
     var blockVar = st.params.blockNoise != null ? st.params.blockNoise : 4.5;
 
-    // 4 Treatments (Diets A, B, C, D) × 4 Replications/Blocks (Parity 1..4)
     var trts = ["Diet A", "Diet B", "Diet C", "Diet D"];
     var trtCols = [P.blue, P.teal, P.purple, P.amberFill];
     var trtOffsets = [-trtEff, -trtEff * 0.3, trtEff * 0.3, trtEff];
@@ -1341,13 +1349,10 @@ window.simEngine = (function () {
       [0.2, -0.2, 0.5, -0.5],
       [-0.3, 0.1, -0.4, 0.6]
     ];
-    // Deterministic randomized layout
     var crdOrder = [2, 0, 3, 1, 1, 3, 0, 2, 0, 2, 1, 3, 3, 1, 2, 0];
     var rbdOrder = [[0, 2, 1, 3], [3, 0, 2, 1], [1, 3, 0, 2], [2, 1, 3, 0]];
 
-    // Compute exact ANOVA values for both CRD and RBD on the same farm gradient!
-    var grandMean = 16.0;
-    var grid = [];
+    var grandMean = 16.0, grid = [];
     for (var b = 0; b < 4; b++) {
       grid[b] = [];
       for (var t = 0; t < 4; t++) {
@@ -1370,20 +1375,18 @@ window.simEngine = (function () {
     var dfTrt = 3, dfBlk = 3;
     var dfErr = design === "rbd" ? 9 : 12;
     var ssErr = design === "rbd" ? ssErrRBD : ssErrCRD;
-    var msTrt = ssTrt / dfTrt;
-    var msBlk = ssBlk / dfBlk;
-    var msErr = ssErr / dfErr;
+    var msTrt = ssTrt / dfTrt, msBlk = ssBlk / dfBlk, msErr = ssErr / dfErr;
     var fCalc = msTrt / msErr;
     var fCrit = m.fCrit(dfTrt, dfErr, 0.05);
     var sig = fCalc > fCrit;
 
-    // Draw Farm Pen Randomization Grid
-    var padX = 28, padY = 44;
-    var gridW = w - padX * 2 - 90, gridH = h - padY - 26;
+    var padX = 24, padY = 44;
+    var rightReserve = design === "rbd" ? 76 : 10;
+    var gridW = w - padX * 2 - rightReserve, gridH = h - padY - 22;
     var cellW = gridW / 4, cellH = gridH / 4;
 
-    ctx.fillStyle = P.text; ctx.font = "700 14px " + P.fontSans; ctx.textAlign = "left";
-    ctx.fillText(design === "rbd" ? "RBD: Local Control — Each Block (Parity/Shed) Contains All 4 Diets" : "CRD: Complete Randomization Across Heterogeneous Pens (No Blocking)", padX, 24);
+    ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "left";
+    ctx.fillText(design === "rbd" ? "RBD: Local Control (4 Blocks × 4 Diets)" : "CRD: Complete Randomization (No Blocking)", padX, 24);
 
     for (var row = 0; row < 4; row++) {
       if (design === "rbd") {
@@ -1396,19 +1399,13 @@ window.simEngine = (function () {
         var cw = cellW - 8, ch = cellH - 8;
         ctx.fillStyle = trtCols[trtIdx];
         ctx.globalAlpha = 0.22;
-        env.roundRect(ctx, x, y, cw, ch, 8);
-        ctx.fill();
+        env.roundRect(ctx, x, y, cw, ch, 8); ctx.fill();
         ctx.globalAlpha = 1;
-        ctx.strokeStyle = trtCols[trtIdx];
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.strokeStyle = trtCols[trtIdx]; ctx.lineWidth = 2; ctx.stroke();
 
-        ctx.fillStyle = P.text;
-        ctx.font = "700 13px " + P.fontSans;
-        ctx.textAlign = "center";
+        ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "center";
         ctx.fillText(trts[trtIdx], x + cw / 2, y + ch / 2 - 4);
-        ctx.fillStyle = P.textMuted;
-        ctx.font = "600 12px " + P.fontMono;
+        ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono;
         ctx.fillText(grid[row][trtIdx].toFixed(1) + " L", x + cw / 2, y + ch / 2 + 14);
       }
     }
@@ -1450,7 +1447,6 @@ window.simEngine = (function () {
         (fnName === "STDEV.S" ? "=STDEV.S(B2:B7)" :
         (fnName === "TTEST" ? "=T.TEST(B2:B7, C2:C7, 2, 2)" : "=CHISQ.TEST(B2:B3, C2:C3)"));
 
-      // Draw Excel-like spreadsheet grid on canvas
       var padX = 24, padY = 38;
       var cols = ["Cow ID (A)", "Yield L (B)", "Control L (C)", "Breed (D)"];
       var rows = [
@@ -1463,14 +1459,12 @@ window.simEngine = (function () {
       ];
       var cw = (w - padX * 2) / 4, rh = 34;
 
-      // Formula bar
       ctx.fillStyle = P.surface2;
       env.roundRect(ctx, padX, 12, w - padX * 2, 32, 6); ctx.fill();
       ctx.strokeStyle = P.borderStrong; ctx.lineWidth = 1.2; ctx.stroke();
       ctx.fillStyle = P.blue; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "left";
-      ctx.fillText("fx   " + syntax + "   →   " + outVal, padX + 12, 33);
+      ctx.fillText("fx  " + syntax + "  →  " + outVal, padX + 12, 33);
 
-      // Header row
       var y0 = padY + 18;
       for (var c = 0; c < 4; c++) {
         ctx.fillStyle = P.blueLight;
@@ -1479,7 +1473,6 @@ window.simEngine = (function () {
         ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "center";
         ctx.fillText(cols[c], padX + c * cw + cw / 2, y0 + 22);
       }
-      // Data rows
       for (var r = 0; r < rows.length; r++) {
         for (var c2 = 0; c2 < 4; c2++) {
           var isSel = c2 === 1 || (c2 === 2 && (fnName === "TTEST" || fnName === "CHISQ.TEST"));
@@ -1503,60 +1496,38 @@ window.simEngine = (function () {
       };
     }
 
-    // Herd Sampling Simulator (40 animals in 4 breed strata / sheds)
     var method = st.params.method || "srs";
-    var colsN = 8, rowsN = 5;
-    var selected = {};
-    if (method === "srs") {
-      [2, 7, 11, 16, 21, 27, 33, 38].forEach(function (i) { selected[i] = true; });
-    } else if (method === "stratified") {
-      // 2 from each of 4 breed strata (columns 0-1, 2-3, 4-5, 6-7)
-      [1, 17, 10, 26, 4, 29, 14, 39].forEach(function (i) { selected[i] = true; });
-    } else if (method === "systematic") {
-      // Every k = 5th animal starting from random start r = 2
-      for (var s = 2; s < 40; s += 5) selected[s] = true;
-    } else {
-      // Cluster: entire Shed 2 (columns 2-3, all 10 animals)
-      for (var r2 = 0; r2 < rowsN; r2++) { selected[r2 * colsN + 2] = true; selected[r2 * colsN + 3] = true; }
-    }
+    var colsN = 8, rowsN = 5, selected = {};
+    if (method === "srs") [2, 7, 11, 16, 21, 27, 33, 38].forEach(function (i) { selected[i] = true; });
+    else if (method === "stratified") [1, 17, 10, 26, 4, 29, 14, 39].forEach(function (i) { selected[i] = true; });
+    else if (method === "systematic") { for (var s = 2; s < 40; s += 5) selected[s] = true; }
+    else { for (var r2 = 0; r2 < rowsN; r2++) { selected[r2 * colsN + 2] = true; selected[r2 * colsN + 3] = true; } }
 
-    var pad = { l: 28, r: 28, t: 48, b: 36 };
-    var cw2 = (w - pad.l - pad.r) / colsN;
-    var ch2 = (h - pad.t - pad.b) / rowsN;
+    var pad = { l: 24, r: 24, t: 48, b: 30 };
+    var cw2 = (w - pad.l - pad.r) / colsN, ch2 = (h - pad.t - pad.b) / rowsN;
     var strataCols = [P.blue, P.teal, P.purple, P.amberFill];
-    var strataNames = ["Shed 1 (Sahiwal)", "Shed 2 (Gir)", "Shed 3 (Murrah)", "Shed 4 (Crossbred)"];
+    var strataNames = ["Shed 1: Sahiwal", "Shed 2: Gir", "Shed 3: Murrah", "Shed 4: Crossbred"];
 
     for (var stIdx = 0; stIdx < 4; stIdx++) {
       var sx0 = pad.l + stIdx * 2 * cw2;
-      ctx.fillStyle = strataCols[stIdx];
-      ctx.globalAlpha = 0.1;
-      env.roundRect(ctx, sx0 + 2, pad.t - 26, cw2 * 2 - 4, h - pad.t - pad.b + 30, 8);
-      ctx.fill();
+      ctx.fillStyle = strataCols[stIdx]; ctx.globalAlpha = 0.1;
+      env.roundRect(ctx, sx0 + 2, pad.t - 26, cw2 * 2 - 4, h - pad.t - pad.b + 30, 8); ctx.fill();
       ctx.globalAlpha = 1;
-      ctx.fillStyle = strataCols[stIdx];
-      ctx.font = "700 12px " + P.fontSans;
-      ctx.textAlign = "center";
+      ctx.fillStyle = strataCols[stIdx]; ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "center";
       ctx.fillText(strataNames[stIdx], sx0 + cw2, pad.t - 10);
     }
 
     var selCount = 0;
     for (var idx = 0; idx < 40; idx++) {
       var rr = Math.floor(idx / colsN), cc = idx % colsN;
-      var cx = pad.l + cc * cw2 + cw2 / 2;
-      var cy = pad.t + rr * ch2 + ch2 / 2;
+      var cx = pad.l + cc * cw2 + cw2 / 2, cy = pad.t + rr * ch2 + ch2 / 2;
       var isSel2 = !!selected[idx];
       if (isSel2) selCount++;
-      ctx.beginPath();
-      ctx.arc(cx, cy, isSel2 ? 14 : 10, 0, Math.PI * 2);
-      ctx.fillStyle = isSel2 ? P.coral : P.surface2;
-      ctx.fill();
-      ctx.strokeStyle = isSel2 ? P.coral : P.borderStrong;
-      ctx.lineWidth = isSel2 ? 2.5 : 1.5;
-      ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, isSel2 ? 14 : 10, 0, Math.PI * 2);
+      ctx.fillStyle = isSel2 ? P.coral : P.surface2; ctx.fill();
+      ctx.strokeStyle = isSel2 ? P.coral : P.borderStrong; ctx.lineWidth = isSel2 ? 2.5 : 1.5; ctx.stroke();
       ctx.fillStyle = isSel2 ? P.textInvert : P.textMuted;
-      ctx.font = "700 11px " + P.fontMono;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+      ctx.font = "700 11px " + P.fontMono; ctx.textAlign = "center"; ctx.textBaseline = "middle";
       ctx.fillText(String(idx + 1), cx, cy);
     }
     ctx.textBaseline = "alphabetic";
@@ -1587,79 +1558,79 @@ window.simEngine = (function () {
 
     var presets = {
       mono: {
-        name: "Monohybrid Cross (Aa × Aa — Polled vs Horned Cattle)",
+        name: "Monohybrid Cross (Pp × Pp — Polled vs Horned)",
         ratio: "3 : 1",
-        bars: [{ lbl: "Polled (P_)", n: 3, col: P.blue }, { lbl: "Horned (pp)", n: 1, col: P.coral }],
+        bars: [{ lbl: "Polled", sub: "P_", n: 3, col: P.blue }, { lbl: "Horned", sub: "pp", n: 1, col: P.coral }],
         grid: [["", "P", "p"], ["P", "PP (Polled)", "Pp (Polled)"], ["p", "Pp (Polled)", "pp (Horned)"]],
         insight: "<b>Mendel's Law of Segregation:</b> Heterozygote × Heterozygote (Pp × Pp) gives phenotypic ratio <b>3 Polled : 1 Horned</b> and genotypic ratio <b>1 PP : 2 Pp : 1 pp</b>."
       },
       test: {
         name: "Monohybrid Test Cross (Pp × pp)",
         ratio: "1 : 1",
-        bars: [{ lbl: "Polled (Pp)", n: 1, col: P.blue }, { lbl: "Horned (pp)", n: 1, col: P.coral }],
+        bars: [{ lbl: "Polled", sub: "Pp", n: 1, col: P.blue }, { lbl: "Horned", sub: "pp", n: 1, col: P.coral }],
         grid: [["", "p", "p"], ["P", "Pp (Polled)", "Pp (Polled)"], ["p", "pp (Horned)", "pp (Horned)"]],
         insight: "<b>Test Cross:</b> Crossing a phenotypically dominant animal with a homozygous recessive (pp) reveals whether it is homozygous (100% dominant) or heterozygous (<b>1:1 ratio</b>)."
       },
       incomplete: {
         name: "Incomplete Dominance — Andalusian Fowl (Bb × Bb)",
         ratio: "1 : 2 : 1",
-        bars: [{ lbl: "Black (BB)", n: 1, col: P.text }, { lbl: "Blue (Bb)", n: 2, col: P.blue }, { lbl: "White (bb)", n: 1, col: P.textFaint }],
+        bars: [{ lbl: "Black", sub: "BB", n: 1, col: P.text }, { lbl: "Andalusian Blue", sub: "Bb", n: 2, col: P.blue }, { lbl: "Splash White", sub: "bb", n: 1, col: P.textFaint }],
         grid: [["", "B", "b"], ["B", "BB (Black)", "Bb (Andalusian Blue)"], ["b", "Bb (Andalusian Blue)", "bb (Splash White)"]],
         insight: "<b>Incomplete Dominance:</b> Heterozygote (Bb) shows an intermediate phenotype (Andalusian Blue). Phenotypic and genotypic ratios are identical: <b>1 : 2 : 1</b>."
       },
       codom: {
-        name: "Codominance — Shorthorn Cattle Coat (RR × WW → F2)",
+        name: "Codominance — Shorthorn Cattle Coat (CᴿCᵂ × CᴿCᵂ)",
         ratio: "1 : 2 : 1",
-        bars: [{ lbl: "Red (RR)", n: 1, col: P.coral }, { lbl: "Roan (RW)", n: 2, col: P.purple }, { lbl: "White (WW)", n: 1, col: P.textFaint }],
-        grid: [["", "R", "W"], ["R", "RR (Red)", "RW (Roan — Both expressed)"], ["W", "RW (Roan — Both expressed)", "WW (White)"]],
-        insight: "<b>Codominance:</b> Both alleles express equally and independently in heterozygotes (Roan Shorthorn cattle have distinct red AND white hairs; also seen in ABO/cattle blood groups). Ratio = <b>1 : 2 : 1</b>."
+        bars: [{ lbl: "Red", sub: "CᴿCᴿ", n: 1, col: P.coral }, { lbl: "Roan", sub: "CᴿCᵂ", n: 2, col: P.purple }, { lbl: "White", sub: "CᵂCᵂ", n: 1, col: P.textFaint }],
+        grid: [["", "Cᴿ", "Cᵂ"], ["Cᴿ", "CᴿCᴿ (Red)", "CᴿCᵂ (Roan — Both expressed)"], ["Cᵂ", "CᴿCᵂ (Roan — Both expressed)", "CᵂCᵂ (White)"]],
+        insight: "<b>Codominance:</b> Both alleles express equally and independently in heterozygotes (Roan Shorthorn cattle have distinct red AND white hairs; also seen in ABO/cattle blood groups). Phenotypic = Genotypic ratio = <b>1 : 2 : 1</b>."
       },
       lethal: {
-        name: "Recessive Lethal — Dexter Bulldog Calf / Creeper Fowl (Dd × Dd)",
+        name: "Dominant with Recessive Lethal Effect — Dexter Cattle / Creeper Fowl (Dd × Dd)",
         ratio: "2 : 1 (Living)",
-        bars: [{ lbl: "Bulldog (DD — Lethal)", n: 1, col: P.danger }, { lbl: "Dexter (Dd — Short-leg)", n: 2, col: P.amberFill }, { lbl: "Kerry (dd — Normal)", n: 1, col: P.sage }],
-        grid: [["", "D", "d"], ["D", "DD (Bulldog — LETHAL)", "Dd (Dexter)"], ["d", "Dd (Dexter)", "dd (Normal Kerry)"]],
-        insight: "<b>Lethal Gene Modification:</b> Homozygous DD calves die in utero (achondroplastic Bulldog calf). Among living progeny, the classic 1:2:1 ratio collapses to <b>2 Dexter : 1 Normal</b>!"
+        bars: [{ lbl: "Dexter (Living)", sub: "Dd (2/3)", n: 2, col: P.amberFill }, { lbl: "Normal Kerry (Living)", sub: "dd (1/3)", n: 1, col: P.sage }],
+        grid: [["", "D", "d"], ["D", "DD (Bulldog — LETHAL in utero)", "Dd (Dexter — Short-legged)"], ["d", "Dd (Dexter — Short-legged)", "dd (Normal Kerry)"]],
+        insight: "<b>Lethal Gene Ratio (2:1 Living):</b> Homozygous <b>DD</b> (or <b>CpCp</b> in Creeper fowl) dies in utero (Bulldog calf). Because 1/4 die before birth, the living progeny segregate as <b>2 Dexter (66.7%) : 1 Normal Kerry (33.3%)</b>!"
       },
       dihybrid: {
         name: "Dihybrid Independent Assortment (PpBb × PpBb)",
         ratio: "9 : 3 : 3 : 1",
-        bars: [{ lbl: "Polled Black (9)", n: 9, col: P.blue }, { lbl: "Polled Red (3)", n: 3, col: P.coral }, { lbl: "Horned Black (3)", n: 3, col: P.teal }, { lbl: "Horned Red (1)", n: 1, col: P.amberFill }],
+        bars: [{ lbl: "Polled Black", sub: "P_B_", n: 9, col: P.blue }, { lbl: "Polled Red", sub: "P_bb", n: 3, col: P.coral }, { lbl: "Horned Black", sub: "ppB_", n: 3, col: P.teal }, { lbl: "Horned Red", sub: "ppbb", n: 1, col: P.amberFill }],
         grid: [["", "PB", "Pb", "pB", "pb"], ["PB", "PPBB", "PPBb", "PpBB", "PpBb"], ["Pb", "PPBb", "PPbb", "PpBb", "Ppbb"], ["pB", "PpBB", "PpBb", "ppBB", "ppBb"], ["pb", "PpBb", "Ppbb", "ppBb", "ppbb"]],
         insight: "<b>Law of Independent Assortment:</b> Two unlinked genes assort independently to yield the canonical <b>9 : 3 : 3 : 1</b> phenotypic ratio (4 phenotypes, 9 genotypes)."
       },
       epi_rec: {
-        name: "Recessive Epistasis — Labrador Coat Color (BbEe × BbEe)",
+        name: "Recessive Epistasis — Labrador Coat (BbEe × BbEe)",
         ratio: "9 : 3 : 4",
-        bars: [{ lbl: "Black (B_E_)", n: 9, col: P.text }, { lbl: "Chocolate (bbE_)", n: 3, col: P.amber }, { lbl: "Yellow (B_ee + bbee)", n: 4, col: P.amberFill }],
+        bars: [{ lbl: "Black", sub: "B_E_", n: 9, col: P.text }, { lbl: "Chocolate", sub: "bbE_", n: 3, col: P.amber }, { lbl: "Yellow", sub: "B_ee + bbee", n: 4, col: P.amberFill }],
         grid: [["Genotype", "Count / 16", "Coat Phenotype", "Mechanism"], ["B_E_", "9", "Black", "E allows eumelanin; B = black"], ["bbE_", "3", "Chocolate", "E allows eumelanin; bb = brown"], ["B_ee / bbee", "3 + 1 = 4", "Yellow", "ee masks B/b locus (epistatic)!"]],
         insight: "<b>Recessive Epistasis (9:3:4):</b> Homozygous recessive <b>ee</b> prevents eumelanin deposition in hair regardless of B/b, merging the 3 B_ee and 1 bbee classes into <b>4 Yellow</b> Labradors!"
       },
       epi_dom: {
-        name: "Dominant Epistasis (12 : 3 : 1 — Coat/Plumage Inhibitor)",
+        name: "Dominant Epistasis (12 : 3 : 1 — Coat Inhibitor)",
         ratio: "12 : 3 : 1",
-        bars: [{ lbl: "White (I_C_ + I_cc)", n: 12, col: P.textFaint }, { lbl: "Colored Dom (iiC_)", n: 3, col: P.blue }, { lbl: "Colored Rec (iicc)", n: 1, col: P.coral }],
+        bars: [{ lbl: "White (Masked)", sub: "I_C_ + I_cc", n: 12, col: P.textFaint }, { lbl: "Colored Dom", sub: "iiC_", n: 3, col: P.blue }, { lbl: "Colored Rec", sub: "iicc", n: 1, col: P.coral }],
         grid: [["Genotype", "Count / 16", "Phenotype"], ["I_C_ & I_cc", "9 + 3 = 12", "White (Dominant I masks C/c)"], ["iiC_", "3", "Pigmented Type 1"], ["iicc", "1", "Pigmented Type 2"]],
         insight: "<b>Dominant Epistasis (12:3:1):</b> A single dominant allele (<b>I_</b>) masks expression of the second gene, collapsing 9 + 3 into <b>12</b>."
       },
       epi_comp: {
-        name: "Complementary Gene Action (9 : 7 — White Leghorn × Silkie)",
+        name: "Complementary Genes (9 : 7 — White Leghorn × Silkie)",
         ratio: "9 : 7",
-        bars: [{ lbl: "Colored (C_P_)", n: 9, col: P.purple }, { lbl: "White (C_pp + ccP_ + ccpp)", n: 7, col: P.textFaint }],
+        bars: [{ lbl: "Colored", sub: "C_P_", n: 9, col: P.purple }, { lbl: "White", sub: "C_pp/ccP_/ccpp", n: 7, col: P.textFaint }],
         grid: [["Genotype", "Count / 16", "Phenotype"], ["C_P_", "9", "Colored (Both dominant enzymes present)"], ["C_pp / ccP_ / ccpp", "3 + 3 + 1 = 7", "White (Pathway blocked)"]],
         insight: "<b>Complementary Genes (9:7):</b> Both dominant genes (C_ AND P_) are required in a biochemical pathway to produce pigment. Missing either gives white (3+3+1 = <b>7</b>)."
       },
       epi_dup: {
         name: "Duplicate Dominant Epistasis (15 : 1 — Feathered Shanks)",
         ratio: "15 : 1",
-        bars: [{ lbl: "Feathered (F1_ or F2_)", n: 15, col: P.teal }, { lbl: "Unfeathered (f1f1 f2f2)", n: 1, col: P.coral }],
+        bars: [{ lbl: "Feathered", sub: "F1_ or F2_", n: 15, col: P.teal }, { lbl: "Clean Shanks", sub: "f1f1 f2f2", n: 1, col: P.coral }],
         grid: [["Genotype", "Count / 16", "Phenotype"], ["F1_F2_, F1_f2f2, f1f1F2_", "9 + 3 + 3 = 15", "Feathered shanks (Either dominant suffices)"], ["f1f1 f2f2", "1", "Clean / Unfeathered shanks"]],
         insight: "<b>Duplicate Genes (15:1):</b> Either dominant gene alone produces the dominant trait; only the double recessive (1/16) shows the alternative phenotype."
       },
       comb: {
-        name: "Comb Shape in Poultry (RrPp × RrPp — Bateson & Punnett)",
+        name: "Comb Shape in Poultry (RrPp × RrPp)",
         ratio: "9 : 3 : 3 : 1",
-        bars: [{ lbl: "Walnut (R_P_)", n: 9, col: P.coral }, { lbl: "Rose (R_pp)", n: 3, col: P.blue }, { lbl: "Pea (rrP_)", n: 3, col: P.teal }, { lbl: "Single (rrpp)", n: 1, col: P.purple }],
+        bars: [{ lbl: "Walnut", sub: "R_P_", n: 9, col: P.coral }, { lbl: "Rose", sub: "R_pp", n: 3, col: P.blue }, { lbl: "Pea", sub: "rrP_", n: 3, col: P.teal }, { lbl: "Single", sub: "rrpp", n: 1, col: P.purple }],
         grid: [["Genotype", "Count / 16", "Comb Phenotype", "Breed Example"], ["R_P_", "9", "Walnut", "Malay"], ["R_pp", "3", "Rose", "Wyandotte"], ["rrP_", "3", "Pea", "Brahma"], ["rrpp", "1", "Single", "White Leghorn"]],
         insight: "<b>Novel Phenotype Interaction (9:3:3:1):</b> Rose (R_pp) × Pea (rrP_) produces 100% <b>Walnut (RrPp)</b> in F1, and <b>9 Walnut : 3 Rose : 3 Pea : 1 Single</b> in F2!"
       }
@@ -1667,22 +1638,23 @@ window.simEngine = (function () {
 
     var pr = presets[cross] || presets.mono;
     var total = pr.bars.reduce(function (s, b) { return s + b.n; }, 0);
-    var pad = { l: 52, r: 28, t: 44, b: 64 };
+    var pad = { l: 52, r: 28, t: 44, b: 68 };
     env.drawAxes(ctx, pad, w, h, P, pr.name, "Proportion (%)");
 
     var plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
-    var bw = Math.min(110, (plotW / pr.bars.length) * 0.62);
+    var bw = Math.min(104, (plotW / pr.bars.length) * 0.58);
     pr.bars.forEach(function (b, i) {
       var frac = b.n / total;
       var cx = pad.l + ((i + 0.5) / pr.bars.length) * plotW;
-      var bh = frac * plotH * 0.92;
+      var bh = frac * plotH * 0.88;
       ctx.fillStyle = b.col;
-      env.roundRect(ctx, cx - bw / 2, h - pad.b - bh, bw, bh, 8);
-      ctx.fill();
-      ctx.fillStyle = P.text; ctx.font = "700 14px " + P.fontMono; ctx.textAlign = "center";
-      ctx.fillText(b.n + "/" + total + " (" + (frac * 100).toFixed(1) + "%)", cx, h - pad.b - bh - 10);
-      ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontSans;
-      ctx.fillText(b.lbl, cx, h - pad.b + 20);
+      env.roundRect(ctx, cx - bw / 2, h - pad.b - bh, bw, bh, 8); ctx.fill();
+      ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "center";
+      ctx.fillText(b.n + "/" + total + " (" + (frac * 100).toFixed(0) + "%)", cx, h - pad.b - bh - 10);
+      ctx.fillStyle = P.text; ctx.font = "700 12px " + P.fontSans;
+      ctx.fillText(b.lbl, cx, h - pad.b + 16);
+      ctx.fillStyle = P.textMuted; ctx.font = "600 11px " + P.fontMono;
+      ctx.fillText(b.sub, cx, h - pad.b + 31);
     });
 
     var bench = '<table class="sim-table"><thead><tr>' + pr.grid[0].map(function (hd) { return '<th>' + hd + '</th>'; }).join("") + '</tr></thead><tbody>' +
@@ -1706,28 +1678,30 @@ window.simEngine = (function () {
   registerRenderer("hardy_weinberg", function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state;
     var p0 = st.params.p0 != null ? st.params.p0 : 0.6;
-    var sel = st.params.s != null ? st.params.s : 0.0;       // selection against aa
-    var mig = st.params.m != null ? st.params.m : 0.0;       // migration rate from p_m = 0.1
-    var mut = st.params.mu != null ? st.params.mu : 0.0;     // forward mutation A->a
+    var sel = st.params.s != null ? st.params.s : 0.0;
+    var selMode = st.params.selMode || "rec"; // rec (against aa), dom (against A_), het (heterozygote advantage)
+    var mig = st.params.m != null ? st.params.m : 0.0;
+    var mut = st.params.mu != null ? st.params.mu : 0.0;
     var ne = Math.round(st.params.ne != null ? st.params.ne : 500);
     var gens = 40;
 
-    // Deterministic trajectory
     var pHist = [p0], p = p0;
     for (var g = 1; g <= gens; g++) {
-      // 1. Mutation A->a
+      // 1. Forward mutation A -> a
       p = p * (1 - mut);
       // 2. Migration from donor herd with p_m = 0.15
       p = p * (1 - mig) + mig * 0.15;
-      // 3. Selection against recessive aa (fitness: AA=1, Aa=1, aa=1-s)
-      var q = 1 - p;
-      var wBar = 1 - sel * q * q;
-      if (wBar > 0.001) p = (p * p + p * q) / wBar;
+      // 3. Selection
+      var q = 1 - p, wAA = 1, wAa = 1, waa = 1;
+      if (selMode === "rec") { waa = 1 - sel; }
+      else if (selMode === "dom") { wAA = 1 - sel; wAa = 1 - sel; }
+      else if (selMode === "het") { wAA = 1 - sel * 0.6; waa = 1 - sel; }
+      var wBar = p * p * wAA + 2 * p * q * wAa + q * q * waa;
+      if (wBar > 0.001) p = (p * p * wAA + p * q * wAa) / wBar;
       p = Math.max(0, Math.min(1, p));
       pHist.push(p);
     }
 
-    // Drift trajectories when Ne < 200 (seeded deterministic pseudo-random for crisp visual)
     var driftLines = [];
     if (ne < 250) {
       for (var rep = 0; rep < 3; rep++) {
@@ -1743,20 +1717,22 @@ window.simEngine = (function () {
       }
     }
 
-    var pad = { l: 56, r: 28, t: 36, b: 52 };
+    var pad = { l: 56, r: 28, t: 40, b: 54 };
     env.drawAxes(ctx, pad, w, h, P, "Generations (0 to " + gens + ")", "Frequency (0.0 to 1.0)");
     function sx(g) { return pad.l + (g / gens) * (w - pad.l - pad.r); }
     function sy(v) { return h - pad.b - v * (h - pad.t - pad.b); }
 
-    // Grid lines at 0.25, 0.5, 0.75, 1.0
     ctx.strokeStyle = P.border; ctx.lineWidth = 1;
     [0.25, 0.5, 0.75, 1.0].forEach(function (lv) {
       ctx.beginPath(); ctx.moveTo(pad.l, sy(lv)); ctx.lineTo(w - pad.r, sy(lv)); ctx.stroke();
       ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono; ctx.textAlign = "right";
       ctx.fillText(lv.toFixed(2), pad.l - 8, sy(lv) + 4);
     });
+    ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontMono; ctx.textAlign = "center";
+    [0, 10, 20, 30, 40].forEach(function (gt) {
+      ctx.fillText(String(gt), sx(gt), h - pad.b + 18);
+    });
 
-    // Plot drift replicate lines if small Ne
     driftLines.forEach(function (dl) {
       ctx.beginPath();
       dl.forEach(function (v, idx) { if (idx === 0) ctx.moveTo(sx(idx), sy(v)); else ctx.lineTo(sx(idx), sy(v)); });
@@ -1764,7 +1740,6 @@ window.simEngine = (function () {
       ctx.globalAlpha = 1;
     });
 
-    // Plot p, p^2, 2pq, q^2
     function plotSeries(fn, col, dash) {
       ctx.save();
       if (dash) ctx.setLineDash(dash);
@@ -1781,10 +1756,10 @@ window.simEngine = (function () {
     plotSeries(function (pv) { return 2 * pv * (1 - pv); }, P.purple, [4, 4]);
     plotSeries(function (pv) { return (1 - pv) * (1 - pv); }, P.coral, [2, 3]);
 
-    // Legend
-    var leg = [["p (Allele A)", P.blue], ["p² (AA)", P.teal], ["2pq (Aa)", P.purple], ["q² (aa)", P.coral]];
+    var leg = [["p (A)", P.blue], ["p² (AA)", P.teal], ["2pq (Aa)", P.purple], ["q² (aa)", P.coral]];
+    var legStep = Math.min(130, (w - pad.l - pad.r) / 4);
     leg.forEach(function (item, idx) {
-      var lx = pad.l + 14 + idx * 125;
+      var lx = pad.l + idx * legStep;
       ctx.fillStyle = item[1]; ctx.fillRect(lx, 12, 12, 12);
       ctx.fillStyle = P.text; ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "left";
       ctx.fillText(item[0], lx + 16, 22);
@@ -1801,7 +1776,7 @@ window.simEngine = (function () {
       ],
       insight: inEq
         ? "<b>Hardy-Weinberg Equilibrium Held!</b> With zero selection, migration, or mutation in a large random-mating population (Nₑ = " + ne + "), allele frequencies (p = " + p0.toFixed(2) + ", q = " + (1 - p0).toFixed(2) + ") and genotype frequencies (p², 2pq, q²) remain strictly constant across all generations. Note: Heterozygotes (2pq) peak at <b>50% when p = q = 0.5</b>!"
-        : "<b>Equilibrium Disrupted!</b> " + (sel > 0 ? "Selection (s=" + sel.toFixed(2) + ") against recessive aa increases p, but elimination slows dramatically when q becomes small because most 'a' alleles hide in Aa carriers! " : "") + (ne < 250 ? "Small Nₑ (" + ne + ") triggers <b>Random Genetic Drift</b> (amber trajectories), causing unpredictable fixation or loss of alleles!" : ""),
+        : "<b>Equilibrium Disrupted!</b> " + (sel > 0 ? (selMode === "het" ? "<b>Heterozygote Advantage (Overdominance):</b> Both alleles are maintained at a stable balanced polymorphism! " : "Selection (s=" + sel.toFixed(2) + ") shifts allele frequency; against recessive aa, elimination slows when q is small because 'a' hides in Aa carriers! ") : "") + (mut > 0 ? "Mutation (μ=" + mut.toFixed(3) + ") slowly introduces recessive alleles. " : "") + (ne < 250 ? "Small Nₑ (" + ne + ") triggers <b>Random Genetic Drift</b> (amber trajectories)!" : ""),
       formula: "p + q = 1   |   p² + 2pq + q² = 1   |   Δq_sel = −s·p·q² / (1 − s·q²)   |   σ²_drift = pq / (2Nₑ)"
     };
   });
@@ -1822,7 +1797,7 @@ window.simEngine = (function () {
         probs.push(pr);
         if (pr > maxP) maxP = pr;
       }
-      env.drawAxes(ctx, pad, w, h, P, "Additive Allele Dose (" + loci + " Polygenic Loci → " + (alleles + 1) + " Genotypic Classes)", "Frequency");
+      env.drawAxes(ctx, pad, w, h, P, "Additive Allele Dose (" + loci + " Polygenic Loci → " + (alleles + 1) + " Classes)", "Frequency");
       var plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
       var bw = Math.max(10, (plotW / (alleles + 1)) * 0.72);
       for (var i = 0; i <= alleles; i++) {
@@ -1831,7 +1806,6 @@ window.simEngine = (function () {
         ctx.fillStyle = P.blueLight; ctx.strokeStyle = P.blue; ctx.lineWidth = 2;
         env.roundRect(ctx, bx, h - pad.b - bh, bw, bh, 4); ctx.fill(); ctx.stroke();
       }
-      // Continuous phenotypic curve when environment blurs discrete classes
       if (envBlur > 0.05) {
         var mu = alleles / 2, sig = Math.sqrt(alleles * 0.25 + envBlur * envBlur * 2.5);
         var peak = env.math.normalPDF(mu, mu, sig);
@@ -1856,18 +1830,16 @@ window.simEngine = (function () {
     }
 
     if (mode === "gxe") {
-      var gxe = st.params.gxe != null ? st.params.gxe : 1.0; // 0 = parallel, 1 = rank crossing
-      env.drawAxes(ctx, pad, w, h, P, "Production Environment (Temperate Intensive  →  Tropical Field)", "Lactation Milk Yield (kg)");
+      var gxe = st.params.gxe != null ? st.params.gxe : 1.0;
+      env.drawAxes(ctx, pad, w, h, P, "Environment (Temperate Intensive  →  Tropical Field)", "Lactation Milk Yield (kg)");
       var x1 = pad.l + (w - pad.l - pad.r) * 0.22;
       var x2 = pad.l + (w - pad.l - pad.r) * 0.78;
       var hfTemp = 6800, hfTrop = Math.round(6200 - gxe * 4000);
       var sahTemp = 2600, sahTrop = Math.round(2100 + gxe * 900);
       function sy(v) { return h - pad.b - ((v - 1000) / 6500) * (h - pad.t - pad.b); }
 
-      // Holstein line
       ctx.strokeStyle = P.blue; ctx.lineWidth = 3.5;
       ctx.beginPath(); ctx.moveTo(x1, sy(hfTemp)); ctx.lineTo(x2, sy(hfTrop)); ctx.stroke();
-      // Sahiwal line
       ctx.strokeStyle = P.coral; ctx.lineWidth = 3.5;
       ctx.beginPath(); ctx.moveTo(x1, sy(sahTemp)); ctx.lineTo(x2, sy(sahTrop)); ctx.stroke();
 
@@ -1893,7 +1865,6 @@ window.simEngine = (function () {
       };
     }
 
-    // Variance Partitioning (V_A, V_D, V_I, V_Ep, V_Et)
     var va = st.params.va != null ? st.params.va : 30;
     var vd = st.params.vd != null ? st.params.vd : 12;
     var vi = st.params.vi != null ? st.params.vi : 6;
@@ -1903,10 +1874,9 @@ window.simEngine = (function () {
     var vg = va + vd + vi;
     var h2 = va / vp, H2 = vg / vp, rep = (vg + vep) / vp;
 
-    // Stacked horizontal variance bar + 3 comparison bars (h², H², r)
-    var barX = 48, barW = w - 96, barY = 58, barH = 54;
-    ctx.fillStyle = P.text; ctx.font = "700 14px " + P.fontSans; ctx.textAlign = "left";
-    ctx.fillText("Total Phenotypic Variance (V_P = " + vp.toFixed(0) + ") Partitioned into Genetic & Environmental Components", barX, 34);
+    var barX = 40, barW = w - 80, barY = 54, barH = 52;
+    ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "left";
+    ctx.fillText("Total Phenotypic Variance (V_P = " + vp.toFixed(0) + ") Partitioned", barX, 32);
 
     var segs = [
       { lbl: "V_A", val: va, col: P.blue },
@@ -1923,20 +1893,19 @@ window.simEngine = (function () {
         ctx.fillRect(curX, barY, sw, barH);
         if (sw > 38) {
           ctx.fillStyle = P.textInvert; ctx.font = "700 12px " + P.fontMono; ctx.textAlign = "center";
-          ctx.fillText(s.lbl + " " + Math.round((s.val / vp) * 100) + "%", curX + sw / 2, barY + 32);
+          ctx.fillText(s.lbl + " " + Math.round((s.val / vp) * 100) + "%", curX + sw / 2, barY + 31);
         }
         curX += sw;
       }
     });
 
-    // Draw h², H², and Repeatability r bars below to prove h² <= H² <= r visually!
     var metrics = [
-      { name: "Narrow-Sense Heritability  h² = V_A / V_P", val: h2, col: P.blue },
-      { name: "Broad-Sense Heritability   H² = (V_A + V_D + V_I) / V_P", val: H2, col: P.purple },
-      { name: "Repeatability              r  = (V_G + V_Ep) / V_P  (Upper Limit of h²)", val: rep, col: P.teal }
+      { name: "Narrow-Sense Heritability (h² = V_A / V_P)", val: h2, col: P.blue },
+      { name: "Broad-Sense Heritability (H² = V_G / V_P)", val: H2, col: P.purple },
+      { name: "Repeatability (r = (V_G + V_Ep) / V_P — Upper Limit of h²)", val: rep, col: P.teal }
     ];
     metrics.forEach(function (mt, idx) {
-      var my = 152 + idx * 58;
+      var my = 148 + idx * 58;
       ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontSans; ctx.textAlign = "left";
       ctx.fillText(mt.name, barX, my);
       ctx.fillStyle = P.bgAlt;
@@ -1975,7 +1944,7 @@ window.simEngine = (function () {
     var dG = h2 * S;
     var dGyr = dG / Math.max(0.5, genL);
 
-    var pad = { l: 56, r: 28, t: 38, b: 54 };
+    var pad = { l: 56, r: 28, t: 46, b: 54 };
     var minX = mu - 3.5 * sigmaP, maxX = mu + 3.5 * sigmaP;
     function sx(x) { return pad.l + ((x - minX) / (maxX - minX)) * (w - pad.l - pad.r); }
     var peak = m.normalPDF(mu, mu, sigmaP);
@@ -1983,7 +1952,6 @@ window.simEngine = (function () {
 
     env.drawAxes(ctx, pad, w, h, P, "Trait Performance (Mean μ = " + mu + " kg, Selected Top " + Math.round(pSel * 100) + "%)", "Density");
 
-    // Shade selected parents tail
     ctx.beginPath();
     ctx.moveTo(sx(xCut), h - pad.b);
     for (var j = 0; j <= 80; j++) {
@@ -1992,10 +1960,8 @@ window.simEngine = (function () {
     }
     ctx.lineTo(sx(maxX), h - pad.b);
     ctx.closePath();
-    ctx.fillStyle = P.okSoft;
-    ctx.fill();
+    ctx.fillStyle = P.okSoft; ctx.fill();
 
-    // Base population curve
     ctx.beginPath();
     for (var k = 0; k <= 150; k++) {
       var xv2 = minX + ((maxX - minX) * k) / 150;
@@ -2004,7 +1970,6 @@ window.simEngine = (function () {
     }
     ctx.strokeStyle = P.blue; ctx.lineWidth = 3; ctx.stroke();
 
-    // Next-generation shifted offspring curve (dashed teal)
     ctx.save();
     ctx.setLineDash([6, 4]);
     ctx.beginPath();
@@ -2016,18 +1981,16 @@ window.simEngine = (function () {
     ctx.strokeStyle = P.teal; ctx.lineWidth = 2.5; ctx.stroke();
     ctx.restore();
 
-    // Truncation line & Mean markers
     ctx.strokeStyle = P.ok; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(sx(xCut), pad.t + 16); ctx.lineTo(sx(xCut), h - pad.b); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sx(xCut), pad.t + 6); ctx.lineTo(sx(xCut), h - pad.b); ctx.stroke();
     ctx.fillStyle = P.ok; ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "center";
-    ctx.fillText("Cutoff (" + Math.round(pSel * 100) + "%)", sx(xCut), pad.t + 12);
+    ctx.fillText("Cutoff (" + Math.round(pSel * 100) + "%)", Math.min(w - 55, Math.max(pad.l + 55, sx(xCut))), pad.t);
 
-    // S arrow
     var xMeanSel = mu + S;
     ctx.strokeStyle = P.coral; ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(sx(mu), pad.t + 36); ctx.lineTo(sx(xMeanSel), pad.t + 36); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sx(mu), pad.t + 28); ctx.lineTo(sx(xMeanSel), pad.t + 28); ctx.stroke();
     ctx.fillStyle = P.coral; ctx.font = "700 12px " + P.fontMono;
-    ctx.fillText("S = +" + S.toFixed(0), (sx(mu) + sx(xMeanSel)) / 2, pad.t + 30);
+    ctx.fillText("S = +" + S.toFixed(0), (sx(mu) + sx(xMeanSel)) / 2, pad.t + 22);
 
     var traitHint = h2 < 0.15 ? "Low h² (Fertility/Fitness): Individual selection is weak — use Family/Progeny testing!"
       : (h2 < 0.35 ? "Medium h² (Milk Yield ~0.25): Combine Individual + Progeny/BLUP evaluation."
@@ -2052,20 +2015,17 @@ window.simEngine = (function () {
     var pad = { l: 58, r: 28, t: 38, b: 54 };
     env.drawAxes(ctx, pad, w, h, P, "Trait 1: Milk Yield (Std. Units)", "Trait 2: Fat % / Fertility (Std. Units)");
 
-    // Deterministic 80-animal herd
     var herd = [];
     for (var i = 0; i < 80; i++) {
       var a1 = Math.sin(i * 12.9898) * 43758.5453; var u1 = a1 - Math.floor(a1);
       var a2 = Math.sin(i * 78.233 + 1.5) * 43758.5453; var u2 = a2 - Math.floor(a2);
       var x = 10 + u1 * 80, y = 10 + u2 * 80;
-      var score = 0.6 * x + 0.4 * y; // True aggregate merit H
-      herd.push({ x: x, y: y, score: score });
+      herd.push({ x: x, y: y, score: 0.6 * x + 0.4 * y });
     }
 
     function sx(v) { return pad.l + (v / 100) * (w - pad.l - pad.r); }
     function sy(v) { return h - pad.b - (v / 100) * (h - pad.t - pad.b); }
 
-    // Select top 25% (20 animals) under chosen method
     var selSet = [];
     if (method === "tandem") {
       var sortedT = herd.slice().sort(function (a, b) { return b.x - a.x; });
@@ -2083,32 +2043,25 @@ window.simEngine = (function () {
       ctx.beginPath(); ctx.moveTo(sx(cxCut), pad.t); ctx.lineTo(sx(cxCut), sy(cyCut)); ctx.lineTo(w - pad.r, sy(cyCut)); ctx.stroke();
       herd.forEach(function (a) { a.sel = (a.x >= cxCut && a.y >= cyCut); if (a.sel) selSet.push(a); });
     } else {
-      // Selection Index: I = 0.6*X1 + 0.4*X2
       var sortedI = herd.slice().sort(function (a, b) { return b.score - a.score; });
       var cutI = sortedI[19].score;
-      // Diagonal line 0.6x + 0.4y = cutI => y = (cutI - 0.6x) / 0.4
-      var yAt0 = (cutI) / 0.4, yAt100 = (cutI - 60) / 0.4;
+      var xTop = Math.max(0, (cutI - 40) / 0.6);
+      var yRight = Math.max(0, (cutI - 60) / 0.4);
       ctx.beginPath();
-      ctx.moveTo(sx(0), sy(Math.min(100, yAt0)));
-      ctx.lineTo(sx(100), sy(Math.max(0, yAt100)));
+      ctx.moveTo(sx(xTop), sy(100));
+      ctx.lineTo(sx(100), sy(yRight));
       ctx.lineTo(sx(100), pad.t);
-      ctx.lineTo(sx(0), pad.t);
       ctx.closePath();
       ctx.fillStyle = P.okSoft; ctx.fill();
       ctx.strokeStyle = P.ok; ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(sx(Math.max(0, (cutI - 40) / 0.6)), sy(100));
-      ctx.lineTo(sx(100), sy(Math.max(0, yAt100)));
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(sx(xTop), sy(100)); ctx.lineTo(sx(100), sy(yRight)); ctx.stroke();
       herd.forEach(function (a) { a.sel = a.score >= cutI; if (a.sel) selSet.push(a); });
     }
 
-    // Draw herd points
     herd.forEach(function (a) {
       ctx.beginPath();
       ctx.arc(sx(a.x), sy(a.y), a.sel ? 7 : 5, 0, Math.PI * 2);
-      ctx.fillStyle = a.sel ? P.blue : P.textFaint;
-      ctx.fill();
+      ctx.fillStyle = a.sel ? P.blue : P.textFaint; ctx.fill();
       if (a.sel) { ctx.strokeStyle = P.surface; ctx.lineWidth = 1.5; ctx.stroke(); }
     });
 
@@ -2132,40 +2085,43 @@ window.simEngine = (function () {
     };
   });
 
-  /* ---- 5.13 Wright's Inbreeding Coefficient (F_X) & Relationship (R_XY) ---- */
+  /* ---- 5.13 Wright's Inbreeding Coefficient (F_X) & Exact Relationship (R_SD) ---- */
   registerRenderer("pedigree_inbreeding", function (env) {
     var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state;
     var mating = st.params.mating || "fullsib";
-    var fAnc = st.params.fA != null ? st.params.fA : 0; // Common ancestor inbreeding F_A
+    var fAnc = st.params.fA != null ? st.params.fA : 0;
 
     var presets = {
-      selfing: { name: "Self-Fertilization", fBase: 0.5, rBase: 1.0, paths: "1 path (n₁=0, n₂=0)", n1: 0, n2: 0, nPaths: 1,
-        nodes: [{ id: "A", x: 0.5, y: 0.22, ca: true }, { id: "X", x: 0.5, y: 0.78, target: true }],
-        edges: [["A", "X", -28], ["A", "X", 28]] },
-      parent_off: { name: "Parent × Offspring (Sire × Daughter)", fBase: 0.25, rBase: 0.50, paths: "1 path (n₁=0, n₂=1)", n1: 0, n2: 1, nPaths: 1,
-        nodes: [{ id: "Sire (A)", x: 0.35, y: 0.22, ca: true }, { id: "Dam", x: 0.72, y: 0.22 }, { id: "Daughter", x: 0.62, y: 0.52 }, { id: "X", x: 0.48, y: 0.82, target: true }],
-        edges: [["Sire (A)", "Daughter", 0], ["Dam", "Daughter", 0], ["Sire (A)", "X", 0], ["Daughter", "X", 0]] },
-      fullsib: { name: "Full-Sib Mating (Brother × Sister)", fBase: 0.25, rBase: 0.50, paths: "2 paths via Sire A & Dam B (each n₁=1, n₂=1)", n1: 1, n2: 1, nPaths: 2,
-        nodes: [{ id: "Sire (A)", x: 0.34, y: 0.18, ca: true }, { id: "Dam (B)", x: 0.66, y: 0.18, ca: true }, { id: "Bro (S)", x: 0.34, y: 0.52 }, { id: "Sis (D)", x: 0.66, y: 0.52 }, { id: "X", x: 0.5, y: 0.84, target: true }],
-        edges: [["Sire (A)", "Bro (S)", 0], ["Sire (A)", "Sis (D)", 0], ["Dam (B)", "Bro (S)", 0], ["Dam (B)", "Sis (D)", 0], ["Bro (S)", "X", 0], ["Sis (D)", "X", 0]] },
-      halfsib: { name: "Half-Sib Mating (Common Sire A)", fBase: 0.125, rBase: 0.25, paths: "1 path via Common Sire A (n₁=1, n₂=1)", n1: 1, n2: 1, nPaths: 1,
-        nodes: [{ id: "Common Sire (A)", x: 0.5, y: 0.18, ca: true }, { id: "Dam 1", x: 0.18, y: 0.18 }, { id: "Dam 2", x: 0.82, y: 0.18 }, { id: "Half-Bro", x: 0.34, y: 0.52 }, { id: "Half-Sis", x: 0.66, y: 0.52 }, { id: "X", x: 0.5, y: 0.84, target: true }],
-        edges: [["Common Sire (A)", "Half-Bro", 0], ["Common Sire (A)", "Half-Sis", 0], ["Dam 1", "Half-Bro", 0], ["Dam 2", "Half-Sis", 0], ["Half-Bro", "X", 0], ["Half-Sis", "X", 0]] },
-      cousin: { name: "First-Cousin Mating", fBase: 0.0625, rBase: 0.125, paths: "2 paths (each n₁=2, n₂=2)", n1: 2, n2: 2, nPaths: 2,
-        nodes: [{ id: "GP1 (A)", x: 0.36, y: 0.14, ca: true }, { id: "GP2 (B)", x: 0.64, y: 0.14, ca: true }, { id: "P1", x: 0.32, y: 0.40 }, { id: "P2", x: 0.68, y: 0.40 }, { id: "Cousin 1", x: 0.32, y: 0.64 }, { id: "Cousin 2", x: 0.68, y: 0.64 }, { id: "X", x: 0.5, y: 0.88, target: true }],
-        edges: [["GP1 (A)", "P1", 0], ["GP1 (A)", "P2", 0], ["GP2 (B)", "P1", 0], ["GP2 (B)", "P2", 0], ["P1", "Cousin 1", 0], ["P2", "Cousin 2", 0], ["Cousin 1", "X", 0], ["Cousin 2", "X", 0]] }
+      selfing: { name: "Self-Fertilization", paths: "1 path (n₁=0, n₂=0)", n1: 0, n2: 0, nPaths: 1,
+        calcR: function () { return 1.0; },
+        nodes: [{ id: "Parent (A)", x: 0.5, y: 0.22, ca: true }, { id: "Offspring X", x: 0.5, y: 0.78, target: true }],
+        edges: [["Parent (A)", "Offspring X", -34], ["Parent (A)", "Offspring X", 34]] },
+      parent_off: { name: "Parent × Offspring (Sire × Daughter)", paths: "1 path (n₁=0, n₂=1)", n1: 0, n2: 1, nPaths: 1,
+        calcR: function (fA) { return 0.5 * Math.sqrt(1 + fA); },
+        nodes: [{ id: "Sire (A)", x: 0.34, y: 0.20, ca: true }, { id: "Dam", x: 0.72, y: 0.20 }, { id: "Daughter", x: 0.62, y: 0.52 }, { id: "Offspring X", x: 0.48, y: 0.84, target: true }],
+        edges: [["Sire (A)", "Daughter", 0], ["Dam", "Daughter", 0], ["Sire (A)", "Offspring X", 0], ["Daughter", "Offspring X", 0]] },
+      fullsib: { name: "Full-Sib Mating (Brother × Sister)", paths: "2 paths via Sire A & Dam B (each n₁=1, n₂=1)", n1: 1, n2: 1, nPaths: 2,
+        calcR: function (fA) { return 0.5 * (1 + fA); },
+        nodes: [{ id: "Sire (A)", x: 0.32, y: 0.16, ca: true }, { id: "Dam (B)", x: 0.68, y: 0.16, ca: true }, { id: "Brother (S)", x: 0.32, y: 0.52 }, { id: "Sister (D)", x: 0.68, y: 0.52 }, { id: "Offspring X", x: 0.5, y: 0.85, target: true }],
+        edges: [["Sire (A)", "Brother (S)", 0], ["Sire (A)", "Sister (D)", 0], ["Dam (B)", "Brother (S)", 0], ["Dam (B)", "Sister (D)", 0], ["Brother (S)", "Offspring X", 0], ["Sister (D)", "Offspring X", 0]] },
+      halfsib: { name: "Half-Sib Mating (Common Sire A)", paths: "1 path via Common Sire A (n₁=1, n₂=1)", n1: 1, n2: 1, nPaths: 1,
+        calcR: function (fA) { return 0.25 * (1 + fA); },
+        nodes: [{ id: "Common Sire (A)", x: 0.5, y: 0.16, ca: true }, { id: "Dam 1", x: 0.16, y: 0.16 }, { id: "Dam 2", x: 0.84, y: 0.16 }, { id: "Half-Bro", x: 0.32, y: 0.52 }, { id: "Half-Sis", x: 0.68, y: 0.52 }, { id: "Offspring X", x: 0.5, y: 0.85, target: true }],
+        edges: [["Common Sire (A)", "Half-Bro", 0], ["Common Sire (A)", "Half-Sis", 0], ["Dam 1", "Half-Bro", 0], ["Dam 2", "Half-Sis", 0], ["Half-Bro", "Offspring X", 0], ["Half-Sis", "Offspring X", 0]] },
+      cousin: { name: "First-Cousin Mating", paths: "2 paths (each n₁=2, n₂=2)", n1: 2, n2: 2, nPaths: 2,
+        calcR: function (fA) { return 0.125 * (1 + fA); },
+        nodes: [{ id: "GP1 (A)", x: 0.35, y: 0.14, ca: true }, { id: "GP2 (B)", x: 0.65, y: 0.14, ca: true }, { id: "Parent 1", x: 0.30, y: 0.40 }, { id: "Parent 2", x: 0.70, y: 0.40 }, { id: "Cousin 1", x: 0.30, y: 0.64 }, { id: "Cousin 2", x: 0.70, y: 0.64 }, { id: "Offspring X", x: 0.5, y: 0.88, target: true }],
+        edges: [["GP1 (A)", "Parent 1", 0], ["GP1 (A)", "Parent 2", 0], ["GP2 (B)", "Parent 1", 0], ["GP2 (B)", "Parent 2", 0], ["Parent 1", "Cousin 1", 0], ["Parent 2", "Cousin 2", 0], ["Cousin 1", "Offspring X", 0], ["Cousin 2", "Offspring X", 0]] }
     };
 
     var pr = presets[mating] || presets.fullsib;
     var fX = pr.nPaths * Math.pow(0.5, pr.n1 + pr.n2 + 1) * (1 + fAnc);
-    var rSD = pr.rBase * (1 + fAnc);
+    var rSD = Math.min(1.0, pr.calcR(fAnc));
     var nodeMap = {};
     pr.nodes.forEach(function (nd) { nodeMap[nd.id] = { x: nd.x * w, y: nd.y * h, ca: nd.ca, target: nd.target, id: nd.id }; });
 
-    // Draw edges
     pr.edges.forEach(function (ed) {
       var a = nodeMap[ed[0]], b = nodeMap[ed[1]];
-      var isPath = a.ca || b.target || (!a.ca && !b.target);
       ctx.strokeStyle = (a.ca || b.target) ? P.blue : P.borderStrong;
       ctx.lineWidth = (a.ca || b.target) ? 3 : 2;
       ctx.beginPath();
@@ -2178,17 +2134,19 @@ window.simEngine = (function () {
       ctx.stroke();
     });
 
-    // Draw nodes
+    // Draw crisp pill nodes sized to text (zero text overflow!)
+    ctx.font = "700 12px " + P.fontSans;
     pr.nodes.forEach(function (nd) {
       var p = nodeMap[nd.id];
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.target ? 24 : (p.ca ? 22 : 19), 0, Math.PI * 2);
+      var tw = ctx.measureText(nd.id).width;
+      var pw = Math.max(66, tw + 24), ph = 32;
       ctx.fillStyle = p.target ? P.coral : (p.ca ? P.blue : P.surface2);
+      env.roundRect(ctx, p.x - pw / 2, p.y - ph / 2, pw, ph, 16);
       ctx.fill();
       ctx.strokeStyle = p.target ? P.coral : (p.ca ? P.blueDark : P.borderStrong);
-      ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.lineWidth = 2; ctx.stroke();
       ctx.fillStyle = (p.target || p.ca) ? P.textInvert : P.text;
-      ctx.font = "700 12px " + P.fontSans; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
       ctx.fillText(nd.id, p.x, p.y);
     });
     ctx.textBaseline = "alphabetic";
@@ -2200,8 +2158,8 @@ window.simEngine = (function () {
         { label: "Wright's Path Count", value: pr.paths, tone: "purple" },
         { label: "Heterozygosity Loss", value: "−" + (fX * 100).toFixed(1) + "%", tone: "danger" }
       ],
-      insight: "<b>" + pr.name + ":</b> " + pr.paths + ". Using Wright's formula, <b>F_X = " + (fX * 100).toFixed(2) + "%</b>. Inbreeding increases homozygosity and exposes lethal/deleterious recessives, causing <b>Inbreeding Depression</b> — most severe in <b>low-h² fitness &amp; fertility traits</b> (conception rate, calf survival, litter size)!",
-      formula: "F_X = Σ [ (½)^(n₁ + n₂ + 1) · (1 + F_A) ]   |   F_X = ½ · R_SD (for non-inbred parents)"
+      insight: "<b>" + pr.name + ":</b> " + pr.paths + ". Using Wright's formula, <b>F_X = " + (fX * 100).toFixed(2) + "%</b> and <b>R_SD = " + (rSD * 100).toFixed(1) + "%</b>. Inbreeding increases homozygosity and exposes deleterious recessives, causing <b>Inbreeding Depression</b> — most severe in <b>low-h² fitness &amp; fertility traits</b>!",
+      formula: "F_X = Σ [ (½)^(n₁ + n₂ + 1) · (1 + F_A) ]   |   R_SD = Σ[(½)^(n₁+n₂)(1+F_A)] / √[(1+F_S)(1+F_D)]"
     };
   });
 
@@ -2213,7 +2171,7 @@ window.simEngine = (function () {
 
     if (mode === "grading") {
       var gens = Math.round(st.params.gens != null ? st.params.gens : 7);
-      env.drawAxes(ctx, pad, w, h, P, "Backcross Generation (Non-descript × Purebred Murrah/Sahiwal Sire)", "Exotic / Purebred Inheritance (%)");
+      env.drawAxes(ctx, pad, w, h, P, "Backcross Generation (Non-descript × Purebred Sire)", "Exotic / Purebred Inheritance (%)");
       var plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
       var bw = Math.min(64, (plotW / gens) * 0.65);
 
@@ -2221,13 +2179,10 @@ window.simEngine = (function () {
         var exotic = (1 - Math.pow(0.5, g)) * 100;
         var cx = pad.l + ((g - 0.5) / gens) * plotW;
         var bh = (exotic / 100) * plotH;
-        // Nondescript portion on top
         ctx.fillStyle = P.bgAlt;
         ctx.fillRect(cx - bw / 2, pad.t, bw, plotH - bh);
-        // Purebred portion
         ctx.fillStyle = P.blue;
-        env.roundRect(ctx, cx - bw / 2, h - pad.b - bh, bw, bh, 4);
-        ctx.fill();
+        env.roundRect(ctx, cx - bw / 2, h - pad.b - bh, bw, bh, 4); ctx.fill();
         ctx.fillStyle = P.text; ctx.font = "700 12px " + P.fontMono; ctx.textAlign = "center";
         ctx.fillText(exotic.toFixed(1) + "%", cx, h - pad.b - bh - 8);
         ctx.fillStyle = P.textMuted; ctx.font = "700 12px " + P.fontSans;
@@ -2247,7 +2202,6 @@ window.simEngine = (function () {
       };
     }
 
-    // Crossbreeding & Heterosis Comparator
     var pA = st.params.pA != null ? st.params.pA : 2200;
     var pB = st.params.pB != null ? st.params.pB : 4200;
     var f1 = st.params.f1 != null ? st.params.f1 : 3680;
@@ -2256,10 +2210,10 @@ window.simEngine = (function () {
 
     var systems = [
       { lbl: "2-Breed F1", ret: 100, col: P.blue },
-      { lbl: "3-Breed Terminal", ret: 100, col: P.teal },
-      { lbl: "Crisscross (2-Br)", ret: 66.7, col: P.purple },
-      { lbl: "3-Breed Rotation", ret: 85.7, col: P.sage },
-      { lbl: "Synthetic (2-Br)", ret: 50.0, col: P.amberFill }
+      { lbl: "3-Breed Term.", ret: 100, col: P.teal },
+      { lbl: "Crisscross", ret: 66.7, col: P.purple },
+      { lbl: "3-Breed Rot.", ret: 85.7, col: P.sage },
+      { lbl: "2-Br Synth.", ret: 50.0, col: P.amberFill }
     ];
     env.drawAxes(ctx, pad, w, h, P, "Crossbreeding System", "Retained Individual Heterosis (%)");
     var pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
@@ -2271,7 +2225,7 @@ window.simEngine = (function () {
       env.roundRect(ctx, cx - sw / 2, h - pad.b - bh, sw, bh, 6); ctx.fill();
       ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "center";
       ctx.fillText(sys.ret.toFixed(1) + "%", cx, h - pad.b - bh - 8);
-      ctx.fillStyle = P.textMuted; ctx.font = "600 11px " + P.fontSans;
+      ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontSans;
       ctx.fillText(sys.lbl, cx, h - pad.b + 20);
     });
 
@@ -2293,10 +2247,9 @@ window.simEngine = (function () {
     var method = st.params.method || "blup";
     var nDau = Math.round(st.params.nDau != null ? st.params.nDau : 40);
     var h2 = 0.25;
-    var k = (4 - h2) / h2; // k = 15 for h2 = 0.25
+    var k = (4 - h2) / h2;
     var wFactor = nDau / (nDau + k);
 
-    // 3 Sires: Sire A in elite herd (4200 kg), Sire B in average herd (3000 kg), Sire C in poor herd (2200 kg)
     var sires = [
       { name: "Bull A (Elite Herd)", dauAvg: 4350, herdAvg: 4200, col: P.amberFill },
       { name: "Bull B (Avg Herd)", dauAvg: 3450, herdAvg: 3000, col: P.blue },
@@ -2305,22 +2258,30 @@ window.simEngine = (function () {
     var breedAvg = 3133;
     sires.forEach(function (s) {
       s.dev = s.dauAvg - s.herdAvg;
-      s.cc = breedAvg + 2 * wFactor * s.dev; // Sire Breeding Value via CC / BLUP adjustment
+      s.cc = breedAvg + 2 * wFactor * s.dev;
       s.score = method === "raw" ? s.dauAvg : s.cc;
     });
     var ranked = sires.slice().sort(function (a, b) { return b.score - a.score; });
 
-    var pad = { l: 58, r: 28, t: 44, b: 56 };
-    env.drawAxes(ctx, pad, w, h, P, method === "raw" ? "Raw Daughter Average (Biased by Herd Environment!)" : "BLUP / Contemporary Comparison Breeding Value (Adjusted for Herd)", "Estimated Merit (kg)");
+    var pad = { l: 64, r: 28, t: 44, b: 56 };
+    env.drawAxes(ctx, pad, w, h, P, method === "raw" ? "Raw Daughter Average (Biased by Herd Environment!)" : "BLUP / Contemporary Comparison Breeding Value (Herd-Adjusted)", "Merit (kg)");
     var pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
-    var bw = Math.min(96, (pw / 3) * 0.56);
 
+    // Y-axis ticks
+    ctx.strokeStyle = P.border; ctx.lineWidth = 1;
+    [2000, 3000, 4000, 5000].forEach(function (yv) {
+      var py = h - pad.b - ((yv - 1500) / 3500) * ph;
+      ctx.beginPath(); ctx.moveTo(pad.l, py); ctx.lineTo(w - pad.r, py); ctx.stroke();
+      ctx.fillStyle = P.textMuted; ctx.font = "600 11px " + P.fontMono; ctx.textAlign = "right";
+      ctx.fillText(String(yv), pad.l - 6, py + 4);
+    });
+
+    var bw = Math.min(96, (pw / 3) * 0.56);
     sires.forEach(function (s, idx) {
       var cx = pad.l + ((idx + 0.5) / 3) * pw;
       var bh = ((s.score - 1500) / 3500) * ph;
       ctx.fillStyle = s.col;
-      env.roundRect(ctx, cx - bw / 2, h - pad.b - Math.max(20, bh), bw, Math.max(20, bh), 8);
-      ctx.fill();
+      env.roundRect(ctx, cx - bw / 2, h - pad.b - Math.max(20, bh), bw, Math.max(20, bh), 8); ctx.fill();
       ctx.fillStyle = P.text; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "center";
       ctx.fillText(Math.round(s.score) + " kg", cx, h - pad.b - Math.max(20, bh) - 10);
       ctx.fillStyle = P.textMuted; ctx.font = "600 12px " + P.fontSans;
@@ -2328,9 +2289,10 @@ window.simEngine = (function () {
     });
 
     var acc = Math.sqrt((nDau * h2) / (4 + (nDau - 1) * h2));
-    var bench = '<table class="sim-table"><thead><tr><th>Sire</th><th>Daughter Avg</th><th>Herd-Year-Season Avg</th><th>Deviation (D − H)</th><th>BLUP / CC BV</th></tr></thead><tbody>' +
+    var bench = '<table class="sim-table"><thead><tr><th>Sire</th><th>Daughter Avg</th><th>Herd Avg (H)</th><th>Dev (D − H)</th><th>EBV (Sire BV)</th><th>PTA (½ EBV Dev)</th></tr></thead><tbody>' +
       sires.map(function (s) {
-        return '<tr><td><b>' + s.name + '</b></td><td class="sim-num">' + s.dauAvg + '</td><td class="sim-num">' + s.herdAvg + '</td><td class="sim-num">+' + s.dev + '</td><td class="sim-num sim-highlight">' + Math.round(s.cc) + ' kg</td></tr>';
+        var pta = wFactor * s.dev;
+        return '<tr><td><b>' + s.name + '</b></td><td class="sim-num">' + s.dauAvg + '</td><td class="sim-num">' + s.herdAvg + '</td><td class="sim-num">+' + s.dev + '</td><td class="sim-num sim-highlight">' + Math.round(s.cc) + ' kg</td><td class="sim-num">+' + Math.round(pta) + ' kg</td></tr>';
       }).join("") + '</tbody></table>';
 
     return {
@@ -2342,8 +2304,62 @@ window.simEngine = (function () {
       bench: bench,
       insight: method === "raw"
         ? "<b>Trap of Raw Daughter Average!</b> Bull A looks #1 (4350 kg) ONLY because his daughters live in an elite herd (4200 kg, +150 kg above contemporaries), while <b>Bull C (+700 kg above herd!)</b> looks worst! Switch to <b>BLUP / Contemporary Comparison</b> to remove herd bias."
-        : "<b>BLUP / Contemporary Comparison Reveals the True Champion!</b> After adjusting for Herd-Year-Season fixed effects, <b>Bull C (+700 kg superiority)</b> jumps from #3 to <b>#1</b>! With Genomic Selection (SNP chips), bulls are evaluated at birth, slashing generation interval L from 6+ years to ~2 years!",
-      formula: "EBV = μ + [ 2n / (n + k) ] · (D̄ − H̄)   |   k = (4 − h²) / h²   |   BLUP: y = Xb + Zu + e"
+        : "<b>BLUP / Contemporary Comparison Reveals the True Champion!</b> After adjusting for Herd-Year-Season fixed effects, <b>Bull C (+700 kg superiority)</b> jumps from #3 to <b>#1</b>! Notice <b>PTA (Predicted Transmitting Ability) = ½ EBV deviation</b> because a sire transmits only half his genes to each calf.",
+      formula: "EBV = μ + [2n/(n+k)](D̄ − H̄)   |   PTA = [n/(n+k)](D̄ − H̄)   |   k = (4 − h²)/h²   |   BLUP: y = Xb + Zu + e"
+    };
+  });
+
+  /* ---- 5.16 EPA & MPPA Calculator (Practical 3 — Lush's Formula) ---- */
+  registerRenderer("epa_mppa", function (env) {
+    var ctx = env.ctx, w = env.w, h = env.h, P = env.P, st = env.state;
+    var r = st.params.r != null ? st.params.r : 0.45;
+    var nA = Math.round(st.params.nA != null ? st.params.nA : 1);
+    var nB = Math.round(st.params.nB != null ? st.params.nB : 4);
+    var hAvg = 3000, pA = 4100, pB = 3850;
+
+    function calc(pMean, nRec) {
+      var wt = (nRec * r) / (1 + (nRec - 1) * r);
+      var epa = wt * (pMean - hAvg);
+      return { wt: wt, epa: epa, mppa: hAvg + epa };
+    }
+    var cA = calc(pA, nA), cB = calc(pB, nB);
+
+    var pad = { l: 64, r: 28, t: 44, b: 56 };
+    env.drawAxes(ctx, pad, w, h, P, "Cow Comparison (Herd Average H̄ = 3000 kg)", "Milk Yield / MPPA (kg)");
+    var pw = w - pad.l - pad.r, ph = h - pad.t - pad.b;
+    var bars = [
+      { lbl: "Cow A Raw", val: pA, col: P.bgAlt, txt: P.textMuted },
+      { lbl: "Cow A MPPA (n=" + nA + ")", val: cA.mppa, col: P.blue, txt: P.blue },
+      { lbl: "Cow B Raw", val: pB, col: P.bgAlt, txt: P.textMuted },
+      { lbl: "Cow B MPPA (n=" + nB + ")", val: cB.mppa, col: P.teal, txt: P.teal }
+    ];
+    var bw = Math.min(86, (pw / 4) * 0.62);
+    bars.forEach(function (b, idx) {
+      var cx = pad.l + ((idx + 0.5) / 4) * pw;
+      var bh = ((b.val - 2500) / 2000) * ph;
+      ctx.fillStyle = b.col;
+      env.roundRect(ctx, cx - bw / 2, h - pad.b - Math.max(16, bh), bw, Math.max(16, bh), 6); ctx.fill();
+      ctx.fillStyle = b.txt; ctx.font = "700 13px " + P.fontMono; ctx.textAlign = "center";
+      ctx.fillText(Math.round(b.val) + " kg", cx, h - pad.b - Math.max(16, bh) - 8);
+      ctx.fillStyle = P.textMuted; ctx.font = "600 11px " + P.fontSans;
+      ctx.fillText(b.lbl, cx, h - pad.b + 20);
+    });
+
+    var winner = cB.mppa > cA.mppa ? "Cow B (More Records!)" : "Cow A";
+    var bench = '<table class="sim-table"><thead><tr><th>Cow</th><th>Records (n)</th><th>Avg Yield (P̄)</th><th>Weight nr/[1+(n−1)r]</th><th>EPA (kg)</th><th>MPPA (kg)</th></tr></thead><tbody>' +
+      '<tr><td><b>Cow A</b></td><td class="sim-num">' + nA + '</td><td class="sim-num">' + pA + '</td><td class="sim-num">' + cA.wt.toFixed(3) + '</td><td class="sim-num">+' + cA.epa.toFixed(1) + '</td><td class="sim-num sim-highlight">' + cA.mppa.toFixed(1) + '</td></tr>' +
+      '<tr><td><b>Cow B</b></td><td class="sim-num">' + nB + '</td><td class="sim-num">' + pB + '</td><td class="sim-num">' + cB.wt.toFixed(3) + '</td><td class="sim-num">+' + cB.epa.toFixed(1) + '</td><td class="sim-num sim-highlight">' + cB.mppa.toFixed(1) + '</td></tr></tbody></table>';
+
+    return {
+      readouts: [
+        { label: "Cow A MPPA", value: cA.mppa.toFixed(1) + " kg", tone: "accent" },
+        { label: "Cow B MPPA", value: cB.mppa.toFixed(1) + " kg", tone: "teal" },
+        { label: "Repeatability (r)", value: r.toFixed(2), tone: "purple" },
+        { label: "Higher MPPA Cow", value: winner, tone: "ok" }
+      ],
+      bench: bench,
+      insight: "<b>Why MPPA Matters for Culling Decisions:</b> Cow A has a higher raw average (4100 kg) on only <b>" + nA + " lactation(s)</b>, so her record is regressed heavily toward the herd mean (weight = " + cA.wt.toFixed(2) + "). Cow B's <b>" + nB + " repeated records</b> earn a much higher reliability weight (" + cB.wt.toFixed(2) + ") — often ranking Cow B higher in true producing ability!",
+      formula: "EPA = [nr / (1 + (n−1)r)] · (P̄ − H̄)   |   MPPA = H̄ + EPA"
     };
   });
 
