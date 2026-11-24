@@ -12,7 +12,7 @@
    PRECACHE, otherwise students keep seeing the old version.
    ============================================================ */
 
-var CACHE_VERSION = "vgen-v27";
+var CACHE_VERSION = "vgen-v28";
 var SHELL_CACHE = CACHE_VERSION + "-shell";
 var IMG_CACHE = CACHE_VERSION + "-img";
 
@@ -27,6 +27,7 @@ var PRECACHE = [
   "assets/css/deep-guide.css",
   "assets/css/events.css",
   "assets/css/animations.css",
+  "assets/css/simulations.css",
 
   "data/data-syllabus.JS",
   "data/data-theory-unit1.JS",
@@ -37,6 +38,10 @@ var PRECACHE = [
   "data/data-qa.JS",
   "data/data-quiz.JS",
   "data/events-data.js",
+  "data/data-sims-unit1.js",
+  "data/data-sims-unit2.js",
+  "data/data-sims-unit3.js",
+  "data/data-sims-practical.js",
 
   "js/store.js",
   "js/quiz.js",
@@ -46,6 +51,8 @@ var PRECACHE = [
   "js/deep-guide.js",
   "js/events.js",
   "js/sync.js",
+  "js/simulations.js",
+  "js/simulations-3d.js",
   "js/app.js",
 
   "images/icon-192.png",

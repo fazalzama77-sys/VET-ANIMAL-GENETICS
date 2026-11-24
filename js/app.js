@@ -260,6 +260,7 @@ var app = (function () {
     stopSpeech();              // never let a lesson keep reading after you leave it
     teardownHighlightPopup();  // remove floating selection toolbar if active
     closeWhyModal();
+    if (window.simEngine) simEngine.unmount(); // cleanly stop active simulation loops
 
     var map = {
       home: "home", theory: "theory", practical: "practical",
@@ -1549,6 +1550,8 @@ var app = (function () {
 
             '<div id="topic-highlights-container">' + renderHighlights(t.id) + '</div>' +
 
+            '<div id="sim-lab-mount"></div>' +
+
             body +
 
             '<nav class="pager">' +
@@ -1563,6 +1566,7 @@ var app = (function () {
       '</div>';
 
     wireTopicActions(t);
+    if (window.simEngine) simEngine.mount(el("#sim-lab-mount"), t.id);
     var cur = el(".rail__item.is-current");
     if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: "nearest" });
   }
